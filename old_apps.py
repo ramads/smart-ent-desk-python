@@ -1,5 +1,6 @@
 
 from pathlib import Path
+from helpers import *
 
 # from tkinter import *
 # Explicit imports to satisfy Flake8
@@ -16,7 +17,7 @@ def relative_to_assets(path: str) -> Path:
 
 window = Tk()
 
-window.geometry("1512x982")
+window.geometry(DEFAULT_GEOMETRY)
 # window.attributes('-fullscreen',True)
 window.configure(bg = "#DFEBD0")
 window.title("Smart ENT v0.1.")
