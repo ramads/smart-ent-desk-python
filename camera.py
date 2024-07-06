@@ -4,7 +4,6 @@ from tkinter import *
 from PIL import Image, ImageTk
 import os
 
-# Ensure the 'image_capture' directory exists
 os.makedirs('image_capture', exist_ok=True)
 
 # Initialize Tkinter window
@@ -62,7 +61,7 @@ def openCameraPage():
     )
     capture_button.place(x=700, y=900)
 
-    # Input fields for patient ID and name
+    # Dynamic input test
     patient_id_label = Label(window, text="Patient ID:")
     patient_id_label.place(x=600, y=850)
     patient_id = Entry(window)
