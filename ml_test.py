@@ -3,7 +3,8 @@ from machine_learning.image_predictor import ImagePredictor
 # Initialize the predictor
 predictor = ImagePredictor()
 
-image_path = '2017-05-15T19-48-56.jpg'
+image_path = './image_capture/2017-05-15T19-48-56.jpg'
+# image_path = './image_capture/123-test.jpg'
 
 # Get the prediction results
 result_1, result_2, result_3 = predictor.predict(image_path)
