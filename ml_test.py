@@ -1,7 +1,7 @@
-from image_predictor import ImagePredictor
+from machine_learning.image_predictor import ImagePredictor
 
 # Initialize the predictor with the model path
-model_path = './models/1-model_tuning224_128_adam.h5'
+model_path = './machine_learning/models/1-model_tuning224_128_adam.h5'
 predictor = ImagePredictor(model_path)
 
 # Path to your image
