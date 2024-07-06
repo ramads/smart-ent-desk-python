@@ -490,7 +490,7 @@ def diagnosis_page():
 
 
 import cv2
-vidCap = cv2.VideoCapture()
+vidCap = cv2.VideoCapture(0)
 
 def preparingCamera():
     # Declare the width and height in variables
@@ -752,7 +752,7 @@ def openCameraPage():
         font=("Nunito Regular", 14 * -1)
     )
 
-    canvas.after(10, openCameraPage)
+    canvas.after(100, openCameraPage)
 
     window.resizable(False, False)
     window.mainloop()
