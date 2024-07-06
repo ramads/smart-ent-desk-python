@@ -4,7 +4,8 @@ import numpy as np
 from efficientnet.tfkeras import EfficientNetB0
 
 class ImagePredictor:
-    def __init__(self, model_path):
+    def __init__(self):
+        model_path = './machine_learning/models/v2_new_arch.h5'
         self.model = tf.keras.models.load_model(model_path)
         self.labels = [
             'Aerotitis Barotrauma', 'Cerumen', 'Corpus Alienum', 'M Timpani normal', 
@@ -37,8 +38,6 @@ class ImagePredictor:
         result = [(top_3_labels[i], top_3_probabilities[i]) for i in range(3)]
         
         # Unpack the results into separate variables
-        top_1, top_2, top_3 = result
+        result_1, result_2, result_3 = result
         
-        return top_1, top_2, top_3
-
-# Save the above class in a file named image_predictor.py
+        return result_1, result_2, result_3
