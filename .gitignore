@@ -2,6 +2,7 @@
 __pycache__/
 pages/__pycache__/
 machine_learning/__pycache__/
+libs/__pycache__/
 *.py[cod]
 *$py.class
 

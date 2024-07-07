@@ -6,12 +6,14 @@ from colours import *
 from helpers import *
 from PIL import Image, ImageTk
 from pages import DEarPage, PreviewImagePage
+from libs.serial_com import SerialCom
 
 
 class DEarProcessPage(Canvas, BasePage):
     capture_image = None
     after_cam_id = 0
     image_dir = "./" + DIR_TEMP_IMAGE
+    text_command = ""
 
     def __init__(self, window):
         super().__init__(
@@ -61,6 +63,24 @@ class DEarProcessPage(Canvas, BasePage):
     def backToPrevPage(self):
         self.onStopCamera()
         goToPage(DEarPage.DEarPage(self.window))
+
+    def sendSerialCommand(self, command):
+        if command == 4: command = 0
+        elif command > 4: command = command - 1
+
+        self.text_command = f"Send serial command: {command}"
+        self.itemconfig(self.commandText, text=self.text_command)
+        # print(self.text_command)
+
+    def drawDemoSerialCommand(self):
+        self.commandText = self.create_text(
+            726.0,
+            675.0,
+            anchor="nw",
+            text=self.text_command,
+            fill="#404040",
+            font=("Nunito Regular", 15 * -1)
+        )
 
     def drawPage(self):
         self.place(x=0, y=0)
@@ -147,7 +167,8 @@ class DEarProcessPage(Canvas, BasePage):
                     button.config(image=button.active_image)
                 else:
                     button.config(image=button.image)
-            
+
+            self.sendSerialCommand(button_index)
             # Logika tambahan untuk mengaktifkan tombol terkait
             if button_index in [0, 1, 2, 3]:  # Jika tombol 3, 4, 5, atau 6 diklik
                 buttons[4].config(image=buttons[4].active_image)  # Aktifkan tombol 7
@@ -440,5 +461,8 @@ class DEarProcessPage(Canvas, BasePage):
             font=("SFProText Semibold", 15 * -1)
         )
 
+        self.drawDemoSerialCommand()
+
+        switch_button_image(0)
         self.after(10, self.updateCameraFrame)
         self.window.mainloop()
