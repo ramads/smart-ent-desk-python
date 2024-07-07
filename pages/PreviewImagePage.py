@@ -26,7 +26,7 @@ class PreviewImagePage(Canvas, BasePage):
     def drawPage(self, data = None):
         self.place(x=0, y=0)
         image_image_1 = PhotoImage(
-            file=relative_to_assets("control/frame4/image_1.png"))
+            file=relative_to_assets("control/PreviewImageFrame/image_1.png"))
         image_1 = self.create_image(
             566.0,
             378.0,
@@ -50,7 +50,7 @@ class PreviewImagePage(Canvas, BasePage):
         )
 
         button_image_1 = PhotoImage(
-            file=relative_to_assets("control/frame4/button_1.png"))
+            file=relative_to_assets("control/PreviewImageFrame/button_1.png"))
         button_1 = Button(
             image=button_image_1,
             borderwidth=0,
@@ -66,7 +66,7 @@ class PreviewImagePage(Canvas, BasePage):
         )
 
         button_image_2 = PhotoImage(
-            file=relative_to_assets("control/frame4/button_2.png"))
+            file=relative_to_assets("control/PreviewImageFrame/button_2.png"))
         button_2 = Button(
             image=button_image_2,
             borderwidth=0,
@@ -91,7 +91,7 @@ class PreviewImagePage(Canvas, BasePage):
         )
 
         image_image_3 = PhotoImage(
-            file=relative_to_assets("control/frame4/image_3.png"))
+            file=relative_to_assets("control/PreviewImageFrame/image_3.png"))
         image_3 = self.create_image(
             1099.333251953125,
             22.33349609375,
@@ -99,7 +99,7 @@ class PreviewImagePage(Canvas, BasePage):
         )
 
         image_image_4 = PhotoImage(
-            file=relative_to_assets("control/frame4/image_4.png"))
+            file=relative_to_assets("control/PreviewImageFrame/image_4.png"))
         image_4 = self.create_image(
             1074.0,
             22.33056640625,

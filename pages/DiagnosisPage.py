@@ -19,7 +19,7 @@ class DiagnosisPage(Canvas, BasePage):
     def drawPage(self, data = None):
         self.place(x=0, y=0)
         button_image_1 = PhotoImage(
-            file=relative_to_assets("control/frame1/button_1.png"))
+            file=relative_to_assets("control/DiagnosisFrame/button_1.png"))
         button_1 = Button(
             image=button_image_1,
             borderwidth=0,
@@ -35,7 +35,7 @@ class DiagnosisPage(Canvas, BasePage):
         )
 
         button_image_2 = PhotoImage(
-            file=relative_to_assets("control/frame1/button_2.png"))
+            file=relative_to_assets("control/DiagnosisFrame/button_2.png"))
         button_2 = Button(
             image=button_image_2,
             borderwidth=0,
@@ -51,7 +51,7 @@ class DiagnosisPage(Canvas, BasePage):
         )
 
         button_image_3 = PhotoImage(
-            file=relative_to_assets("control/frame1/button_3.png"))
+            file=relative_to_assets("control/DiagnosisFrame/button_3.png"))
         button_3 = Button(
             image=button_image_3,
             borderwidth=0,
@@ -67,7 +67,7 @@ class DiagnosisPage(Canvas, BasePage):
         )
 
         image_image_1 = PhotoImage(
-            file=relative_to_assets("control/frame1/image_1.png"))
+            file=relative_to_assets("control/DiagnosisFrame/image_1.png"))
         image_1 = self.create_image(
             566.0,
             89.0,
@@ -84,7 +84,7 @@ class DiagnosisPage(Canvas, BasePage):
         )
 
         image_image_2 = PhotoImage(
-            file=relative_to_assets("control/frame1/image_2.png"))
+            file=relative_to_assets("control/DiagnosisFrame/image_2.png"))
         image_2 = self.create_image(
             1099.333251953125,
             22.33349609375,
@@ -92,7 +92,7 @@ class DiagnosisPage(Canvas, BasePage):
         )
 
         image_image_3 = PhotoImage(
-            file=relative_to_assets("control/frame1/image_3.png"))
+            file=relative_to_assets("control/DiagnosisFrame/image_3.png"))
         image_3 = self.create_image(
             1074.0,
             22.33056640625,
@@ -127,7 +127,7 @@ class DiagnosisPage(Canvas, BasePage):
         )
 
         image_image_4 = PhotoImage(
-            file=relative_to_assets("control/frame1/image_4.png"))
+            file=relative_to_assets("control/DiagnosisFrame/image_4.png"))
         image_4 = self.create_image(
             89.0,
             139.0,

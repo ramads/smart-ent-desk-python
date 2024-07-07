@@ -1,7 +1,8 @@
 from tkinter import *
 from colours import *
 from helpers import *
-from pages.DiagnosisPage import DiagnosisPage
+
+from pages import PatientQueuePage
 
 
 class HomePage(Canvas, BasePage):
@@ -21,12 +22,12 @@ class HomePage(Canvas, BasePage):
     def drawPage(self):
         self.place(x=0, y=0)
         button_image_1 = PhotoImage(
-            file=relative_to_assets("control/frame8/button_1.png"))
+            file=relative_to_assets("control/HomeFrame/button_1.png"))
         button_1 = Button(
             image=button_image_1,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: goToPage(DiagnosisPage(self.window)),
+            command=lambda: goToPage(PatientQueuePage.PatientQueuePage(self.window)),
             relief="flat"
         )
         button_1.place(
@@ -37,7 +38,7 @@ class HomePage(Canvas, BasePage):
         )
 
         button_image_2 = PhotoImage(
-            file=relative_to_assets("control/frame8/button_2.png"))
+            file=relative_to_assets("control/HomeFrame/button_2.png"))
         button_2 = Button(
             image=button_image_2,
             borderwidth=0,
@@ -53,7 +54,7 @@ class HomePage(Canvas, BasePage):
         )
 
         button_image_3 = PhotoImage(
-            file=relative_to_assets("control/frame8/button_3.png"))
+            file=relative_to_assets("control/HomeFrame/button_3.png"))
         button_3 = Button(
             image=button_image_3,
             borderwidth=0,
@@ -69,7 +70,7 @@ class HomePage(Canvas, BasePage):
         )
 
         button_image_4 = PhotoImage(
-            file=relative_to_assets("control/frame8/button_4.png"))
+            file=relative_to_assets("control/HomeFrame/button_4.png"))
         button_4 = Button(
             image=button_image_4,
             borderwidth=0,
@@ -85,7 +86,7 @@ class HomePage(Canvas, BasePage):
         )
 
         button_image_5 = PhotoImage(
-            file=relative_to_assets("control/frame8/button_5.png"))
+            file=relative_to_assets("control/HomeFrame/button_5.png"))
         button_5 = Button(
             image=button_image_5,
             borderwidth=0,
@@ -101,7 +102,7 @@ class HomePage(Canvas, BasePage):
         )
 
         button_image_6 = PhotoImage(
-            file=relative_to_assets("control/frame8/button_6.png"))
+            file=relative_to_assets("control/HomeFrame/button_6.png"))
         button_6 = Button(
             image=button_image_6,
             borderwidth=0,
@@ -117,7 +118,7 @@ class HomePage(Canvas, BasePage):
         )
 
         image_image_1 = PhotoImage(
-            file=relative_to_assets("control/frame8/image_1.png"))
+            file=relative_to_assets("control/HomeFrame/image_1.png"))
         image_1 = self.create_image(
             566.0,
             89.0,
@@ -125,7 +126,7 @@ class HomePage(Canvas, BasePage):
         )
 
         image_image_2 = PhotoImage(
-            file=relative_to_assets("control/frame8/image_2.png"))
+            file=relative_to_assets("control/HomeFrame/image_2.png"))
         image_2 = self.create_image(
             1099.333251953125,
             22.33349609375,
@@ -133,7 +134,7 @@ class HomePage(Canvas, BasePage):
         )
 
         image_image_3 = PhotoImage(
-            file=relative_to_assets("control/frame8/image_3.png"))
+            file=relative_to_assets("control/HomeFrame/image_3.png"))
         image_3 = self.create_image(
             1074.0,
             22.33056640625,
@@ -168,7 +169,7 @@ class HomePage(Canvas, BasePage):
         )
 
         image_image_4 = PhotoImage(
-            file=relative_to_assets("control/frame8/image_4.png"))
+            file=relative_to_assets("control/HomeFrame/image_4.png"))
         image_4 = self.create_image(
             89.0,
             139.0,

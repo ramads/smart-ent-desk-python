@@ -4,6 +4,7 @@ from helpers import *
 from PIL import ImageTk, Image
 
 from pages import DEarProcessPage
+from pages import DEarCorrectionPage
 from machine_learning.image_predictor import ImagePredictor
 
 
@@ -26,7 +27,7 @@ class DEarResultPage(Canvas, BasePage):
     def drawPage(self, data = None):
         self.place(x = 0, y = 0)
         image_image_1 = PhotoImage(
-            file=relative_to_assets("control/frame5/image_1.png"))
+            file=relative_to_assets("control/DEarResultFrame/image_1.png"))
         image_1 = self.create_image(
             361.0,
             233.0,
@@ -52,7 +53,7 @@ class DEarResultPage(Canvas, BasePage):
         result_1, result_2, result_3 = predictor.predict(image_path)
 
         image_image_3 = PhotoImage(
-            file=relative_to_assets("control/frame5/image_3.png"))
+            file=relative_to_assets("control/DEarResultFrame/image_3.png"))
         image_3 = self.create_image(
             623.0,
             356.0,
@@ -60,12 +61,12 @@ class DEarResultPage(Canvas, BasePage):
         )
 
         button_image_1 = PhotoImage(
-            file=relative_to_assets("control/frame5/button_1.png"))
+            file=relative_to_assets("control/DEarResultFrame/button_1.png"))
         button_1 = Button(
             image=button_image_1,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("control/frame5/button_1 clicked"),
+            command=lambda: print("control/DEarResultFrame/button_1 clicked"),
             relief="flat"
         )
         button_1.place(
@@ -76,7 +77,7 @@ class DEarResultPage(Canvas, BasePage):
         )
 
         image_image_4 = PhotoImage(
-            file=relative_to_assets("control/frame5/image_4.png"))
+            file=relative_to_assets("control/DEarResultFrame/image_4.png"))
         image_4 = self.create_image(
             895.0,
             233.0,
@@ -84,7 +85,7 @@ class DEarResultPage(Canvas, BasePage):
         )
 
         image_image_5 = PhotoImage(
-            file=relative_to_assets("control/frame5/image_5.png"))
+            file=relative_to_assets("control/DEarResultFrame/image_5.png"))
         image_5 = self.create_image(
             895.5,
             215.0,
@@ -119,7 +120,7 @@ class DEarResultPage(Canvas, BasePage):
         )
 
         image_image_6 = PhotoImage(
-            file=relative_to_assets("control/frame5/image_6.png"))
+            file=relative_to_assets("control/DEarResultFrame/image_6.png"))
         image_6 = self.create_image(
             996.0,
             378.0,
@@ -136,7 +137,7 @@ class DEarResultPage(Canvas, BasePage):
         )
 
         image_image_7 = PhotoImage(
-            file=relative_to_assets("control/frame5/image_7.png"))
+            file=relative_to_assets("control/DEarResultFrame/image_7.png"))
         image_7 = self.create_image(
             864.0,
             378.0,
@@ -153,7 +154,7 @@ class DEarResultPage(Canvas, BasePage):
         )
 
         image_image_8 = PhotoImage(
-            file=relative_to_assets("control/frame5/image_8.png"))
+            file=relative_to_assets("control/DEarResultFrame/image_8.png"))
         image_8 = self.create_image(
             732.0,
             378.0,
@@ -161,7 +162,7 @@ class DEarResultPage(Canvas, BasePage):
         )
 
         image_image_9 = PhotoImage(
-            file=relative_to_assets("control/frame5/image_9.png"))
+            file=relative_to_assets("control/DEarResultFrame/image_9.png"))
         image_9 = self.create_image(
             351.0,
             568.0,
@@ -214,12 +215,12 @@ class DEarResultPage(Canvas, BasePage):
         )
 
         button_image_2 = PhotoImage(
-            file=relative_to_assets("control/frame5/button_2.png"))
+            file=relative_to_assets("control/DEarResultFrame/button_2.png"))
         button_2 = Button(
             image=button_image_2,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("control/frame5/button_2 clicked"),
+            command=lambda: goToPage(DEarCorrectionPage.DEarCorrectionPage(self.window)),
             relief="flat"
         )
         button_2.place(
@@ -230,12 +231,12 @@ class DEarResultPage(Canvas, BasePage):
         )
 
         button_image_3 = PhotoImage(
-            file=relative_to_assets("control/frame5/button_3.png"))
+            file=relative_to_assets("control/DEarResultFrame/button_3.png"))
         button_3 = Button(
             image=button_image_3,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("control/frame5/button_3 clicked"),
+            command=lambda: print("control/DEarResultFrame/button_3 clicked"),
             relief="flat"
         )
         button_3.place(
@@ -246,7 +247,7 @@ class DEarResultPage(Canvas, BasePage):
         )
 
         image_image_10 = PhotoImage(
-            file=relative_to_assets("control/frame5/image_10.png"))
+            file=relative_to_assets("control/DEarResultFrame/image_10.png"))
         image_10 = self.create_image(
             895.0,
             570.0,
@@ -344,7 +345,7 @@ class DEarResultPage(Canvas, BasePage):
         )
 
         image_image_11 = PhotoImage(
-            file=relative_to_assets("control/frame5/image_11.png"))
+            file=relative_to_assets("control/DEarResultFrame/image_11.png"))
         image_11 = self.create_image(
             1099.333251953125,
             22.33349609375,
@@ -352,7 +353,7 @@ class DEarResultPage(Canvas, BasePage):
         )
 
         image_image_12 = PhotoImage(
-            file=relative_to_assets("control/frame5/image_12.png"))
+            file=relative_to_assets("control/DEarResultFrame/image_12.png"))
         image_12 = self.create_image(
             1074.0,
             22.33056640625,

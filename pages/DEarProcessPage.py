@@ -68,7 +68,7 @@ class DEarProcessPage(Canvas, BasePage):
     def drawPage(self):
         self.place(x=0, y=0)
         image_image_1 = PhotoImage(
-            file=relative_to_assets("control/frame3/image_1.png"))
+            file=relative_to_assets("control/DEarProcessFrame/image_1.png"))
         image_1 = self.create_image(
             354.0,
             378.0,
@@ -76,7 +76,7 @@ class DEarProcessPage(Canvas, BasePage):
         )
 
         button_image_1 = PhotoImage(
-            file=relative_to_assets("control/frame3/button_1.png"))
+            file=relative_to_assets("control/DEarProcessFrame/button_1.png"))
         button_1 = Button(
             image=button_image_1,
             borderwidth=0,
@@ -92,7 +92,7 @@ class DEarProcessPage(Canvas, BasePage):
         )
 
         button_image_2 = PhotoImage(
-            file=relative_to_assets("control/frame3/button_2.png"))
+            file=relative_to_assets("control/DEarProcessFrame/button_2.png"))
         button_2 = Button(
             image=button_image_2,
             borderwidth=0,
@@ -108,7 +108,7 @@ class DEarProcessPage(Canvas, BasePage):
         )
 
         image_image_3 = PhotoImage(
-            file=relative_to_assets("control/frame3/image_3.png"))
+            file=relative_to_assets("control/DEarProcessFrame/image_3.png"))
         image_3 = self.create_image(
             901.0,
             500.0,
@@ -134,7 +134,7 @@ class DEarProcessPage(Canvas, BasePage):
         )
 
         button_image_3 = PhotoImage(
-            file=relative_to_assets("control/frame3/button_3.png"))
+            file=relative_to_assets("control/DEarProcessFrame/button_3.png"))
         button_3 = Button(
             image=button_image_3,
             borderwidth=0,
@@ -150,7 +150,7 @@ class DEarProcessPage(Canvas, BasePage):
         )
 
         button_image_4 = PhotoImage(
-            file=relative_to_assets("control/frame3/button_4.png"))
+            file=relative_to_assets("control/DEarProcessFrame/button_4.png"))
         button_4 = Button(
             image=button_image_4,
             borderwidth=0,
@@ -166,7 +166,7 @@ class DEarProcessPage(Canvas, BasePage):
         )
 
         button_image_5 = PhotoImage(
-            file=relative_to_assets("control/frame3/button_5.png"))
+            file=relative_to_assets("control/DEarProcessFrame/button_5.png"))
         button_5 = Button(
             image=button_image_5,
             borderwidth=0,
@@ -182,7 +182,7 @@ class DEarProcessPage(Canvas, BasePage):
         )
 
         button_image_6 = PhotoImage(
-            file=relative_to_assets("control/frame3/button_6.png"))
+            file=relative_to_assets("control/DEarProcessFrame/button_6.png"))
         button_6 = Button(
             image=button_image_6,
             borderwidth=0,
@@ -207,7 +207,7 @@ class DEarProcessPage(Canvas, BasePage):
         )
 
         button_image_7 = PhotoImage(
-            file=relative_to_assets("control/frame3/button_7.png"))
+            file=relative_to_assets("control/DEarProcessFrame/button_7.png"))
         button_7 = Button(
             image=button_image_7,
             borderwidth=0,
@@ -223,7 +223,7 @@ class DEarProcessPage(Canvas, BasePage):
         )
 
         button_image_8 = PhotoImage(
-            file=relative_to_assets("control/frame3/button_8.png"))
+            file=relative_to_assets("control/DEarProcessFrame/button_8.png"))
         button_8 = Button(
             image=button_image_8,
             borderwidth=0,
@@ -239,7 +239,7 @@ class DEarProcessPage(Canvas, BasePage):
         )
 
         button_image_9 = PhotoImage(
-            file=relative_to_assets("control/frame3/button_9.png"))
+            file=relative_to_assets("control/DEarProcessFrame/button_9.png"))
         button_9 = Button(
             image=button_image_9,
             borderwidth=0,
@@ -255,7 +255,7 @@ class DEarProcessPage(Canvas, BasePage):
         )
 
         button_image_10 = PhotoImage(
-            file=relative_to_assets("control/frame3/button_10.png"))
+            file=relative_to_assets("control/DEarProcessFrame/button_10.png"))
         button_10 = Button(
             image=button_image_10,
             borderwidth=0,
@@ -271,7 +271,7 @@ class DEarProcessPage(Canvas, BasePage):
         )
 
         image_image_4 = PhotoImage(
-            file=relative_to_assets("control/frame3/image_4.png"))
+            file=relative_to_assets("control/DEarProcessFrame/image_4.png"))
         image_4 = self.create_image(
             901.0,
             161.0,
@@ -369,7 +369,7 @@ class DEarProcessPage(Canvas, BasePage):
         )
 
         image_image_5 = PhotoImage(
-            file=relative_to_assets("control/frame3/image_5.png"))
+            file=relative_to_assets("control/DEarProcessFrame/image_5.png"))
         image_5 = self.create_image(
             1099.333251953125,
             22.33349609375,
@@ -377,7 +377,7 @@ class DEarProcessPage(Canvas, BasePage):
         )
 
         image_image_6 = PhotoImage(
-            file=relative_to_assets("control/frame3/image_6.png"))
+            file=relative_to_assets("control/DEarProcessFrame/image_6.png"))
         image_6 = self.create_image(
             1074.0,
             22.33056640625,
