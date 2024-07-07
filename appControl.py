@@ -2,7 +2,7 @@ from tkinter import *
 
 from pages import (HomePage, DEarProcessPage as page)
 from helpers import *
-from colours import *
+from colors import *
 
 class App(Tk):
     def __init__(self):

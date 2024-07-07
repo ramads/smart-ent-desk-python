@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import *
-from colours import *
+from colors import *
 from helpers import *
 
 from pages import DiagnosisPage

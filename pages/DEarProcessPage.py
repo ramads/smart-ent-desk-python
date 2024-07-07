@@ -2,7 +2,7 @@ import os
 
 import cv2
 from tkinter import *
-from colours import *
+from colors import *
 from helpers import *
 from PIL import Image, ImageTk
 from pages import DEarPage, PreviewImagePage
