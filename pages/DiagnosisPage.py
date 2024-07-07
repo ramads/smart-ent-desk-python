@@ -18,53 +18,27 @@ class DiagnosisPage(Canvas, BasePage):
 
     def drawPage(self, data = None):
         self.place(x=0, y=0)
-        button_image_1 = PhotoImage(
-            file=relative_to_assets("control/DiagnosisFrame/button_1.png"))
-        button_1 = Button(
-            image=button_image_1,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: goToPage(DEarPage(self.window)),
-            relief="flat"
-        )
-        button_1.place(
-            x=41.0,
-            y=255.0,
-            width=332.0,
-            height=319.0
-        )
 
-        button_image_2 = PhotoImage(
-            file=relative_to_assets("control/DiagnosisFrame/button_2.png"))
-        button_2 = Button(
-            image=button_image_2,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: print("button_2 clicked"),
-            relief="flat"
-        )
-        button_2.place(
-            x=402.0,
-            y=255.0,
-            width=330.0,
-            height=319.0
-        )
+        inactive_button_1 = relative_to_assets("control/DiagnosisFrame/button_1.png")
+        active_button_1 = relative_to_assets("control/DiagnosisFrame/active_button_1.png")
+        
+        inactive_button_2 = relative_to_assets("control/DiagnosisFrame/button_2.png")
+        active_button_2 = relative_to_assets("control/DiagnosisFrame/active_button_2.png")
 
-        button_image_3 = PhotoImage(
-            file=relative_to_assets("control/DiagnosisFrame/button_3.png"))
-        button_3 = Button(
-            image=button_image_3,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: print("button_3 clicked"),
-            relief="flat"
-        )
-        button_3.place(
-            x=761.0,
-            y=255.0,
-            width=332.0,
-            height=319.0
-        )
+        inactive_button_3 = relative_to_assets("control/DiagnosisFrame/button_3.png")
+        active_button_3 = relative_to_assets("control/DiagnosisFrame/active_button_3.png")
+        
+        create_hover_button(self.window, 41.0, 255.0, 332.0, 319.0,
+                            BACKGROUND_COLOUR, inactive_button_1, active_button_1, 
+                            lambda: goToPage(DEarPage(self.window)))
+        
+        create_hover_button(self.window, 402.0, 255.0, 330.0, 319.0,
+                            BACKGROUND_COLOUR, inactive_button_2, active_button_2,  
+                            lambda: print("button_2 clicked"))
+        
+        create_hover_button(self.window, 761.0, 255.0, 332.0, 319.0,
+                            BACKGROUND_COLOUR, inactive_button_3, active_button_3,  
+                            lambda: print("button_3 clicked"))
 
         image_image_1 = PhotoImage(
             file=relative_to_assets("control/DiagnosisFrame/image_1.png"))

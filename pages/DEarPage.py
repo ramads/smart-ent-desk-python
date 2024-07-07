@@ -20,6 +20,22 @@ class DEarPage(Canvas, BasePage):
 
     def drawPage(self):
         self.place(x=0, y=0)
+
+        inactive_button_1 = relative_to_assets("control/DEarFrame/button_1.png")
+        active_button_1 = relative_to_assets("control/DEarFrame/active_button_1.png")
+        
+        inactive_button_2 = relative_to_assets("control/DEarFrame/button_2.png")
+        active_button_2 = relative_to_assets("control/DEarFrame/active_button_2.png")
+
+        create_hover_button(self.window, 431.0, 600.0, 136.0, 42.0,
+                            "#FFFFFF", inactive_button_1, active_button_1, 
+                            lambda: goToPage(DiagnosisPage.DiagnosisPage(self.window)))
+        
+        create_hover_button(self.window, 575.0, 600.0, 136.0, 42.0,
+                            "#FFFFFF", inactive_button_2, active_button_2,  
+                            lambda: goToPage(DEarProcessPage.DEarProcessPage(self.window)))
+        
+
         image_image_1 = PhotoImage(
             file=relative_to_assets("control/DEarFrame/image_1.png"))
         image_1 = self.create_image(
@@ -52,38 +68,6 @@ class DEarPage(Canvas, BasePage):
             text="Diagnosa Telinga",
             fill="#404040",
             font=("Nunito Bold", 24 * -1)
-        )
-
-        button_image_1 = PhotoImage(
-            file=relative_to_assets("control/DEarFrame/button_1.png"))
-        button_1 = Button(
-            image=button_image_1,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: goToPage(DiagnosisPage.DiagnosisPage(self.window)),
-            relief="flat"
-        )
-        button_1.place(
-            x=431.0,
-            y=600.0,
-            width=136.0,
-            height=42.0
-        )
-
-        button_image_2 = PhotoImage(
-            file=relative_to_assets("control/DEarFrame/button_2.png"))
-        button_2 = Button(
-            image=button_image_2,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: goToPage(DEarProcessPage.DEarProcessPage(self.window)),
-            relief="flat"
-        )
-        button_2.place(
-            x=575.0,
-            y=600.0,
-            width=136.0,
-            height=42.0
         )
 
         image_image_3 = PhotoImage(

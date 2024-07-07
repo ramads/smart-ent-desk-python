@@ -75,38 +75,20 @@ class DEarProcessPage(Canvas, BasePage):
             image=image_image_1
         )
 
-        button_image_1 = PhotoImage(
-            file=relative_to_assets("control/DEarProcessFrame/button_1.png"))
-        button_1 = Button(
-            image=button_image_1,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: self.backToPrevPage(),
-            relief="flat"
-        )
-        button_1.place(
-            x=158.0,
-            y=632.0,
-            width=192.0,
-            height=54.0
-        )
+        inactive_button_1 = relative_to_assets("control/DEarProcessFrame/button_1.png")
+        active_button_1 = relative_to_assets("control/DEarProcessFrame/active_button_1.png")
+        
+        inactive_button_2 = relative_to_assets("control/DEarProcessFrame/button_2.png")
+        active_button_2 = relative_to_assets("control/DEarProcessFrame/active_button_2.png")
 
-        button_image_2 = PhotoImage(
-            file=relative_to_assets("control/DEarProcessFrame/button_2.png"))
-        button_2 = Button(
-            image=button_image_2,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: self.onCapture("test_image"),
-            relief="flat"
-        )
-        button_2.place(
-            x=358.0,
-            y=632.0,
-            width=192.0,
-            height=54.0
-        )
-
+        create_hover_button(self.window, 158.0, 632.0, 192.0, 54.0,
+                            "#FFFFFF", inactive_button_1, active_button_1, 
+                            lambda: self.backToPrevPage())
+        
+        create_hover_button(self.window, 358.0, 632.0, 192.0, 54.0,
+                            "#FFFFFF", inactive_button_2, active_button_2,  
+                            lambda: self.onCapture("test_image"))
+        
         image_image_3 = PhotoImage(
             file=relative_to_assets("control/DEarProcessFrame/image_3.png"))
         image_3 = self.create_image(
@@ -133,14 +115,57 @@ class DEarProcessPage(Canvas, BasePage):
             font=("Nunito Bold", 19 * -1)
         )
 
-        button_image_3 = PhotoImage(
-            file=relative_to_assets("control/DEarProcessFrame/button_3.png"))
+        # Load images
+        active_button_image_3 = PhotoImage(file=relative_to_assets("control/DEarProcessFrame/active_button_3.png"))
+        button_image_3 = PhotoImage(file=relative_to_assets("control/DEarProcessFrame/button_3.png"))
+
+        active_button_image_4 = PhotoImage(file=relative_to_assets("control/DEarProcessFrame/active_button_4.png"))
+        button_image_4 = PhotoImage(file=relative_to_assets("control/DEarProcessFrame/button_4.png"))
+
+        active_button_image_5 = PhotoImage(file=relative_to_assets("control/DEarProcessFrame/active_button_5.png"))
+        button_image_5 = PhotoImage(file=relative_to_assets("control/DEarProcessFrame/button_5.png"))
+
+        active_button_image_6 = PhotoImage(file=relative_to_assets("control/DEarProcessFrame/active_button_6.png"))
+        button_image_6 = PhotoImage(file=relative_to_assets("control/DEarProcessFrame/button_6.png"))
+
+        active_button_image_7 = PhotoImage(file=relative_to_assets("control/DEarProcessFrame/active_button_7.png"))
+        button_image_7 = PhotoImage(file=relative_to_assets("control/DEarProcessFrame/button_7.png"))
+
+        active_button_image_8 = PhotoImage(file=relative_to_assets("control/DEarProcessFrame/active_button_8.png"))
+        button_image_8 = PhotoImage(file=relative_to_assets("control/DEarProcessFrame/button_8.png"))
+
+        active_button_image_9 = PhotoImage(file=relative_to_assets("control/DEarProcessFrame/active_button_9.png"))
+        button_image_9 = PhotoImage(file=relative_to_assets("control/DEarProcessFrame/button_9.png"))
+
+        active_button_image_10 = PhotoImage(file=relative_to_assets("control/DEarProcessFrame/active_button_10.png"))
+        button_image_10 = PhotoImage(file=relative_to_assets("control/DEarProcessFrame/button_10.png"))
+
+        # List untuk menyimpan referensi tombol dan gambar mereka
+        buttons = []
+
+        # Fungsi untuk mengganti gambar tombol
+        def switch_button_image(button_index):
+            for index, button in enumerate(buttons):
+                if index == button_index:
+                    button.config(image=button.active_image)
+                else:
+                    button.config(image=button.image)
+            
+            # Logika tambahan untuk mengaktifkan tombol terkait
+            if button_index in [0, 1, 2, 3]:  # Jika tombol 3, 4, 5, atau 6 diklik
+                buttons[4].config(image=buttons[4].active_image)  # Aktifkan tombol 7
+            elif button_index in [4, 5, 6, 7]:  # Jika tombol 7, 8, 9, atau 10 diklik
+                buttons[0].config(image=buttons[0].active_image)  # Aktifkan tombol 3
+
+        # Membuat tombol dan menambahkannya ke list buttons
         button_3 = Button(
             image=button_image_3,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_3 clicked"),
-            relief="flat"
+            command=lambda: switch_button_image(0),
+            relief="flat",
+            activebackground="#FFFFFF",
+            bg="#FFFFFF"
         )
         button_3.place(
             x=720.3446052083908,
@@ -148,15 +173,18 @@ class DEarProcessPage(Canvas, BasePage):
             width=79.07769703770293,
             height=79.07769703770293
         )
+        button_3.image = button_image_3
+        button_3.active_image = active_button_image_3
+        buttons.append(button_3)
 
-        button_image_4 = PhotoImage(
-            file=relative_to_assets("control/DEarProcessFrame/button_4.png"))
         button_4 = Button(
             image=button_image_4,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_4 clicked"),
-            relief="flat"
+            command=lambda: switch_button_image(1),
+            relief="flat",
+            activebackground="#FFFFFF",
+            bg="#FFFFFF"
         )
         button_4.place(
             x=814.4223022460938,
@@ -164,15 +192,18 @@ class DEarProcessPage(Canvas, BasePage):
             width=79.07769012451172,
             height=79.07769012451172
         )
+        button_4.image = button_image_4
+        button_4.active_image = active_button_image_4
+        buttons.append(button_4)
 
-        button_image_5 = PhotoImage(
-            file=relative_to_assets("control/DEarProcessFrame/button_5.png"))
         button_5 = Button(
             image=button_image_5,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_5 clicked"),
-            relief="flat"
+            command=lambda: switch_button_image(2),
+            relief="flat",
+            activebackground="#FFFFFF",
+            bg="#FFFFFF"
         )
         button_5.place(
             x=908.5,
@@ -180,15 +211,18 @@ class DEarProcessPage(Canvas, BasePage):
             width=79.07769012451172,
             height=79.07769012451172
         )
+        button_5.image = button_image_5
+        button_5.active_image = active_button_image_5
+        buttons.append(button_5)
 
-        button_image_6 = PhotoImage(
-            file=relative_to_assets("control/DEarProcessFrame/button_6.png"))
         button_6 = Button(
             image=button_image_6,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_6 clicked"),
-            relief="flat"
+            command=lambda: switch_button_image(3),
+            relief="flat",
+            activebackground="#FFFFFF",
+            bg="#FFFFFF"
         )
         button_6.place(
             x=1002.57763671875,
@@ -196,6 +230,86 @@ class DEarProcessPage(Canvas, BasePage):
             width=79.07769012451172,
             height=79.07769012451172
         )
+        button_6.image = button_image_6
+        button_6.active_image = active_button_image_6
+        buttons.append(button_6)
+
+        # Membuat tombol dan menambahkannya ke list buttons
+        button_7 = Button(
+            image=button_image_7,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: switch_button_image(4),
+            relief="flat",
+            activebackground="#FFFFFF",
+            bg="#FFFFFF"
+        )
+        button_7.place(
+            x=720.3446052083908,
+            y=581.4611282348633,
+            width=79.07769703770293,
+            height=79.07769703770305
+        )
+        button_7.image = button_image_7
+        button_7.active_image = active_button_image_7
+        buttons.append(button_7)
+
+        button_8 = Button(
+            image=button_image_8,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: switch_button_image(5),
+            relief="flat",
+            activebackground="#FFFFFF",
+            bg="#FFFFFF"
+        )
+        button_8.place(
+            x=814.4223022460938,
+            y=581.461181640625,
+            width=79.07769012451172,
+            height=79.07769012451172
+        )
+        button_8.image = button_image_8
+        button_8.active_image = active_button_image_8
+        buttons.append(button_8)
+
+        button_9 = Button(
+            image=button_image_9,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: switch_button_image(6),
+            relief="flat",
+            activebackground="#FFFFFF",
+            bg="#FFFFFF"
+        )
+        button_9.place(
+            x=908.5,
+            y=581.461181640625,
+            width=79.07769012451172,
+            height=79.07769012451172
+        )
+        button_9.image = button_image_9
+        button_9.active_image = active_button_image_9
+        buttons.append(button_9)
+
+        button_10 = Button(
+            image=button_image_10,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: switch_button_image(7),
+            relief="flat",
+            activebackground="#FFFFFF",
+            bg="#FFFFFF"
+        )
+        button_10.place(
+            x=1002.57763671875,
+            y=581.461181640625,
+            width=79.07769012451172,
+            height=79.07769012451172
+        )
+        button_10.image = button_image_10
+        button_10.active_image = active_button_image_10
+        buttons.append(button_10)
 
         self.create_text(
             726.0,
@@ -204,70 +318,6 @@ class DEarProcessPage(Canvas, BasePage):
             text="Tekanan Pompa Penghisap",
             fill="#404040",
             font=("Nunito Bold", 19 * -1)
-        )
-
-        button_image_7 = PhotoImage(
-            file=relative_to_assets("control/DEarProcessFrame/button_7.png"))
-        button_7 = Button(
-            image=button_image_7,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: print("button_7 clicked"),
-            relief="flat"
-        )
-        button_7.place(
-            x=720.3446052083908,
-            y=581.4611282348633,
-            width=79.07769703770293,
-            height=79.07769703770305
-        )
-
-        button_image_8 = PhotoImage(
-            file=relative_to_assets("control/DEarProcessFrame/button_8.png"))
-        button_8 = Button(
-            image=button_image_8,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: print("button_8 clicked"),
-            relief="flat"
-        )
-        button_8.place(
-            x=814.4223022460938,
-            y=581.461181640625,
-            width=79.07769012451172,
-            height=79.07769012451172
-        )
-
-        button_image_9 = PhotoImage(
-            file=relative_to_assets("control/DEarProcessFrame/button_9.png"))
-        button_9 = Button(
-            image=button_image_9,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: print("button_9 clicked"),
-            relief="flat"
-        )
-        button_9.place(
-            x=908.5,
-            y=581.461181640625,
-            width=79.07769012451172,
-            height=79.07769012451172
-        )
-
-        button_image_10 = PhotoImage(
-            file=relative_to_assets("control/DEarProcessFrame/button_10.png"))
-        button_10 = Button(
-            image=button_image_10,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: print("button_10 clicked"),
-            relief="flat"
-        )
-        button_10.place(
-            x=1002.57763671875,
-            y=581.461181640625,
-            width=79.07769012451172,
-            height=79.07769012451172
         )
 
         image_image_4 = PhotoImage(
