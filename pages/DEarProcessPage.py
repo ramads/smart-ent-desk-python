@@ -31,10 +31,7 @@ class DEarProcessPage(Canvas, BasePage):
         if not self.ret:
             print("Failed to grab frame")
 
-        print("inisialisasi!")
-
     def updateCameraFrame(self):
-        print("update frame!")
         self.ret, self.frame = self.vidCap.read()
 
         if self.ret:

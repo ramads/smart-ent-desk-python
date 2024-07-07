@@ -1,6 +1,7 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 pages/__pycache__/
+machine_learning/__pycache__/
 *.py[cod]
 *$py.class
 
