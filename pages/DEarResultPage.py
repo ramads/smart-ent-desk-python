@@ -36,11 +36,11 @@ class DEarResultPage(Canvas, BasePage):
         
         image_path = relative_to_image_capture("test_image.jpg")
         original_image = Image.open(image_path)
-        resized_image = original_image.resize((604, 345))  # Resize to 604x538
+        resized_image = original_image.resize((600, 335))  # Resize to 604x538
         captured_img = ImageTk.PhotoImage(resized_image)
         image_2 = self.create_image(
-            341.0,
-            215.5,
+            361.0,
+            235.5,
             image=captured_img
         )
 
@@ -148,7 +148,7 @@ class DEarResultPage(Canvas, BasePage):
         image_image_9 = PhotoImage(
             file=relative_to_assets("control/DEarResultFrame/image_9.png"))
         image_9 = self.create_image(
-            351.0,
+            361.0,
             568.0,
             image=image_image_9
         )
