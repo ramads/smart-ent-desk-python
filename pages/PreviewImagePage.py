@@ -49,37 +49,20 @@ class PreviewImagePage(Canvas, BasePage):
             font=("Nunito Regular", 14 * -1)
         )
 
-        button_image_1 = PhotoImage(
-            file=relative_to_assets("control/PreviewImageFrame/button_1.png"))
-        button_1 = Button(
-            image=button_image_1,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: goToPage(DEarProcessPage.DEarProcessPage(self.window)),
-            relief="flat"
-        )
-        button_1.place(
-            x=370.5,
-            y=631.0,
-            width=192.0,
-            height=54.0
-        )
 
-        button_image_2 = PhotoImage(
-            file=relative_to_assets("control/PreviewImageFrame/button_2.png"))
-        button_2 = Button(
-            image=button_image_2,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: goToPage(DEarResultPage.DEarResultPage(self.window)),
-            relief="flat"
-        )
-        button_2.place(
-            x=570.5,
-            y=631.0,
-            width=192.0,
-            height=54.0
-        )
+        inactive_button_1 = relative_to_assets("control/PreviewImageFrame/button_1.png")
+        active_button_1 = relative_to_assets("control/PreviewImageFrame/active_button_1.png")
+        
+        inactive_button_2 = relative_to_assets("control/PreviewImageFrame/button_2.png")
+        active_button_2 = relative_to_assets("control/PreviewImageFrame/active_button_2.png")
+        
+        create_hover_button(self.window, 370.5, 631.0, 192.0, 54.0, 
+                            "#FFFFFF", inactive_button_1, active_button_1, 
+                            lambda: goToPage(DEarProcessPage.DEarProcessPage(self.window)))
+        create_hover_button(self.window, 570.5, 631.0, 192.0, 54.0, 
+                            "#FFFFFF", inactive_button_2, active_button_2,  
+                            lambda: goToPage(DEarResultPage.DEarResultPage(self.window)))
+
 
         self.create_text(
             65.0,
