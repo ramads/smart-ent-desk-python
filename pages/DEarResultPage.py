@@ -194,7 +194,7 @@ class DEarResultPage(Canvas, BasePage):
             583.0,
             anchor="nw",
             text="Note: Jika hasil diagnosa dirasa keliru, silakan untuk melakukan koreksi hasil.",
-            fill="#151920",
+            fill="#8A8C8F",
             font=("Nunito Bold", 12 * -1)
         )
 
@@ -255,7 +255,7 @@ class DEarResultPage(Canvas, BasePage):
         )
 
         self.create_text(
-            839.0,
+            850.0,
             543.0,
             anchor="nw",
             text="000863002321023",
@@ -273,7 +273,7 @@ class DEarResultPage(Canvas, BasePage):
         )
 
         self.create_text(
-            838.0,
+            850.0,
             567.0,
             anchor="nw",
             text="BPJS",
@@ -291,7 +291,7 @@ class DEarResultPage(Canvas, BasePage):
         )
 
         self.create_text(
-            838.0,
+            850.0,
             591.0,
             anchor="nw",
             text="Kelas 1",
@@ -309,7 +309,7 @@ class DEarResultPage(Canvas, BasePage):
         )
 
         self.create_text(
-            865.0,
+            890.0,
             615.0,
             anchor="nw",
             text="Puskesmas Selaparang",

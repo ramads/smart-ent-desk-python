@@ -53,18 +53,18 @@ class DEarPage(Canvas, BasePage):
         )
 
         self.create_text(
-            102.0,
-            556.0,
-            anchor="nw",
+            560.0,
+            565.0,
+            anchor="center",
             text="Sebelum mengambil gambar silakan ambil Otoscope dan pastikan sudah diarahkan dengan benar.",
-            fill="#14181F",
-            font=("Nunito Regular", 19 * -1)
+            fill="#8A8C8F",
+            font=("Nunito Regular", 15 * -1)
         )
 
         self.create_text(
-            102.0,
-            508.0,
-            anchor="nw",
+            565.0,
+            522.0,
+            anchor="center",
             text="Diagnosa Telinga",
             fill="#404040",
             font=("Nunito Bold", 24 * -1)

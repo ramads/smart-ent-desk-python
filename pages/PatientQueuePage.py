@@ -1,7 +1,7 @@
+import tkinter as tk
 from tkinter import *
 from colours import *
 from helpers import *
-from PIL import ImageTk, Image
 
 from pages import DiagnosisPage
 from pages import HomePage
@@ -52,7 +52,7 @@ class PatientQueuePage(Canvas, BasePage):
         )
 
         self.create_text(
-            257.0,
+            275.0,
             278.5,
             anchor="nw",
             text="Perempuan",
@@ -70,7 +70,7 @@ class PatientQueuePage(Canvas, BasePage):
         )
 
         self.create_text(
-            257.0,
+            275.0,
             312.5,
             anchor="nw",
             text="Selasa, 16 April 2024",
@@ -88,7 +88,7 @@ class PatientQueuePage(Canvas, BasePage):
         )
 
         self.create_text(
-            257.0,
+            275.0,
             346.5,
             anchor="nw",
             text="Jl. Langko No. 72, Mataram, Ntb",
@@ -113,15 +113,19 @@ class PatientQueuePage(Canvas, BasePage):
             fill="#1E5C2A",
             font=("Nunito Bold", 19 * -1)
         )
+        
+        text_widget = tk.Text(self.window, wrap="word", font=("Nunito regular", 12), bg="#FFFFFF", fg="#404040", bd=0, highlightthickness=0)
+        text_widget.place(x=86, y=417.5, width=600, height=150)  # ukuran box
 
-        self.create_text(
-            86.0,
-            417.5,
-            anchor="nw",
-            text="OMA Perofrasi adalah gangguan ........ . Dicirikan dengan .......Lorem ipsum dolor sit amet, consectetur adipiscing elit. Iaculis tempus tellus adipiscing eget non arcu egestas elementum faucibus. Senectus cras nunc et, arcu ultricies tristique. Mi purus ut eget euismod orci, odio eu, non. Massa sapien magna volutpat lorem. Aliquet amet elit sed ac. ",
-            fill="#404040",
-            font=("Nunito SemiBold", 16 * -1)
-        )
+        # Mengisi teks ke Text Widget
+        text_content = """OMA Perofrasi adalah gangguan ........ . Dicirikan dengan ....... Lorem ipsum dolor sit amet, consectetur adipiscing elit. Iaculis tempus tellus adipiscing eget non arcu egestas elementum faucibus. Senectus cras nunc et, arcu ultricies tristique. Mi purus ut eget euismod orci, odio eu, non. Massa sapien magna volutpat lorem. Aliquet amet elit sed ac. """
+        text_widget.insert(tk.END, text_content)
+
+        text_widget.tag_configure("justify", justify="left")
+        text_widget.tag_add("justify", "1.0", "end")
+
+        # Menonaktifkan Text Widget agar tidak dapat diedit
+        text_widget.configure(state="disabled")
 
         image_image_2 = PhotoImage(
             file=relative_to_assets("control/PatientQueueFrame/image_2.png"))
@@ -297,7 +301,7 @@ class PatientQueuePage(Canvas, BasePage):
             anchor="nw",
             text="No Asuransi     : ",
             fill="#404040",
-            font=("Nunito Regular", 15 * -1)
+            font=("Nunito Regular", 13 * -1)
         )
 
         self.create_text(
@@ -306,7 +310,7 @@ class PatientQueuePage(Canvas, BasePage):
             anchor="nw",
             text="000863002321023",
             fill="#404040",
-            font=("Nunito Bold", 15 * -1)
+            font=("Nunito Bold", 13 * -1)
         )
 
         self.create_text(
@@ -315,7 +319,7 @@ class PatientQueuePage(Canvas, BasePage):
             anchor="nw",
             text="Jenis Asuransi  : ",
             fill="#404040",
-            font=("Nunito Regular", 15 * -1)
+            font=("Nunito Regular", 13 * -1)
         )
 
         self.create_text(
@@ -324,7 +328,7 @@ class PatientQueuePage(Canvas, BasePage):
             anchor="nw",
             text="BPJS",
             fill="#404040",
-            font=("Nunito Bold", 15 * -1)
+            font=("Nunito Bold", 13 * -1)
         )
 
         self.create_text(
@@ -333,7 +337,7 @@ class PatientQueuePage(Canvas, BasePage):
             anchor="nw",
             text="Kelas Asuransi : ",
             fill="#404040",
-            font=("Nunito Regular", 15 * -1)
+            font=("Nunito Regular", 13 * -1)
         )
 
         self.create_text(
@@ -342,7 +346,7 @@ class PatientQueuePage(Canvas, BasePage):
             anchor="nw",
             text="Kelas 1",
             fill="#404040",
-            font=("Nunito Bold", 15 * -1)
+            font=("Nunito Bold", 13 * -1)
         )
 
         self.create_text(
@@ -351,7 +355,7 @@ class PatientQueuePage(Canvas, BasePage):
             anchor="nw",
             text="Fasilitas Kesehatan : ",
             fill="#404040",
-            font=("Nunito Regular", 15 * -1)
+            font=("Nunito Regular", 13 * -1)
         )
 
         self.create_text(
@@ -360,7 +364,7 @@ class PatientQueuePage(Canvas, BasePage):
             anchor="nw",
             text="Puskesmas Selaparang",
             fill="#404040",
-            font=("Nunito Bold", 15 * -1)
+            font=("Nunito Bold", 13 * -1)
         )
 
         image_image_8 = PhotoImage(

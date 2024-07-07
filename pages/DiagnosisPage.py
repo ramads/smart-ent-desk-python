@@ -49,10 +49,10 @@ class DiagnosisPage(Canvas, BasePage):
         )
 
         self.create_text(
-            281.0,
-            608.0,
-            anchor="nw",
-            text="Silakan pilih diagnosa yang akan anda lakukan. \nKami akan menyiapkannya untuk anda.",
+            555.0,
+            630.0,
+            anchor="center",
+            text="Silakan pilih diagnosa yang akan anda lakukan.\n      Kami akan menyiapkannya untuk anda.",
             fill="#FFFFFF",
             font=("Nunito SemiBold", 16 * -1)
         )

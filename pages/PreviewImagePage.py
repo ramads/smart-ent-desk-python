@@ -41,12 +41,12 @@ class PreviewImagePage(Canvas, BasePage):
         )
 
         self.create_text(
-            65.0,
-            589.0,
-            anchor="nw",
-            text="Pastikan gambar terlihat dengan jelas dan memiliki posisi sempurna. Jika gambar terlihat kurang sempurna silakan untuk mengambil ulang gambar.",
-            fill="#14181F",
-            font=("Nunito Regular", 14 * -1)
+            560.0,
+            600.0,
+            anchor="center",
+            text="Pastikan gambar terlihat dengan jelas dan memiliki posisi sempurna. Silakan untuk mengambil ulang gambar jika belum jelas.",
+            fill="#8A8C8F",
+            font=("Nunito Regular", 15 * -1)
         )
 
 
@@ -65,9 +65,9 @@ class PreviewImagePage(Canvas, BasePage):
 
 
         self.create_text(
-            65.0,
-            541.0,
-            anchor="nw",
+            565.0,
+            550.0,
+            anchor="center",
             text="Gambar Berhasil Diambil!",
             fill="#404040",
             font=("Nunito Bold", 24 * -1)
