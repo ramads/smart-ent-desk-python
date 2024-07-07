@@ -60,22 +60,6 @@ class DEarResultPage(Canvas, BasePage):
             image=image_image_3
         )
 
-        button_image_1 = PhotoImage(
-            file=relative_to_assets("control/DEarResultFrame/button_1.png"))
-        button_1 = Button(
-            image=button_image_1,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: print("control/DEarResultFrame/button_1 clicked"),
-            relief="flat"
-        )
-        button_1.place(
-            x=607.0,
-            y=340.0,
-            width=31.0,
-            height=31.0
-        )
-
         image_image_4 = PhotoImage(
             file=relative_to_assets("control/DEarResultFrame/image_4.png"))
         image_4 = self.create_image(
@@ -214,37 +198,26 @@ class DEarResultPage(Canvas, BasePage):
             font=("Nunito Bold", 12 * -1)
         )
 
-        button_image_2 = PhotoImage(
-            file=relative_to_assets("control/DEarResultFrame/button_2.png"))
-        button_2 = Button(
-            image=button_image_2,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: goToPage(DEarCorrectionPage.DEarCorrectionPage(self.window)),
-            relief="flat"
-        )
-        button_2.place(
-            x=67.0,
-            y=623.0,
-            width=192.0,
-            height=54.0
-        )
+        inactive_button_1 = relative_to_assets("control/DEarResultFrame/button_1.png")
+        active_button_1 = relative_to_assets("control/DEarResultFrame/active_button_1.png")
+        
+        inactive_button_2 = relative_to_assets("control/DEarResultFrame/button_2.png")
+        active_button_2 = relative_to_assets("control/DEarResultFrame/active_button_2.png")
+        
+        inactive_button_3 = relative_to_assets("control/DEarResultFrame/button_3.png")
+        active_button_3 = relative_to_assets("control/DEarResultFrame/active_button_3.png")
 
-        button_image_3 = PhotoImage(
-            file=relative_to_assets("control/DEarResultFrame/button_3.png"))
-        button_3 = Button(
-            image=button_image_3,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: print("control/DEarResultFrame/button_3 clicked"),
-            relief="flat"
-        )
-        button_3.place(
-            x=267.0,
-            y=623.0,
-            width=192.0,
-            height=54.0
-        )
+        create_hover_button(self.window, 607.0, 340.0, 31.0, 31.0,
+                            BACKGROUND_COLOUR, inactive_button_1, active_button_1, 
+                            lambda: print("button_1 clicked"))
+        
+        create_hover_button(self.window, 67.0, 623.0, 192.0, 54.0,
+                            "#FFFFFF", inactive_button_2, active_button_2, 
+                            lambda: goToPage(DEarCorrectionPage.DEarCorrectionPage(self.window)))
+        
+        create_hover_button(self.window, 267.0, 623.0, 192.0, 54.0,
+                            "#FFFFFF", inactive_button_3, active_button_3,  
+                            lambda: print("button_3 clicked"))
 
         image_image_10 = PhotoImage(
             file=relative_to_assets("control/DEarResultFrame/image_10.png"))
