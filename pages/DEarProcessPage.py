@@ -353,7 +353,7 @@ class DEarProcessPage(Canvas, BasePage):
         )
 
         self.create_text(
-            839.0,
+            850.0,
             160.0,
             anchor="nw",
             text="000863002321023",
@@ -371,7 +371,7 @@ class DEarProcessPage(Canvas, BasePage):
         )
 
         self.create_text(
-            838.0,
+            850.0,
             184.0,
             anchor="nw",
             text="BPJS",
@@ -389,7 +389,7 @@ class DEarProcessPage(Canvas, BasePage):
         )
 
         self.create_text(
-            838.0,
+            850.0,
             208.0,
             anchor="nw",
             text="Kelas 1",
@@ -407,7 +407,7 @@ class DEarProcessPage(Canvas, BasePage):
         )
 
         self.create_text(
-            865.0,
+            885.0,
             232.0,
             anchor="nw",
             text="Puskesmas Selaparang",
