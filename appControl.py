@@ -11,8 +11,8 @@ class App(Tk):
         self.configure(bg=BACKGROUND_COLOUR)
         self.title(APP_TITLE)
 
-        # self.homePage = HomePage.HomePage(self)
-        self.homePage = page.DEarProcessPage(self)
+        self.homePage = HomePage.HomePage(self)
+        # self.homePage = page.DEarProcessPage(self)
 
         goToPage(self.homePage)
 
