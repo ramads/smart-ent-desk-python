@@ -1,4 +1,5 @@
 from pathlib import Path
+from tkinter import Button, PhotoImage
 from pages.BasePage import BasePage
 
 # default ukuran window
@@ -23,3 +24,30 @@ def goToPage(page:BasePage, data=None):
         page.drawPage()
     else:
         page.drawPage(data)
+
+def create_hover_button(window, x, y, width, height, bg_color, image_path, hover_image_path, command):
+    button_image = PhotoImage(file=relative_to_assets(image_path))
+    hover_button_image = PhotoImage(file=relative_to_assets(hover_image_path))
+    
+    button = Button(
+        window,
+        image=button_image,
+        borderwidth=0,
+        highlightthickness=0,
+        command=command,
+        relief="flat",
+        activebackground=bg_color,
+        bg=bg_color
+    )
+    
+    def on_enter(event):
+        button.config(image=hover_button_image)
+    
+    def on_leave(event):
+        button.config(image=button_image)
+    
+    button.bind("<Enter>", on_enter)
+    button.bind("<Leave>", on_leave)
+    button.place(x=x, y=y, width=width, height=height)
+    button.image = button_image
+    button.hover_image = hover_button_image

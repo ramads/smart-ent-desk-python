@@ -21,7 +21,7 @@ class DEarPage(Canvas, BasePage):
     def drawPage(self):
         self.place(x=0, y=0)
         image_image_1 = PhotoImage(
-            file=relative_to_assets("control/frame2/image_1.png"))
+            file=relative_to_assets("control/DEarFrame/image_1.png"))
         image_1 = self.create_image(
             566.0,
             89.0,
@@ -29,7 +29,7 @@ class DEarPage(Canvas, BasePage):
         )
 
         image_image_2 = PhotoImage(
-            file=relative_to_assets("control/frame2/image_2.png"))
+            file=relative_to_assets("control/DEarFrame/image_2.png"))
         image_2 = self.create_image(
             571.0,
             414.0,
@@ -55,7 +55,7 @@ class DEarPage(Canvas, BasePage):
         )
 
         button_image_1 = PhotoImage(
-            file=relative_to_assets("control/frame2/button_1.png"))
+            file=relative_to_assets("control/DEarFrame/button_1.png"))
         button_1 = Button(
             image=button_image_1,
             borderwidth=0,
@@ -71,7 +71,7 @@ class DEarPage(Canvas, BasePage):
         )
 
         button_image_2 = PhotoImage(
-            file=relative_to_assets("control/frame2/button_2.png"))
+            file=relative_to_assets("control/DEarFrame/button_2.png"))
         button_2 = Button(
             image=button_image_2,
             borderwidth=0,
@@ -87,7 +87,7 @@ class DEarPage(Canvas, BasePage):
         )
 
         image_image_3 = PhotoImage(
-            file=relative_to_assets("control/frame2/image_3.png"))
+            file=relative_to_assets("control/DEarFrame/image_3.png"))
         image_3 = self.create_image(
             568.0,
             326.0,
@@ -95,7 +95,7 @@ class DEarPage(Canvas, BasePage):
         )
 
         image_image_4 = PhotoImage(
-            file=relative_to_assets("control/frame2/image_4.png"))
+            file=relative_to_assets("control/DEarFrame/image_4.png"))
         image_4 = self.create_image(
             1099.333251953125,
             22.33349609375,
@@ -103,7 +103,7 @@ class DEarPage(Canvas, BasePage):
         )
 
         image_image_5 = PhotoImage(
-            file=relative_to_assets("control/frame2/image_5.png"))
+            file=relative_to_assets("control/DEarFrame/image_5.png"))
         image_5 = self.create_image(
             1074.0,
             22.33056640625,

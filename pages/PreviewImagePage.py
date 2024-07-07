@@ -4,6 +4,7 @@ from helpers import *
 from PIL import ImageTk, Image
 
 from pages import DEarProcessPage
+from pages import DEarResultPage
 
 
 class PreviewImagePage(Canvas, BasePage):
@@ -25,7 +26,7 @@ class PreviewImagePage(Canvas, BasePage):
     def drawPage(self, data = None):
         self.place(x=0, y=0)
         image_image_1 = PhotoImage(
-            file=relative_to_assets("control/frame4/image_1.png"))
+            file=relative_to_assets("control/PreviewImageFrame/image_1.png"))
         image_1 = self.create_image(
             566.0,
             378.0,
@@ -48,37 +49,20 @@ class PreviewImagePage(Canvas, BasePage):
             font=("Nunito Regular", 14 * -1)
         )
 
-        button_image_1 = PhotoImage(
-            file=relative_to_assets("control/frame4/button_1.png"))
-        button_1 = Button(
-            image=button_image_1,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: goToPage(DEarProcessPage.DEarProcessPage(self.window)),
-            relief="flat"
-        )
-        button_1.place(
-            x=370.5,
-            y=631.0,
-            width=192.0,
-            height=54.0
-        )
 
-        button_image_2 = PhotoImage(
-            file=relative_to_assets("control/frame4/button_2.png"))
-        button_2 = Button(
-            image=button_image_2,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: print("button_2 clicked"),
-            relief="flat"
-        )
-        button_2.place(
-            x=570.5,
-            y=631.0,
-            width=192.0,
-            height=54.0
-        )
+        inactive_button_1 = relative_to_assets("control/PreviewImageFrame/button_1.png")
+        active_button_1 = relative_to_assets("control/PreviewImageFrame/active_button_1.png")
+        
+        inactive_button_2 = relative_to_assets("control/PreviewImageFrame/button_2.png")
+        active_button_2 = relative_to_assets("control/PreviewImageFrame/active_button_2.png")
+        
+        create_hover_button(self.window, 370.5, 631.0, 192.0, 54.0, 
+                            "#FFFFFF", inactive_button_1, active_button_1, 
+                            lambda: goToPage(DEarProcessPage.DEarProcessPage(self.window)))
+        create_hover_button(self.window, 570.5, 631.0, 192.0, 54.0, 
+                            "#FFFFFF", inactive_button_2, active_button_2,  
+                            lambda: goToPage(DEarResultPage.DEarResultPage(self.window)))
+
 
         self.create_text(
             65.0,
@@ -90,7 +74,7 @@ class PreviewImagePage(Canvas, BasePage):
         )
 
         image_image_3 = PhotoImage(
-            file=relative_to_assets("control/frame4/image_3.png"))
+            file=relative_to_assets("control/PreviewImageFrame/image_3.png"))
         image_3 = self.create_image(
             1099.333251953125,
             22.33349609375,
@@ -98,7 +82,7 @@ class PreviewImagePage(Canvas, BasePage):
         )
 
         image_image_4 = PhotoImage(
-            file=relative_to_assets("control/frame4/image_4.png"))
+            file=relative_to_assets("control/PreviewImageFrame/image_4.png"))
         image_4 = self.create_image(
             1074.0,
             22.33056640625,
