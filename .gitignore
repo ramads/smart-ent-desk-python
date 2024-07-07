@@ -4,4 +4,9 @@ pages/__pycache__/
 *.py[cod]
 *$py.class
 
+# idea files
 .idea
+
+# image directory
+temp_image
+image_capture
