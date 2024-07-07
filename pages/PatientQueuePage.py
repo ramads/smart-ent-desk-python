@@ -371,53 +371,26 @@ class PatientQueuePage(Canvas, BasePage):
             image=image_image_8
         )
 
-        button_image_3 = PhotoImage(
-            file=relative_to_assets("control/PatientQueueFrame/button_3.png"))
-        button_3 = Button(
-            image=button_image_3,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: goToPage(HomePage.HomePage(self.window)),
-            relief="flat"
-        )
-        button_3.place(
-            x=59.5,
-            y=633.5,
-            width=192.0,
-            height=54.0
-        )
+        inactive_button_3 = relative_to_assets("control/PatientQueueFrame/button_3.png")
+        active_button_3 = relative_to_assets("control/PatientQueueFrame/active_button_3.png")
+        
+        inactive_button_4 = relative_to_assets("control/PatientQueueFrame/button_4.png")
+        active_button_4 = relative_to_assets("control/PatientQueueFrame/active_button_4.png")
+        
+        inactive_button_5 = relative_to_assets("control/PatientQueueFrame/button_5.png")
+        active_button_5 = relative_to_assets("control/PatientQueueFrame/active_button_5.png")
 
-        button_image_4 = PhotoImage(
-            file=relative_to_assets("control/PatientQueueFrame/button_4.png"))
-        button_4 = Button(
-            image=button_image_4,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: goToPage(DiagnosisPage.DiagnosisPage(self.window)),
-            relief="flat"
-        )
-        button_4.place(
-            x=284.5,
-            y=633.5,
-            width=192.0,
-            height=54.0
-        )
-
-        button_image_5 = PhotoImage(
-            file=relative_to_assets("control/PatientQueueFrame/button_5.png"))
-        button_5 = Button(
-            image=button_image_5,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: print("button_5 clicked"),
-            relief="flat"
-        )
-        button_5.place(
-            x=509.5,
-            y=633.5,
-            width=192.0,
-            height=54.0
-        )
+        create_hover_button(self.window, 59.5, 633.5, 192.0, 54.0, 
+                            BACKGROUND_COLOUR, inactive_button_3, active_button_3,  
+                            lambda: goToPage(HomePage.HomePage(self.window)))
+        
+        create_hover_button(self.window, 284.5, 633.5, 192.0, 54.0,
+                            BACKGROUND_COLOUR, inactive_button_4, active_button_4,  
+                            lambda: goToPage(DiagnosisPage.DiagnosisPage(self.window)))
+        
+        create_hover_button(self.window, 509.5, 633.5, 192.0, 54.0,
+                            BACKGROUND_COLOUR, inactive_button_5, active_button_5,  
+                            lambda: print("button_5 clicked"))
 
         self.create_text(
             130.0,

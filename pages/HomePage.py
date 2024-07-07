@@ -21,101 +21,49 @@ class HomePage(Canvas, BasePage):
 
     def drawPage(self):
         self.place(x=0, y=0)
-        button_image_1 = PhotoImage(
-            file=relative_to_assets("control/HomeFrame/button_1.png"))
-        button_1 = Button(
-            image=button_image_1,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: goToPage(PatientQueuePage.PatientQueuePage(self.window)),
-            relief="flat"
-        )
-        button_1.place(
-            x=47.0,
-            y=216.0,
-            width=447.0,
-            height=319.0
-        )
 
-        button_image_2 = PhotoImage(
-            file=relative_to_assets("control/HomeFrame/button_2.png"))
-        button_2 = Button(
-            image=button_image_2,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: print("button_2 clicked"),
-            relief="flat"
-        )
-        button_2.place(
-            x=523.0,
-            y=216.0,
-            width=263.0,
-            height=319.0
-        )
+        inactive_button_1 = relative_to_assets("control/HomeFrame/button_1.png")
+        active_button_1 = relative_to_assets("control/HomeFrame/active_button_1.png")
+        
+        inactive_button_2 = relative_to_assets("control/HomeFrame/button_2.png")
+        active_button_2 = relative_to_assets("control/HomeFrame/active_button_2.png")
 
-        button_image_3 = PhotoImage(
-            file=relative_to_assets("control/HomeFrame/button_3.png"))
-        button_3 = Button(
-            image=button_image_3,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: print("button_3 clicked"),
-            relief="flat"
-        )
-        button_3.place(
-            x=815.0,
-            y=216.0,
-            width=271.0,
-            height=151.0
-        )
+        inactive_button_3 = relative_to_assets("control/HomeFrame/button_3.png")
+        active_button_3 = relative_to_assets("control/HomeFrame/active_button_3.png")
+        
+        inactive_button_4 = relative_to_assets("control/HomeFrame/button_4.png")
+        active_button_4 = relative_to_assets("control/HomeFrame/active_button_4.png")
+        
+        inactive_button_5 = relative_to_assets("control/HomeFrame/button_5.png")
+        active_button_5 = relative_to_assets("control/HomeFrame/active_button_5.png")
+        
+        inactive_button_6 = relative_to_assets("control/HomeFrame/button_6.png")
+        active_button_6 = relative_to_assets("control/HomeFrame/active_button_6.png")
+        
+        create_hover_button(self.window, 47.0, 216.0, 447.0, 319.0, 
+                            BACKGROUND_COLOUR, inactive_button_1, active_button_1, 
+                            lambda: goToPage(PatientQueuePage.PatientQueuePage(self.window)))
+        
+        create_hover_button(self.window, 523.0,216.0, 263.0, 319.0, 
+                            BACKGROUND_COLOUR, inactive_button_2, active_button_2,  
+                            lambda: print("button_2 clicked"))
+        
+        create_hover_button(self.window, 815.0,216.0, 271.0, 151.0, 
+                            BACKGROUND_COLOUR, inactive_button_3, active_button_3,  
+                            lambda: print("button_3 clicked"))
+        
+        create_hover_button(self.window, 815.0,384.0, 271.0, 151.0, 
+                            BACKGROUND_COLOUR, inactive_button_4, active_button_4,  
+                            lambda: print("button_4 clicked"))
+        
+        create_hover_button(self.window, 269.0,591.0, 275.0, 99.0, 
+                            BACKGROUND_COLOUR, inactive_button_5, active_button_5,  
+                            lambda: print("button_5 clicked"))
+        
+        create_hover_button(self.window, 590.0,591.0, 274.0, 99.0,
+                            BACKGROUND_COLOUR, inactive_button_6, active_button_6,  
+                            lambda: print("button__6 clicked"))
 
-        button_image_4 = PhotoImage(
-            file=relative_to_assets("control/HomeFrame/button_4.png"))
-        button_4 = Button(
-            image=button_image_4,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: print("button_4 clicked"),
-            relief="flat"
-        )
-        button_4.place(
-            x=815.0,
-            y=384.0,
-            width=271.0,
-            height=151.0
-        )
-
-        button_image_5 = PhotoImage(
-            file=relative_to_assets("control/HomeFrame/button_5.png"))
-        button_5 = Button(
-            image=button_image_5,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: print("button_5 clicked"),
-            relief="flat"
-        )
-        button_5.place(
-            x=269.0,
-            y=591.0,
-            width=275.0,
-            height=99.0
-        )
-
-        button_image_6 = PhotoImage(
-            file=relative_to_assets("control/HomeFrame/button_6.png"))
-        button_6 = Button(
-            image=button_image_6,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: print("button_6 clicked"),
-            relief="flat"
-        )
-        button_6.place(
-            x=590.0,
-            y=591.0,
-            width=274.0,
-            height=99.0
-        )
 
         image_image_1 = PhotoImage(
             file=relative_to_assets("control/HomeFrame/image_1.png"))
