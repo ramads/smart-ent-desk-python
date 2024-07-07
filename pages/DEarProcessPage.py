@@ -1,13 +1,17 @@
+import os
+
 import cv2
 from tkinter import *
 from colours import *
 from helpers import *
 from PIL import Image, ImageTk
-# from pages.DEarPage import DEarPage
+from pages import DEarPage, PreviewImagePage
 
 
 class DEarProcessPage(Canvas, BasePage):
     capture_image = None
+    after_cam_id = 0
+    image_dir = "./" + DIR_TEMP_IMAGE
 
     def __init__(self, window):
         super().__init__(
@@ -20,6 +24,7 @@ class DEarProcessPage(Canvas, BasePage):
             relief="ridge"
         )
 
+        os.makedirs(self.image_dir, exist_ok=True)
         self.window = window
         self.vidCap = cv2.VideoCapture(0)
         self.ret, self.frame = self.vidCap.read()
@@ -38,17 +43,27 @@ class DEarProcessPage(Canvas, BasePage):
             self.captured_image = ImageTk.PhotoImage(image=Image.fromarray(opencv_image))
             self.create_image(354.0, 339.0, image=self.captured_image)
 
-        self.after(10, self.updateCameraFrame)
+        self.after_cam_id = self.after(10, self.updateCameraFrame)
 
-    def onCapture(self):
+    def onCapture(self, image_name):
         if self.frame is not None:
-            # cv2.imwrite(filename, frame)
-            print(f"Image captured and saved'")
+            filename = os.path.join(self.image_dir, f"{image_name}.jpg")
+            saved_img = cv2.resize(self.frame, (1019, 452))
+            cv2.imwrite(filename, saved_img)
+
+            print(f"Image captured and saved as '{filename}'")
+            self.onStopCamera()
+
+            goToPage(PreviewImagePage.PreviewImagePage(self.window))
 
     def onStopCamera(self):
         self.vidCap.release()
         cv2.destroyAllWindows()
-        # goToPage(DEarPage(self.window))
+        self.after_cancel(self.after_cam_id)
+
+    def backToPrevPage(self):
+        self.onStopCamera()
+        goToPage(DEarPage.DEarPage(self.window))
 
     def drawPage(self):
         self.place(x=0, y=0)
@@ -66,7 +81,7 @@ class DEarProcessPage(Canvas, BasePage):
             image=button_image_1,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_1 clicked"),
+            command=lambda: self.backToPrevPage(),
             relief="flat"
         )
         button_1.place(
@@ -82,7 +97,7 @@ class DEarProcessPage(Canvas, BasePage):
             image=button_image_2,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_2 clicked"),
+            command=lambda: self.onCapture("test_image"),
             relief="flat"
         )
         button_2.place(

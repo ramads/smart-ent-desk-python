@@ -1,7 +1,7 @@
 from tkinter import *
 from colours import *
 from helpers import *
-from pages.DEarProcessPage import DEarProcessPage
+from pages import DEarProcessPage, DiagnosisPage
 
 
 class DEarPage(Canvas, BasePage):
@@ -60,7 +60,7 @@ class DEarPage(Canvas, BasePage):
             image=button_image_1,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_1 clicked"),
+            command=lambda: goToPage(DiagnosisPage.DiagnosisPage(self.window)),
             relief="flat"
         )
         button_1.place(
@@ -76,7 +76,7 @@ class DEarPage(Canvas, BasePage):
             image=button_image_2,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: goToPage(DEarProcessPage(self.window)),
+            command=lambda: goToPage(DEarProcessPage.DEarProcessPage(self.window)),
             relief="flat"
         )
         button_2.place(

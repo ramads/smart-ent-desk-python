@@ -1,6 +1,6 @@
 from tkinter import *
 
-from pages.HomePage import HomePage
+from pages import (HomePage, PreviewImagePage)
 from helpers import *
 from colours import *
 
@@ -11,7 +11,8 @@ class App(Tk):
         self.configure(bg=BACKGROUND_COLOUR)
         self.title(APP_TITLE)
 
-        self.homePage = HomePage(self)
+        self.homePage = HomePage.HomePage(self)
+        # self.homePage = PreviewImagePage.PreviewImagePage(self)
 
         goToPage(self.homePage)
 
