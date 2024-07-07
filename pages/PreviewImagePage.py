@@ -4,6 +4,7 @@ from helpers import *
 from PIL import ImageTk, Image
 
 from pages import DEarProcessPage
+from pages import DEarResultPage
 
 
 class PreviewImagePage(Canvas, BasePage):
@@ -70,7 +71,7 @@ class PreviewImagePage(Canvas, BasePage):
             image=button_image_2,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_2 clicked"),
+            command=lambda: goToPage(DEarResultPage.DEarResultPage(self.window)),
             relief="flat"
         )
         button_2.place(
