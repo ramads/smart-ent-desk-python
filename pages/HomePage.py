@@ -1,9 +1,8 @@
 from tkinter import *
-
-from BasePage import BasePage
-from DiagnosisPage import DiagnosisPage
 from colours import *
 from helpers import *
+from pages.DiagnosisPage import DiagnosisPage
+
 
 class HomePage(Canvas, BasePage):
 
@@ -27,7 +26,7 @@ class HomePage(Canvas, BasePage):
             image=button_image_1,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: switchPage(DiagnosisPage(self.window)),
+            command=lambda: goToPage(DiagnosisPage(self.window)),
             relief="flat"
         )
         button_1.place(

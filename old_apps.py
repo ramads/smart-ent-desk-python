@@ -17,7 +17,7 @@ def relative_to_assets(path: str) -> Path:
 
 window = Tk()
 
-window.geometry(DEFAULT_GEOMETRY)
+window.geometry(DEFAULT_APP_CONTROL_GEOMETRY)
 # window.attributes('-fullscreen',True)
 window.configure(bg = "#DFEBD0")
 window.title("Smart ENT v0.1.")
@@ -77,7 +77,7 @@ def home_page():
         image=iconBtnHome,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: switchPage(page=home_page),
+        command=lambda: goToPage(page=home_page),
         relief="flat"
     )
     btnHome.place(
@@ -107,7 +107,7 @@ def home_page():
         image=iconBtnNotif,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: switchPage(page=notification_page),
+        command=lambda: goToPage(page=notification_page),
         relief="flat"
     )
     btnNotif.place(
@@ -139,7 +139,7 @@ def home_page():
         image=iconBtnPasien,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: switchPage(page=pasien_page),
+        command=lambda: goToPage(page=pasien_page),
         relief="flat"
     )
     btnPasien.place(
@@ -220,7 +220,7 @@ def home_page():
         image=iconBtnStart,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: switchPage(page=preparingCamera),
+        command=lambda: goToPage(page=preparingCamera),
         relief="flat"
     )
     btnEarDiagnose.place(
@@ -335,11 +335,11 @@ def preparingCamera():
 
 def onStopCamera():
     vidCap.release()
-    switchPage(page=home_page)
+    goToPage(page=home_page)
 
 def onCaptured(image):
     vidCap.release()
-    switchPage(page=diagnose_ear_image_page, data=image)
+    goToPage(page=diagnose_ear_image_page, data=image)
 
 def openCameraPage():
     # Capture the video frame by frame
@@ -396,7 +396,7 @@ def openCameraPage():
         image=iconBtnHome,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: switchPage(page=onStopCamera),
+        command=lambda: goToPage(page=onStopCamera),
         relief="flat"
     )
     btnHome.place(
@@ -522,7 +522,7 @@ def openCameraPage():
         image=button_image_1,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: switchPage(page=onStopCamera),
+        command=lambda: goToPage(page=onStopCamera),
         relief="flat"
     )
     button_1.place(
@@ -621,7 +621,7 @@ def diagnose_ear_image_page(capturedImage):
         image=btnBack,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: switchPage(page=preparingCamera),
+        command=lambda: goToPage(page=preparingCamera),
         relief="flat"
     )
     button_1.place(
@@ -637,7 +637,7 @@ def diagnose_ear_image_page(capturedImage):
         image=btnDiagnose,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: switchPage(result_diagnose_page, data=capturedImage),
+        command=lambda: goToPage(result_diagnose_page, data=capturedImage),
         relief="flat"
     )
     button_2.place(
@@ -912,7 +912,7 @@ def result_diagnose_page(capturedImage):
         image=button_image_2,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: switchPage(page=home_page),
+        command=lambda: goToPage(page=home_page),
         relief="flat"
     )
     button_2.place(
@@ -1259,7 +1259,7 @@ def notification_page():
         image=button_image_2,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: switchPage(page=home_page),
+        command=lambda: goToPage(page=home_page),
         relief="flat"
     )
     button_2.place(
@@ -1323,7 +1323,7 @@ def notification_page():
         image=button_image_6,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: switchPage(page=pasien_page),
+        command=lambda: goToPage(page=pasien_page),
         relief="flat"
     )
     button_6.place(
@@ -1509,7 +1509,7 @@ def pasien_page():
         image=button_image_2,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: switchPage(page=home_page()),
+        command=lambda: goToPage(page=home_page()),
         relief="flat"
     )
     button_2.place(
@@ -1541,7 +1541,7 @@ def pasien_page():
         image=button_image_4,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: switchPage(page=notification_page),
+        command=lambda: goToPage(page=notification_page),
         relief="flat"
     )
     button_4.place(

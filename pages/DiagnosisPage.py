@@ -1,9 +1,7 @@
 from tkinter import *
-
-from BasePage import BasePage
 from colours import *
 from helpers import *
-
+from pages.DEarPage import DEarPage
 
 class DiagnosisPage(Canvas, BasePage):
     def __init__(self, window):
@@ -26,7 +24,7 @@ class DiagnosisPage(Canvas, BasePage):
             image=button_image_1,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_1 clicked"),
+            command=lambda: goToPage(DEarPage(self.window)),
             relief="flat"
         )
         button_1.place(

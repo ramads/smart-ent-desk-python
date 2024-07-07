@@ -13,6 +13,6 @@ class App(Tk):
 
         self.homePage = HomePage(self)
 
-        switchPage(self.homePage)
+        goToPage(self.homePage)
 
 app = App()

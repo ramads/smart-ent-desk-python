@@ -11,7 +11,7 @@ def relative_to_assets(path: str) -> Path: #
     ASSETS_PATH = OUTPUT_PATH / Path(r"./assets")
     return ASSETS_PATH / Path(path)
 
-def switchPage(page:BasePage, data=None):
+def goToPage(page:BasePage, data=None):
     if data is None:
         page.drawPage()
     else:
