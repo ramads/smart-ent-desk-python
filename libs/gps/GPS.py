@@ -41,6 +41,7 @@ def loop(gps):
         match = re.match(regex, gpsString)
         if match:
             mode = match.group(2)
+            # print("mode", mode)
             if mode == "A":
                 latitude = round(float(match.group(4)) + float(match.group(5)) / 60, 6)
                 longitude = round(float(match.group(8)) + float(match.group(9)) / 60, 6)

@@ -4,6 +4,7 @@ import cv2
 from tkinter import *
 from colors import *
 from helpers import *
+from config import CAMERA_INDEX
 from PIL import Image, ImageTk
 from pages import DEarPage, PreviewImagePage
 from libs.serial_com import SerialCom
@@ -28,7 +29,7 @@ class DEarProcessPage(Canvas, BasePage):
 
         os.makedirs(self.image_dir, exist_ok=True)
         self.window = window
-        self.vidCap = cv2.VideoCapture(0)
+        self.vidCap = cv2.VideoCapture(CAMERA_INDEX)
         self.ret, self.frame = self.vidCap.read()
         if not self.ret:
             print("Failed to grab frame")
