@@ -24,6 +24,7 @@ class DEarCompletePage(Canvas, BasePage):
 
     def drawPage(self, data = None):
         self.place(x = 0, y = 0)
+        
         image_image_1 = PhotoImage(
             file=relative_to_assets("control/DEarCompleteFrame/image_1.png"))
         image_1 = self.create_image(
@@ -66,27 +67,31 @@ class DEarCompletePage(Canvas, BasePage):
         )
 
         self.create_text(
-            103.0,
+            1133.0/2,
             472.0,
-            anchor="nw",
+            anchor="center",
             text="Proses Diagnosis Selesai",
             fill="#404040",
-            font=("Nunito Bold", 24 * -1)
+            font=("Nunito Bold", 24 * -1),
         )
 
         self.create_text(
-            103.0,
+            1133.0/2,
             520.0,
-            anchor="nw",
+            anchor="center",
             text="Diagnosis berhasil dilakukan. Hasil diagnosis dapat di akses kembali pada menu riwayat pasien.",
-            fill="#14181F",
-            font=("Nunito Regular", 19 * -1)
+            fill="#8A8C8F",
+            font=("Nunito Regular", 16 * -1)
         )
 
-        self.window.after(1000, self.go_to_homepage)
+        # Update the UI to ensure all elements are rendered
+        self.window.update_idletasks()
+
+
+        self.window.after(2000, self.go_to_homepage)
+        self.window.mainloop()
+
+         # Delay for 3 seconds before navigating to the HomePage
 
     def go_to_homepage(self):
-        # Change to the HomePage after 3 seconds
         goToPage(HomePage.HomePage(self.window))
-
-        self.window.mainloop()

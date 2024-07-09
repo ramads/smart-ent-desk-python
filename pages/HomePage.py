@@ -3,6 +3,7 @@ from colors import *
 from helpers import *
 
 from pages import PatientQueuePage
+from pages import DEarCompletePage
 
 
 class HomePage(Canvas, BasePage):
@@ -62,7 +63,7 @@ class HomePage(Canvas, BasePage):
         
         create_hover_button(self.window, 590.0,591.0, 274.0, 99.0,
                             BACKGROUND_COLOUR, inactive_button_6, active_button_6,  
-                            lambda: print("button__6 clicked"))
+                            lambda: goToPage(DEarCompletePage.DEarCompletePage(self.window)))
 
 
         image_image_1 = PhotoImage(
