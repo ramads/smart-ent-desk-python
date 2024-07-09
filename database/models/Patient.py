@@ -8,26 +8,25 @@ class PatientModel:
 
     def create_table(self):
         query = """
-        CREATE TABLE IF NOT EXISTS patients (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            name VARCHAR(255) NOT NULL,
-            gender ENUM('Laki-laki', 'Perempuan') NOT NULL,
-            birth_date DATE NOT NULL,
-            address TEXT,
-            insurance_id INT
-        );
+            CREATE TABLE Pasien (
+                id_pasien INT AUTO_INCREMENT PRIMARY KEY,
+                nama_pasien VARCHAR(255) NOT NULL,
+                jenis_kelamin ENUM('Laki-laki', 'Perempuan') NOT NULL,
+                tanggal_lahir DATE NOT NULL,
+                alamat TEXT
+            );
         """
         cursor = self.db.connection.cursor()
         cursor.execute(query)
         self.db.connection.commit()
 
-    def insert_patient(self, name, gender, birth_date, address, insurance_id):
+    def insert_patient(self, name, gender, birth_date, address):
         query = """
-        INSERT INTO Pasien (nama_pasien, jenis_kelamin, tanggal_lahir, alamat, id_asuransi)
-        VALUES (%s, %s, STR_TO_DATE(%s, '%d %M %Y'), %s, %s);
+        INSERT INTO Pasien (nama_pasien, jenis_kelamin, tanggal_lahir, alamat)
+        VALUES (%s, %s, STR_TO_DATE(%s, '%d %M %Y'), %s);
         """
         cursor = self.db.connection.cursor()
-        cursor.execute(query, (name, gender, birth_date, address, insurance_id))
+        cursor.execute(query, (name, gender, birth_date, address))
         self.db.connection.commit()
 
     def get_patient(self, patient_id):
