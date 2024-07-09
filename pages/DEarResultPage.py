@@ -4,6 +4,7 @@ from helpers import *
 from PIL import ImageTk, Image
 
 from pages import DEarCorrectionPage
+from pages import DEarCompletePage
 from machine_learning.image_predictor import ImagePredictor
 
 global label
@@ -55,13 +56,6 @@ class DEarResultPage(Canvas, BasePage):
         # Save result to global variable
         label = result_1[0]
 
-        image_image_3 = PhotoImage(
-            file=relative_to_assets("control/DEarResultFrame/image_3.png"))
-        image_3 = self.create_image(
-            623.0,
-            356.0,
-            image=image_image_3
-        )
 
         image_image_4 = PhotoImage(
             file=relative_to_assets("control/DEarResultFrame/image_4.png"))
@@ -201,27 +195,6 @@ class DEarResultPage(Canvas, BasePage):
             font=("Nunito Bold", 12 * -1)
         )
 
-        inactive_button_1 = relative_to_assets("control/DEarResultFrame/button_1.png")
-        active_button_1 = relative_to_assets("control/DEarResultFrame/active_button_1.png")
-        
-        inactive_button_2 = relative_to_assets("control/DEarResultFrame/button_2.png")
-        active_button_2 = relative_to_assets("control/DEarResultFrame/active_button_2.png")
-        
-        inactive_button_3 = relative_to_assets("control/DEarResultFrame/button_3.png")
-        active_button_3 = relative_to_assets("control/DEarResultFrame/active_button_3.png")
-
-        create_hover_button(self.window, 607.0, 340.0, 31.0, 31.0,
-                            BACKGROUND_COLOUR, inactive_button_1, active_button_1, 
-                            lambda: print("button_1 clicked"))
-        
-        create_hover_button(self.window, 67.0, 623.0, 192.0, 54.0,
-                            "#FFFFFF", inactive_button_2, active_button_2, 
-                            lambda: goToPage(DEarCorrectionPage.DEarCorrectionPage(self.window)))
-        
-        create_hover_button(self.window, 267.0, 623.0, 192.0, 54.0,
-                            "#FFFFFF", inactive_button_3, active_button_3,  
-                            lambda: print("button_3 clicked"))
-
         image_image_10 = PhotoImage(
             file=relative_to_assets("control/DEarResultFrame/image_10.png"))
         image_10 = self.create_image(
@@ -344,5 +317,27 @@ class DEarResultPage(Canvas, BasePage):
             fill="#FFFFFF",
             font=("SFProText Semibold", 15 * -1)
         )
+
+        inactive_button_1 = relative_to_assets("control/DEarResultFrame/button_1.png")
+        active_button_1 = relative_to_assets("control/DEarResultFrame/active_button_1.png")
+        
+        inactive_button_2 = relative_to_assets("control/DEarResultFrame/button_2.png")
+        active_button_2 = relative_to_assets("control/DEarResultFrame/active_button_2.png")
+        
+        inactive_button_3 = relative_to_assets("control/DEarResultFrame/button_3.png")
+        active_button_3 = relative_to_assets("control/DEarResultFrame/active_button_3.png")
+
+        create_hover_button(self.window, 597.0, 330.0, 52.0, 52.0,
+                            BACKGROUND_COLOUR, inactive_button_1, active_button_1, 
+                            lambda: print("button_1 clicked"))
+        
+        create_hover_button(self.window, 67.0, 623.0, 192.0, 54.0,
+                            "#FFFFFF", inactive_button_2, active_button_2, 
+                            lambda: goToPage(DEarCorrectionPage.DEarCorrectionPage(self.window)))
+        
+        create_hover_button(self.window, 267.0, 623.0, 192.0, 54.0,
+                            "#FFFFFF", inactive_button_3, active_button_3,  
+                            lambda: goToPage(DEarCompletePage.DEarCompletePage(self.window)))
+
 
         self.window.mainloop()

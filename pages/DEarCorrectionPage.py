@@ -65,7 +65,7 @@ class DEarCorrectionPage(Canvas, BasePage):
             123.0,
             anchor="nw",
             text="Untuk mengoreksi hasil diagnosa \n sebelumnya, mohon untuk memilih label\n berikut yang dinilai sesuai dengan penyakit \n yang diderita pasien dan sertakan \nalasan yang jelas.",
-            fill="#14181F",
+            fill="#8A8C8F",
             font=("Nunito Regular", 14 * -1)
         )
 
@@ -76,6 +76,31 @@ class DEarCorrectionPage(Canvas, BasePage):
             text="Label Baru",
             fill="#404040",
             font=("Nunito Bold", 19 * -1)
+        )
+
+        image_image_4 = PhotoImage(
+            file=relative_to_assets("control/DEarCorrectionFrame/image_4.png"))
+        image_4 = self.create_image(
+            1099.3330078125,
+            22.33349609375,
+            image=image_image_4
+        )
+
+        image_image_5 = PhotoImage(
+            file=relative_to_assets("control/DEarCorrectionFrame/image_5.png"))
+        image_5 = self.create_image(
+            1074.0,
+            22.33056640625,
+            image=image_image_5
+        )
+
+        self.create_text(
+            21.0,
+            13.0,
+            anchor="nw",
+            text="9:41",
+            fill="#FFFFFF",
+            font=("SFProText Semibold", 15 * -1)
         )
 
         def show():
@@ -94,7 +119,7 @@ class DEarCorrectionPage(Canvas, BasePage):
 
         # Create a Tkinter StringVar to hold the selected option
         clicked = StringVar()
-        clicked.set("options[0]")
+        clicked.set("Pilih Label")
 
         # Create a style for the OptionMenu
         style = ttk.Style()
@@ -126,21 +151,6 @@ class DEarCorrectionPage(Canvas, BasePage):
             height=40.0
         )
 
-        button_image_3 = PhotoImage(
-            file=relative_to_assets("control/DEarCorrectionFrame/button_3.png"))
-        button_3 = Button(
-            image=button_image_3,
-            borderwidth=0,
-            highlightthickness=0,
-            command=show,
-            relief="flat"
-        )
-        button_3.place(
-            x=908.0,
-            y=463.0,
-            width=150.0,
-            height=46.0
-        )
 
         self.create_text(
             749.0,
@@ -158,58 +168,35 @@ class DEarCorrectionPage(Canvas, BasePage):
             404.0,
             image=entry_image_1
         )
-        entry_1 = Text(
+
+        entry_1 = TextArea(
+            self.window,
             bd=0,
             bg="#FFFFFF",
             fg="#000716",
-            highlightthickness=0
+            highlightthickness=0,
+            placeholder="Enter your text here..."
         )
         entry_1.place(
-            x=759.0,
-            y=368.0,
+            x=758.0,
+            y=372.0,
             width=290.0,
-            height=70.0
+            height=65.0
         )
 
-        button_image_2 = PhotoImage(
-            file=relative_to_assets("control/DEarCorrectionFrame/button_2.png"))
-        button_2 = Button(
-            image=button_image_2,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: goToPage(DEarResultPage.DEarResultPage(self.window)),
-            relief="flat"
-        )
-        button_2.place(
-            x=750.0,
-            y=463.0,
-            width=150.0,
-            height=46.0
-        )
+        inactive_button_2 = relative_to_assets("control/DEarCorrectionFrame/button_2.png")
+        active_button_2 = relative_to_assets("control/DEarCorrectionFrame/active_button_2.png")
 
-        image_image_4 = PhotoImage(
-            file=relative_to_assets("control/DEarCorrectionFrame/image_4.png"))
-        image_4 = self.create_image(
-            1099.3330078125,
-            22.33349609375,
-            image=image_image_4
-        )
+        inactive_button_3 = relative_to_assets("control/DEarCorrectionFrame/button_3.png")
+        active_button_3 = relative_to_assets("control/DEarCorrectionFrame/active_button_3.png")
 
-        image_image_5 = PhotoImage(
-            file=relative_to_assets("control/DEarCorrectionFrame/image_5.png"))
-        image_5 = self.create_image(
-            1074.0,
-            22.33056640625,
-            image=image_image_5
-        )
+        create_hover_button(self.window, 750.0, 463.0, 150.0, 46.0,
+                            "#FFFFFF", inactive_button_2, active_button_2,  
+                            lambda: goToPage(DEarResultPage.DEarResultPage(self.window)))
+        
+        create_hover_button(self.window, 908.0, 463.0, 150.0, 46.0,
+                            "#FFFFFF", inactive_button_3, active_button_3,  
+                            show)
 
-        self.create_text(
-            21.0,
-            13.0,
-            anchor="nw",
-            text="9:41",
-            fill="#FFFFFF",
-            font=("SFProText Semibold", 15 * -1)
-        )
 
         self.window.mainloop()
