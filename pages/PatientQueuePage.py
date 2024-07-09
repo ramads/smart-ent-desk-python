@@ -6,6 +6,8 @@ from helpers import *
 from pages import DiagnosisPage
 from pages import HomePage
 
+from database.models.Patient import PatientModel
+
 
 class PatientQueuePage(Canvas, BasePage):
     def __init__(self, window):
@@ -19,9 +21,20 @@ class PatientQueuePage(Canvas, BasePage):
             highlightthickness=0,
             relief="ridge"
         )
+        self.patient = PatientModel()
+        self.current_patient = 0
+        self.data = self.patient.get_all_patients()
+
+    def nextPatient(self):
+        if self.current_patient < len(self.data) - 1:
+            self.current_patient += 1
+            self.drawPage()
+        else:
+            print("No more patient")
 
     def loadImage(self):
         return PhotoImage(file=relative_to_assets("image_3.png"))
+    
 
     def drawPage(self, data = None):
         self.place(x = 0, y = 0)
@@ -37,7 +50,7 @@ class PatientQueuePage(Canvas, BasePage):
             86.0,
             219.5,
             anchor="nw",
-            text="Alma Liakua Mutia",
+            text=self.data[self.current_patient]['nama_pasien'],
             fill="#404040",
             font=("Nunito Bold", 24 * -1)
         )
@@ -55,7 +68,7 @@ class PatientQueuePage(Canvas, BasePage):
             275.0,
             278.5,
             anchor="nw",
-            text="Perempuan",
+            text=self.data[self.current_patient]['jenis_kelamin'],
             fill="#404040",
             font=("Nunito Regular", 16 * -1)
         )
@@ -73,7 +86,7 @@ class PatientQueuePage(Canvas, BasePage):
             275.0,
             312.5,
             anchor="nw",
-            text="Selasa, 16 April 2024",
+            text=self.data[self.current_patient]['tanggal_lahir'].strftime("%d %B %Y"),
             fill="#404040",
             font=("Nunito Regular", 16 * -1)
         )
@@ -91,7 +104,7 @@ class PatientQueuePage(Canvas, BasePage):
             275.0,
             346.5,
             anchor="nw",
-            text="Jl. Langko No. 72, Mataram, Ntb",
+            text=self.data[self.current_patient]['alamat'],
             fill="#404040",
             font=("Nunito Regular", 16 * -1)
         )
@@ -394,7 +407,7 @@ class PatientQueuePage(Canvas, BasePage):
         
         create_hover_button(self.window, 509.5, 633.5, 192.0, 54.0,
                             BACKGROUND_COLOUR, inactive_button_5, active_button_5,  
-                            lambda: print("button_5 clicked"))
+                            lambda: self.nextPatient())
 
         self.create_text(
             130.0,
