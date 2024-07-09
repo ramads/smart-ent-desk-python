@@ -3,10 +3,10 @@ from colors import *
 from helpers import *
 from PIL import ImageTk, Image
 
-from pages import DEarProcessPage
 from pages import DEarCorrectionPage
 from machine_learning.image_predictor import ImagePredictor
 
+global label
 
 class DEarResultPage(Canvas, BasePage):
     def __init__(self, window):
@@ -36,7 +36,7 @@ class DEarResultPage(Canvas, BasePage):
         
         image_path = relative_to_image_capture("test_image.jpg")
         original_image = Image.open(image_path)
-        resized_image = original_image.resize((600, 335))  # Resize to 604x538
+        resized_image = original_image.resize((600, 335)) 
         captured_img = ImageTk.PhotoImage(resized_image)
         image_2 = self.create_image(
             361.0,
@@ -51,6 +51,9 @@ class DEarResultPage(Canvas, BasePage):
 
         # Get the prediction results
         result_1, result_2, result_3 = predictor.predict(image_path)
+
+        # Save result to global variable
+        label = result_1[0]
 
         image_image_3 = PhotoImage(
             file=relative_to_assets("control/DEarResultFrame/image_3.png"))
@@ -132,7 +135,7 @@ class DEarResultPage(Canvas, BasePage):
             754.0,
             366.5,
             anchor="nw",
-            text=result_1[0],
+            text=label,
             fill="#404040",
             font=("Nunito Regular", 12 * -1)
         )

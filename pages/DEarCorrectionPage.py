@@ -2,6 +2,7 @@ from tkinter import *
 from colors import *
 from helpers import *
 from PIL import ImageTk, Image
+from tkinter import ttk
 
 from pages import DEarResultPage
 
@@ -77,20 +78,68 @@ class DEarCorrectionPage(Canvas, BasePage):
             font=("Nunito Bold", 19 * -1)
         )
 
-        button_image_1 = PhotoImage(
-            file=relative_to_assets("control/DEarCorrectionFrame/button_1.png"))
-        button_1 = Button(
-            image=button_image_1,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: print("button_1 clicked"),
-            relief="flat"
-        )
-        button_1.place(
+        def show():
+            label = clicked.get()
+            print(clicked.get())
+            goToPage(DEarResultPage.DEarResultPage(self.window))
+
+        # Define options
+        options = [
+            'Aerotitis Barotrauma', 'Cerumen', 'Corpus Alienum', 'M Timpani normal', 
+            'Myringitis Bulosa', 'Normal', 'OE Difusa', 'OE Furunkulosa', 'OMA Hiperemis', 
+            'OMA Oklusi Tuba', 'OMA Perforasi', 'OMA Resolusi', 'OMA Supurasi', 'OMed Efusi', 
+            'OMedK Resolusi', 'OMedK Tipe Aman', 'OMedK Tipe Bahaya', 'Otomikosis', 
+            'Perforasi Membran Tympani', 'Tympanosklerotik'
+        ]
+
+        # Create a Tkinter StringVar to hold the selected option
+        clicked = StringVar()
+        clicked.set("options[0]")
+
+        # Create a style for the OptionMenu
+        style = ttk.Style()
+        style.theme_use('clam')
+        style.configure("Rounded.TMenubutton",
+                        relief="flat",
+                        padding=6,
+                        background="#FFFFFF",
+                        foreground="black",
+                        borderwidth=1,
+                        bordercolor="black",
+                        border=8,
+                        focusthickness=3,
+                        focuscolor="#FFFFFF",
+                        anchor="w")
+        style.map("Rounded.TMenubutton",
+                background=[("active", "skyblue")])
+        
+
+        # Create the OptionMenu with the custom style
+        drop = ttk.OptionMenu(self.window, clicked, options[0], *options)
+        drop.config(style="Rounded.TMenubutton")
+        drop.pack(pady=20)
+
+        drop.place(
             x=749.0,
             y=262.0,
             width=310.0,
             height=40.0
+        )
+
+        button_image_3 = PhotoImage(
+            file=relative_to_assets("control/DEarCorrectionFrame/button_3.png"))
+        button_3 = Button(
+            image=button_image_3,
+            borderwidth=0,
+            highlightthickness=0,
+            command=show,
+            relief="flat"
+        )
+        button_3.place(
+            x=908.0,
+            y=463.0,
+            width=150.0,
+            height=46.0
         )
 
         self.create_text(
@@ -133,22 +182,6 @@ class DEarCorrectionPage(Canvas, BasePage):
         )
         button_2.place(
             x=750.0,
-            y=463.0,
-            width=150.0,
-            height=46.0
-        )
-
-        button_image_3 = PhotoImage(
-            file=relative_to_assets("control/DEarCorrectionFrame/button_3.png"))
-        button_3 = Button(
-            image=button_image_3,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: print("button_3 clicked"),
-            relief="flat"
-        )
-        button_3.place(
-            x=908.0,
             y=463.0,
             width=150.0,
             height=46.0

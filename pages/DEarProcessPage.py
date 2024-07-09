@@ -158,7 +158,6 @@ class DEarProcessPage(Canvas, BasePage):
         active_button_image_10 = PhotoImage(file=relative_to_assets("control/DEarProcessFrame/active_button_10.png"))
         button_image_10 = PhotoImage(file=relative_to_assets("control/DEarProcessFrame/button_10.png"))
 
-        # List untuk menyimpan referensi tombol dan gambar mereka
         buttons = []
 
         # Fungsi untuk mengganti gambar tombol
