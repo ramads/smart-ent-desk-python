@@ -5,6 +5,8 @@ from PIL import ImageTk, Image
 
 from pages import DEarCorrectionPage
 from pages import DEarCompletePage
+from pages import FullScreenImagePage
+
 from machine_learning.image_predictor import ImagePredictor
 
 global label
@@ -329,7 +331,7 @@ class DEarResultPage(Canvas, BasePage):
 
         create_hover_button(self.window, 597.0, 330.0, 52.0, 52.0,
                             BACKGROUND_COLOUR, inactive_button_1, active_button_1, 
-                            lambda: print("button_1 clicked"))
+                            lambda: goToPage(FullScreenImagePage.FullScreenImagePage(self.window)))
         
         create_hover_button(self.window, 67.0, 623.0, 192.0, 54.0,
                             "#FFFFFF", inactive_button_2, active_button_2, 
