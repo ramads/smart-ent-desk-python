@@ -1,14 +1,14 @@
 from database.core.database import Database
-from database.config.config import DB_HOST, DB_NAME, DB_USER, DB_PASSWORD
+from database.config.config import *
 
 class DiagnosisModel:
     def __init__(self):
-        self.db = Database(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD)
+        self.db = Database(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD, DB_PORT)
         self.db.connect()
 
     def create_table(self):
         query = """
-            CREATE TABLE Diagnosa (
+            CREATE TABLE IF NOT EXISTS Diagnosa (
                 id_diagnosa INT AUTO_INCREMENT PRIMARY KEY,
                 id_riwayat INT,
                 diagnosa VARCHAR(255) NOT NULL,
@@ -23,13 +23,13 @@ class DiagnosisModel:
         cursor.execute(query)
         self.db.connection.commit()
 
-    def insert_diagnosis(self, history_id, diagnosis, diagnosis_date, result, severity, image_path):
+    def insert_diagnosis(self, history_id, diagnosis, diagnosis_date, result, confidence, image_path):
         query = """
-        INSERT INTO diagnoses (id_riwayat, diagnosa, tanggal_diagnosa, hasil_diagnosa, tingkat_keparahan, gambar_diagnosa)
+        INSERT INTO Diagnosa (id_riwayat, diagnosa, tanggal_diagnosa, hasil_diagnosa, tingkat_keyakinan, gambar_diagnosa)
         VALUES (%s, %s, %s, %s, %s, %s);
         """
         cursor = self.db.connection.cursor()
-        cursor.execute(query, (history_id, diagnosis, diagnosis_date, result, severity, image_path))
+        cursor.execute(query, (history_id, diagnosis, diagnosis_date, result, confidence, image_path))
         self.db.connection.commit()
 
     def get_diagnosis(self, diagnosis_id):

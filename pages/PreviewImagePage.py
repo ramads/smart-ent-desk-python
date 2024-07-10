@@ -8,7 +8,7 @@ from pages import DEarResultPage
 
 
 class PreviewImagePage(Canvas, BasePage):
-    def __init__(self, window):
+    def __init__(self, window, id_patient=None, organ=None):
         self.window = window
         super().__init__(
             window,
@@ -19,6 +19,8 @@ class PreviewImagePage(Canvas, BasePage):
             highlightthickness=0,
             relief="ridge"
         )
+        self.id_patient = id_patient
+        self.organ = organ
 
     def loadImage(self):
         return PhotoImage(file=relative_to_assets("image_3.png"))
@@ -58,10 +60,10 @@ class PreviewImagePage(Canvas, BasePage):
         
         create_hover_button(self.window, 370.5, 631.0, 192.0, 54.0, 
                             "#FFFFFF", inactive_button_1, active_button_1, 
-                            lambda: goToPage(DEarProcessPage.DEarProcessPage(self.window)))
+                            lambda: goToPage(DEarProcessPage.DEarProcessPage(self.window, self.id_patient, self.organ)))
         create_hover_button(self.window, 570.5, 631.0, 192.0, 54.0, 
                             "#FFFFFF", inactive_button_2, active_button_2,  
-                            lambda: goToPage(DEarResultPage.DEarResultPage(self.window)))
+                            lambda: goToPage(DEarResultPage.DEarResultPage(self.window, self.id_patient, self.organ)))
 
 
         self.create_text(

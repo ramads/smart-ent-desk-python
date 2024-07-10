@@ -1,14 +1,14 @@
 from database.core.database import Database
-from database.config.config import DB_HOST, DB_NAME, DB_USER, DB_PASSWORD
+from database.config.config import *
 
 class PatientModel:
     def __init__(self):
-        self.db = Database(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD)
+        self.db = Database(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD, DB_PORT)
         self.db.connect()
 
     def create_table(self):
         query = """
-            CREATE TABLE Pasien (
+            CREATE TABLE IF NOT EXISTS Pasien (
                 id_pasien INT AUTO_INCREMENT PRIMARY KEY,
                 nama_pasien VARCHAR(255) NOT NULL,
                 jenis_kelamin ENUM('Laki-laki', 'Perempuan') NOT NULL,
@@ -30,9 +30,9 @@ class PatientModel:
         self.db.connection.commit()
 
     def get_patient(self, patient_id):
-        query = "SELECT * FROM Pasien WHERE id = %s"
+        query = "SELECT * FROM Pasien WHERE id_pasien = %s"
         cursor = self.db.connection.cursor(dictionary=True)
-        cursor.execute(query, (patient_id))
+        cursor.execute(query, (patient_id,))
         return cursor.fetchone()
     
     def get_all_patients(self):

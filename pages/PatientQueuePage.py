@@ -12,6 +12,8 @@ from database.models.Diagnosis import DiagnosisModel
 from database.models.Insurance import InsuranceModel
 from database.models.Hospital import HospitalModel
 
+from pprint import pprint
+
 
 
 class PatientQueuePage(Canvas, BasePage):
@@ -45,13 +47,10 @@ class PatientQueuePage(Canvas, BasePage):
             self.get_current_patient_data()
 
     def get_current_patient_data(self):
-        self.current_history_data = self.history.get_patient_histories(self.patient_data[self.current_patient]['id_pasien'])
+        self.current_history_data = self.history.get_patient_histories_join_diagnosis(self.patient_data[self.current_patient]['id_pasien'])
+        pprint(self.current_history_data)
         if self.current_history_data:
-            self.get_last_diagnosis()
             self.get_patient_insurance()
-
-    def get_last_diagnosis(self):
-        self.last_diagnosis = self.diagnosis.get_diagnosis(self.current_history_data[0]['id_riwayat'])
 
     def get_patient_insurance(self):
         self.patient_insurance = self.insurance.get_patient_insurances(self.patient_data[self.current_patient]['id_pasien'])
@@ -154,7 +153,7 @@ class PatientQueuePage(Canvas, BasePage):
             257.0,
             384.5,
             anchor="nw",
-            text= " "*4 + self.last_diagnosis['diagnosa'],
+            text= " "*4 + self.current_history_data[0]['diagnosa'] if self.current_history_data[0]['diagnosa'] else "Belum ada data",
             fill="#1E5C2A",
             font=("Nunito Bold", 19 * -1)
         )
@@ -163,7 +162,7 @@ class PatientQueuePage(Canvas, BasePage):
         text_widget.place(x=86, y=417.5, width=600, height=150)  # ukuran box
 
         # Mengisi teks ke Text Widget
-        text_content = self.last_diagnosis['hasil_diagnosa']
+        text_content = self.current_history_data[0]['hasil_diagnosa'] if self.current_history_data[0]['hasil_diagnosa'] else "Belum ada data"
         text_widget.insert(tk.END, text_content)
 
         text_widget.tag_configure("justify", justify="left")
@@ -192,7 +191,7 @@ class PatientQueuePage(Canvas, BasePage):
             744.5,
             277.5,
             anchor="nw",
-            text="Penyakit " + self.current_history_data[0]['organ'],
+            text="Penyakit " + self.current_history_data[0]['organ'] if self.current_history_data[0]['organ'] else "Belum ada data",
             fill="#404040",
             font=("Nunito Bold", 19 * -1)
         )
@@ -209,7 +208,7 @@ class PatientQueuePage(Canvas, BasePage):
             774.5,
             301.5,
             anchor="nw",
-            text= self.current_history_data[0]['tanggal_pemeriksaan'].strftime("%d %B %Y"),
+            text= self.current_history_data[0]['tanggal_diagnosa'].strftime("%d %B %Y") if self.current_history_data[0]['tanggal_diagnosa'] else "Belum ada data",
             fill="#404040",
             font=("Nunito Regular", 12 * -1)
         )
@@ -226,7 +225,7 @@ class PatientQueuePage(Canvas, BasePage):
             773.5,
             326.0,
             anchor="nw",
-            text= self.hospital.get_hospital(self.current_history_data[0]['id_rumah_sakit'])['nama_rumah_sakit'],
+            text="RS. Universitas Mataram",
             fill="#404040",
             font=("Nunito Regular", 12 * -1)
         )
@@ -259,7 +258,7 @@ class PatientQueuePage(Canvas, BasePage):
             744.5,
             358.0,
             anchor="nw",
-            text= "Penyakit " + self.current_history_data[1]['organ'],
+            text= "Penyakit " + self.current_history_data[1]['organ'] if self.current_history_data[1]['organ'] else "Belum ada data",
             fill="#404040",
             font=("Nunito Bold", 19 * -1)
         )
@@ -276,7 +275,7 @@ class PatientQueuePage(Canvas, BasePage):
             774.5,
             382.0,
             anchor="nw",
-            text= self.current_history_data[1]['tanggal_pemeriksaan'].strftime("%d %B %Y"),
+            text= self.current_history_data[1]['tanggal_diagnosa'].strftime("%d %B %Y") if self.current_history_data[1]['tanggal_diagnosa'] else "Belum ada data",
             fill="#404040",
             font=("Nunito Regular", 12 * -1)
         )
@@ -293,7 +292,7 @@ class PatientQueuePage(Canvas, BasePage):
             773.5,
             406.5,
             anchor="nw",
-            text= self.hospital.get_hospital(self.current_history_data[1]['id_rumah_sakit'])['nama_rumah_sakit'],
+            text= self.hospital.get_hospital(self.current_history_data[1]['id_rumah_sakit'])['nama_rumah_sakit'] if self.current_history_data[1]['id_rumah_sakit'] else "Belum ada data",
             fill="#404040",
             font=("Nunito Regular", 12 * -1)
         )
@@ -435,7 +434,7 @@ class PatientQueuePage(Canvas, BasePage):
         
         create_hover_button(self.window, 284.5, 633.5, 192.0, 54.0,
                             BACKGROUND_COLOUR, inactive_button_4, active_button_4,  
-                            lambda: goToPage(DiagnosisPage.DiagnosisPage(self.window)))
+                            lambda: goToPage(DiagnosisPage.DiagnosisPage(self.window, self.patient_data[self.current_patient]['id_pasien'])))
         
         create_hover_button(self.window, 509.5, 633.5, 192.0, 54.0,
                             BACKGROUND_COLOUR, inactive_button_5, active_button_5,  

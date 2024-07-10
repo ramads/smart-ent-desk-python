@@ -16,7 +16,7 @@ class DEarProcessPage(Canvas, BasePage):
     image_dir = "./" + DIR_TEMP_IMAGE
     text_command = ""
 
-    def __init__(self, window):
+    def __init__(self, window, id_patient=None, organ=None):
         super().__init__(
             window,
             bg=BACKGROUND_COLOUR,
@@ -26,13 +26,17 @@ class DEarProcessPage(Canvas, BasePage):
             highlightthickness=0,
             relief="ridge"
         )
-
+        self.id_patient = id_patient
+        self.organ = organ
         os.makedirs(self.image_dir, exist_ok=True)
         self.window = window
         self.vidCap = cv2.VideoCapture(CAMERA_INDEX)
         self.ret, self.frame = self.vidCap.read()
         if not self.ret:
             print("Failed to grab frame")
+        
+    
+        
 
     def updateCameraFrame(self):
         self.ret, self.frame = self.vidCap.read()
@@ -54,7 +58,7 @@ class DEarProcessPage(Canvas, BasePage):
             print(f"Image captured and saved as '{filename}'")
             self.onStopCamera()
 
-            goToPage(PreviewImagePage.PreviewImagePage(self.window))
+            goToPage(PreviewImagePage.PreviewImagePage(self.window, self.id_patient, self.organ))
 
     def onStopCamera(self):
         self.vidCap.release()

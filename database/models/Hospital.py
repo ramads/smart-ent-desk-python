@@ -1,18 +1,24 @@
 from database.core.database import Database
-from database.config.config import DB_HOST, DB_NAME, DB_USER, DB_PASSWORD
+from database.config.config import *
 
 class HospitalModel:
     def __init__(self):
-        self.db = Database(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD)
+        self.db = Database(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD, DB_PORT)
         self.db.connect()
 
     def create_table(self):
         query = """
-            CREATE TABLE Rumah_Sakit (
+            CREATE TABLE IF NOT EXISTS Rumah_Sakit (
                 id_rumah_sakit INT AUTO_INCREMENT PRIMARY KEY,
                 nama_rumah_sakit VARCHAR(255) NOT NULL,
                 alamat_rumah_sakit TEXT NOT NULL,
-                phone_number_rumah_sakit VARCHAR(20)
+                phone_number_rumah_sakit VARCHAR(20),
+                email_rumah_sakit VARCHAR(255),
+                situs_rumah_sakit VARCHAR(255),
+                tentang_rumah_sakit VARCHAR(255),
+                jumlah_partner int,
+                jumlah_award int,
+                jumlah_tenang_ahli int
             );
         """
         cursor = self.db.connection.cursor()

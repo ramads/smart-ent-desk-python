@@ -13,4 +13,4 @@ libs/__pycache__/
 temp_image
 image_capture
 
-.venv
+.venv*
