@@ -4,6 +4,8 @@ from pages import (HomePage, DEarProcessPage as page)
 from helpers import *
 from colors import *
 
+from database.init import Generate_Database
+ 
 class App(Tk):
     def __init__(self):
         super().__init__()
@@ -13,6 +15,8 @@ class App(Tk):
 
         self.homePage = HomePage.HomePage(self)
         # self.homePage = page.DEarProcessPage(self)
+
+        Generate_Database().create_tables()
 
         goToPage(self.homePage)
 

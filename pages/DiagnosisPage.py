@@ -6,7 +6,7 @@ from pages.DEarPage import DEarPage
 from pages import PatientQueuePage
 
 class DiagnosisPage(Canvas, BasePage):
-    def __init__(self, window):
+    def __init__(self, window, id_patient = None):
         self.window = window
         super().__init__(
             window,
@@ -17,6 +17,7 @@ class DiagnosisPage(Canvas, BasePage):
             highlightthickness=0,
             relief="ridge"
         )
+        self.id_patient = id_patient
 
     def drawPage(self, data = None):
         self.place(x=0, y=0)
@@ -35,7 +36,7 @@ class DiagnosisPage(Canvas, BasePage):
         
         create_hover_button(self.window, 41.0, 223.0, 332.0, 319.0,
                             BACKGROUND_COLOUR, inactive_button_1, active_button_1, 
-                            lambda: goToPage(DEarPage(self.window)))
+                            lambda: goToPage(DEarPage(self.window, self.id_patient, "Telinga")))
         
         create_hover_button(self.window, 402.0, 223.0, 330.0, 319.0,
                             BACKGROUND_COLOUR, inactive_button_2, active_button_2,  

@@ -6,11 +6,20 @@ from helpers import *
 from PIL import ImageTk, Image
 
 from pages import DEarCorrectionPage
+from machine_learning.image_predictor import ImagePredictor
+from datetime import datetime
+
+from database.models.Diagnosis import DiagnosisModel
+from database.models.History import HistoryModel
+from database.models.Patient import PatientModel
+from database.models.Insurance import InsuranceModel
+
 from pages import DEarCompletePage
 from pages import FullScreenImagePage
 
 class DEarResultPage(Canvas, BasePage):
-    def __init__(self, window, result_1, result_2, result_3):
+    def __init__(self, window, result_1, result_2, result_3, id_patient=None, organ=None):
+
         self.window = window
         self.result_1=list(result_1)
         self.result_2=list(result_2)
@@ -25,10 +34,33 @@ class DEarResultPage(Canvas, BasePage):
             highlightthickness=0,
             relief="ridge"
         )
+        self.id_patient = id_patient
+        self.organ = organ
+        self.diagnosis = DiagnosisModel()
+        self.history = HistoryModel()
+        self.patient = PatientModel()
+        self.insurance = InsuranceModel()
 
+        self.get_patient_data()
+        self.get_insurance_data()
+
+    def get_patient_data(self):
+        self.patient_data = self.patient.get_patient(self.id_patient)
+
+    def get_insurance_data(self):
+        self.insurance_data = self.insurance.get_patient_insurances(self.id_patient)
+    
     def loadImage(self):
         return PhotoImage(file=relative_to_assets("image_3.png"))
     
+    def insert_data(self, hospital_id, diagnosis, diagnosis_date, result, confidence, image_path_temp):
+        history_id = self.history.insert_history(self.id_patient, hospital_id, self.organ)
+        image_path = f"temp_image/{self.id_patient}_{history_id}.jpg"
+        image = Image.open(image_path_temp)
+        image.save(image_path)
+        confidence = round(confidence, 2) * 100
+        confidence = int(confidence)
+        self.diagnosis.insert_diagnosis(history_id, diagnosis, diagnosis_date, result, confidence, image_path)
 
     def drawPage(self):
         self.place(x = 0, y = 0)
@@ -51,6 +83,27 @@ class DEarResultPage(Canvas, BasePage):
             image=captured_img
         )
 
+        # Initialize the predictor
+        print("Pattient ID: ", self.id_patient)
+        predictor = ImagePredictor()
+
+        image_path = 'temp_image/test_image.jpg'
+
+        # Get the prediction results
+        result_1, result_2, result_3 = predictor.predict(image_path)
+        
+        current_date = datetime.now().strftime("%Y-%m-%d")
+
+        image_path_temp = image_path
+        self.insert_data(1, result_1[0], current_date,"", result_1[1],  image_path_temp)
+
+        image_image_3 = PhotoImage(
+            file=relative_to_assets("control/DEarResultFrame/image_3.png"))
+        image_3 = self.create_image(
+            623.0,
+            356.0,
+            image=image_image_3
+        )
 
         image_image_4 = PhotoImage(
             file=relative_to_assets("control/DEarResultFrame/image_4.png"))
@@ -221,7 +274,7 @@ class DEarResultPage(Canvas, BasePage):
             726.0,
             509.0,
             anchor="nw",
-            text="Alma Liakua Mutia",
+            text=self.patient_data['nama_pasien'],
             fill="#404040",
             font=("Nunito Bold", 20 * -1)
         )
@@ -239,7 +292,7 @@ class DEarResultPage(Canvas, BasePage):
             850.0,
             543.0,
             anchor="nw",
-            text="000863002321023",
+            text=self.insurance_data[0]['nomor_asuransi'],
             fill="#404040",
             font=("Nunito Bold", 15 * -1)
         )
@@ -257,7 +310,7 @@ class DEarResultPage(Canvas, BasePage):
             850.0,
             567.0,
             anchor="nw",
-            text="BPJS",
+            text=self.insurance_data[0]['jenis_asuransi'],
             fill="#404040",
             font=("Nunito Bold", 15 * -1)
         )
@@ -275,7 +328,7 @@ class DEarResultPage(Canvas, BasePage):
             850.0,
             591.0,
             anchor="nw",
-            text="Kelas 1",
+            text=self.insurance_data[0]['kelas_asuransi'],
             fill="#404040",
             font=("Nunito Bold", 15 * -1)
         )
@@ -293,7 +346,7 @@ class DEarResultPage(Canvas, BasePage):
             890.0,
             615.0,
             anchor="nw",
-            text="Puskesmas Selaparang",
+            text=self.insurance_data[0]['fasilitas_kesehatan'],
             fill="#404040",
             font=("Nunito Bold", 15 * -1)
         )
