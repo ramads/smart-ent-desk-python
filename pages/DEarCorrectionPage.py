@@ -8,8 +8,11 @@ from pages import DEarResultPage
 
 
 class DEarCorrectionPage(Canvas, BasePage):
-    def __init__(self, window):
+    def __init__(self, window, result_1, result_2, result_3):
         self.window = window
+        self.result_1 = result_1
+        self.result_2 = result_2
+        self.result_3 = result_3
         super().__init__(
             window,
             bg=BACKGROUND_COLOUR,
@@ -106,7 +109,8 @@ class DEarCorrectionPage(Canvas, BasePage):
         def show():
             label = clicked.get()
             print(clicked.get())
-            goToPage(DEarResultPage.DEarResultPage(self.window))
+            self.result_1[0] = "{}".format(label)
+            goToPage(DEarResultPage.DEarResultPage(self.window, self.result_1, self.result_2, self.result_3))
 
         # Define options
         options = [

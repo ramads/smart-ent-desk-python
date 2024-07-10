@@ -7,13 +7,13 @@ from pages import DEarCorrectionPage
 from pages import DEarCompletePage
 from pages import FullScreenImagePage
 
-from machine_learning.image_predictor import ImagePredictor
-
-global label
-
 class DEarResultPage(Canvas, BasePage):
-    def __init__(self, window):
+    def __init__(self, window, result_1, result_2, result_3):
         self.window = window
+        self.result_1=list(result_1)
+        self.result_2=list(result_2)
+        self.result_3=list(result_3)
+
         super().__init__(
             window,
             bg=BACKGROUND_COLOUR,
@@ -27,8 +27,9 @@ class DEarResultPage(Canvas, BasePage):
     def loadImage(self):
         return PhotoImage(file=relative_to_assets("image_3.png"))
 
-    def drawPage(self, data = None):
+    def drawPage(self):
         self.place(x = 0, y = 0)
+
         image_image_1 = PhotoImage(
             file=relative_to_assets("control/DEarResultFrame/image_1.png"))
         image_1 = self.create_image(
@@ -46,17 +47,6 @@ class DEarResultPage(Canvas, BasePage):
             235.5,
             image=captured_img
         )
-
-        # Initialize the predictor
-        predictor = ImagePredictor()
-
-        image_path = 'temp_image/test_image.jpg'
-
-        # Get the prediction results
-        result_1, result_2, result_3 = predictor.predict(image_path)
-
-        # Save result to global variable
-        label = result_1[0]
 
 
         image_image_4 = PhotoImage(
@@ -97,7 +87,7 @@ class DEarResultPage(Canvas, BasePage):
             1018.0,
             366.5,
             anchor="nw",
-            text=result_3[0],
+            text=self.result_3[0],
             fill="#404040",
             font=("Nunito Regular", 12 * -1)
         )
@@ -114,7 +104,7 @@ class DEarResultPage(Canvas, BasePage):
             886.0,
             366.5,
             anchor="nw",
-            text=result_2[0],
+            text=self.result_2[0],
             fill="#404040",
             font=("Nunito Regular", 12 * -1)
         )
@@ -131,7 +121,7 @@ class DEarResultPage(Canvas, BasePage):
             754.0,
             366.5,
             anchor="nw",
-            text=label,
+            text=self.result_1[0],
             fill="#404040",
             font=("Nunito Regular", 12 * -1)
         )
@@ -165,7 +155,7 @@ class DEarResultPage(Canvas, BasePage):
             67.0,
             507.0,
             anchor="nw",
-            text=result_1[0],
+            text=self.result_1[0],
             fill="#1E5C2A",
             font=("Nunito Bold", 24 * -1)
         )
@@ -183,7 +173,7 @@ class DEarResultPage(Canvas, BasePage):
             280.0,
             547.0,
             anchor="nw",
-            text = "{} %".format(int(result_1[1] * 100)),
+            text = "{} %".format(int(self.result_1[1] * 100)),
             fill="#1E5C2A",
             font=("Nunito Bold", 15 * -1)
         )
@@ -335,7 +325,7 @@ class DEarResultPage(Canvas, BasePage):
         
         create_hover_button(self.window, 67.0, 623.0, 192.0, 54.0,
                             "#FFFFFF", inactive_button_2, active_button_2, 
-                            lambda: goToPage(DEarCorrectionPage.DEarCorrectionPage(self.window)))
+                            lambda: goToPage(DEarCorrectionPage.DEarCorrectionPage(self.window, self.result_1, self.result_2, self.result_3)))
         
         create_hover_button(self.window, 267.0, 623.0, 192.0, 54.0,
                             "#FFFFFF", inactive_button_3, active_button_3,  

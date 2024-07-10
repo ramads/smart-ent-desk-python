@@ -5,6 +5,7 @@ from helpers import *
 from pages import PatientQueuePage
 from pages import NotificationPage
 from pages import MedicalRecordPage
+from pages import DEarLoadingPage
 
 
 class HomePage(Canvas, BasePage):

@@ -4,7 +4,7 @@ from helpers import *
 from PIL import ImageTk, Image
 
 from pages import DEarProcessPage
-from pages import DEarResultPage
+from pages import DEarLoadingPage
 
 
 class PreviewImagePage(Canvas, BasePage):
@@ -61,7 +61,7 @@ class PreviewImagePage(Canvas, BasePage):
                             lambda: goToPage(DEarProcessPage.DEarProcessPage(self.window)))
         create_hover_button(self.window, 570.5, 631.0, 192.0, 54.0, 
                             "#FFFFFF", inactive_button_2, active_button_2,  
-                            lambda: goToPage(DEarResultPage.DEarResultPage(self.window)))
+                            lambda: goToPage(DEarLoadingPage.DEarLoadingPage(self.window)))
 
 
         self.create_text(
