@@ -419,6 +419,7 @@ class PatientQueuePage(Canvas, BasePage):
             image=image_image_8
         )
 
+
         inactive_button_3 = relative_to_assets("control/PatientQueueFrame/button_3.png")
         active_button_3 = relative_to_assets("control/PatientQueueFrame/active_button_3.png")
         
@@ -439,7 +440,6 @@ class PatientQueuePage(Canvas, BasePage):
         create_hover_button(self.window, 509.5, 633.5, 192.0, 54.0,
                             BACKGROUND_COLOUR, inactive_button_5, active_button_5,  
                             lambda: self.next_patient())
-
         self.create_text(
             130.0,
             117.5,
@@ -490,5 +490,26 @@ class PatientQueuePage(Canvas, BasePage):
             fill="#FFFFFF",
             font=("SFProText Semibold", 15 * -1)
         )
+
+        inactive_button_3 = relative_to_assets("control/PatientQueueFrame/button_3.png")
+        active_button_3 = relative_to_assets("control/PatientQueueFrame/active_button_3.png")
+        
+        inactive_button_4 = relative_to_assets("control/PatientQueueFrame/button_4.png")
+        active_button_4 = relative_to_assets("control/PatientQueueFrame/active_button_4.png")
+        
+        inactive_button_5 = relative_to_assets("control/PatientQueueFrame/button_5.png")
+        active_button_5 = relative_to_assets("control/PatientQueueFrame/active_button_5.png")
+
+        create_hover_button(self.window, 59.5, 633.5, 192.0, 54.0, 
+                            BACKGROUND_COLOUR, inactive_button_3, active_button_3,  
+                            lambda: goToPage(HomePage.HomePage(self.window)))
+        
+        create_hover_button(self.window, 284.5, 633.5, 192.0, 54.0,
+                            BACKGROUND_COLOUR, inactive_button_4, active_button_4,  
+                            lambda: goToPage(DiagnosisPage.DiagnosisPage(self.window)))
+        
+        create_hover_button(self.window, 509.5, 633.5, 192.0, 54.0,
+                            BACKGROUND_COLOUR, inactive_button_5, active_button_5,  
+                            lambda: print("button_5 clicked"))
 
         self.window.mainloop()

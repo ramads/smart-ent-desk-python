@@ -1,7 +1,9 @@
 from tkinter import *
 from colors import *
 from helpers import *
+
 from pages.DEarPage import DEarPage
+from pages import PatientQueuePage
 
 class DiagnosisPage(Canvas, BasePage):
     def __init__(self, window, id_patient = None):
@@ -28,18 +30,25 @@ class DiagnosisPage(Canvas, BasePage):
 
         inactive_button_3 = relative_to_assets("control/DiagnosisFrame/button_3.png")
         active_button_3 = relative_to_assets("control/DiagnosisFrame/active_button_3.png")
+
+        inactive_button_4 = relative_to_assets("control/DiagnosisFrame/button_4.png")
+        active_button_4 = relative_to_assets("control/DiagnosisFrame/active_button_4.png")
         
-        create_hover_button(self.window, 41.0, 255.0, 332.0, 319.0,
+        create_hover_button(self.window, 41.0, 223.0, 332.0, 319.0,
                             BACKGROUND_COLOUR, inactive_button_1, active_button_1, 
                             lambda: goToPage(DEarPage(self.window, self.id_patient, "Telinga")))
         
-        create_hover_button(self.window, 402.0, 255.0, 330.0, 319.0,
+        create_hover_button(self.window, 402.0, 223.0, 330.0, 319.0,
                             BACKGROUND_COLOUR, inactive_button_2, active_button_2,  
                             lambda: print("button_2 clicked"))
         
-        create_hover_button(self.window, 761.0, 255.0, 332.0, 319.0,
+        create_hover_button(self.window, 761.0, 223.0, 332.0, 319.0,
                             BACKGROUND_COLOUR, inactive_button_3, active_button_3,  
                             lambda: print("button_3 clicked"))
+        
+        create_hover_button(self.window, 471, 635.0, 192.0, 54.0,
+                            BACKGROUND_COLOUR, inactive_button_4, active_button_4,  
+                            lambda: goToPage(PatientQueuePage.PatientQueuePage(self.window)))
 
         image_image_1 = PhotoImage(
             file=relative_to_assets("control/DiagnosisFrame/image_1.png"))
@@ -51,7 +60,7 @@ class DiagnosisPage(Canvas, BasePage):
 
         self.create_text(
             555.0,
-            630.0,
+            590.0,
             anchor="center",
             text="Silakan pilih diagnosa yang akan anda lakukan.\n      Kami akan menyiapkannya untuk anda.",
             fill="#FFFFFF",

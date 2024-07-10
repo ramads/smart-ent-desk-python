@@ -1,9 +1,10 @@
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from tkinter import *
 from colors import *
 from helpers import *
 from PIL import ImageTk, Image
 
-from pages import DEarProcessPage
 from pages import DEarCorrectionPage
 from machine_learning.image_predictor import ImagePredictor
 from datetime import datetime
@@ -13,10 +14,17 @@ from database.models.History import HistoryModel
 from database.models.Patient import PatientModel
 from database.models.Insurance import InsuranceModel
 
+from pages import DEarCompletePage
+from pages import FullScreenImagePage
 
 class DEarResultPage(Canvas, BasePage):
-    def __init__(self, window, id_patient=None, organ=None):
+    def __init__(self, window, result_1, result_2, result_3, id_patient=None, organ=None):
+
         self.window = window
+        self.result_1=list(result_1)
+        self.result_2=list(result_2)
+        self.result_3=list(result_3)
+
         super().__init__(
             window,
             bg=BACKGROUND_COLOUR,
@@ -54,8 +62,9 @@ class DEarResultPage(Canvas, BasePage):
         confidence = int(confidence)
         self.diagnosis.insert_diagnosis(history_id, diagnosis, diagnosis_date, result, confidence, image_path)
 
-    def drawPage(self, data = None):
+    def drawPage(self):
         self.place(x = 0, y = 0)
+
         image_image_1 = PhotoImage(
             file=relative_to_assets("control/DEarResultFrame/image_1.png"))
         image_1 = self.create_image(
@@ -66,7 +75,7 @@ class DEarResultPage(Canvas, BasePage):
         
         image_path = relative_to_image_capture("test_image.jpg")
         original_image = Image.open(image_path)
-        resized_image = original_image.resize((600, 335))  # Resize to 604x538
+        resized_image = original_image.resize((600, 335)) 
         captured_img = ImageTk.PhotoImage(resized_image)
         image_2 = self.create_image(
             361.0,
@@ -104,13 +113,23 @@ class DEarResultPage(Canvas, BasePage):
             image=image_image_4
         )
 
-        image_image_5 = PhotoImage(
-            file=relative_to_assets("control/DEarResultFrame/image_5.png"))
-        image_5 = self.create_image(
-            895.5,
-            215.0,
-            image=image_image_5
-        )
+        #pie chart
+        labels = [self.result_1[0], self.result_2[0], self.result_3[0], "Lainnya"]
+        sizes = [int(self.result_1[1] * 100), int(self.result_2[1] * 100), int(self.result_3[1] * 100), (100-int((self.result_1[1]+ self.result_2[1]+ self.result_3[1])*100))]
+        colors = ['lightcoral',  'gold', 'yellowgreen', 'lightskyblue']
+        explode = (0.1, 0, 0, 0)
+
+        fig, ax = plt.subplots(figsize=(3, 2), dpi=100)
+        ax.pie(sizes, explode=explode, labels=labels, colors=colors,
+            autopct='%d%%', shadow=True, startangle=140)
+        ax.axis('equal')
+
+        centre_circle = plt.Circle((0, 0), 0.70, fc='white')
+        ax.add_artist(centre_circle)
+
+        chart_canvas = FigureCanvasTkAgg(fig, master=self)
+        chart_canvas.draw()
+        chart_canvas.get_tk_widget().place(x=740.5, y=115.0)
 
         self.create_text(
             726.0,
@@ -134,7 +153,7 @@ class DEarResultPage(Canvas, BasePage):
             1018.0,
             366.5,
             anchor="nw",
-            text=result_3[0],
+            text=self.result_3[0],
             fill="#404040",
             font=("Nunito Regular", 12 * -1)
         )
@@ -151,7 +170,7 @@ class DEarResultPage(Canvas, BasePage):
             886.0,
             366.5,
             anchor="nw",
-            text=result_2[0],
+            text=self.result_2[0],
             fill="#404040",
             font=("Nunito Regular", 12 * -1)
         )
@@ -168,7 +187,7 @@ class DEarResultPage(Canvas, BasePage):
             754.0,
             366.5,
             anchor="nw",
-            text=result_1[0],
+            text=self.result_1[0],
             fill="#404040",
             font=("Nunito Regular", 12 * -1)
         )
@@ -202,7 +221,7 @@ class DEarResultPage(Canvas, BasePage):
             67.0,
             507.0,
             anchor="nw",
-            text=result_1[0],
+            text=self.result_1[0],
             fill="#1E5C2A",
             font=("Nunito Bold", 24 * -1)
         )
@@ -220,7 +239,7 @@ class DEarResultPage(Canvas, BasePage):
             280.0,
             547.0,
             anchor="nw",
-            text = "{} %".format(int(result_1[1] * 100)),
+            text = "{} %".format(int(self.result_1[1] * 100)),
             fill="#1E5C2A",
             font=("Nunito Bold", 15 * -1)
         )
@@ -233,27 +252,6 @@ class DEarResultPage(Canvas, BasePage):
             fill="#8A8C8F",
             font=("Nunito Bold", 12 * -1)
         )
-
-        inactive_button_1 = relative_to_assets("control/DEarResultFrame/button_1.png")
-        active_button_1 = relative_to_assets("control/DEarResultFrame/active_button_1.png")
-        
-        inactive_button_2 = relative_to_assets("control/DEarResultFrame/button_2.png")
-        active_button_2 = relative_to_assets("control/DEarResultFrame/active_button_2.png")
-        
-        inactive_button_3 = relative_to_assets("control/DEarResultFrame/button_3.png")
-        active_button_3 = relative_to_assets("control/DEarResultFrame/active_button_3.png")
-
-        create_hover_button(self.window, 607.0, 340.0, 31.0, 31.0,
-                            BACKGROUND_COLOUR, inactive_button_1, active_button_1, 
-                            lambda: print("button_1 clicked"))
-        
-        create_hover_button(self.window, 67.0, 623.0, 192.0, 54.0,
-                            "#FFFFFF", inactive_button_2, active_button_2, 
-                            lambda: goToPage(DEarCorrectionPage.DEarCorrectionPage(self.window)))
-        
-        create_hover_button(self.window, 267.0, 623.0, 192.0, 54.0,
-                            "#FFFFFF", inactive_button_3, active_button_3,  
-                            lambda: print("button_3 clicked"))
 
         image_image_10 = PhotoImage(
             file=relative_to_assets("control/DEarResultFrame/image_10.png"))
@@ -377,5 +375,27 @@ class DEarResultPage(Canvas, BasePage):
             fill="#FFFFFF",
             font=("SFProText Semibold", 15 * -1)
         )
+
+        inactive_button_1 = relative_to_assets("control/DEarResultFrame/button_1.png")
+        active_button_1 = relative_to_assets("control/DEarResultFrame/active_button_1.png")
+        
+        inactive_button_2 = relative_to_assets("control/DEarResultFrame/button_2.png")
+        active_button_2 = relative_to_assets("control/DEarResultFrame/active_button_2.png")
+        
+        inactive_button_3 = relative_to_assets("control/DEarResultFrame/button_3.png")
+        active_button_3 = relative_to_assets("control/DEarResultFrame/active_button_3.png")
+
+        create_hover_button(self.window, 597.0, 330.0, 52.0, 52.0,
+                            BACKGROUND_COLOUR, inactive_button_1, active_button_1, 
+                            lambda: goToPage(FullScreenImagePage.FullScreenImagePage(self.window, self.result_1, self.result_2, self.result_3)))
+        
+        create_hover_button(self.window, 67.0, 623.0, 192.0, 54.0,
+                            "#FFFFFF", inactive_button_2, active_button_2, 
+                            lambda: goToPage(DEarCorrectionPage.DEarCorrectionPage(self.window, self.result_1, self.result_2, self.result_3)))
+        
+        create_hover_button(self.window, 267.0, 623.0, 192.0, 54.0,
+                            "#FFFFFF", inactive_button_3, active_button_3,  
+                            lambda: goToPage(DEarCompletePage.DEarCompletePage(self.window)))
+
 
         self.window.mainloop()

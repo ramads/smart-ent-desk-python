@@ -2,13 +2,17 @@ from tkinter import *
 from colors import *
 from helpers import *
 from PIL import ImageTk, Image
+from tkinter import ttk
 
 from pages import DEarResultPage
 
 
 class DEarCorrectionPage(Canvas, BasePage):
-    def __init__(self, window):
+    def __init__(self, window, result_1, result_2, result_3):
         self.window = window
+        self.result_1 = result_1
+        self.result_2 = result_2
+        self.result_3 = result_3
         super().__init__(
             window,
             bg=BACKGROUND_COLOUR,
@@ -64,7 +68,7 @@ class DEarCorrectionPage(Canvas, BasePage):
             123.0,
             anchor="nw",
             text="Untuk mengoreksi hasil diagnosa \n sebelumnya, mohon untuk memilih label\n berikut yang dinilai sesuai dengan penyakit \n yang diderita pasien dan sertakan \nalasan yang jelas.",
-            fill="#14181F",
+            fill="#8A8C8F",
             font=("Nunito Regular", 14 * -1)
         )
 
@@ -75,83 +79,6 @@ class DEarCorrectionPage(Canvas, BasePage):
             text="Label Baru",
             fill="#404040",
             font=("Nunito Bold", 19 * -1)
-        )
-
-        button_image_1 = PhotoImage(
-            file=relative_to_assets("control/DEarCorrectionFrame/button_1.png"))
-        button_1 = Button(
-            image=button_image_1,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: print("button_1 clicked"),
-            relief="flat"
-        )
-        button_1.place(
-            x=749.0,
-            y=262.0,
-            width=310.0,
-            height=40.0
-        )
-
-        self.create_text(
-            749.0,
-            334.0,
-            anchor="nw",
-            text="Alasan",
-            fill="#404040",
-            font=("Nunito Bold", 19 * -1)
-        )
-
-        entry_image_1 = PhotoImage(
-            file=relative_to_assets("control/DEarCorrectionFrame/entry_1.png"))
-        entry_bg_1 = self.create_image(
-            904.0,
-            404.0,
-            image=entry_image_1
-        )
-        entry_1 = Text(
-            bd=0,
-            bg="#FFFFFF",
-            fg="#000716",
-            highlightthickness=0
-        )
-        entry_1.place(
-            x=759.0,
-            y=368.0,
-            width=290.0,
-            height=70.0
-        )
-
-        button_image_2 = PhotoImage(
-            file=relative_to_assets("control/DEarCorrectionFrame/button_2.png"))
-        button_2 = Button(
-            image=button_image_2,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: goToPage(DEarResultPage.DEarResultPage(self.window)),
-            relief="flat"
-        )
-        button_2.place(
-            x=750.0,
-            y=463.0,
-            width=150.0,
-            height=46.0
-        )
-
-        button_image_3 = PhotoImage(
-            file=relative_to_assets("control/DEarCorrectionFrame/button_3.png"))
-        button_3 = Button(
-            image=button_image_3,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: print("button_3 clicked"),
-            relief="flat"
-        )
-        button_3.place(
-            x=908.0,
-            y=463.0,
-            width=150.0,
-            height=46.0
         )
 
         image_image_4 = PhotoImage(
@@ -178,5 +105,102 @@ class DEarCorrectionPage(Canvas, BasePage):
             fill="#FFFFFF",
             font=("SFProText Semibold", 15 * -1)
         )
+
+        def show():
+            label = clicked.get()
+            print(clicked.get())
+            self.result_1[0] = "{}".format(label)
+            goToPage(DEarResultPage.DEarResultPage(self.window, self.result_1, self.result_2, self.result_3))
+
+        # Define options
+        options = [
+            'Aerotitis Barotrauma', 'Cerumen', 'Corpus Alienum', 'M Timpani normal', 
+            'Myringitis Bulosa', 'Normal', 'OE Difusa', 'OE Furunkulosa', 'OMA Hiperemis', 
+            'OMA Oklusi Tuba', 'OMA Perforasi', 'OMA Resolusi', 'OMA Supurasi', 'OMed Efusi', 
+            'OMedK Resolusi', 'OMedK Tipe Aman', 'OMedK Tipe Bahaya', 'Otomikosis', 
+            'Perforasi Membran Tympani', 'Tympanosklerotik'
+        ]
+
+        # Create a Tkinter StringVar to hold the selected option
+        clicked = StringVar()
+        clicked.set("Pilih Label")
+
+        # Create a style for the OptionMenu
+        style = ttk.Style()
+        style.theme_use('clam')
+        style.configure("Rounded.TMenubutton",
+                        relief="flat",
+                        padding=6,
+                        background="#FFFFFF",
+                        foreground="black",
+                        borderwidth=1,
+                        bordercolor="black",
+                        border=8,
+                        focusthickness=3,
+                        focuscolor="#FFFFFF",
+                        anchor="w")
+        style.map("Rounded.TMenubutton",
+                background=[("active", "skyblue")])
+        
+
+        # Create the OptionMenu with the custom style
+        drop = ttk.OptionMenu(self.window, clicked, options[0], *options)
+        drop.config(style="Rounded.TMenubutton")
+        drop.pack(pady=20)
+
+        drop.place(
+            x=749.0,
+            y=262.0,
+            width=310.0,
+            height=40.0
+        )
+
+
+        self.create_text(
+            749.0,
+            334.0,
+            anchor="nw",
+            text="Alasan",
+            fill="#404040",
+            font=("Nunito Bold", 19 * -1)
+        )
+
+        entry_image_1 = PhotoImage(
+            file=relative_to_assets("control/DEarCorrectionFrame/entry_1.png"))
+        entry_bg_1 = self.create_image(
+            904.0,
+            404.0,
+            image=entry_image_1
+        )
+
+        entry_1 = TextArea(
+            self.window,
+            bd=0,
+            bg="#FFFFFF",
+            fg="#000716",
+            highlightthickness=0,
+            placeholder="Enter your text here..."
+        )
+        entry_1.place(
+            x=758.0,
+            y=372.0,
+            width=290.0,
+            height=65.0
+        )
+
+        inactive_button_2 = relative_to_assets("control/DEarCorrectionFrame/button_2.png")
+        active_button_2 = relative_to_assets("control/DEarCorrectionFrame/active_button_2.png")
+
+        inactive_button_3 = relative_to_assets("control/DEarCorrectionFrame/button_3.png")
+        active_button_3 = relative_to_assets("control/DEarCorrectionFrame/active_button_3.png")
+
+        create_hover_button(self.window, 750.0, 463.0, 150.0, 46.0,
+                            "#FFFFFF", inactive_button_2, active_button_2,  
+                            lambda: goToPage(DEarResultPage.DEarResultPage(self.window, self.result_1, self.result_2, self.result_3)))
+        
+        create_hover_button(self.window, 908.0, 463.0, 150.0, 46.0,
+                            "#FFFFFF", inactive_button_3, active_button_3,  
+                            show)
+
 
         self.window.mainloop()
