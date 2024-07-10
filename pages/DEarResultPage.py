@@ -1,3 +1,5 @@
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from tkinter import *
 from colors import *
 from helpers import *
@@ -26,6 +28,7 @@ class DEarResultPage(Canvas, BasePage):
 
     def loadImage(self):
         return PhotoImage(file=relative_to_assets("image_3.png"))
+    
 
     def drawPage(self):
         self.place(x = 0, y = 0)
@@ -57,13 +60,23 @@ class DEarResultPage(Canvas, BasePage):
             image=image_image_4
         )
 
-        image_image_5 = PhotoImage(
-            file=relative_to_assets("control/DEarResultFrame/image_5.png"))
-        image_5 = self.create_image(
-            895.5,
-            215.0,
-            image=image_image_5
-        )
+        #pie chart
+        labels = [self.result_1[0], self.result_2[0], self.result_3[0], "Lainnya"]
+        sizes = [int(self.result_1[1] * 100), int(self.result_2[1] * 100), int(self.result_3[1] * 100), (100-int((self.result_1[1]+ self.result_2[1]+ self.result_3[1])*100))]
+        colors = ['lightcoral',  'gold', 'yellowgreen', 'lightskyblue']
+        explode = (0.1, 0, 0, 0)
+
+        fig, ax = plt.subplots(figsize=(3, 2), dpi=100)
+        ax.pie(sizes, explode=explode, labels=labels, colors=colors,
+            autopct='%d%%', shadow=True, startangle=140)
+        ax.axis('equal')
+
+        centre_circle = plt.Circle((0, 0), 0.70, fc='white')
+        ax.add_artist(centre_circle)
+
+        chart_canvas = FigureCanvasTkAgg(fig, master=self)
+        chart_canvas.draw()
+        chart_canvas.get_tk_widget().place(x=740.5, y=115.0)
 
         self.create_text(
             726.0,
@@ -321,7 +334,7 @@ class DEarResultPage(Canvas, BasePage):
 
         create_hover_button(self.window, 597.0, 330.0, 52.0, 52.0,
                             BACKGROUND_COLOUR, inactive_button_1, active_button_1, 
-                            lambda: goToPage(FullScreenImagePage.FullScreenImagePage(self.window)))
+                            lambda: goToPage(FullScreenImagePage.FullScreenImagePage(self.window, self.result_1, self.result_2, self.result_3)))
         
         create_hover_button(self.window, 67.0, 623.0, 192.0, 54.0,
                             "#FFFFFF", inactive_button_2, active_button_2, 

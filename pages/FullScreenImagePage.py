@@ -5,8 +5,11 @@ from helpers import *
 from pages import DEarResultPage
 
 class FullScreenImagePage(Canvas, BasePage):
-    def __init__(self, window):
+    def __init__(self, window, result_1, result_2, result_3):
         self.window = window
+        self.result_1=list(result_1)
+        self.result_2=list(result_2)
+        self.result_3=list(result_3)
         super().__init__(
             window,
             bg=BACKGROUND_COLOUR,
@@ -68,7 +71,7 @@ class FullScreenImagePage(Canvas, BasePage):
         
         create_hover_button(self.window, 500.5, 648.0, 136.0, 42.0,
                             "#FFFFFF", inactive_button_1, active_button_1, 
-                            lambda: goToPage(DEarResultPage.DEarResultPage(self.window)))
+                            lambda: goToPage(DEarResultPage.DEarResultPage(self.window, self.result_1, self.result_2, self.result_3)))
 
         
         self.window.mainloop()

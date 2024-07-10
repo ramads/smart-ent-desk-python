@@ -196,7 +196,7 @@ class DEarCorrectionPage(Canvas, BasePage):
 
         create_hover_button(self.window, 750.0, 463.0, 150.0, 46.0,
                             "#FFFFFF", inactive_button_2, active_button_2,  
-                            lambda: goToPage(DEarResultPage.DEarResultPage(self.window)))
+                            lambda: goToPage(DEarResultPage.DEarResultPage(self.window, self.result_1, self.result_2, self.result_3)))
         
         create_hover_button(self.window, 908.0, 463.0, 150.0, 46.0,
                             "#FFFFFF", inactive_button_3, active_button_3,  
