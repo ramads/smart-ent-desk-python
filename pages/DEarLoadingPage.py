@@ -25,6 +25,7 @@ class DEarLoadingPage(Canvas, BasePage):
             relief="ridge"
         )
         self.drawPage()
+
     def run_prediction(self):
         predictor = ImagePredictor()
         image_path = 'temp_image/test_image.jpg'
@@ -44,10 +45,13 @@ class DEarLoadingPage(Canvas, BasePage):
             self.task_id = self.window.after(90, self.update_progress)
         else:
             self.stop()
-            self.window.after(500, self.load_next_page)
+            self.window.after(100, self.check_thread)
 
-    def load_next_page(self):
-        goToPage(DEarResultPage.DEarResultPage(self.window, self.result_1, self.result_2, self.result_3))
+    def check_thread(self):
+        if self.predictor_thread.is_alive():
+            self.window.after(5, self.check_thread)
+        else:
+            goToPage(DEarResultPage.DEarResultPage(self.window, self.result_1, self.result_2, self.result_3))
 
     def drawPage(self):
         self.place(x=0, y=0)
@@ -115,6 +119,5 @@ class DEarLoadingPage(Canvas, BasePage):
         # Start the predictor in a new thread
         self.predictor_thread = threading.Thread(target=self.run_prediction)
         self.predictor_thread.start()
-
 
         self.window.mainloop()
