@@ -63,7 +63,7 @@ class PreviewImagePage(Canvas, BasePage):
                             lambda: goToPage(DEarProcessPage.DEarProcessPage(self.window, self.id_patient, self.organ)))
         create_hover_button(self.window, 570.5, 631.0, 192.0, 54.0, 
                             "#FFFFFF", inactive_button_2, active_button_2,  
-                            lambda: goToPage(DEarResultPage.DEarResultPage(self.window, self.id_patient, self.organ)))
+                            lambda: goToPage(DEarLoadingPage.DEarLoadingPage(self.window, self.id_patient, self.organ)))
 
 
 
