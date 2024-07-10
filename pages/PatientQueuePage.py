@@ -429,17 +429,6 @@ class PatientQueuePage(Canvas, BasePage):
         inactive_button_5 = relative_to_assets("control/PatientQueueFrame/button_5.png")
         active_button_5 = relative_to_assets("control/PatientQueueFrame/active_button_5.png")
 
-        create_hover_button(self.window, 59.5, 633.5, 192.0, 54.0, 
-                            BACKGROUND_COLOUR, inactive_button_3, active_button_3,  
-                            lambda: goToPage(HomePage.HomePage(self.window)))
-        
-        create_hover_button(self.window, 284.5, 633.5, 192.0, 54.0,
-                            BACKGROUND_COLOUR, inactive_button_4, active_button_4,  
-                            lambda: goToPage(DiagnosisPage.DiagnosisPage(self.window, self.patient_data[self.current_patient]['id_pasien'])))
-        
-        create_hover_button(self.window, 509.5, 633.5, 192.0, 54.0,
-                            BACKGROUND_COLOUR, inactive_button_5, active_button_5,  
-                            lambda: self.next_patient())
         self.create_text(
             130.0,
             117.5,
@@ -506,10 +495,9 @@ class PatientQueuePage(Canvas, BasePage):
         
         create_hover_button(self.window, 284.5, 633.5, 192.0, 54.0,
                             BACKGROUND_COLOUR, inactive_button_4, active_button_4,  
-                            lambda: goToPage(DiagnosisPage.DiagnosisPage(self.window)))
+                            lambda: goToPage(DiagnosisPage.DiagnosisPage(self.window, self.patient_data[self.current_patient]['id_pasien'])))
         
         create_hover_button(self.window, 509.5, 633.5, 192.0, 54.0,
                             BACKGROUND_COLOUR, inactive_button_5, active_button_5,  
-                            lambda: print("button_5 clicked"))
-
+                            lambda: self.next_patient())
         self.window.mainloop()

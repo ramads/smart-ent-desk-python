@@ -13,7 +13,7 @@ class DEarLoadingPage(Canvas, BasePage):
     result_2 = ("",0)
     result_3 = ("",0)
 
-    def __init__(self, window):
+    def __init__(self, window, id_patient=None, organ=None):
         self.window = window
         super().__init__(
             window,
@@ -24,7 +24,10 @@ class DEarLoadingPage(Canvas, BasePage):
             highlightthickness=0,
             relief="ridge"
         )
+        self.id_patient = id_patient
+        self.organ = organ
         self.drawPage()
+
 
     def run_prediction(self):
         predictor = ImagePredictor()
@@ -51,7 +54,7 @@ class DEarLoadingPage(Canvas, BasePage):
         if self.predictor_thread.is_alive():
             self.window.after(5, self.check_thread)
         else:
-            goToPage(DEarResultPage.DEarResultPage(self.window, self.result_1, self.result_2, self.result_3))
+            goToPage(DEarResultPage.DEarResultPage(self.window, self.result_1, self.result_2, self.result_3, self.id_patient, self.organ))
 
     def drawPage(self):
         self.place(x=0, y=0)
