@@ -97,13 +97,13 @@ class DEarResultPage(Canvas, BasePage):
         image_path_temp = image_path
         self.insert_data(1, result_1[0], current_date,"", result_1[1],  image_path_temp)
 
-        image_image_3 = PhotoImage(
-            file=relative_to_assets("control/DEarResultFrame/image_3.png"))
-        image_3 = self.create_image(
-            623.0,
-            356.0,
-            image=image_image_3
-        )
+        # image_image_3 = PhotoImage(
+        #     file=relative_to_assets("control/DEarResultFrame/image_3.png"))
+        # image_3 = self.create_image(
+        #     623.0,
+        #     356.0,
+        #     image=image_image_3
+        # )
 
         image_image_4 = PhotoImage(
             file=relative_to_assets("control/DEarResultFrame/image_4.png"))
