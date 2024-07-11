@@ -6,7 +6,7 @@ from pages import DEarProcessPage, DiagnosisPage
 
 class DEarPage(Canvas, BasePage):
 
-    def __init__(self, window, id_patient=None, organ=None):
+    def __init__(self, window, temp_data=None, organ=None):
         self.window = window
         super().__init__(
             window,
@@ -17,8 +17,8 @@ class DEarPage(Canvas, BasePage):
             highlightthickness=0,
             relief="ridge"
         )
-        self.id_patient = id_patient
-        self.organ = organ
+        self.temp_data = temp_data
+        self.temp_data['organ'] = organ
 
     def drawPage(self):
         self.place(x=0, y=0)
@@ -31,11 +31,11 @@ class DEarPage(Canvas, BasePage):
 
         create_hover_button(self.window, 431.0, 600.0, 136.0, 42.0,
                             "#FFFFFF", inactive_button_1, active_button_1, 
-                            lambda: goToPage(DiagnosisPage.DiagnosisPage(self.window, self.id_patient)))
+                            lambda: goToPage(DiagnosisPage.DiagnosisPage(self.window, self.temp_data['id_patient'])))
         
         create_hover_button(self.window, 575.0, 600.0, 136.0, 42.0,
                             "#FFFFFF", inactive_button_2, active_button_2,  
-                            lambda: goToPage(DEarProcessPage.DEarProcessPage(self.window, self.id_patient, self.organ)))
+                            lambda: goToPage(DEarProcessPage.DEarProcessPage(self.window, self.temp_data)))
         
 
         image_image_1 = PhotoImage(

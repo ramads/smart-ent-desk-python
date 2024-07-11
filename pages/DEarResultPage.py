@@ -7,23 +7,20 @@ from PIL import ImageTk, Image
 
 from pages import DEarCorrectionPage
 from machine_learning.image_predictor import ImagePredictor
-from datetime import datetime
 
-from database.models.Diagnosis import DiagnosisModel
-from database.models.History import HistoryModel
 from database.models.Patient import PatientModel
 from database.models.Insurance import InsuranceModel
 
 from pages import DEarCompletePage
 from pages import FullScreenImagePage
 
+from pprint import pprint
+
 class DEarResultPage(Canvas, BasePage):
-    def __init__(self, window, result_1, result_2, result_3, id_patient=None, organ=None):
+    def __init__(self, window, temp_data=None):
 
         self.window = window
-        self.result_1=list(result_1)
-        self.result_2=list(result_2)
-        self.result_3=list(result_3)
+        self.temp_data = temp_data
 
         super().__init__(
             window,
@@ -34,33 +31,29 @@ class DEarResultPage(Canvas, BasePage):
             highlightthickness=0,
             relief="ridge"
         )
-        self.id_patient = id_patient
-        self.organ = organ
-        self.diagnosis = DiagnosisModel()
-        self.history = HistoryModel()
         self.patient = PatientModel()
         self.insurance = InsuranceModel()
-
         self.get_patient_data()
         self.get_insurance_data()
+        pprint(self.temp_data)
+        
 
     def get_patient_data(self):
-        self.patient_data = self.patient.get_patient(self.id_patient)
+        self.patient_data = self.patient.get_patient(self.temp_data['id_patient'])
 
     def get_insurance_data(self):
-        self.insurance_data = self.insurance.get_patient_insurances(self.id_patient)
+        self.insurance_data = self.insurance.get_patient_insurances(self.temp_data['id_patient'])
     
     def loadImage(self):
         return PhotoImage(file=relative_to_assets("image_3.png"))
     
-    def insert_data(self, hospital_id, diagnosis, diagnosis_date, result, confidence, image_path_temp):
-        history_id = self.history.insert_history(self.id_patient, hospital_id, self.organ)
-        image_path = f"temp_image/{self.id_patient}_{history_id}.jpg"
-        image = Image.open(image_path_temp)
-        image.save(image_path)
-        confidence = round(confidence, 2) * 100
-        confidence = int(confidence)
-        self.diagnosis.insert_diagnosis(history_id, diagnosis, diagnosis_date, result, confidence, image_path)
+    def update_data(self, hospital_id, result_1, result_2, result_3, image_path_temp):
+        self.temp_data['result_1'] = result_1
+        self.temp_data['result_2'] = result_2
+        self.temp_data['result_3'] = result_3
+        self.temp_data['id_hospital'] = hospital_id
+        self.temp_data['image_path_temp'] = image_path_temp
+
 
     def drawPage(self):
         self.place(x = 0, y = 0)
@@ -84,18 +77,15 @@ class DEarResultPage(Canvas, BasePage):
         )
 
         # Initialize the predictor
-        print("Pattient ID: ", self.id_patient)
         predictor = ImagePredictor()
 
         image_path = 'temp_image/test_image.jpg'
 
         # Get the prediction results
-        result_1, result_2, result_3 = predictor.predict(image_path)
-        
-        current_date = datetime.now().strftime("%Y-%m-%d")
-
-        image_path_temp = image_path
-        self.insert_data(1, result_1[0], current_date,"", result_1[1],  image_path_temp)
+        if not self.temp_data.get('result_1'):
+            result_1, result_2, result_3 = predictor.predict(image_path)
+            image_path_temp = image_path
+            self.update_data(result_1=result_1, result_2=result_2, result_3=result_3, hospital_id=1, image_path_temp=image_path_temp)
 
         # image_image_3 = PhotoImage(
         #     file=relative_to_assets("control/DEarResultFrame/image_3.png"))
@@ -114,8 +104,8 @@ class DEarResultPage(Canvas, BasePage):
         )
 
         #pie chart
-        labels = [self.result_1[0], self.result_2[0], self.result_3[0], "Lainnya"]
-        sizes = [int(self.result_1[1] * 100), int(self.result_2[1] * 100), int(self.result_3[1] * 100), (100-int((self.result_1[1]+ self.result_2[1]+ self.result_3[1])*100))]
+        labels = [self.temp_data['result_1'][0], self.temp_data['result_2'][0], self.temp_data['result_3'][0], "Lainnya"]
+        sizes = [int(self.temp_data['result_1'][1] * 100), int(self.temp_data['result_2'][1] * 100), int(self.temp_data['result_3'][1] * 100), (100-int((self.temp_data['result_1'][1]+ self.temp_data['result_2'][1]+ self.temp_data['result_3'][1])*100))]
         colors = ['lightcoral',  'gold', 'yellowgreen', 'lightskyblue']
         explode = (0.1, 0, 0, 0)
 
@@ -153,7 +143,7 @@ class DEarResultPage(Canvas, BasePage):
             1018.0,
             366.5,
             anchor="nw",
-            text=self.result_3[0],
+            text=self.temp_data['result_3'][0],
             fill="#404040",
             font=("Nunito Regular", 12 * -1)
         )
@@ -170,7 +160,7 @@ class DEarResultPage(Canvas, BasePage):
             886.0,
             366.5,
             anchor="nw",
-            text=self.result_2[0],
+            text=self.temp_data['result_2'][0],
             fill="#404040",
             font=("Nunito Regular", 12 * -1)
         )
@@ -187,7 +177,7 @@ class DEarResultPage(Canvas, BasePage):
             754.0,
             366.5,
             anchor="nw",
-            text=self.result_1[0],
+            text=self.temp_data['result_1'][0],
             fill="#404040",
             font=("Nunito Regular", 12 * -1)
         )
@@ -221,7 +211,7 @@ class DEarResultPage(Canvas, BasePage):
             67.0,
             507.0,
             anchor="nw",
-            text=self.result_1[0],
+            text=self.temp_data['result_1'][0],
             fill="#1E5C2A",
             font=("Nunito Bold", 24 * -1)
         )
@@ -239,7 +229,7 @@ class DEarResultPage(Canvas, BasePage):
             280.0,
             547.0,
             anchor="nw",
-            text = "{} %".format(int(self.result_1[1] * 100)),
+            text = "{} %".format(int(self.temp_data['result_1'][1] * 100)),
             fill="#1E5C2A",
             font=("Nunito Bold", 15 * -1)
         )
@@ -387,15 +377,15 @@ class DEarResultPage(Canvas, BasePage):
 
         create_hover_button(self.window, 597.0, 330.0, 52.0, 52.0,
                             BACKGROUND_COLOUR, inactive_button_1, active_button_1, 
-                            lambda: goToPage(FullScreenImagePage.FullScreenImagePage(self.window, self.result_1, self.result_2, self.result_3)))
+                            lambda: goToPage(FullScreenImagePage.FullScreenImagePage(self.window, self.temp_data)))
         
         create_hover_button(self.window, 67.0, 623.0, 192.0, 54.0,
                             "#FFFFFF", inactive_button_2, active_button_2, 
-                            lambda: goToPage(DEarCorrectionPage.DEarCorrectionPage(self.window, self.result_1, self.result_2, self.result_3)))
+                            lambda: goToPage(DEarCorrectionPage.DEarCorrectionPage(self.window, self.temp_data)))
         
         create_hover_button(self.window, 267.0, 623.0, 192.0, 54.0,
                             "#FFFFFF", inactive_button_3, active_button_3,  
-                            lambda: goToPage(DEarCompletePage.DEarCompletePage(self.window)))
+                            lambda: goToPage(DEarCompletePage.DEarCompletePage(self.window, self.temp_data)))
 
 
         self.window.mainloop()
