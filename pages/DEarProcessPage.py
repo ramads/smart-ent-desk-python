@@ -16,7 +16,7 @@ class DEarProcessPage(Canvas, BasePage):
     image_dir = "./" + DIR_TEMP_IMAGE
     text_command = ""
 
-    def __init__(self, window, id_patient=None, organ=None):
+    def __init__(self, window, temp_data=None):
         super().__init__(
             window,
             bg=BACKGROUND_COLOUR,
@@ -26,8 +26,7 @@ class DEarProcessPage(Canvas, BasePage):
             highlightthickness=0,
             relief="ridge"
         )
-        self.id_patient = id_patient
-        self.organ = organ
+        self.temp_data = temp_data
         os.makedirs(self.image_dir, exist_ok=True)
         self.window = window
         self.vidCap = cv2.VideoCapture(CAMERA_INDEX)
@@ -58,7 +57,7 @@ class DEarProcessPage(Canvas, BasePage):
             print(f"Image captured and saved as '{filename}'")
             self.onStopCamera()
 
-            goToPage(PreviewImagePage.PreviewImagePage(self.window, self.id_patient, self.organ))
+            goToPage(PreviewImagePage.PreviewImagePage(self.window, self.temp_data))
 
     def onStopCamera(self):
         self.vidCap.release()
@@ -67,7 +66,7 @@ class DEarProcessPage(Canvas, BasePage):
 
     def backToPrevPage(self):
         self.onStopCamera()
-        goToPage(DEarPage.DEarPage(self.window))
+        goToPage(DEarPage.DEarPage(self.window, self.temp_data))
 
     def sendSerialCommand(self, command):
         if command == 4: command = 0

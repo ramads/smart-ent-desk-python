@@ -8,11 +8,9 @@ from pages import DEarResultPage
 
 
 class DEarCorrectionPage(Canvas, BasePage):
-    def __init__(self, window, result_1, result_2, result_3):
+    def __init__(self, window, temp_data):
         self.window = window
-        self.result_1 = result_1
-        self.result_2 = result_2
-        self.result_3 = result_3
+        self.temp_data = temp_data
         super().__init__(
             window,
             bg=BACKGROUND_COLOUR,
@@ -109,8 +107,8 @@ class DEarCorrectionPage(Canvas, BasePage):
         def show():
             label = clicked.get()
             print(clicked.get())
-            self.result_1[0] = "{}".format(label)
-            goToPage(DEarResultPage.DEarResultPage(self.window, self.result_1, self.result_2, self.result_3))
+            self.temp_data['result_1'] = (label, self.temp_data['result_1'][1])
+            goToPage(DEarResultPage.DEarResultPage(self.window, self.temp_data))
 
         # Define options
         options = [
@@ -196,7 +194,7 @@ class DEarCorrectionPage(Canvas, BasePage):
 
         create_hover_button(self.window, 750.0, 463.0, 150.0, 46.0,
                             "#FFFFFF", inactive_button_2, active_button_2,  
-                            lambda: goToPage(DEarResultPage.DEarResultPage(self.window, self.result_1, self.result_2, self.result_3)))
+                            lambda: goToPage(DEarResultPage.DEarResultPage(self.window, self.temp_data)))
         
         create_hover_button(self.window, 908.0, 463.0, 150.0, 46.0,
                             "#FFFFFF", inactive_button_3, active_button_3,  
