@@ -1,6 +1,7 @@
 from tkinter import *
 from colors import *
 from helpers import *
+from notificationBar import notificationBar
 
 from pages.DEarPage import DEarPage
 from pages import PatientQueuePage
@@ -23,6 +24,8 @@ class DiagnosisPage(Canvas, BasePage):
 
     def drawPage(self, data = None):
         self.place(x=0, y=0)
+
+        wifi_clock_app = notificationBar(self.window)
 
         inactive_button_1 = relative_to_assets("control/DiagnosisFrame/button_1.png")
         active_button_1 = relative_to_assets("control/DiagnosisFrame/active_button_1.png")
@@ -67,22 +70,6 @@ class DiagnosisPage(Canvas, BasePage):
             text="Silakan pilih diagnosa yang akan anda lakukan.\n      Kami akan menyiapkannya untuk anda.",
             fill="#FFFFFF",
             font=("Nunito SemiBold", 16 * -1)
-        )
-
-        image_image_2 = PhotoImage(
-            file=relative_to_assets("control/DiagnosisFrame/image_2.png"))
-        image_2 = self.create_image(
-            1099.333251953125,
-            22.33349609375,
-            image=image_image_2
-        )
-
-        image_image_3 = PhotoImage(
-            file=relative_to_assets("control/DiagnosisFrame/image_3.png"))
-        image_3 = self.create_image(
-            1074.0,
-            22.33056640625,
-            image=image_image_3
         )
 
         self.create_text(

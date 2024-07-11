@@ -8,6 +8,7 @@ from config import CAMERA_INDEX
 from PIL import Image, ImageTk
 from pages import DEarPage, PreviewImagePage
 from libs.serial_com import SerialCom
+from notificationBar import notificationBar
 
 
 class DEarProcessPage(Canvas, BasePage):
@@ -33,9 +34,7 @@ class DEarProcessPage(Canvas, BasePage):
         self.ret, self.frame = self.vidCap.read()
         if not self.ret:
             print("Failed to grab frame")
-        
-    
-        
+
 
     def updateCameraFrame(self):
         self.ret, self.frame = self.vidCap.read()
@@ -88,6 +87,9 @@ class DEarProcessPage(Canvas, BasePage):
 
     def drawPage(self):
         self.place(x=0, y=0)
+
+        wifi_clock_app = notificationBar(self.window)
+
         image_image_1 = PhotoImage(
             file=relative_to_assets("control/DEarProcessFrame/image_1.png"))
         image_1 = self.create_image(
@@ -437,22 +439,6 @@ class DEarProcessPage(Canvas, BasePage):
             text="Puskesmas Selaparang",
             fill="#404040",
             font=("Nunito Bold", 15 * -1)
-        )
-
-        image_image_5 = PhotoImage(
-            file=relative_to_assets("control/DEarProcessFrame/image_5.png"))
-        image_5 = self.create_image(
-            1099.333251953125,
-            22.33349609375,
-            image=image_image_5
-        )
-
-        image_image_6 = PhotoImage(
-            file=relative_to_assets("control/DEarProcessFrame/image_6.png"))
-        image_6 = self.create_image(
-            1074.0,
-            22.33056640625,
-            image=image_image_6
         )
 
         self.create_text(

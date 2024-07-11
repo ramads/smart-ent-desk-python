@@ -3,6 +3,8 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from tkinter import *
 from colors import *
 from helpers import *
+from notificationBar import notificationBar
+
 from PIL import ImageTk, Image
 
 from pages import DEarCorrectionPage
@@ -57,6 +59,8 @@ class DEarResultPage(Canvas, BasePage):
 
     def drawPage(self):
         self.place(x = 0, y = 0)
+
+        wifi_clock_app = notificationBar(self.window)
 
         image_image_1 = PhotoImage(
             file=relative_to_assets("control/DEarResultFrame/image_1.png"))
@@ -339,31 +343,6 @@ class DEarResultPage(Canvas, BasePage):
             text=self.insurance_data[0]['fasilitas_kesehatan'],
             fill="#404040",
             font=("Nunito Bold", 15 * -1)
-        )
-
-        image_image_11 = PhotoImage(
-            file=relative_to_assets("control/DEarResultFrame/image_11.png"))
-        image_11 = self.create_image(
-            1099.333251953125,
-            22.33349609375,
-            image=image_image_11
-        )
-
-        image_image_12 = PhotoImage(
-            file=relative_to_assets("control/DEarResultFrame/image_12.png"))
-        image_12 = self.create_image(
-            1074.0,
-            22.33056640625,
-            image=image_image_12
-        )
-
-        self.create_text(
-            21.0,
-            13.0,
-            anchor="nw",
-            text="9:41",
-            fill="#FFFFFF",
-            font=("SFProText Semibold", 15 * -1)
         )
 
         inactive_button_1 = relative_to_assets("control/DEarResultFrame/button_1.png")

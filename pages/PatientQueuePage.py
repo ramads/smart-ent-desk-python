@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import *
 from colors import *
 from helpers import *
+from notificationBar import notificationBar
 
 from pages import DiagnosisPage
 from pages import HomePage
@@ -69,6 +70,9 @@ class PatientQueuePage(Canvas, BasePage):
 
     def drawPage(self, data = None):
         self.place(x = 0, y = 0)
+
+        wifi_clock_app = notificationBar(self.window)
+
         image_image_1 = PhotoImage(
             file=relative_to_assets("control/PatientQueueFrame/image_1.png"))
         image_1 = self.create_image(
@@ -455,31 +459,6 @@ class PatientQueuePage(Canvas, BasePage):
             image=image_image_9
         )
 
-        image_image_10 = PhotoImage(
-            file=relative_to_assets("control/PatientQueueFrame/image_10.png"))
-        image_10 = self.create_image(
-            1099.333251953125,
-            22.33349609375,
-            image=image_image_10
-        )
-
-        image_image_11 = PhotoImage(
-            file=relative_to_assets("control/PatientQueueFrame/image_11.png"))
-        image_11 = self.create_image(
-            1074.0,
-            22.33056640625,
-            image=image_image_11
-        )
-
-        self.create_text(
-            21.0,
-            13.0,
-            anchor="nw",
-            text="9:41",
-            fill="#FFFFFF",
-            font=("SFProText Semibold", 15 * -1)
-        )
-
         inactive_button_3 = relative_to_assets("control/PatientQueueFrame/button_3.png")
         active_button_3 = relative_to_assets("control/PatientQueueFrame/active_button_3.png")
         
@@ -500,4 +479,5 @@ class PatientQueuePage(Canvas, BasePage):
         create_hover_button(self.window, 509.5, 633.5, 192.0, 54.0,
                             BACKGROUND_COLOUR, inactive_button_5, active_button_5,  
                             lambda: self.next_patient())
+
         self.window.mainloop()

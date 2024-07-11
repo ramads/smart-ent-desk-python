@@ -2,7 +2,7 @@ from tkinter import *
 from colors import *
 from helpers import *
 from pages import DEarProcessPage, DiagnosisPage
-
+from notificationBar import notificationBar
 
 class DEarPage(Canvas, BasePage):
 
@@ -22,6 +22,8 @@ class DEarPage(Canvas, BasePage):
 
     def drawPage(self):
         self.place(x=0, y=0)
+
+        wifi_clock_app = notificationBar(self.window)
 
         inactive_button_1 = relative_to_assets("control/DEarFrame/button_1.png")
         active_button_1 = relative_to_assets("control/DEarFrame/active_button_1.png")
@@ -78,31 +80,6 @@ class DEarPage(Canvas, BasePage):
             568.0,
             326.0,
             image=image_image_3
-        )
-
-        image_image_4 = PhotoImage(
-            file=relative_to_assets("control/DEarFrame/image_4.png"))
-        image_4 = self.create_image(
-            1099.333251953125,
-            22.33349609375,
-            image=image_image_4
-        )
-
-        image_image_5 = PhotoImage(
-            file=relative_to_assets("control/DEarFrame/image_5.png"))
-        image_5 = self.create_image(
-            1074.0,
-            22.33056640625,
-            image=image_image_5
-        )
-
-        self.create_text(
-            21.0,
-            13.0,
-            anchor="nw",
-            text="9:41",
-            fill="#FFFFFF",
-            font=("SFProText Semibold", 15 * -1)
         )
 
         self.window.mainloop()

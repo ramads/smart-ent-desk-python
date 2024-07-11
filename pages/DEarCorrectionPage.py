@@ -3,6 +3,7 @@ from colors import *
 from helpers import *
 from PIL import ImageTk, Image
 from tkinter import ttk
+from notificationBar import notificationBar
 
 from pages import DEarResultPage
 
@@ -26,6 +27,9 @@ class DEarCorrectionPage(Canvas, BasePage):
 
     def drawPage(self, data = None):
         self.place(x = 0, y = 0)
+
+        wifi_clock_app = notificationBar(self.window)
+
         image_image_1 = PhotoImage(
             file=relative_to_assets("control/DEarCorrectionFrame/image_1.png"))
         image_1 = self.create_image(
@@ -77,31 +81,6 @@ class DEarCorrectionPage(Canvas, BasePage):
             text="Label Baru",
             fill="#404040",
             font=("Nunito Bold", 19 * -1)
-        )
-
-        image_image_4 = PhotoImage(
-            file=relative_to_assets("control/DEarCorrectionFrame/image_4.png"))
-        image_4 = self.create_image(
-            1099.3330078125,
-            22.33349609375,
-            image=image_image_4
-        )
-
-        image_image_5 = PhotoImage(
-            file=relative_to_assets("control/DEarCorrectionFrame/image_5.png"))
-        image_5 = self.create_image(
-            1074.0,
-            22.33056640625,
-            image=image_image_5
-        )
-
-        self.create_text(
-            21.0,
-            13.0,
-            anchor="nw",
-            text="9:41",
-            fill="#FFFFFF",
-            font=("SFProText Semibold", 15 * -1)
         )
 
         def show():

@@ -2,6 +2,7 @@ from tkinter import *
 from colors import *
 from helpers import *
 from PIL import ImageTk, Image
+from notificationBar import notificationBar
 
 from pages import DEarProcessPage
 from pages import DEarLoadingPage
@@ -26,6 +27,9 @@ class PreviewImagePage(Canvas, BasePage):
 
     def drawPage(self, data = None):
         self.place(x=0, y=0)
+
+        wifi_clock_app = notificationBar(self.window)
+
         image_image_1 = PhotoImage(
             file=relative_to_assets("control/PreviewImageFrame/image_1.png"))
         image_1 = self.create_image(
@@ -73,22 +77,6 @@ class PreviewImagePage(Canvas, BasePage):
             text="Gambar Berhasil Diambil!",
             fill="#404040",
             font=("Nunito Bold", 24 * -1)
-        )
-
-        image_image_3 = PhotoImage(
-            file=relative_to_assets("control/PreviewImageFrame/image_3.png"))
-        image_3 = self.create_image(
-            1099.333251953125,
-            22.33349609375,
-            image=image_image_3
-        )
-
-        image_image_4 = PhotoImage(
-            file=relative_to_assets("control/PreviewImageFrame/image_4.png"))
-        image_4 = self.create_image(
-            1074.0,
-            22.33056640625,
-            image=image_image_4
         )
 
         self.create_text(

@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter import ttk
 from colors import *
 from helpers import *
+from notificationBar import notificationBar
 
 from pages import DEarResultPage
 from machine_learning.image_predictor import ImagePredictor
@@ -58,6 +59,8 @@ class DEarLoadingPage(Canvas, BasePage):
     def drawPage(self):
         self.place(x=0, y=0)
 
+        wifi_clock_app = notificationBar(self.window)
+
         self.image_image_1 = PhotoImage(
             file=relative_to_assets("control/DEarLoadingFrame/image_1.png"))
         self.create_image(
@@ -81,31 +84,6 @@ class DEarLoadingPage(Canvas, BasePage):
             text="              Mohon Tunggu Sebentar,\nkami sedang menyiapkannya untuk anda.",
             fill="#FFFFFF",
             font=("Nunito SemiBold", 16 * -1)
-        )
-
-        self.image_image_3 = PhotoImage(
-            file=relative_to_assets("control/DEarLoadingFrame/image_3.png"))
-        self.create_image(
-            1099.3330078125,
-            22.33349609375,
-            image=self.image_image_3
-        )
-
-        self.image_image_4 = PhotoImage(
-            file=relative_to_assets("control/DEarLoadingFrame/image_4.png"))
-        self.create_image(
-            1074.0,
-            22.33056640625,
-            image=self.image_image_4
-        )
-
-        self.create_text(
-            21.0,
-            13.0,
-            anchor="nw",
-            text="9:41",
-            fill="#FFFFFF",
-            font=("SFProText Semibold", 15 * -1)
         )
 
         self.s = ttk.Style()
