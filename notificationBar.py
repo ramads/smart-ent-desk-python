@@ -65,7 +65,7 @@ class notificationBar:
 
     def is_connected_to_internet(self):
         try:
-            subprocess.run(["ping", "-c", "1", "8.8.8.8"], check=True)
+            subprocess.run(["ping", "-c", "1", "8.8.8.8"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
             return True
         except subprocess.CalledProcessError:
             return False
