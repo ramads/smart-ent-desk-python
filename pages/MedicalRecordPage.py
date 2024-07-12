@@ -20,6 +20,10 @@ class MedicalRecordPage(Canvas, BasePage):
             relief="ridge"
         )
 
+    def searching(self) :
+        input_text = self.searchingBox.get("1.0", "end-1c")
+        print("Input text:", input_text)
+
     def drawPage(self):
         self.place(x=0, y=0)
 
@@ -43,7 +47,7 @@ class MedicalRecordPage(Canvas, BasePage):
                                                     bg_color="#FFFFFF",
                                                     border_width=0)
 
-        my_frame.place(x=75, y=305)
+        my_frame.place(x=75, y=312)
         # Create a canvas within the scrollable frame
         canvas_scroll = Canvas(my_frame, width=955, height=2000, bg="#FFFFFF")
         canvas_scroll.pack()
@@ -86,7 +90,7 @@ class MedicalRecordPage(Canvas, BasePage):
 
         self.create_text(
             81.0,
-            273.0,
+            280.0,
             anchor="nw",
             text="Nama",
             fill="#404040",
@@ -95,7 +99,7 @@ class MedicalRecordPage(Canvas, BasePage):
 
         self.create_text(
             380,
-            273.0,
+            280.0,
             anchor="nw",
             text="Diagnosa",
             fill="#404040",
@@ -104,7 +108,7 @@ class MedicalRecordPage(Canvas, BasePage):
 
         self.create_text(
             650.0,
-            273.0,
+            280.0,
             anchor="nw",
             text="Tanggal Periksa",
             fill="#404040",
@@ -113,7 +117,7 @@ class MedicalRecordPage(Canvas, BasePage):
 
         self.create_text(
             915.0,
-            273.0,
+            280.0,
             anchor="nw",
             text="Action",
             fill="#404040",
@@ -172,10 +176,7 @@ class MedicalRecordPage(Canvas, BasePage):
             relief="flat"
         )
         button_5.place(
-            x=964.0,
-            y=216.0,
-            width=88.0,
-            height=45.0
+
         )
 
         self.create_text(
@@ -187,12 +188,34 @@ class MedicalRecordPage(Canvas, BasePage):
             font=("Nunito Bold", 25 * -1)
         )
 
+        self.searchingBox = TextArea(
+            self.window,
+            bd=0,
+            bg="#FFFFFF",
+            fg="#000716",
+            highlightthickness=0,
+            font=("Nunito Bold", 12),
+            placeholder="Enter your text here..."
+        )
+        self.searchingBox.place(
+            x=635.0,
+            y=230.0,
+            width=300.0,
+            height=30.0
+        )
+
         inactive_button_4 = relative_to_assets("control/MedicalRecordFrame/button_4.png")
         active_button_4 = relative_to_assets("control/MedicalRecordFrame/active_button_4.png")
 
-        
+        inactive_button_5 = relative_to_assets("control/MedicalRecordFrame/button_5.png")
+        active_button_5 = relative_to_assets("control/MedicalRecordFrame/active_button_5.png")
+
         create_hover_button(self.window, 471.0,662.0, 192.0, 54.0, 
-                            BACKGROUND_COLOUR, inactive_button_4, active_button_4,  
+                            BACKGROUND_COLOUR, inactive_button_4, active_button_4,
                             lambda: goToPage(HomePage.HomePage(self.window)))
-        
+
+        create_hover_button(self.window, 964.0, 216.0, 88.0, 45.0,
+                            "#FFFFFF", inactive_button_5, active_button_5,
+                            lambda: self.searching())
+
         self.window.mainloop()
