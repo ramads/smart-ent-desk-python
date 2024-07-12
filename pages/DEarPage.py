@@ -6,7 +6,7 @@ from notificationBar import notificationBar
 
 class DEarPage(Canvas, BasePage):
 
-    def __init__(self, window, temp_data=None, organ=None):
+    def __init__(self, window, temp_data=None, diagnosis_type=None):
         self.window = window
         super().__init__(
             window,
@@ -18,7 +18,7 @@ class DEarPage(Canvas, BasePage):
             relief="ridge"
         )
         self.temp_data = temp_data
-        self.temp_data['organ'] = organ
+        self.temp_data['diagnosis_type'] = diagnosis_type
 
     def drawPage(self):
         self.place(x=0, y=0)

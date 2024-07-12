@@ -34,6 +34,17 @@ class DEarLoadingPage(Canvas, BasePage):
         image_path = 'temp_image/test_image.jpg'
 
         self.result_1, self.result_2, self.result_3 = predictor.predict(image_path)
+        self.update_data(hospital_id=1, result_1=self.result_1, result_2=self.result_2, result_3=self.result_3, image_path_temp=image_path)
+
+    def update_data(self, hospital_id, result_1, result_2, result_3, image_path_temp):
+        self.temp_data['result_1'] = result_1
+        self.temp_data['result_2'] = result_2
+        self.temp_data['result_3'] = result_3
+        self.temp_data['id_hospital'] = hospital_id
+        self.temp_data['image_path_temp'] = image_path_temp
+        self.temp_data['is_corrected'] = True
+        self.temp_data['correction_reason'] = "None"
+
 
     def start(self):
         self.p['value'] = 0

@@ -87,6 +87,8 @@ class DEarCorrectionPage(Canvas, BasePage):
             label = clicked.get()
             print(clicked.get())
             self.temp_data['result_1'] = (label, self.temp_data['result_1'][1])
+            self.temp_data['is_corrected'] = False
+            self.temp_data['correction_reason'] = entry_1.get("1.0", "end-1c")
             goToPage(DEarResultPage.DEarResultPage(self.window, self.temp_data))
 
         # Define options
