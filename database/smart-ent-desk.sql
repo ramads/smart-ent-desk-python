@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 10, 2024 at 07:48 PM
+-- Generation Time: Jul 12, 2024 at 10:21 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -54,26 +54,25 @@ INSERT INTO `Asuransi` (`id_asuransi`, `id_pasien`, `nama_asuransi`, `nomor_asur
 
 CREATE TABLE `Diagnosa` (
   `id_diagnosa` int(11) NOT NULL,
-  `id_riwayat` int(11) DEFAULT NULL,
   `diagnosa` varchar(255) NOT NULL,
   `tanggal_diagnosa` date NOT NULL,
   `hasil_diagnosa` text DEFAULT NULL,
   `tingkat_keyakinan` int(11) DEFAULT NULL,
-  `gambar_diagnosa` varchar(255) DEFAULT NULL
+  `gambar_diagnosa` varchar(255) DEFAULT NULL,
+  `prediksi_benar` tinyint(1) DEFAULT NULL,
+  `alasan_koreksi` text DEFAULT NULL,
+  `jenis_diagnosa` enum('telinga','hidung','tenggorokan') DEFAULT NULL,
+  `id_pasien` int(11) DEFAULT NULL,
+  `id_rumah_sakit` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `Diagnosa`
 --
 
-INSERT INTO `Diagnosa` (`id_diagnosa`, `id_riwayat`, `diagnosa`, `tanggal_diagnosa`, `hasil_diagnosa`, `tingkat_keyakinan`, `gambar_diagnosa`) VALUES
-(1, 1, 'Otitis Media', '2024-01-15', 'Infeksi pada telinga tengah', 90, 'otitis_media.jpg'),
-(2, 2, 'Sinusitis', '2024-02-20', 'Infeksi pada rongga sinus', 80, 'sinusitis.jpg'),
-(3, 3, 'Tonsilitis', '2024-03-25', 'Peradangan pada amandel', 70, 'tonsilitis.jpg'),
-(4, 1, 'Tinnitus', '2024-04-10', 'Telinga berdenging', 75, 'tinnitus.jpg'),
-(5, 2, 'Rhinitis', '2024-05-05', 'Peradangan pada rongga hidung', 65, 'rhinitis.jpg'),
-(6, 3, 'Faringitis', '2024-06-15', 'Radang tenggorokan', 92, 'faringitis.jpg'),
-(8, 9, 'Aerotitis Barotrauma', '2024-07-11', '', 23, 'temp_image/1_9.jpg');
+INSERT INTO `Diagnosa` (`id_diagnosa`, `diagnosa`, `tanggal_diagnosa`, `hasil_diagnosa`, `tingkat_keyakinan`, `gambar_diagnosa`, `prediksi_benar`, `alasan_koreksi`, `jenis_diagnosa`, `id_pasien`, `id_rumah_sakit`) VALUES
+(21, 'OMed Efusi', '2024-07-12', 'Otitis Media dengan efusi, yaitu adanya cairan di telinga tengah tanpa adanya infeksi akut.', 23, 'temp_image/1_1_20240712_152757.jpg', 1, 'None', 'telinga', 1, 1),
+(22, 'Aerotitis Barotrauma', '2024-07-12', 'Kondisi yang disebabkan oleh perbedaan tekanan antara telinga tengah dan lingkungan sekitarnya, sering terjadi saat naik atau turun pesawat.', 50, 'temp_image/2_1_20240712_152921.jpg', 1, 'None', 'telinga', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -97,31 +96,6 @@ INSERT INTO `Pasien` (`id_pasien`, `nama_pasien`, `jenis_kelamin`, `tanggal_lahi
 (1, 'John Doe', 'Laki-laki', '1980-05-15', 'Jl. Kebon Jeruk No. 3'),
 (2, 'Jane Smith', 'Perempuan', '1992-08-25', 'Jl. Mangga Dua No. 5'),
 (3, 'Michael Johnson', 'Laki-laki', '1975-11-10', 'Jl. Karet No. 7');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `Riwayat_Pemeriksaan`
---
-
-CREATE TABLE `Riwayat_Pemeriksaan` (
-  `id_riwayat` int(11) NOT NULL,
-  `id_pasien` int(11) DEFAULT NULL,
-  `id_rumah_sakit` int(11) DEFAULT NULL,
-  `organ` enum('Telinga','Hidung','Tenggorokan') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `Riwayat_Pemeriksaan`
---
-
-INSERT INTO `Riwayat_Pemeriksaan` (`id_riwayat`, `id_pasien`, `id_rumah_sakit`, `organ`) VALUES
-(1, 1, 1, 'Telinga'),
-(2, 2, 1, 'Hidung'),
-(3, 3, 2, 'Tenggorokan'),
-(7, 1, 1, 'Telinga'),
-(8, 1, 1, 'Telinga'),
-(9, 1, 1, 'Telinga');
 
 -- --------------------------------------------------------
 
@@ -166,21 +140,14 @@ ALTER TABLE `Asuransi`
 --
 ALTER TABLE `Diagnosa`
   ADD PRIMARY KEY (`id_diagnosa`),
-  ADD KEY `id_riwayat` (`id_riwayat`);
+  ADD KEY `Diagnosa_Pasien_id_pasien_fk` (`id_pasien`),
+  ADD KEY `Diagnosa_Rumah_Sakit_id_rumah_sakit_fk` (`id_rumah_sakit`);
 
 --
 -- Indexes for table `Pasien`
 --
 ALTER TABLE `Pasien`
   ADD PRIMARY KEY (`id_pasien`);
-
---
--- Indexes for table `Riwayat_Pemeriksaan`
---
-ALTER TABLE `Riwayat_Pemeriksaan`
-  ADD PRIMARY KEY (`id_riwayat`),
-  ADD KEY `id_rumah_sakit` (`id_rumah_sakit`),
-  ADD KEY `id_pasien` (`id_pasien`);
 
 --
 -- Indexes for table `Rumah_Sakit`
@@ -202,19 +169,13 @@ ALTER TABLE `Asuransi`
 -- AUTO_INCREMENT for table `Diagnosa`
 --
 ALTER TABLE `Diagnosa`
-  MODIFY `id_diagnosa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_diagnosa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `Pasien`
 --
 ALTER TABLE `Pasien`
   MODIFY `id_pasien` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `Riwayat_Pemeriksaan`
---
-ALTER TABLE `Riwayat_Pemeriksaan`
-  MODIFY `id_riwayat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `Rumah_Sakit`
@@ -236,14 +197,8 @@ ALTER TABLE `Asuransi`
 -- Constraints for table `Diagnosa`
 --
 ALTER TABLE `Diagnosa`
-  ADD CONSTRAINT `Diagnosa_ibfk_1` FOREIGN KEY (`id_riwayat`) REFERENCES `Riwayat_Pemeriksaan` (`id_riwayat`);
-
---
--- Constraints for table `Riwayat_Pemeriksaan`
---
-ALTER TABLE `Riwayat_Pemeriksaan`
-  ADD CONSTRAINT `Riwayat_Pemeriksaan_ibfk_1` FOREIGN KEY (`id_rumah_sakit`) REFERENCES `Rumah_Sakit` (`id_rumah_sakit`),
-  ADD CONSTRAINT `Riwayat_Pemeriksaan_ibfk_2` FOREIGN KEY (`id_pasien`) REFERENCES `Pasien` (`id_pasien`);
+  ADD CONSTRAINT `Diagnosa_Pasien_id_pasien_fk` FOREIGN KEY (`id_pasien`) REFERENCES `Pasien` (`id_pasien`),
+  ADD CONSTRAINT `Diagnosa_Rumah_Sakit_id_rumah_sakit_fk` FOREIGN KEY (`id_rumah_sakit`) REFERENCES `Rumah_Sakit` (`id_rumah_sakit`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
