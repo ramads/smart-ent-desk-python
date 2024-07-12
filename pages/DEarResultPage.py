@@ -8,7 +8,6 @@ from notificationBar import notificationBar
 from PIL import ImageTk, Image
 
 from pages import DEarCorrectionPage
-from machine_learning.image_predictor import ImagePredictor
 
 from database.models.Patient import PatientModel
 from database.models.Insurance import InsuranceModel
@@ -97,11 +96,11 @@ class DEarResultPage(Canvas, BasePage):
 
         chart_canvas = FigureCanvasTkAgg(fig, master=self)
         chart_canvas.draw()
-        chart_canvas.get_tk_widget().place(x=740.5, y=115.0)
+        chart_canvas.get_tk_widget().place(x=740.5, y=100.0)
 
         self.create_text(
             726.0,
-            324.0,
+            300.0,
             anchor="nw",
             text="Keterangan grafik:",
             fill="#404040",
@@ -117,54 +116,75 @@ class DEarResultPage(Canvas, BasePage):
             font=("Nunito Bold", 24 * -1)
         )
 
+        image_image_5 = PhotoImage(
+            file=relative_to_assets("control/DEarResultFrame/image_5.png"))
+        image_5 = self.create_image(
+            910.0,
+            377.0,
+            image=image_image_5
+        )
+
         self.create_text(
-            1018.0,
-            366.5,
+            933.0,
+            370.0,
+            anchor="nw",
+            # text=self.temp_data['result_2'][0],
+            text="Akumulasi Lainnya",
+            fill="#404040",
+            font=("Nunito Regular", 12 * -1),
+            width=150
+        )
+
+        image_image_6 = PhotoImage(
+            file=relative_to_assets("control/DEarResultFrame/image_6.png"))
+        image_6 = self.create_image(
+            735.0,
+            380,
+            image=image_image_6
+        )
+
+        self.create_text(
+            759.0,
+            373.0,
             anchor="nw",
             text=self.temp_data['result_3'][0],
             fill="#404040",
             font=("Nunito Regular", 12 * -1)
         )
 
-        image_image_6 = PhotoImage(
-            file=relative_to_assets("control/DEarResultFrame/image_6.png"))
-        image_6 = self.create_image(
-            996.0,
-            378.0,
-            image=image_image_6
-        )
-
         self.create_text(
-            886.0,
-            366.5,
+            933.0,
+            329.0,
             anchor="nw",
             text=self.temp_data['result_2'][0],
             fill="#404040",
-            font=("Nunito Regular", 12 * -1)
+            font=("Nunito Regular", 12 * -1),
+            width=150
         )
 
         image_image_7 = PhotoImage(
             file=relative_to_assets("control/DEarResultFrame/image_7.png"))
         image_7 = self.create_image(
-            864.0,
-            378.0,
+            910.0,
+            343.0,
             image=image_image_7
         )
 
         self.create_text(
-            754.0,
-            366.5,
+            758.0,
+            329.0,
             anchor="nw",
             text=self.temp_data['result_1'][0],
             fill="#404040",
-            font=("Nunito Regular", 12 * -1)
+            font=("Nunito Regular", 12 * -1),
+            width=100
         )
 
         image_image_8 = PhotoImage(
             file=relative_to_assets("control/DEarResultFrame/image_8.png"))
         image_8 = self.create_image(
-            732.0,
-            378.0,
+            735.0,
+            343.0,
             image=image_image_8
         )
 

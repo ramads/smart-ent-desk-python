@@ -56,7 +56,7 @@ class DEarLoadingPage(Canvas, BasePage):
     def update_progress(self):
         if self.p['value'] < self.p['maximum']:
             self.p['value'] += 30 
-            self.task_id = self.window.after(90, self.update_progress)
+            self.task_id = self.window.after(300, self.update_progress)
         else:
             self.stop()
             self.window.after(100, self.check_thread)

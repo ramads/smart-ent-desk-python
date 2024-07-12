@@ -43,7 +43,7 @@ class DEarCorrectionPage(Canvas, BasePage):
         resized_image = original_image.resize((604, 600))  # Resize to 604x538
         captured_img = ImageTk.PhotoImage(resized_image)
         image_2 = self.create_image(
-            370.0,
+            375.0,
             377.5,
             image=captured_img
         )
@@ -69,9 +69,10 @@ class DEarCorrectionPage(Canvas, BasePage):
             749.0,
             123.0,
             anchor="nw",
-            text="Untuk mengoreksi hasil diagnosa \n sebelumnya, mohon untuk memilih label\n berikut yang dinilai sesuai dengan penyakit \n yang diderita pasien dan sertakan \nalasan yang jelas.",
+            text="Untuk mengoreksi hasil diagnosa sebelumnya, mohon untuk memilih label berikut yang dinilai sesuai dengan penyakit yang diderita pasien dan sertakan alasan yang jelas.",
             fill="#8A8C8F",
-            font=("Nunito Regular", 14 * -1)
+            font=("Nunito Regular", 14 * -1),
+            width=320
         )
 
         self.create_text(
