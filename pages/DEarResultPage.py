@@ -49,13 +49,6 @@ class DEarResultPage(Canvas, BasePage):
     def loadImage(self):
         return PhotoImage(file=relative_to_assets("image_3.png"))
     
-    def update_data(self, hospital_id, result_1, result_2, result_3, image_path_temp):
-        self.temp_data['result_1'] = result_1
-        self.temp_data['result_2'] = result_2
-        self.temp_data['result_3'] = result_3
-        self.temp_data['id_hospital'] = hospital_id
-        self.temp_data['image_path_temp'] = image_path_temp
-
 
     def drawPage(self):
         self.place(x = 0, y = 0)
@@ -80,16 +73,7 @@ class DEarResultPage(Canvas, BasePage):
             image=captured_img
         )
 
-        # Initialize the predictor
-        predictor = ImagePredictor()
 
-        image_path = 'temp_image/test_image.jpg'
-
-        # Get the prediction results
-        if not self.temp_data.get('result_1'):
-            result_1, result_2, result_3 = predictor.predict(image_path)
-            image_path_temp = image_path
-            self.update_data(result_1=result_1, result_2=result_2, result_3=result_3, hospital_id=1, image_path_temp=image_path_temp)
 
         # image_image_3 = PhotoImage(
         #     file=relative_to_assets("control/DEarResultFrame/image_3.png"))

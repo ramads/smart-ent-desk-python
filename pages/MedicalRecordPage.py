@@ -3,13 +3,24 @@ from tkinter import *
 from colors import *
 from helpers import *
 from notificationBar import notificationBar
+from pprint import pprint
 
 from pages import HomePage
+
+from database.models.Diagnosis import DiagnosisModel
+
 
 class MedicalRecordPage(Canvas, BasePage):
 
     def __init__(self, window):
         self.window = window
+        self.dignosisModel = DiagnosisModel()
+        self.history_data = self.dignosisModel.get_patient_joint_diagnoses()
+        pprint(self.history_data)
+
+
+
+
         super().__init__(
             window,
             bg=BACKGROUND_COLOUR,
@@ -54,15 +65,18 @@ class MedicalRecordPage(Canvas, BasePage):
 
         button_images = []
 
-        for i in range(50):
+        for i in range(len(self.history_data)):
             y_offset = i * 50
             canvas_scroll.create_rectangle(81.0, 367.0 + y_offset, 1278.0, 367.0 + y_offset, fill="#F3F3F3", outline="")
             # canvas_scroll.create_rectangle(81.0, 318.0 + y_offset, 1278.0, 318.0 + y_offset, fill="#F3F3F3", outline="")
-            canvas_scroll.create_text(81.0, 322.0 + y_offset, anchor="nw", text="Alma Liakua Mutia", fill="#404040",
+            canvas_scroll.create_text(81.0, 322.0 + y_offset, anchor="nw", text=self.history_data[i]['nama_pasien'], 
+                                      fill="#404040",
                                       font=("Nunito Regular", 20 * -1))
-            canvas_scroll.create_text(380, 322.0 + y_offset, anchor="nw", text="OMA Perforasi", fill="#404040",
+            canvas_scroll.create_text(380, 322.0 + y_offset, anchor="nw", text=self.history_data[i]['diagnosa'], 
+                                      fill="#404040",
                                       font=("Nunito Regular", 20 * -1))
-            canvas_scroll.create_text(650, 322.0 + y_offset, anchor="nw", text="16 December 2023", fill="#404040",
+            canvas_scroll.create_text(650, 322.0 + y_offset, anchor="nw", text=self.history_data[i]['tanggal_diagnosa'].strftime("%d %B %Y"), 
+                                      fill="#404040",
                                       font=("Nunito Regular", 20 * -1))
 
             button_image_1 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/button_1.png"))

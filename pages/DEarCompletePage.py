@@ -9,7 +9,6 @@ from pages import HomePage
 from pprint import pprint
 from datetime import datetime
 
-from database.models.History import HistoryModel
 from database.models.Diagnosis import DiagnosisModel
 
 
@@ -27,7 +26,6 @@ class DEarCompletePage(Canvas, BasePage):
             highlightthickness=0,
             relief="ridge"
         )
-        self.history = HistoryModel()
         self.diagnosis = DiagnosisModel()
         self.result_dict = {
             'Aerotitis Barotrauma': 'Kondisi yang disebabkan oleh perbedaan tekanan antara telinga tengah dan lingkungan sekitarnya, sering terjadi saat naik atau turun pesawat.',
@@ -55,24 +53,27 @@ class DEarCompletePage(Canvas, BasePage):
         self.insert_data()
 
     def insert_data(self):
-        history_id = self.history.insert_history(
-            patient_id=self.temp_data['id_patient'],
-            hospital_id=self.temp_data['id_hospital'],
-            organ=self.temp_data['organ']
-        )
         current_date = datetime.now().strftime('%Y-%m-%d')
-        image_path = f"temp_image/{self.temp_data['id_patient']}_{history_id}.jpg"
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        image_path = f"temp_image/{self.temp_data['id_patient']}_{self.temp_data['id_hospital']}_{timestamp}.jpg"
+        
         image = Image.open(self.temp_data['image_path_temp'])
         image.save(image_path)
+        
         confidence = self.temp_data['result_1'][1]
         confidence = int(round(confidence, 2) * 100)
+        
         self.diagnosis.insert_diagnosis(
-            history_id=history_id,
             diagnosis=self.temp_data['result_1'][0],
             diagnosis_date=current_date,
             result=self.result_dict[self.temp_data['result_1'][0]],
             confidence=confidence,
-            image_path=image_path
+            image_path=image_path,
+            is_corrected=self.temp_data['is_corrected'],
+            correction_reason=self.temp_data['correction_reason'],
+            hospital_id=self.temp_data['id_hospital'],
+            patient_id=self.temp_data['id_patient'],
+            diagnosis_type=self.temp_data['diagnosis_type']
         )
         
 

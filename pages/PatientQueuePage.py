@@ -8,7 +8,6 @@ from pages import DiagnosisPage
 from pages import HomePage
 
 from database.models.Patient import PatientModel
-from database.models.History import HistoryModel
 from database.models.Diagnosis import DiagnosisModel
 from database.models.Insurance import InsuranceModel
 from database.models.Hospital import HospitalModel
@@ -37,7 +36,6 @@ class PatientQueuePage(Canvas, BasePage):
 
     def initialize_models(self):
         self.patient = PatientModel()
-        self.history = HistoryModel()
         self.diagnosis = DiagnosisModel()
         self.insurance = InsuranceModel()
         self.hospital = HospitalModel()
@@ -48,8 +46,7 @@ class PatientQueuePage(Canvas, BasePage):
             self.get_current_patient_data()
 
     def get_current_patient_data(self):
-        self.current_history_data = self.history.get_patient_histories_join_diagnosis(self.patient_data[self.current_patient]['id_pasien'])
-        pprint(self.current_history_data)
+        self.current_history_data = self.diagnosis.get_patient_diagnoses(self.patient_data[self.current_patient]['id_pasien'])
         if self.current_history_data:
             self.get_patient_insurance()
 
@@ -157,7 +154,11 @@ class PatientQueuePage(Canvas, BasePage):
             257.0,
             384.5,
             anchor="nw",
-            text= " "*4 + self.current_history_data[0]['diagnosa'] if self.current_history_data[0]['diagnosa'] else "Belum ada data",
+            text=(
+                " " * 4 + self.current_history_data[0]['diagnosa'] 
+                if self.current_history_data and self.current_history_data[0]['diagnosa'] 
+                else "Belum ada data"
+            ),
             fill="#1E5C2A",
             font=("Nunito Bold", 19 * -1)
         )
@@ -166,7 +167,10 @@ class PatientQueuePage(Canvas, BasePage):
         text_widget.place(x=86, y=417.5, width=600, height=150)  # ukuran box
 
         # Mengisi teks ke Text Widget
-        text_content = self.current_history_data[0]['hasil_diagnosa'] if self.current_history_data[0]['hasil_diagnosa'] else "Belum ada data"
+        if self.current_history_data and len(self.current_history_data) > 0:
+            text_content = self.current_history_data[0]['hasil_diagnosa'] or "Belum ada data"
+        else:
+            text_content = "Belum ada data"
         text_widget.insert(tk.END, text_content)
 
         text_widget.tag_configure("justify", justify="left")
@@ -195,7 +199,7 @@ class PatientQueuePage(Canvas, BasePage):
             744.5,
             277.5,
             anchor="nw",
-            text="Penyakit " + self.current_history_data[0]['organ'] if self.current_history_data[0]['organ'] else "Belum ada data",
+            text="Penyakit " + self.current_history_data[0]['jenis_diagnosa'] if len(self.current_history_data)>0 else "Belum ada data",
             fill="#404040",
             font=("Nunito Bold", 19 * -1)
         )
@@ -212,7 +216,7 @@ class PatientQueuePage(Canvas, BasePage):
             774.5,
             301.5,
             anchor="nw",
-            text= self.current_history_data[0]['tanggal_diagnosa'].strftime("%d %B %Y") if self.current_history_data[0]['tanggal_diagnosa'] else "Belum ada data",
+            text= self.current_history_data[0]['tanggal_diagnosa'].strftime("%d %B %Y") if len(self.current_history_data)>0 else "Belum ada data",
             fill="#404040",
             font=("Nunito Regular", 12 * -1)
         )
@@ -229,7 +233,7 @@ class PatientQueuePage(Canvas, BasePage):
             773.5,
             326.0,
             anchor="nw",
-            text="RS. Universitas Mataram",
+            text= self.hospital.get_hospital(self.current_history_data[0]['id_rumah_sakit'])['nama_rumah_sakit'] if len(self.current_history_data)>0 else "Belum ada data",
             fill="#404040",
             font=("Nunito Regular", 12 * -1)
         )
@@ -262,7 +266,7 @@ class PatientQueuePage(Canvas, BasePage):
             744.5,
             358.0,
             anchor="nw",
-            text= "Penyakit " + self.current_history_data[1]['organ'] if self.current_history_data[1]['organ'] else "Belum ada data",
+            text= "Penyakit " + self.current_history_data[1]['jenis_diagnosa'] if len(self.current_history_data)>1 else "Belum ada data",
             fill="#404040",
             font=("Nunito Bold", 19 * -1)
         )
@@ -279,7 +283,7 @@ class PatientQueuePage(Canvas, BasePage):
             774.5,
             382.0,
             anchor="nw",
-            text= self.current_history_data[1]['tanggal_diagnosa'].strftime("%d %B %Y") if self.current_history_data[1]['tanggal_diagnosa'] else "Belum ada data",
+            text= self.current_history_data[1]['tanggal_diagnosa'].strftime("%d %B %Y") if len(self.current_history_data)>1 else "Belum ada data",
             fill="#404040",
             font=("Nunito Regular", 12 * -1)
         )
@@ -296,7 +300,7 @@ class PatientQueuePage(Canvas, BasePage):
             773.5,
             406.5,
             anchor="nw",
-            text= self.hospital.get_hospital(self.current_history_data[1]['id_rumah_sakit'])['nama_rumah_sakit'] if self.current_history_data[1]['id_rumah_sakit'] else "Belum ada data",
+            text= self.hospital.get_hospital(self.current_history_data[1]['id_rumah_sakit'])['nama_rumah_sakit'] if len(self.current_history_data)>1 else "Belum ada data",
             fill="#404040",
             font=("Nunito Regular", 12 * -1)
         )
