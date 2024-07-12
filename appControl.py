@@ -5,7 +5,7 @@ from helpers import *
 from colors import *
 
 from database.init import Generate_Database
- 
+
 class App(Tk):
     def __init__(self):
         super().__init__()

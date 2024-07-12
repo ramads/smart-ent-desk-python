@@ -1,3 +1,4 @@
+import customtkinter
 from tkinter import *
 from colors import *
 from helpers import *
@@ -32,96 +33,56 @@ class MedicalRecordPage(Canvas, BasePage):
             image=image_image_1
         )
 
-        self.create_rectangle(
-            81.0,
-            367.0,
-            1278.0,
-            367.0,
-            fill="#FFFFFF",
-            outline="")
+        my_frame = customtkinter.CTkScrollableFrame(self.window,
+                                                    orientation="vertical",
+                                                    width=955,
+                                                    height=300,
+                                                    fg_color="#FFFFFF",
+                                                    scrollbar_button_hover_color="#404040",
+                                                    scrollbar_fg_color="#F3F3F3",
+                                                    bg_color="#FFFFFF",
+                                                    border_width=0)
 
-        self.create_rectangle(
-            81.0,
-            318.0,
-            1278.0,
-            318.0,
-            fill="#FFFFFF",
-            outline="")
+        my_frame.place(x=75, y=305)
+        # Create a canvas within the scrollable frame
+        canvas_scroll = Canvas(my_frame, width=955, height=2000, bg="#FFFFFF")
+        canvas_scroll.pack()
 
-        self.create_text(
-            81.0,
-            322.0,
-            anchor="nw",
-            text="Alma Liakua Mutia",
-            fill="#404040",
-            font=("Nunito Regular", 20 * -1)
-        )
+        button_images = []
 
-        self.create_text(
-            377.740234375,
-            322.0,
-            anchor="nw",
-            text="OMA Perforasi",
-            fill="#404040",
-            font=("Nunito Regular", 20 * -1)
-        )
+        for i in range(50):
+            y_offset = i * 50
+            canvas_scroll.create_rectangle(81.0, 367.0 + y_offset, 1278.0, 367.0 + y_offset, fill="#F3F3F3", outline="")
+            # canvas_scroll.create_rectangle(81.0, 318.0 + y_offset, 1278.0, 318.0 + y_offset, fill="#F3F3F3", outline="")
+            canvas_scroll.create_text(81.0, 322.0 + y_offset, anchor="nw", text="Alma Liakua Mutia", fill="#404040",
+                                      font=("Nunito Regular", 20 * -1))
+            canvas_scroll.create_text(380, 322.0 + y_offset, anchor="nw", text="OMA Perforasi", fill="#404040",
+                                      font=("Nunito Regular", 20 * -1))
+            canvas_scroll.create_text(650, 322.0 + y_offset, anchor="nw", text="16 December 2023", fill="#404040",
+                                      font=("Nunito Regular", 20 * -1))
 
-        self.create_text(
-            674.48095703125,
-            322.0,
-            anchor="nw",
-            text="16 December 2023",
-            fill="#404040",
-            font=("Nunito Regular", 20 * -1)
-        )
+            button_image_1 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/button_1.png"))
+            button_images.append(button_image_1)
+            button_1 = Button(canvas_scroll, image=button_image_1, borderwidth=0, highlightthickness=0,
+                              command=lambda: print("button_1 clicked"), relief="flat")
+            canvas_scroll.create_window(914.22119140625, 329.20361328125 + y_offset, anchor="nw", window=button_1,
+                                        width=23.592920303344727, height=23.592920303344727)
 
-        button_image_1 = PhotoImage(
-            file=relative_to_assets("control/MedicalRecordFrame/button_1.png"))
-        button_1 = Button(
-            image=button_image_1,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: print("button_1 clicked"),
-            relief="flat"
-        )
-        button_1.place(
-            x=971.22119140625,
-            y=329.20361328125,
-            width=23.592920303344727,
-            height=23.592920303344727
-        )
+            button_image_2 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/button_2.png"))
+            button_images.append(button_image_2)
+            button_2 = Button(canvas_scroll, image=button_image_2, borderwidth=0, highlightthickness=0,
+                              command=lambda: print("button_2 clicked"), relief="flat")
+            canvas_scroll.create_window(942.814208984375, 329.20361328125 + y_offset, anchor="nw", window=button_2,
+                                        width=23.592920303344727, height=23.592920303344727)
 
-        button_image_2 = PhotoImage(
-            file=relative_to_assets("control/MedicalRecordFrame/button_2.png"))
-        button_2 = Button(
-            image=button_image_2,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: print("button_2 clicked"),
-            relief="flat"
-        )
-        button_2.place(
-            x=999.814208984375,
-            y=329.20361328125,
-            width=23.592920303344727,
-            height=23.592920303344727
-        )
+            button_image_3 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/button_3.png"))
+            button_images.append(button_image_3)
+            button_3 = Button(canvas_scroll, image=button_image_3, borderwidth=0, highlightthickness=0,
+                              command=lambda: print("button_3 clicked"), relief="flat")
+            canvas_scroll.create_window(971.406982421875, 329.20361328125 + y_offset, anchor="nw", window=button_3,
+                                        width=23.592920303344727, height=23.592920303344727)
 
-        button_image_3 = PhotoImage(
-            file=relative_to_assets("control/MedicalRecordFrame/button_3.png"))
-        button_3 = Button(
-            image=button_image_3,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: print("button_3 clicked"),
-            relief="flat"
-        )
-        button_3.place(
-            x=1028.406982421875,
-            y=329.20361328125,
-            width=23.592920303344727,
-            height=23.592920303344727
-        )
+        canvas_scroll.configure(scrollregion=canvas_scroll.bbox("all"))
 
         self.create_text(
             81.0,
@@ -133,7 +94,7 @@ class MedicalRecordPage(Canvas, BasePage):
         )
 
         self.create_text(
-            342.5,
+            380,
             273.0,
             anchor="nw",
             text="Diagnosa",
@@ -142,7 +103,7 @@ class MedicalRecordPage(Canvas, BasePage):
         )
 
         self.create_text(
-            604.0,
+            650.0,
             273.0,
             anchor="nw",
             text="Tanggal Periksa",
@@ -151,7 +112,7 @@ class MedicalRecordPage(Canvas, BasePage):
         )
 
         self.create_text(
-            984.0,
+            915.0,
             273.0,
             anchor="nw",
             text="Action",
