@@ -15,11 +15,9 @@ class MedicalRecordPage(Canvas, BasePage):
     def __init__(self, window):
         self.window = window
         self.dignosisModel = DiagnosisModel()
-        self.history_data = self.dignosisModel.get_patient_joint_diagnoses()
+        self.temp_data = self.dignosisModel.get_patient_joint_diagnoses()
+        self.history_data = self.temp_data
         pprint(self.history_data)
-
-
-
 
         super().__init__(
             window,
@@ -31,9 +29,20 @@ class MedicalRecordPage(Canvas, BasePage):
             relief="ridge"
         )
 
-    def searching(self) :
-        input_text = self.searchingBox.get("1.0", "end-1c")
-        print("Input text:", input_text)
+        self.drawPage()
+
+    def searching(self):
+        input_text = self.searchingBox.get("1.0", "end-1c").lower().strip()
+        input_text = input_text.replace("\n", "").replace("\t", "").replace(" ", "")
+        print(input_text)
+        if input_text == "" or input_text == "enteryourtexthere...":
+            self.history_data = self.temp_data
+        else:
+            self.history_data = [
+                item for item in self.temp_data if input_text in item['nama_pasien'].lower().replace(" ", "")
+            ]
+
+        self.update_cards()
 
     def drawPage(self):
         self.place(x=0, y=0)
@@ -48,59 +57,19 @@ class MedicalRecordPage(Canvas, BasePage):
             image=image_image_1
         )
 
-        my_frame = customtkinter.CTkScrollableFrame(self.window,
-                                                    orientation="vertical",
-                                                    width=955,
-                                                    height=300,
-                                                    fg_color="#FFFFFF",
-                                                    scrollbar_button_hover_color="#404040",
-                                                    scrollbar_fg_color="#F3F3F3",
-                                                    bg_color="#FFFFFF",
-                                                    border_width=0)
+        self.my_frame = customtkinter.CTkScrollableFrame(self.window,
+                                                         orientation="vertical",
+                                                         width=955,
+                                                         height=300,
+                                                         fg_color="#FFFFFF",
+                                                         scrollbar_button_hover_color="#404040",
+                                                         scrollbar_fg_color="#F3F3F3",
+                                                         bg_color="#FFFFFF",
+                                                         border_width=0)
 
-        my_frame.place(x=75, y=312)
-        # Create a canvas within the scrollable frame
-        canvas_scroll = Canvas(my_frame, width=955, height=2000, bg="#FFFFFF")
-        canvas_scroll.pack()
-
-        button_images = []
-
-        for i in range(len(self.history_data)):
-            y_offset = i * 50
-            canvas_scroll.create_rectangle(81.0, 367.0 + y_offset, 1278.0, 367.0 + y_offset, fill="#F3F3F3", outline="")
-            # canvas_scroll.create_rectangle(81.0, 318.0 + y_offset, 1278.0, 318.0 + y_offset, fill="#F3F3F3", outline="")
-            canvas_scroll.create_text(81.0, 322.0 + y_offset, anchor="nw", text=self.history_data[i]['nama_pasien'], 
-                                      fill="#404040",
-                                      font=("Nunito Regular", 20 * -1))
-            canvas_scroll.create_text(380, 322.0 + y_offset, anchor="nw", text=self.history_data[i]['diagnosa'], 
-                                      fill="#404040",
-                                      font=("Nunito Regular", 20 * -1))
-            canvas_scroll.create_text(650, 322.0 + y_offset, anchor="nw", text=self.history_data[i]['tanggal_diagnosa'].strftime("%d %B %Y"), 
-                                      fill="#404040",
-                                      font=("Nunito Regular", 20 * -1))
-
-            button_image_1 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/button_1.png"))
-            button_images.append(button_image_1)
-            button_1 = Button(canvas_scroll, image=button_image_1, borderwidth=0, highlightthickness=0,
-                              command=lambda: print("button_1 clicked"), relief="flat")
-            canvas_scroll.create_window(914.22119140625, 329.20361328125 + y_offset, anchor="nw", window=button_1,
-                                        width=23.592920303344727, height=23.592920303344727)
-
-            button_image_2 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/button_2.png"))
-            button_images.append(button_image_2)
-            button_2 = Button(canvas_scroll, image=button_image_2, borderwidth=0, highlightthickness=0,
-                              command=lambda: print("button_2 clicked"), relief="flat")
-            canvas_scroll.create_window(942.814208984375, 329.20361328125 + y_offset, anchor="nw", window=button_2,
-                                        width=23.592920303344727, height=23.592920303344727)
-
-            button_image_3 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/button_3.png"))
-            button_images.append(button_image_3)
-            button_3 = Button(canvas_scroll, image=button_image_3, borderwidth=0, highlightthickness=0,
-                              command=lambda: print("button_3 clicked"), relief="flat")
-            canvas_scroll.create_window(971.406982421875, 329.20361328125 + y_offset, anchor="nw", window=button_3,
-                                        width=23.592920303344727, height=23.592920303344727)
-
-        canvas_scroll.configure(scrollregion=canvas_scroll.bbox("all"))
+        self.my_frame.place(x=75, y=312)
+        self.canvas_scroll = Canvas(self.my_frame, width=955, height=2000, bg="#FFFFFF")
+        self.canvas_scroll.pack()
 
         self.create_text(
             81.0,
@@ -189,9 +158,7 @@ class MedicalRecordPage(Canvas, BasePage):
             command=lambda: print("button_5 clicked"),
             relief="flat"
         )
-        button_5.place(
-
-        )
+        button_5.place()
 
         self.create_text(
             81.0,
@@ -224,7 +191,7 @@ class MedicalRecordPage(Canvas, BasePage):
         inactive_button_5 = relative_to_assets("control/MedicalRecordFrame/button_5.png")
         active_button_5 = relative_to_assets("control/MedicalRecordFrame/active_button_5.png")
 
-        create_hover_button(self.window, 471.0,662.0, 192.0, 54.0, 
+        create_hover_button(self.window, 471.0, 662.0, 192.0, 54.0,
                             BACKGROUND_COLOUR, inactive_button_4, active_button_4,
                             lambda: goToPage(HomePage.HomePage(self.window)))
 
@@ -232,4 +199,47 @@ class MedicalRecordPage(Canvas, BasePage):
                             "#FFFFFF", inactive_button_5, active_button_5,
                             lambda: self.searching())
 
+        self.update_cards()
+
+    def update_cards(self):
+        self.canvas_scroll.delete("all")
+
+        button_images = []
+
+        for i in range(len(self.history_data)):
+            y_offset = i * 50
+            self.canvas_scroll.create_rectangle(81.0, 367.0 + y_offset, 1278.0, 367.0 + y_offset, fill="#F3F3F3", outline="")
+            self.canvas_scroll.create_text(81.0, 322.0 + y_offset, anchor="nw", text=self.history_data[i]['nama_pasien'], 
+                                           fill="#404040",
+                                           font=("Nunito Regular", 20 * -1))
+            self.canvas_scroll.create_text(380, 322.0 + y_offset, anchor="nw", text=self.history_data[i]['diagnosa'], 
+                                           fill="#404040",
+                                           font=("Nunito Regular", 20 * -1))
+            self.canvas_scroll.create_text(650, 322.0 + y_offset, anchor="nw", text=self.history_data[i]['tanggal_diagnosa'].strftime("%d %B %Y"), 
+                                           fill="#404040",
+                                           font=("Nunito Regular", 20 * -1))
+
+            button_image_1 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/button_1.png"))
+            button_images.append(button_image_1)
+            button_1 = Button(self.canvas_scroll, image=button_image_1, borderwidth=0, highlightthickness=0,
+                              command=lambda: print("button_1 clicked"), relief="flat")
+            self.canvas_scroll.create_window(914.22119140625, 329.20361328125 + y_offset, anchor="nw", window=button_1,
+                                             width=23.592920303344727, height=23.592920303344727)
+
+            button_image_2 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/button_2.png"))
+            button_images.append(button_image_2)
+            button_2 = Button(self.canvas_scroll, image=button_image_2, borderwidth=0, highlightthickness=0,
+                              command=lambda: print("button_2 clicked"), relief="flat")
+            self.canvas_scroll.create_window(942.814208984375, 329.20361328125 + y_offset, anchor="nw", window=button_2,
+                                             width=23.592920303344727, height=23.592920303344727)
+
+            button_image_3 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/button_3.png"))
+            button_images.append(button_image_3)
+            button_3 = Button(self.canvas_scroll, image=button_image_3, borderwidth=0, highlightthickness=0,
+                              command=lambda: print("button_3 clicked"), relief="flat")
+            self.canvas_scroll.create_window(971.406982421875, 329.20361328125 + y_offset, anchor="nw", window=button_3,
+                                             width=23.592920303344727, height=23.592920303344727)
+
+        self.canvas_scroll.configure(scrollregion=self.canvas_scroll.bbox("all"))
         self.window.mainloop()
+
