@@ -73,16 +73,6 @@ class DEarResultPage(Canvas, BasePage):
             image=captured_img
         )
 
-
-
-        # image_image_3 = PhotoImage(
-        #     file=relative_to_assets("control/DEarResultFrame/image_3.png"))
-        # image_3 = self.create_image(
-        #     623.0,
-        #     356.0,
-        #     image=image_image_3
-        # )
-
         image_image_4 = PhotoImage(
             file=relative_to_assets("control/DEarResultFrame/image_4.png"))
         image_4 = self.create_image(
@@ -92,13 +82,13 @@ class DEarResultPage(Canvas, BasePage):
         )
 
         #pie chart
-        labels = [self.temp_data['result_1'][0], self.temp_data['result_2'][0], self.temp_data['result_3'][0], "Lainnya"]
+        # labels = [self.temp_data['result_1'][0], self.temp_data['result_2'][0], self.temp_data['result_3'][0], "Lainnya"]
         sizes = [int(self.temp_data['result_1'][1] * 100), int(self.temp_data['result_2'][1] * 100), int(self.temp_data['result_3'][1] * 100), (100-int((self.temp_data['result_1'][1]+ self.temp_data['result_2'][1]+ self.temp_data['result_3'][1])*100))]
         colors = ['lightcoral',  'gold', 'yellowgreen', 'lightskyblue']
         explode = (0.1, 0, 0, 0)
 
         fig, ax = plt.subplots(figsize=(3, 2), dpi=100)
-        ax.pie(sizes, explode=explode, labels=labels, colors=colors,
+        ax.pie(sizes, explode=explode, colors=colors,
             autopct='%d%%', shadow=True, startangle=140)
         ax.axis('equal')
 

@@ -2,6 +2,7 @@ from tkinter import *
 from colors import *
 from helpers import *
 from notificationBar import notificationBar
+from PIL import ImageTk, Image
 
 from pages import DEarResultPage
 
@@ -33,12 +34,15 @@ class FullScreenImagePage(Canvas, BasePage):
             image=image_image_1
         )
 
-        image_image_2 = PhotoImage(
-            file=relative_to_assets("control/FullScreenImageFrame/image_2.png"))
+        image_path = relative_to_image_capture("test_image.jpg")
+        original_image = Image.open(image_path)
+        resized_image = original_image.resize((1010, 561))  # Resize to 604x538
+        captured_img = ImageTk.PhotoImage(resized_image)
+
         image_2 = self.create_image(
-            560.0,
-            351.0,
-            image=image_image_2
+            568.0,
+            351,
+            image=captured_img
         )
 
         inactive_button_1 = relative_to_assets("control/FullScreenImageFrame/button_1.png")
