@@ -4,7 +4,6 @@ import cv2
 from tkinter import *
 from colors import *
 from helpers import *
-from config import CAMERA_INDEX
 from PIL import Image, ImageTk
 from pages import DEarPage, PreviewImagePage
 from libs.serial_com import SerialCom
@@ -13,6 +12,7 @@ from notificationBar import notificationBar
 
 class DEarProcessPage(Canvas, BasePage):
     capture_image = None
+    seriCom = SerialCom()
     after_cam_id = 0
     image_dir = "./" + DIR_TEMP_IMAGE
     text_command = ""
@@ -27,13 +27,22 @@ class DEarProcessPage(Canvas, BasePage):
             highlightthickness=0,
             relief="ridge"
         )
+
+        self.seriCom.connect()
         self.temp_data = temp_data
         os.makedirs(self.image_dir, exist_ok=True)
         self.window = window
-        self.vidCap = cv2.VideoCapture(CAMERA_INDEX)
-        self.ret, self.frame = self.vidCap.read()
-        if not self.ret:
-            print("Failed to grab frame")
+        self.vidCap = None
+
+        cam_index = 0
+        while (cam_index < 20):
+            self.vidCap = cv2.VideoCapture(cam_index)
+            self.ret, self.frame = self.vidCap.read()
+            if not self.ret:
+                print(f"Failed to grab frame in index {cam_index}")
+                cam_index = cam_index + 1
+            else:
+                break
 
 
     def updateCameraFrame(self):

@@ -16,7 +16,7 @@ class SerialCom():
             except:
                 if(time.time() - prev > 2):
                     print("No serial detected, please plug your Controller")
-                    prev = time.time()
+                    break
 
             if(self.com is not None): # We're connected
                 setup = True
@@ -24,11 +24,13 @@ class SerialCom():
 
     # read one char (default)
     def read_serial(self, num_char = 1):
-        string = self.com.read(num_char)
-        return string.decode()
+        if self.com is not None:
+            string = self.com.read(num_char)
+            return string.decode()
 
 
     # Write whole strings
     def write_serial(self, cmd):
-        cmd = cmd + '\n'
-        self.com.write(cmd.encode())
+        if self.com is not None:
+            cmd = cmd + '\n'
+            self.com.write(cmd.encode())

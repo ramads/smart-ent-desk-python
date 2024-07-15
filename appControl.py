@@ -14,7 +14,6 @@ class App(Tk):
         self.title(APP_TITLE)
 
         self.homePage = HomePage.HomePage(self)
-        # self.homePage = page.DEarProcessPage(self)
 
         Generate_Database().create_tables()
 
