@@ -14,11 +14,12 @@ class SerialCom():
             try:
                 self.com = serial.Serial(THT_UNIT_PORT_ADDR, 115200, timeout=1)
             except:
-                if(time.time() - prev > 2):
+                if(time.time() - prev > 5):
                     print("No serial detected, please plug your Controller")
                     break
 
             if(self.com is not None): # We're connected
+                print("Serial Connected!")
                 setup = True
 
 
@@ -31,6 +32,7 @@ class SerialCom():
 
     # Write whole strings
     def write_serial(self, cmd):
+        print("write serial", cmd)
         if self.com is not None:
             cmd = cmd + '\n'
             self.com.write(cmd.encode())

@@ -82,7 +82,11 @@ class DEarProcessPage(Canvas, BasePage):
 
         self.text_command = f"Send serial command: {command}"
         self.itemconfig(self.commandText, text=self.text_command)
-        # print(self.text_command)
+
+        command = str(command)
+        if command == "0":
+            command = "o"
+        self.seriCom.write_serial(command)
 
     def drawDemoSerialCommand(self):
         self.commandText = self.create_text(
