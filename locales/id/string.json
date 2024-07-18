@@ -1,0 +1,19 @@
+{
+    "ent_unit": "Unit THT",
+    "gender" : "jenis kelamin",
+    "address" : "alamat",
+    "date_of_birth" : "tanggal lahir",
+    "last_diagnosis" : "diagnosis terakhir",
+    "diagnosis" : "penyakit",
+    "medical_record" : "riwayat pemeriksaan",
+    "insurance" : "asuransi kesehatan",
+    "insurance_number" : "nomor asuransi",
+    "insurance_type" : "jenis asuransi",
+    "insurance_class" : "kelas asuransi",
+    "medical_facility" : "fasilitas medis",
+    "no_data_yet" : "Belum ada data",
+    "telinga" : "telinga",
+    "hidung" : "hidung",
+    "tenggorokan" : "tenggorokan",
+    "disease" : "penyakit"
+}

@@ -12,13 +12,15 @@ from database.models.Diagnosis import DiagnosisModel
 from database.models.Insurance import InsuranceModel
 from database.models.Hospital import HospitalModel
 
-from pprint import pprint
+from config import LANG_CODE
+import json
 
 
 
 class PatientQueuePage(Canvas, BasePage):
     def __init__(self, window):
         self.window = window
+        self.data_localization = self.get_localization()
         super().__init__(
             window,
             bg=BACKGROUND_COLOUR,
@@ -33,6 +35,23 @@ class PatientQueuePage(Canvas, BasePage):
         self.initialize_models()
         self.get_patient_data()
         self.get_patient_insurance()
+        self.get_disease_title()
+        
+
+    def get_disease_title(self):
+        if LANG_CODE == "id":
+            self.disease_title_1 = f"{self.data_localization['disease']} {self.data_localization[self.current_history_data[0]['jenis_diagnosa']]}" if len(self.current_history_data)>0 else self.data_localization['no_data_yet']
+            self.disease_title_2 = f"{self.data_localization['disease']} {self.data_localization[self.current_history_data[1]['jenis_diagnosa']]}" if len(self.current_history_data)>1 else self.data_localization['no_data_yet']
+        else:
+            self.disease_title_1 = f"{self.data_localization[self.current_history_data[0]['jenis_diagnosa']]} {self.data_localization['disease']}" if len(self.current_history_data)>0 else self.data_localization['no_data_yet']
+            self.disease_title_2 = f"{self.data_localization[self.current_history_data[1]['jenis_diagnosa']]} {self.data_localization['disease']}" if len(self.current_history_data)>1 else self.data_localization['no_data_yet']
+
+    def get_localization(self):
+        path = f"locales/{LANG_CODE}/string.json"
+        with open(path, "r") as file:
+            data = json.load(file)
+        return data
+
 
     def initialize_models(self):
         self.patient = PatientModel()
@@ -60,6 +79,7 @@ class PatientQueuePage(Canvas, BasePage):
             self.drawPage()
         else:
             print("No more patients")
+    
 
     def loadImage(self):
         return PhotoImage(file=relative_to_assets("image_3.png"))
@@ -71,7 +91,7 @@ class PatientQueuePage(Canvas, BasePage):
         wifi_clock_app = notificationBar(self.window)
 
         image_image_1 = PhotoImage(
-            file=relative_to_assets("control/PatientQueueFrame/image_1.png"))
+            file=relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/image_1.png"))
         image_1 = self.create_image(
             382.0,
             405.0,
@@ -91,7 +111,7 @@ class PatientQueuePage(Canvas, BasePage):
             86.0,
             278.5,
             anchor="nw",
-            text="Jenis Kelamin               : ",
+            text=f"{self.data_localization['gender']}\t: ".capitalize(),
             fill="#404040",
             font=("Nunito Regular", 16 * -1)
         )
@@ -109,7 +129,7 @@ class PatientQueuePage(Canvas, BasePage):
             86.0,
             312.5,
             anchor="nw",
-            text="Tanggal Lahir              : ",
+            text=f"{self.data_localization['date_of_birth']}\t: ".capitalize(),
             fill="#404040",
             font=("Nunito Regular", 16 * -1)
         )
@@ -127,7 +147,7 @@ class PatientQueuePage(Canvas, BasePage):
             86.0,
             346.5,
             anchor="nw",
-            text="Alamat Domisili           : ",
+            text=f"{self.data_localization['address']}\t\t: ".capitalize(),
             fill="#404040",
             font=("Nunito Regular", 16 * -1)
         )
@@ -145,7 +165,7 @@ class PatientQueuePage(Canvas, BasePage):
             86.0,
             380.5,
             anchor="nw",
-            text="Diagnosa Terakhir       : ",
+            text=f"{self.data_localization['last_diagnosis']}\t: ".capitalize(),
             fill="#404040",
             font=("Nunito Regular", 16 * -1)
         )
@@ -154,11 +174,7 @@ class PatientQueuePage(Canvas, BasePage):
             257.0,
             384.5,
             anchor="nw",
-            text=(
-                " " * 4 + self.current_history_data[0]['diagnosa'] 
-                if self.current_history_data and self.current_history_data[0]['diagnosa'] 
-                else "Belum ada data"
-            ),
+            text= " " * 4 + self.current_history_data[0]['diagnosa'] if self.current_history_data and self.current_history_data[0]['diagnosa'] else self.data_localization['no_data_yet'],
             fill="#1E5C2A",
             font=("Nunito Bold", 19 * -1)
         )
@@ -168,9 +184,9 @@ class PatientQueuePage(Canvas, BasePage):
 
         # Mengisi teks ke Text Widget
         if self.current_history_data and len(self.current_history_data) > 0:
-            text_content = self.current_history_data[0]['hasil_diagnosa'] or "Belum ada data"
+            text_content = self.current_history_data[0]['hasil_diagnosa'] or self.data_localization['no_data_yet']
         else:
-            text_content = "Belum ada data"
+            text_content = self.data_localization['no_data_yet']
         text_widget.insert(tk.END, text_content)
 
         text_widget.tag_configure("justify", justify="left")
@@ -180,7 +196,7 @@ class PatientQueuePage(Canvas, BasePage):
         text_widget.configure(state="disabled")
 
         image_image_2 = PhotoImage(
-            file=relative_to_assets("control/PatientQueueFrame/image_2.png"))
+            file=relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/image_2.png"))
         image_2 = self.create_image(
             897.0,
             339.0,
@@ -199,13 +215,13 @@ class PatientQueuePage(Canvas, BasePage):
             744.5,
             277.5,
             anchor="nw",
-            text="Penyakit " + self.current_history_data[0]['jenis_diagnosa'] if len(self.current_history_data)>0 else "Belum ada data",
+            text= self.disease_title_1.title(),
             fill="#404040",
             font=("Nunito Bold", 19 * -1)
         )
 
         image_image_3 = PhotoImage(
-            file=relative_to_assets("control/PatientQueueFrame/image_3.png"))
+            file=relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/image_3.png"))
         image_3 = self.create_image(
             754.5,
             313.0,
@@ -216,13 +232,13 @@ class PatientQueuePage(Canvas, BasePage):
             774.5,
             301.5,
             anchor="nw",
-            text= self.current_history_data[0]['tanggal_diagnosa'].strftime("%d %B %Y") if len(self.current_history_data)>0 else "Belum ada data",
+            text= self.current_history_data[0]['tanggal_diagnosa'].strftime("%d %B %Y") if len(self.current_history_data)>0 else self.data_localization['no_data_yet'],
             fill="#404040",
             font=("Nunito Regular", 12 * -1)
         )
 
         image_image_4 = PhotoImage(
-            file=relative_to_assets("control/PatientQueueFrame/image_4.png"))
+            file=relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/image_4.png"))
         image_4 = self.create_image(
             754.5,
             334.5,
@@ -233,18 +249,18 @@ class PatientQueuePage(Canvas, BasePage):
             773.5,
             326.0,
             anchor="nw",
-            text= self.hospital.get_hospital(self.current_history_data[0]['id_rumah_sakit'])['nama_rumah_sakit'] if len(self.current_history_data)>0 else "Belum ada data",
+            text= self.hospital.get_hospital(self.current_history_data[0]['id_rumah_sakit'])['nama_rumah_sakit'] if len(self.current_history_data)>0 else self.data_localization['no_data_yet'],
             fill="#404040",
             font=("Nunito Regular", 12 * -1)
         )
 
         button_image_1 = PhotoImage(
-            file=relative_to_assets("control/PatientQueueFrame/button_1.png"))
+            file=relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/button_1.png"))
         button_1 = Button(
             image=button_image_1,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("control/PatientQueueFrame/button_1 clicked"),
+            command=lambda: print(f"control/PatientQueueFrame/{LANG_CODE}/button_1 clicked"),
             relief="flat"
         )
         button_1.place(
@@ -266,13 +282,13 @@ class PatientQueuePage(Canvas, BasePage):
             744.5,
             358.0,
             anchor="nw",
-            text= "Penyakit " + self.current_history_data[1]['jenis_diagnosa'] if len(self.current_history_data)>1 else "Belum ada data",
+            text= self.disease_title_2.title(),
             fill="#404040",
             font=("Nunito Bold", 19 * -1)
         )
 
         image_image_5 = PhotoImage(
-            file=relative_to_assets("control/PatientQueueFrame/image_5.png"))
+            file=relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/image_5.png"))
         image_5 = self.create_image(
             754.5,
             393.5,
@@ -283,13 +299,13 @@ class PatientQueuePage(Canvas, BasePage):
             774.5,
             382.0,
             anchor="nw",
-            text= self.current_history_data[1]['tanggal_diagnosa'].strftime("%d %B %Y") if len(self.current_history_data)>1 else "Belum ada data",
+            text= self.current_history_data[1]['tanggal_diagnosa'].strftime("%d %B %Y") if len(self.current_history_data)>1 else self.data_localization['no_data_yet'],
             fill="#404040",
             font=("Nunito Regular", 12 * -1)
         )
 
         image_image_6 = PhotoImage(
-            file=relative_to_assets("control/PatientQueueFrame/image_6.png"))
+            file=relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/image_6.png"))
         image_6 = self.create_image(
             754.5,
             415.0,
@@ -300,13 +316,13 @@ class PatientQueuePage(Canvas, BasePage):
             773.5,
             406.5,
             anchor="nw",
-            text= self.hospital.get_hospital(self.current_history_data[1]['id_rumah_sakit'])['nama_rumah_sakit'] if len(self.current_history_data)>1 else "Belum ada data",
+            text= self.hospital.get_hospital(self.current_history_data[1]['id_rumah_sakit'])['nama_rumah_sakit'] if len(self.current_history_data)>1 else self.data_localization['no_data_yet'],
             fill="#404040",
             font=("Nunito Regular", 12 * -1)
         )
 
         button_image_2 = PhotoImage(
-            file=relative_to_assets("control/PatientQueueFrame/button_2.png"))
+            file=relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/button_2.png"))
         button_2 = Button(
             image=button_image_2,
             borderwidth=0,
@@ -325,13 +341,13 @@ class PatientQueuePage(Canvas, BasePage):
             752.0,
             224.0,
             anchor="nw",
-            text="Riwayat Pemeriksaan",
+            text=f"{self.data_localization['medical_record']}".title(),
             fill="#404040",
             font=("Nunito Bold", 24 * -1)
         )
 
         image_image_7 = PhotoImage(
-            file=relative_to_assets("control/PatientQueueFrame/image_7.png"))
+            file=relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/image_7.png"))
         image_7 = self.create_image(
             897.0,
             592.0,
@@ -342,7 +358,7 @@ class PatientQueuePage(Canvas, BasePage):
             752.0,
             520.0,
             anchor="nw",
-            text="Asuransi Kesehatan",
+            text=f"{self.data_localization['insurance']}".title(),
             fill="#404040",
             font=("Nunito Bold", 24 * -1)
         )
@@ -351,7 +367,7 @@ class PatientQueuePage(Canvas, BasePage):
             752.0,
             570.0,
             anchor="nw",
-            text="No Asuransi     : ",
+            text=f"{self.data_localization['insurance_number']}: ".capitalize(),
             fill="#404040",
             font=("Nunito Regular", 13 * -1)
         )
@@ -369,7 +385,7 @@ class PatientQueuePage(Canvas, BasePage):
             752.0,
             594.0,
             anchor="nw",
-            text="Jenis Asuransi  : ",
+            text=f"{self.data_localization['insurance_type']}: ".capitalize(),
             fill="#404040",
             font=("Nunito Regular", 13 * -1)
         )
@@ -387,7 +403,7 @@ class PatientQueuePage(Canvas, BasePage):
             752.0,
             618.0,
             anchor="nw",
-            text="Kelas Asuransi : ",
+            text=f"{self.data_localization['insurance_class']}: ".capitalize(),
             fill="#404040",
             font=("Nunito Regular", 13 * -1)
         )
@@ -405,13 +421,13 @@ class PatientQueuePage(Canvas, BasePage):
             752.0,
             642.0,
             anchor="nw",
-            text="Fasilitas Kesehatan : ",
+            text=f"{self.data_localization['medical_facility']}: ".capitalize(),
             fill="#404040",
             font=("Nunito Regular", 13 * -1)
         )
 
         self.create_text(
-            891.0,
+            864.0,
             642.0,
             anchor="nw",
             text=self.patient_insurance[0]['fasilitas_kesehatan'],
@@ -420,7 +436,7 @@ class PatientQueuePage(Canvas, BasePage):
         )
 
         image_image_8 = PhotoImage(
-            file=relative_to_assets("control/PatientQueueFrame/image_8.png"))
+            file=relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/image_8.png"))
         image_8 = self.create_image(
             566.0,
             89.0,
@@ -428,14 +444,14 @@ class PatientQueuePage(Canvas, BasePage):
         )
 
 
-        inactive_button_3 = relative_to_assets("control/PatientQueueFrame/button_3.png")
-        active_button_3 = relative_to_assets("control/PatientQueueFrame/active_button_3.png")
+        inactive_button_3 = relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/button_3.png")
+        active_button_3 = relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/active_button_3.png")
         
-        inactive_button_4 = relative_to_assets("control/PatientQueueFrame/button_4.png")
-        active_button_4 = relative_to_assets("control/PatientQueueFrame/active_button_4.png")
+        inactive_button_4 = relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/button_4.png")
+        active_button_4 = relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/active_button_4.png")
         
-        inactive_button_5 = relative_to_assets("control/PatientQueueFrame/button_5.png")
-        active_button_5 = relative_to_assets("control/PatientQueueFrame/active_button_5.png")
+        inactive_button_5 = relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/button_5.png")
+        active_button_5 = relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/active_button_5.png")
 
         self.create_text(
             130.0,
@@ -450,27 +466,27 @@ class PatientQueuePage(Canvas, BasePage):
             130.0,
             144.5,
             anchor="nw",
-            text="Unit THT",
+            text=self.data_localization['ent_unit'],
             fill="#F1F1F1",
             font=("Nunito SemiBold", 12 * -1)
         )
 
         image_image_9 = PhotoImage(
-            file=relative_to_assets("control/PatientQueueFrame/image_9.png"))
+            file=relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/image_9.png"))
         image_9 = self.create_image(
             89.0,
             139.0,
             image=image_image_9
         )
 
-        inactive_button_3 = relative_to_assets("control/PatientQueueFrame/button_3.png")
-        active_button_3 = relative_to_assets("control/PatientQueueFrame/active_button_3.png")
+        inactive_button_3 = relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/button_3.png")
+        active_button_3 = relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/active_button_3.png")
         
-        inactive_button_4 = relative_to_assets("control/PatientQueueFrame/button_4.png")
-        active_button_4 = relative_to_assets("control/PatientQueueFrame/active_button_4.png")
+        inactive_button_4 = relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/button_4.png")
+        active_button_4 = relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/active_button_4.png")
         
-        inactive_button_5 = relative_to_assets("control/PatientQueueFrame/button_5.png")
-        active_button_5 = relative_to_assets("control/PatientQueueFrame/active_button_5.png")
+        inactive_button_5 = relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/button_5.png")
+        active_button_5 = relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/active_button_5.png")
 
         create_hover_button(self.window, 59.5, 633.5, 192.0, 54.0, 
                             BACKGROUND_COLOUR, inactive_button_3, active_button_3,  
