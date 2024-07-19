@@ -1,0 +1,20 @@
+{
+    "ent_unit": "ENT Unit",
+    "gender" : "gender",
+    "address"   : "address",
+    "date_of_birth" : "date of birth",
+    "last_diagnosis" : "last diagnosis",
+    "diagnosis" : "diagnosis",
+    "medical_record" : "medical record",
+    "insurance" : "health insurance",
+    "insurance_number" : "insurance number",
+    "insurance_type" : "insurance type",
+    "insurance_class" : "insurance class",
+    "medical_facility" : "medical facility",
+    "no_data_yet" : "No data yet",
+    "telinga" : "ear",
+    "hidung" : "nose",
+    "tenggorokan" : "throat",
+    "disease" : "disease"
+
+}
