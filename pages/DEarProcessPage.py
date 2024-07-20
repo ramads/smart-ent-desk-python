@@ -1,6 +1,7 @@
 import os
-
+import threading
 import cv2
+
 from tkinter import *
 from colors import *
 from helpers import *
@@ -42,6 +43,8 @@ class DEarProcessPage(Canvas, BasePage):
         os.makedirs(self.image_dir, exist_ok=True)
         self.window = window
         self.vidCap = None
+        self.camera_thread = None
+        self.running = False
 
         cam_index = 0
         while (cam_index < 20):
@@ -52,6 +55,9 @@ class DEarProcessPage(Canvas, BasePage):
                 cam_index = cam_index + 1
             else:
                 break
+
+        self.startCameraThread()
+
     def get_patient_data(self):
         patient_data = self.patient.get_patient(self.temp_data['id_patient'])
         insurance_data = self.insurance.get_patient_insurances(self.temp_data['id_patient'])
@@ -63,16 +69,21 @@ class DEarProcessPage(Canvas, BasePage):
             data = json.load(file)
         return data
 
+    def startCameraThread(self):
+        self.running = True
+        self.updateCameraFrame()
+
     def updateCameraFrame(self):
-        self.ret, self.frame = self.vidCap.read()
+        if self.running:
+            self.ret, self.frame = self.vidCap.read()
 
-        if self.ret:
-            self.frame = cv2.resize(self.frame, (604, 538))
-            opencv_image = cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGBA)
-            self.captured_image = ImageTk.PhotoImage(image=Image.fromarray(opencv_image))
-            self.create_image(354.0, 339.0, image=self.captured_image)
+            if self.ret:
+                self.frame = cv2.resize(self.frame, (604, 538))
+                opencv_image = cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGBA)
+                self.captured_image = ImageTk.PhotoImage(image=Image.fromarray(opencv_image))
+                self.create_image(354.0, 339.0, image=self.captured_image)
 
-        self.after_cam_id = self.after(10, self.updateCameraFrame)
+            self.window.after(1, self.updateCameraFrame)
 
     def onCapture(self, image_name):
         if self.frame is not None:
@@ -86,9 +97,11 @@ class DEarProcessPage(Canvas, BasePage):
             goToPage(PreviewImagePage.PreviewImagePage(self.window, self.temp_data))
 
     def onStopCamera(self):
+        self.running = False
+        if self.camera_thread is not None:
+            self.camera_thread.join()
         self.vidCap.release()
         cv2.destroyAllWindows()
-        self.after_cancel(self.after_cam_id)
 
     def backToPrevPage(self):
         self.onStopCamera()
@@ -484,5 +497,5 @@ class DEarProcessPage(Canvas, BasePage):
         self.drawDemoSerialCommand()
 
         switch_button_image(0)
-        self.after(10, self.updateCameraFrame)
+        # self.after(10, self.updateCameraFrame)
         self.window.mainloop()
