@@ -15,6 +15,12 @@
     "telinga" : "ear",
     "hidung" : "nose",
     "tenggorokan" : "throat",
-    "disease" : "disease"
+    "disease" : "disease",
+    "select_diagnosis" : "please select the diagnosis you want to do.\n                 we will prepare it for you.",
+    "before_proceed" : "Before taking a picture, please take the Otoscope and make sure it is properly directed.",
+    "tool_control" : "Tool Control",
+    "water_pressure" : "Water Pressure (Spray)",
+    "pump_pressure" : "Suction Pump Pressure",
+    "information_patient" : "Patient Information"
 
 }

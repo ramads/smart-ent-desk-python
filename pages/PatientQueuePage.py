@@ -91,7 +91,7 @@ class PatientQueuePage(Canvas, BasePage):
         wifi_clock_app = notificationBar(self.window)
 
         image_image_1 = PhotoImage(
-            file=relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/image_1.png"))
+            file=relative_to_assets(f"control/PatientQueueFrame/image_1.png"))
         image_1 = self.create_image(
             382.0,
             405.0,
@@ -196,7 +196,7 @@ class PatientQueuePage(Canvas, BasePage):
         text_widget.configure(state="disabled")
 
         image_image_2 = PhotoImage(
-            file=relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/image_2.png"))
+            file=relative_to_assets(f"control/PatientQueueFrame/image_2.png"))
         image_2 = self.create_image(
             897.0,
             339.0,
@@ -221,7 +221,7 @@ class PatientQueuePage(Canvas, BasePage):
         )
 
         image_image_3 = PhotoImage(
-            file=relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/image_3.png"))
+            file=relative_to_assets(f"control/PatientQueueFrame/image_3.png"))
         image_3 = self.create_image(
             754.5,
             313.0,
@@ -238,7 +238,7 @@ class PatientQueuePage(Canvas, BasePage):
         )
 
         image_image_4 = PhotoImage(
-            file=relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/image_4.png"))
+            file=relative_to_assets(f"control/PatientQueueFrame/image_4.png"))
         image_4 = self.create_image(
             754.5,
             334.5,
@@ -288,7 +288,7 @@ class PatientQueuePage(Canvas, BasePage):
         )
 
         image_image_5 = PhotoImage(
-            file=relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/image_5.png"))
+            file=relative_to_assets(f"control/PatientQueueFrame/image_5.png"))
         image_5 = self.create_image(
             754.5,
             393.5,
@@ -305,7 +305,7 @@ class PatientQueuePage(Canvas, BasePage):
         )
 
         image_image_6 = PhotoImage(
-            file=relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/image_6.png"))
+            file=relative_to_assets(f"control/PatientQueueFrame/image_6.png"))
         image_6 = self.create_image(
             754.5,
             415.0,
@@ -347,7 +347,7 @@ class PatientQueuePage(Canvas, BasePage):
         )
 
         image_image_7 = PhotoImage(
-            file=relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/image_7.png"))
+            file=relative_to_assets(f"control/PatientQueueFrame/image_7.png"))
         image_7 = self.create_image(
             897.0,
             592.0,
@@ -436,7 +436,7 @@ class PatientQueuePage(Canvas, BasePage):
         )
 
         image_image_8 = PhotoImage(
-            file=relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/image_8.png"))
+            file=relative_to_assets(f"control/PatientQueueFrame/image_8.png"))
         image_8 = self.create_image(
             566.0,
             89.0,
@@ -472,7 +472,7 @@ class PatientQueuePage(Canvas, BasePage):
         )
 
         image_image_9 = PhotoImage(
-            file=relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/image_9.png"))
+            file=relative_to_assets(f"control/PatientQueueFrame/image_9.png"))
         image_9 = self.create_image(
             89.0,
             139.0,
