@@ -8,6 +8,9 @@ from notificationBar import notificationBar
 from pages import DEarResultPage
 from machine_learning.image_predictor import ImagePredictor
 
+from config import LANG_CODE
+import json
+
 
 class DEarLoadingPage(Canvas, BasePage):
     result_1 = ("",0)
@@ -16,6 +19,7 @@ class DEarLoadingPage(Canvas, BasePage):
 
     def __init__(self, window, temp_data):
         self.window = window
+        self.data_localization = self.get_localization()
         super().__init__(
             window,
             bg=BACKGROUND_COLOUR,
@@ -27,6 +31,12 @@ class DEarLoadingPage(Canvas, BasePage):
         )
         self.temp_data = temp_data
         self.drawPage()
+    
+    def get_localization(self):
+        path = f"locales/{LANG_CODE}/string.json"
+        with open(path, "r") as file:
+            data = json.load(file)
+        return data
 
 
     def run_prediction(self):
@@ -92,7 +102,7 @@ class DEarLoadingPage(Canvas, BasePage):
             570.0,
             440.0,
             anchor="center",
-            text="              Mohon Tunggu Sebentar,\nkami sedang menyiapkannya untuk anda.",
+            text=self.data_localization['please_wait'],
             fill="#FFFFFF",
             font=("Nunito SemiBold", 16 * -1)
         )

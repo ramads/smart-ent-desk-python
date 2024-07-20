@@ -3,11 +3,14 @@ from tkinter import *
 from colors import *
 from helpers import *
 from notificationBar import notificationBar
-from pprint import pprint
+
 
 from pages import HomePage
 
 from database.models.Diagnosis import DiagnosisModel
+
+from config import LANG_CODE
+import json
 
 
 class MedicalRecordPage(Canvas, BasePage):
@@ -17,7 +20,7 @@ class MedicalRecordPage(Canvas, BasePage):
         self.dignosisModel = DiagnosisModel()
         self.temp_data = self.dignosisModel.get_patient_joint_diagnoses()
         self.history_data = self.temp_data
-        pprint(self.history_data)
+        self.data_localization = self.get_localization()
 
         super().__init__(
             window,
@@ -30,6 +33,12 @@ class MedicalRecordPage(Canvas, BasePage):
         )
 
         self.drawPage()
+
+    def get_localization(self):
+        path = f"locales/{LANG_CODE}/string.json"
+        with open(path, "r") as file:
+            data = json.load(file)
+        return data
 
     def searching(self):
         input_text = self.searchingBox.get("1.0", "end-1c").lower().strip()
@@ -75,7 +84,7 @@ class MedicalRecordPage(Canvas, BasePage):
             81.0,
             280.0,
             anchor="nw",
-            text="Nama",
+            text=self.data_localization['name'].title(),
             fill="#404040",
             font=("Nunito Bold", 20 * -1)
         )
@@ -84,7 +93,7 @@ class MedicalRecordPage(Canvas, BasePage):
             380,
             280.0,
             anchor="nw",
-            text="Diagnosa",
+            text=self.data_localization['diagnosis'].title(),
             fill="#404040",
             font=("Nunito Bold", 20 * -1)
         )
@@ -93,7 +102,7 @@ class MedicalRecordPage(Canvas, BasePage):
             650.0,
             280.0,
             anchor="nw",
-            text="Tanggal Periksa",
+            text=self.data_localization['check_date'].title(),
             fill="#404040",
             font=("Nunito Bold", 20 * -1)
         )
@@ -102,7 +111,7 @@ class MedicalRecordPage(Canvas, BasePage):
             915.0,
             280.0,
             anchor="nw",
-            text="Action",
+            text=self.data_localization['action'].title(),
             fill="#404040",
             font=("Nunito Bold", 20 * -1)
         )
@@ -128,7 +137,7 @@ class MedicalRecordPage(Canvas, BasePage):
             130.0,
             144.5,
             anchor="nw",
-            text="Unit THT",
+            text=self.data_localization['ent_unit'],
             fill="#F1F1F1",
             font=("Nunito SemiBold", 12 * -1)
         )
@@ -144,27 +153,16 @@ class MedicalRecordPage(Canvas, BasePage):
         image_image_6 = PhotoImage(
             file=relative_to_assets("control/MedicalRecordFrame/image_6.png"))
         image_6 = self.create_image(
-            790.0,
+            764.0,
             239.0,
             image=image_image_6
         )
-
-        button_image_5 = PhotoImage(
-            file=relative_to_assets("control/MedicalRecordFrame/button_5.png"))
-        button_5 = Button(
-            image=button_image_5,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: print("button_5 clicked"),
-            relief="flat"
-        )
-        button_5.place()
 
         self.create_text(
             81.0,
             216.0,
             anchor="nw",
-            text="Riwayat Pasien",
+            text=self.data_localization['patient_history'].title(),
             fill="#404040",
             font=("Nunito Bold", 25 * -1)
         )
@@ -179,23 +177,23 @@ class MedicalRecordPage(Canvas, BasePage):
             placeholder="Enter your text here..."
         )
         self.searchingBox.place(
-            x=635.0,
+            x=611.0,
             y=230.0,
             width=300.0,
             height=30.0
         )
 
-        inactive_button_4 = relative_to_assets("control/MedicalRecordFrame/button_4.png")
-        active_button_4 = relative_to_assets("control/MedicalRecordFrame/active_button_4.png")
+        inactive_button_4 = relative_to_assets(f"control/MedicalRecordFrame/{LANG_CODE}/button_4.png")
+        active_button_4 = relative_to_assets(f"control/MedicalRecordFrame/{LANG_CODE}/active_button_4.png")
 
-        inactive_button_5 = relative_to_assets("control/MedicalRecordFrame/button_5.png")
-        active_button_5 = relative_to_assets("control/MedicalRecordFrame/active_button_5.png")
+        inactive_button_5 = relative_to_assets(f"control/MedicalRecordFrame/{LANG_CODE}/button_5.png")
+        active_button_5 = relative_to_assets(f"control/MedicalRecordFrame/{LANG_CODE}/active_button_5.png")
 
         create_hover_button(self.window, 471.0, 662.0, 192.0, 54.0,
                             BACKGROUND_COLOUR, inactive_button_4, active_button_4,
                             lambda: goToPage(HomePage.HomePage(self.window)))
 
-        create_hover_button(self.window, 964.0, 216.0, 88.0, 45.0,
+        create_hover_button(self.window, 940.0, 216.0, 120.0, 45.0,
                             "#FFFFFF", inactive_button_5, active_button_5,
                             lambda: self.searching())
 

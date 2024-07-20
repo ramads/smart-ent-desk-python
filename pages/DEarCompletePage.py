@@ -11,11 +11,15 @@ from datetime import datetime
 
 from database.models.Diagnosis import DiagnosisModel
 
+from config import LANG_CODE
+import json
+
 
 class DEarCompletePage(Canvas, BasePage):
     def __init__(self, window, temp_data=None):
         self.window = window
         self.temp_data = temp_data
+        self.data_localization = self.get_localization()
         pprint(temp_data)
         super().__init__(
             window,
@@ -49,9 +53,15 @@ class DEarCompletePage(Canvas, BasePage):
             'Perforasi Membran Tympani': 'Robekan atau lubang pada gendang telinga yang dapat disebabkan oleh infeksi, trauma, atau tekanan yang tiba-tiba.',
             'Tympanosklerotik': 'Kondisi di mana jaringan parut terbentuk di gendang telinga atau telinga tengah, seringkali sebagai hasil dari infeksi telinga kronis atau berulang.'
         }
-
+        
         self.insert_data()
 
+    def get_localization(self):
+        path = f"locales/{LANG_CODE}/string.json"
+        with open(path, "r") as file:
+            data = json.load(file)
+        return data
+    
     def insert_data(self):
         current_date = datetime.now().strftime('%Y-%m-%d')
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
@@ -106,7 +116,7 @@ class DEarCompletePage(Canvas, BasePage):
             1133.0/2,
             472.0,
             anchor="center",
-            text="Proses Diagnosis Selesai",
+            text=self.data_localization['diagnosis_complete'].title(),
             fill="#404040",
             font=("Nunito Bold", 24 * -1),
         )
@@ -115,7 +125,7 @@ class DEarCompletePage(Canvas, BasePage):
             1133.0/2,
             520.0,
             anchor="center",
-            text="Diagnosis berhasil dilakukan. Hasil diagnosis dapat di akses kembali pada menu riwayat pasien.",
+            text=self.data_localization['diagnosis_complete_hint'],
             fill="#8A8C8F",
             font=("Nunito Regular", 16 * -1)
         )
