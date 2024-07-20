@@ -8,11 +8,15 @@ from pages import NotificationPage
 from pages import MedicalRecordPage
 from pages import DEarLoadingPage
 
+from config import LANG_CODE
+import json
+
 
 class HomePage(Canvas, BasePage):
 
     def __init__(self, window):
         self.window = window
+        self.data_localization = self.get_localization()
         super().__init__(
             window,
             bg=BACKGROUND_COLOUR,
@@ -23,28 +27,34 @@ class HomePage(Canvas, BasePage):
             relief="ridge"
         )
 
+    def get_localization(self):
+        path = f"locales/{LANG_CODE}/string.json"
+        with open(path, "r") as file:
+            data = json.load(file)
+        return data
+    
     def drawPage(self):
         self.place(x=0, y=0)
 
         wifi_clock_app = notificationBar(self.window)
 
-        inactive_button_1 = relative_to_assets("control/HomeFrame/button_1.png")
-        active_button_1 = relative_to_assets("control/HomeFrame/active_button_1.png")
+        inactive_button_1 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/button_1.png")
+        active_button_1 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/active_button_1.png")
         
-        inactive_button_2 = relative_to_assets("control/HomeFrame/button_2.png")
-        active_button_2 = relative_to_assets("control/HomeFrame/active_button_2.png")
+        inactive_button_2 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/button_2.png")
+        active_button_2 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/active_button_2.png")
 
-        inactive_button_3 = relative_to_assets("control/HomeFrame/button_3.png")
-        active_button_3 = relative_to_assets("control/HomeFrame/active_button_3.png")
+        inactive_button_3 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/button_3.png")
+        active_button_3 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/active_button_3.png")
         
-        inactive_button_4 = relative_to_assets("control/HomeFrame/button_4.png")
-        active_button_4 = relative_to_assets("control/HomeFrame/active_button_4.png")
+        inactive_button_4 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/button_4.png")
+        active_button_4 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/active_button_4.png")
         
-        inactive_button_5 = relative_to_assets("control/HomeFrame/button_5.png")
-        active_button_5 = relative_to_assets("control/HomeFrame/active_button_5.png")
+        inactive_button_5 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/button_5.png")
+        active_button_5 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/active_button_5.png")
         
-        inactive_button_6 = relative_to_assets("control/HomeFrame/button_6.png")
-        active_button_6 = relative_to_assets("control/HomeFrame/active_button_6.png")
+        inactive_button_6 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/button_6.png")
+        active_button_6 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/active_button_6.png")
         
         create_hover_button(self.window, 47.0, 216.0, 447.0, 319.0, 
                             BACKGROUND_COLOUR, inactive_button_1, active_button_1, 
@@ -71,7 +81,7 @@ class HomePage(Canvas, BasePage):
                             lambda: print("button_6 clicked"))
 
         image_image_1 = PhotoImage(
-            file=relative_to_assets("control/HomeFrame/image_1.png"))
+            file=relative_to_assets(f"control/HomeFrame/image_1.png"))
         image_1 = self.create_image(
             566.0,
             89.0,
@@ -91,13 +101,13 @@ class HomePage(Canvas, BasePage):
             130.0,
             144.5,
             anchor="nw",
-            text="Unit THT",
+            text=self.data_localization['ent_unit'],
             fill="#F1F1F1",
             font=("Nunito SemiBold", 12 * -1)
         )
 
         image_image_4 = PhotoImage(
-            file=relative_to_assets("control/HomeFrame/image_4.png"))
+            file=relative_to_assets(f"control/HomeFrame/image_4.png"))
         image_4 = self.create_image(
             89.0,
             139.0,

@@ -6,9 +6,13 @@ from notificationBar import notificationBar
 from pages.DEarPage import DEarPage
 from pages import PatientQueuePage
 
+from config import LANG_CODE
+import json
+
 class DiagnosisPage(Canvas, BasePage):
     def __init__(self, window, id_patient = None):
         self.window = window
+        self.data_localization = self.get_localization()
         super().__init__(
             window,
             bg=BACKGROUND_COLOUR,
@@ -22,22 +26,29 @@ class DiagnosisPage(Canvas, BasePage):
             'id_patient': id_patient
         }
 
+    def get_localization(self):
+        path = f"locales/{LANG_CODE}/string.json"
+        with open(path, "r") as file:
+            data = json.load(file)
+        return data
+
+
     def drawPage(self, data = None):
         self.place(x=0, y=0)
 
         wifi_clock_app = notificationBar(self.window)
 
-        inactive_button_1 = relative_to_assets("control/DiagnosisFrame/button_1.png")
-        active_button_1 = relative_to_assets("control/DiagnosisFrame/active_button_1.png")
+        inactive_button_1 = relative_to_assets(f"control/DiagnosisFrame/{LANG_CODE}/button_1.png")
+        active_button_1 = relative_to_assets(f"control/DiagnosisFrame/{LANG_CODE}/active_button_1.png")
         
-        inactive_button_2 = relative_to_assets("control/DiagnosisFrame/button_2.png")
-        active_button_2 = relative_to_assets("control/DiagnosisFrame/active_button_2.png")
+        inactive_button_2 = relative_to_assets(f"control/DiagnosisFrame/{LANG_CODE}/button_2.png")
+        active_button_2 = relative_to_assets(f"control/DiagnosisFrame/{LANG_CODE}/active_button_2.png")
 
-        inactive_button_3 = relative_to_assets("control/DiagnosisFrame/button_3.png")
-        active_button_3 = relative_to_assets("control/DiagnosisFrame/active_button_3.png")
+        inactive_button_3 = relative_to_assets(f"control/DiagnosisFrame/{LANG_CODE}/button_3.png")
+        active_button_3 = relative_to_assets(f"control/DiagnosisFrame/{LANG_CODE}/active_button_3.png")
 
-        inactive_button_4 = relative_to_assets("control/DiagnosisFrame/button_4.png")
-        active_button_4 = relative_to_assets("control/DiagnosisFrame/active_button_4.png")
+        inactive_button_4 = relative_to_assets(f"control/DiagnosisFrame/{LANG_CODE}/button_4.png")
+        active_button_4 = relative_to_assets(f"control/DiagnosisFrame/{LANG_CODE}/active_button_4.png")
         
         create_hover_button(self.window, 41.0, 223.0, 332.0, 319.0,
                             BACKGROUND_COLOUR, inactive_button_1, active_button_1, 
@@ -56,7 +67,7 @@ class DiagnosisPage(Canvas, BasePage):
                             lambda: goToPage(PatientQueuePage.PatientQueuePage(self.window)))
 
         image_image_1 = PhotoImage(
-            file=relative_to_assets("control/DiagnosisFrame/image_1.png"))
+            file=relative_to_assets(f"control/DiagnosisFrame/image_1.png"))
         image_1 = self.create_image(
             566.0,
             89.0,
@@ -67,7 +78,7 @@ class DiagnosisPage(Canvas, BasePage):
             555.0,
             590.0,
             anchor="center",
-            text="Silakan pilih diagnosa yang akan anda lakukan.\n      Kami akan menyiapkannya untuk anda.",
+            text=self.data_localization["select_diagnosis"].capitalize(),
             fill="#FFFFFF",
             font=("Nunito SemiBold", 16 * -1)
         )
@@ -100,7 +111,7 @@ class DiagnosisPage(Canvas, BasePage):
         )
 
         image_image_4 = PhotoImage(
-            file=relative_to_assets("control/DiagnosisFrame/image_4.png"))
+            file=relative_to_assets(f"control/DiagnosisFrame/image_4.png"))
         image_4 = self.create_image(
             89.0,
             139.0,

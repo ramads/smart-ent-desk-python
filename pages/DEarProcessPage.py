@@ -1,6 +1,7 @@
 import os
-
+import threading
 import cv2
+
 from tkinter import *
 from colors import *
 from helpers import *
@@ -8,6 +9,12 @@ from PIL import Image, ImageTk
 from pages import DEarPage, PreviewImagePage
 from libs.serial_com import SerialCom
 from notificationBar import notificationBar
+
+from database.models.Patient import PatientModel
+from database.models.Insurance import InsuranceModel
+
+from config import LANG_CODE
+import json
 
 
 class DEarProcessPage(Canvas, BasePage):
@@ -27,12 +34,17 @@ class DEarProcessPage(Canvas, BasePage):
             highlightthickness=0,
             relief="ridge"
         )
-
-        self.seriCom.connect()
         self.temp_data = temp_data
+        self.data_localization = self.get_localization()
+        self.patient = PatientModel()
+        self.insurance = InsuranceModel()
+        self.patient_data, self.insurance_data = self.get_patient_data()
+        self.seriCom.connect()
         os.makedirs(self.image_dir, exist_ok=True)
         self.window = window
         self.vidCap = None
+        self.camera_thread = None
+        self.running = False
 
         cam_index = 0
         while (cam_index < 20):
@@ -44,17 +56,34 @@ class DEarProcessPage(Canvas, BasePage):
             else:
                 break
 
+        self.startCameraThread()
+
+    def get_patient_data(self):
+        patient_data = self.patient.get_patient(self.temp_data['id_patient'])
+        insurance_data = self.insurance.get_patient_insurances(self.temp_data['id_patient'])
+        return patient_data, insurance_data
+    
+    def get_localization(self):
+        path = f"locales/{LANG_CODE}/string.json"
+        with open(path, "r") as file:
+            data = json.load(file)
+        return data
+
+    def startCameraThread(self):
+        self.running = True
+        self.updateCameraFrame()
 
     def updateCameraFrame(self):
-        self.ret, self.frame = self.vidCap.read()
+        if self.running:
+            self.ret, self.frame = self.vidCap.read()
 
-        if self.ret:
-            self.frame = cv2.resize(self.frame, (604, 538))
-            opencv_image = cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGBA)
-            self.captured_image = ImageTk.PhotoImage(image=Image.fromarray(opencv_image))
-            self.create_image(354.0, 339.0, image=self.captured_image)
+            if self.ret:
+                self.frame = cv2.resize(self.frame, (604, 538))
+                opencv_image = cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGBA)
+                self.captured_image = ImageTk.PhotoImage(image=Image.fromarray(opencv_image))
+                self.create_image(354.0, 339.0, image=self.captured_image)
 
-        self.after_cam_id = self.after(10, self.updateCameraFrame)
+            self.window.after(1, self.updateCameraFrame)
 
     def onCapture(self, image_name):
         if self.frame is not None:
@@ -68,9 +97,11 @@ class DEarProcessPage(Canvas, BasePage):
             goToPage(PreviewImagePage.PreviewImagePage(self.window, self.temp_data))
 
     def onStopCamera(self):
+        self.running = False
+        if self.camera_thread is not None:
+            self.camera_thread.join()
         self.vidCap.release()
         cv2.destroyAllWindows()
-        self.after_cancel(self.after_cam_id)
 
     def backToPrevPage(self):
         self.onStopCamera()
@@ -111,11 +142,11 @@ class DEarProcessPage(Canvas, BasePage):
             image=image_image_1
         )
 
-        inactive_button_1 = relative_to_assets("control/DEarProcessFrame/button_1.png")
-        active_button_1 = relative_to_assets("control/DEarProcessFrame/active_button_1.png")
+        inactive_button_1 = relative_to_assets(f"control/DEarProcessFrame/{LANG_CODE}/button_1.png")
+        active_button_1 = relative_to_assets(f"control/DEarProcessFrame/{LANG_CODE}/active_button_1.png")
         
-        inactive_button_2 = relative_to_assets("control/DEarProcessFrame/button_2.png")
-        active_button_2 = relative_to_assets("control/DEarProcessFrame/active_button_2.png")
+        inactive_button_2 = relative_to_assets(f"control/DEarProcessFrame/{LANG_CODE}/button_2.png")
+        active_button_2 = relative_to_assets(f"control/DEarProcessFrame/{LANG_CODE}/active_button_2.png")
 
         create_hover_button(self.window, 158.0, 632.0, 192.0, 54.0,
                             "#FFFFFF", inactive_button_1, active_button_1, 
@@ -137,7 +168,7 @@ class DEarProcessPage(Canvas, BasePage):
             726.0,
             319.0,
             anchor="nw",
-            text="Kontrol Alat",
+            text=self.data_localization['tool_control'].title(),
             fill="#404040",
             font=("Nunito Bold", 24 * -1)
         )
@@ -146,7 +177,7 @@ class DEarProcessPage(Canvas, BasePage):
             726.0,
             375.0,
             anchor="nw",
-            text="Tekanan Air (Spray)",
+            text=self.data_localization['water_pressure'].title(),
             fill="#404040",
             font=("Nunito Bold", 19 * -1)
         )
@@ -351,7 +382,7 @@ class DEarProcessPage(Canvas, BasePage):
             726.0,
             531.0,
             anchor="nw",
-            text="Tekanan Pompa Penghisap",
+            text=self.data_localization['pump_pressure'].title(),
             fill="#404040",
             font=("Nunito Bold", 19 * -1)
         )
@@ -368,7 +399,7 @@ class DEarProcessPage(Canvas, BasePage):
             726.0,
             76.0,
             anchor="nw",
-            text="Informasi Pasien",
+            text=self.data_localization['information_patient'].title(),
             fill="#404040",
             font=("Nunito Bold", 24 * -1)
         )
@@ -377,7 +408,7 @@ class DEarProcessPage(Canvas, BasePage):
             726.0,
             126.0,
             anchor="nw",
-            text="Alma Liakua Mutia",
+            text=self.patient_data['nama_pasien'],
             fill="#404040",
             font=("Nunito Bold", 20 * -1)
         )
@@ -386,16 +417,16 @@ class DEarProcessPage(Canvas, BasePage):
             726.0,
             160.0,
             anchor="nw",
-            text="No Asuransi     : ",
+            text=f"{self.data_localization['insurance_number'].capitalize()} :",
             fill="#404040",
             font=("Nunito Regular", 15 * -1)
         )
 
         self.create_text(
-            850.0,
+            885.0,
             160.0,
             anchor="nw",
-            text="000863002321023",
+            text=self.insurance_data[0]['nomor_asuransi'],
             fill="#404040",
             font=("Nunito Bold", 15 * -1)
         )
@@ -404,16 +435,16 @@ class DEarProcessPage(Canvas, BasePage):
             726.0,
             184.0,
             anchor="nw",
-            text="Jenis Asuransi  : ",
+            text=f"{self.data_localization['insurance_type'].capitalize()} :",
             fill="#404040",
             font=("Nunito Regular", 15 * -1)
         )
 
         self.create_text(
-            850.0,
+            885.0,
             184.0,
             anchor="nw",
-            text="BPJS",
+            text=self.insurance_data[0]['jenis_asuransi'],
             fill="#404040",
             font=("Nunito Bold", 15 * -1)
         )
@@ -422,16 +453,16 @@ class DEarProcessPage(Canvas, BasePage):
             726.0,
             208.0,
             anchor="nw",
-            text="Kelas Asuransi : ",
+            text=f"{self.data_localization['insurance_class'].capitalize()} :",
             fill="#404040",
             font=("Nunito Regular", 15 * -1)
         )
 
         self.create_text(
-            850.0,
+            885.0,
             208.0,
             anchor="nw",
-            text="Kelas 1",
+            text=self.insurance_data[0]['kelas_asuransi'],
             fill="#404040",
             font=("Nunito Bold", 15 * -1)
         )
@@ -440,7 +471,7 @@ class DEarProcessPage(Canvas, BasePage):
             726.0,
             232.0,
             anchor="nw",
-            text="Fasilitas Kesehatan : ",
+            text=f"{self.data_localization['medical_facility'].capitalize()} :",
             fill="#404040",
             font=("Nunito Regular", 15 * -1)
         )
@@ -449,7 +480,7 @@ class DEarProcessPage(Canvas, BasePage):
             885.0,
             232.0,
             anchor="nw",
-            text="Puskesmas Selaparang",
+            text=self.insurance_data[0]['fasilitas_kesehatan'],
             fill="#404040",
             font=("Nunito Bold", 15 * -1)
         )
@@ -466,5 +497,5 @@ class DEarProcessPage(Canvas, BasePage):
         self.drawDemoSerialCommand()
 
         switch_button_image(0)
-        self.after(10, self.updateCameraFrame)
+        # self.after(10, self.updateCameraFrame)
         self.window.mainloop()

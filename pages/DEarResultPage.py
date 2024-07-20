@@ -16,12 +16,15 @@ from pages import DEarCompletePage
 from pages import FullScreenImagePage
 
 from pprint import pprint
+from config import LANG_CODE
+import json
 
 class DEarResultPage(Canvas, BasePage):
     def __init__(self, window, temp_data=None):
 
         self.window = window
         self.temp_data = temp_data
+        self.data_localization = self.get_localization()
 
         super().__init__(
             window,
@@ -37,7 +40,12 @@ class DEarResultPage(Canvas, BasePage):
         self.get_patient_data()
         self.get_insurance_data()
         pprint(self.temp_data)
-        
+    
+    def get_localization(self):
+        path = f"locales/{LANG_CODE}/string.json"
+        with open(path, "r") as file:
+            data = json.load(file)
+        return data
 
     def get_patient_data(self):
         self.patient_data = self.patient.get_patient(self.temp_data['id_patient'])
@@ -102,7 +110,7 @@ class DEarResultPage(Canvas, BasePage):
             726.0,
             300.0,
             anchor="nw",
-            text="Keterangan grafik:",
+            text=self.data_localization['graph_information'],
             fill="#404040",
             font=("Nunito Regular", 14 * -1)
         )
@@ -111,7 +119,7 @@ class DEarResultPage(Canvas, BasePage):
             726.0,
             75.0,
             anchor="nw",
-            text="Analisa Gambar:",
+            text=self.data_localization['picture_analysis'],
             fill="#404040",
             font=("Nunito Bold", 24 * -1)
         )
@@ -129,7 +137,7 @@ class DEarResultPage(Canvas, BasePage):
             370.0,
             anchor="nw",
             # text=self.temp_data['result_2'][0],
-            text="Akumulasi Lainnya",
+            text=self.data_localization['other_accumulations'],
             fill="#404040",
             font=("Nunito Regular", 12 * -1),
             width=150
@@ -200,7 +208,7 @@ class DEarResultPage(Canvas, BasePage):
             67.0,
             459.0,
             anchor="nw",
-            text="Hasil Diagnosa",
+            text=self.data_localization['diagnosis_result'],
             fill="#404040",
             font=("Nunito Bold", 19 * -1)
         )
@@ -218,7 +226,7 @@ class DEarResultPage(Canvas, BasePage):
             67.0,
             547.0,
             anchor="nw",
-            text = "Tingkat keyakinan diagnosa: ",
+            text=self.data_localization['confidence_level'],
             fill="#404040",
             font=("Nunito Regular", 14 * -1)
         )
@@ -236,7 +244,7 @@ class DEarResultPage(Canvas, BasePage):
             67.0,
             583.0,
             anchor="nw",
-            text="Note: Jika hasil diagnosa dirasa keliru, silakan untuk melakukan koreksi hasil.",
+            text=self.data_localization['diagnosis_note'],
             fill="#8A8C8F",
             font=("Nunito Bold", 12 * -1)
         )
@@ -253,7 +261,7 @@ class DEarResultPage(Canvas, BasePage):
             726.0,
             459.0,
             anchor="nw",
-            text="Informasi Pasien",
+            text=self.data_localization['information_patient'].title(),
             fill="#404040",
             font=("Nunito Bold", 24 * -1)
         )
@@ -271,13 +279,13 @@ class DEarResultPage(Canvas, BasePage):
             726.0,
             543.0,
             anchor="nw",
-            text="No Asuransi     : ",
+            text=f"{self.data_localization['insurance_number'].capitalize()} :",
             fill="#404040",
             font=("Nunito Regular", 15 * -1)
         )
 
         self.create_text(
-            850.0,
+            900.0,
             543.0,
             anchor="nw",
             text=self.insurance_data[0]['nomor_asuransi'],
@@ -289,13 +297,13 @@ class DEarResultPage(Canvas, BasePage):
             726.0,
             567.0,
             anchor="nw",
-            text="Jenis Asuransi  : ",
+            text=f"{self.data_localization['insurance_type'].capitalize()} :",
             fill="#404040",
             font=("Nunito Regular", 15 * -1)
         )
 
         self.create_text(
-            850.0,
+            900.0,
             567.0,
             anchor="nw",
             text=self.insurance_data[0]['jenis_asuransi'],
@@ -307,13 +315,13 @@ class DEarResultPage(Canvas, BasePage):
             726.0,
             591.0,
             anchor="nw",
-            text="Kelas Asuransi : ",
+            text=f"{self.data_localization['insurance_class'].capitalize()} :",
             fill="#404040",
             font=("Nunito Regular", 15 * -1)
         )
 
         self.create_text(
-            850.0,
+            900.0,
             591.0,
             anchor="nw",
             text=self.insurance_data[0]['kelas_asuransi'],
@@ -325,13 +333,13 @@ class DEarResultPage(Canvas, BasePage):
             726.0,
             615.0,
             anchor="nw",
-            text="Fasilitas Kesehatan : ",
+            text=f"{self.data_localization['medical_facility'].capitalize()} :",
             fill="#404040",
             font=("Nunito Regular", 15 * -1)
         )
 
         self.create_text(
-            890.0,
+            900.0,
             615.0,
             anchor="nw",
             text=self.insurance_data[0]['fasilitas_kesehatan'],
@@ -342,11 +350,11 @@ class DEarResultPage(Canvas, BasePage):
         inactive_button_1 = relative_to_assets("control/DEarResultFrame/button_1.png")
         active_button_1 = relative_to_assets("control/DEarResultFrame/active_button_1.png")
         
-        inactive_button_2 = relative_to_assets("control/DEarResultFrame/button_2.png")
-        active_button_2 = relative_to_assets("control/DEarResultFrame/active_button_2.png")
+        inactive_button_2 = relative_to_assets(f"control/DEarResultFrame/{LANG_CODE}/button_2.png")
+        active_button_2 = relative_to_assets(f"control/DEarResultFrame/{LANG_CODE}/active_button_2.png")
         
-        inactive_button_3 = relative_to_assets("control/DEarResultFrame/button_3.png")
-        active_button_3 = relative_to_assets("control/DEarResultFrame/active_button_3.png")
+        inactive_button_3 = relative_to_assets(f"control/DEarResultFrame/{LANG_CODE}/button_3.png")
+        active_button_3 = relative_to_assets(f"control/DEarResultFrame/{LANG_CODE}/active_button_3.png")
 
         create_hover_button(self.window, 597.0, 330.0, 52.0, 52.0,
                             BACKGROUND_COLOUR, inactive_button_1, active_button_1, 
