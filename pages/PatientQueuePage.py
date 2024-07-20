@@ -373,7 +373,7 @@ class PatientQueuePage(Canvas, BasePage):
         )
 
         self.create_text(
-            865.0,
+            900.0,
             570.0,
             anchor="nw",
             text=self.patient_insurance[0]['nomor_asuransi'],
@@ -391,7 +391,7 @@ class PatientQueuePage(Canvas, BasePage):
         )
 
         self.create_text(
-            864.0,
+            900.0,
             594.0,
             anchor="nw",
             text=self.patient_insurance[0]['jenis_asuransi'],
@@ -409,7 +409,7 @@ class PatientQueuePage(Canvas, BasePage):
         )
 
         self.create_text(
-            864.0,
+            900.0,
             618.0,
             anchor="nw",
             text=self.patient_insurance[0]['kelas_asuransi'],
@@ -427,7 +427,7 @@ class PatientQueuePage(Canvas, BasePage):
         )
 
         self.create_text(
-            864.0,
+            900.0,
             642.0,
             anchor="nw",
             text=self.patient_insurance[0]['fasilitas_kesehatan'],

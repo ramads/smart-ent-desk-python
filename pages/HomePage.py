@@ -7,14 +7,16 @@ from pages import PatientQueuePage
 from pages import NotificationPage
 from pages import MedicalRecordPage
 from pages import DEarLoadingPage
-from config import LANG_CODE
 
+from config import LANG_CODE
+import json
 
 
 class HomePage(Canvas, BasePage):
 
     def __init__(self, window):
         self.window = window
+        self.data_localization = self.get_localization()
         super().__init__(
             window,
             bg=BACKGROUND_COLOUR,
@@ -25,6 +27,12 @@ class HomePage(Canvas, BasePage):
             relief="ridge"
         )
 
+    def get_localization(self):
+        path = f"locales/{LANG_CODE}/string.json"
+        with open(path, "r") as file:
+            data = json.load(file)
+        return data
+    
     def drawPage(self):
         self.place(x=0, y=0)
 
@@ -93,7 +101,7 @@ class HomePage(Canvas, BasePage):
             130.0,
             144.5,
             anchor="nw",
-            text="Unit THT",
+            text=self.data_localization['ent_unit'],
             fill="#F1F1F1",
             font=("Nunito SemiBold", 12 * -1)
         )

@@ -6,6 +6,9 @@ from PIL import ImageTk, Image
 
 from pages import DEarResultPage
 
+from config import LANG_CODE
+import json
+
 class FullScreenImagePage(Canvas, BasePage):
     def __init__(self, window, temp_data=None):
         self.window = window
@@ -19,6 +22,12 @@ class FullScreenImagePage(Canvas, BasePage):
             highlightthickness=0,
             relief="ridge"
         )
+        
+    def get_localization(self):
+        path = f"locales/{LANG_CODE}/string.json"
+        with open(path, "r") as file:
+            data = json.load(file)
+        return data
 
     def drawPage(self, data = None):
         self.place(x=0, y=0)
@@ -45,8 +54,8 @@ class FullScreenImagePage(Canvas, BasePage):
             image=captured_img
         )
 
-        inactive_button_1 = relative_to_assets("control/FullScreenImageFrame/button_1.png")
-        active_button_1 = relative_to_assets("control/FullScreenImageFrame/active_button_1.png")
+        inactive_button_1 = relative_to_assets(f"control/FullScreenImageFrame/{LANG_CODE}/button_1.png")
+        active_button_1 = relative_to_assets(f"control/FullScreenImageFrame/{LANG_CODE}/active_button_1.png")
         
         
         create_hover_button(self.window, 500.5, 648.0, 136.0, 42.0,

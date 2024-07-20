@@ -7,11 +7,15 @@ from notificationBar import notificationBar
 
 from pages import DEarResultPage
 
+from config import LANG_CODE
+import json
+
 
 class DEarCorrectionPage(Canvas, BasePage):
     def __init__(self, window, temp_data):
         self.window = window
         self.temp_data = temp_data
+        self.data_localization = self.get_localization()
         super().__init__(
             window,
             bg=BACKGROUND_COLOUR,
@@ -22,6 +26,12 @@ class DEarCorrectionPage(Canvas, BasePage):
             relief="ridge"
         )
 
+    def get_localization(self):
+        path = f"locales/{LANG_CODE}/string.json"
+        with open(path, "r") as file:
+            data = json.load(file)
+        return data
+    
     def loadImage(self):
         return PhotoImage(file=relative_to_assets("image_3.png"))
 
@@ -60,7 +70,7 @@ class DEarCorrectionPage(Canvas, BasePage):
             749.0,
             75.0,
             anchor="nw",
-            text="Koreksi Hasil",
+            text=self.data_localization['correction_result'].capitalize(),
             fill="#404040",
             font=("Nunito Bold", 24 * -1)
         )
@@ -69,7 +79,7 @@ class DEarCorrectionPage(Canvas, BasePage):
             749.0,
             123.0,
             anchor="nw",
-            text="Untuk mengoreksi hasil diagnosa sebelumnya, mohon untuk memilih label berikut yang dinilai sesuai dengan penyakit yang diderita pasien dan sertakan alasan yang jelas.",
+            text=self.data_localization['correction_hint'],
             fill="#8A8C8F",
             font=("Nunito Regular", 14 * -1),
             width=320
@@ -79,7 +89,7 @@ class DEarCorrectionPage(Canvas, BasePage):
             749.0,
             227.0,
             anchor="nw",
-            text="Label Baru",
+            text=self.data_localization['new_label'].title(),
             fill="#404040",
             font=("Nunito Bold", 19 * -1)
         )
@@ -140,7 +150,7 @@ class DEarCorrectionPage(Canvas, BasePage):
             749.0,
             334.0,
             anchor="nw",
-            text="Alasan",
+            text=self.data_localization['reason'].title(),
             fill="#404040",
             font=("Nunito Bold", 19 * -1)
         )
@@ -168,11 +178,11 @@ class DEarCorrectionPage(Canvas, BasePage):
             height=65.0
         )
 
-        inactive_button_2 = relative_to_assets("control/DEarCorrectionFrame/button_2.png")
-        active_button_2 = relative_to_assets("control/DEarCorrectionFrame/active_button_2.png")
+        inactive_button_2 = relative_to_assets(f"control/DEarCorrectionFrame/{LANG_CODE}/button_2.png")
+        active_button_2 = relative_to_assets(f"control/DEarCorrectionFrame/{LANG_CODE}/active_button_2.png")
 
-        inactive_button_3 = relative_to_assets("control/DEarCorrectionFrame/button_3.png")
-        active_button_3 = relative_to_assets("control/DEarCorrectionFrame/active_button_3.png")
+        inactive_button_3 = relative_to_assets(f"control/DEarCorrectionFrame/{LANG_CODE}/button_3.png")
+        active_button_3 = relative_to_assets(f"control/DEarCorrectionFrame/{LANG_CODE}/active_button_3.png")
 
         create_hover_button(self.window, 750.0, 463.0, 150.0, 46.0,
                             "#FFFFFF", inactive_button_2, active_button_2,  
