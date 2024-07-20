@@ -71,7 +71,8 @@ class DEarProcessPage(Canvas, BasePage):
 
     def startCameraThread(self):
         self.running = True
-        self.updateCameraFrame()
+        self.camera_thread = threading.Thread(target=self.updateCameraFrame)
+        self.camera_thread.start()
 
     def updateCameraFrame(self):
         if self.running:
