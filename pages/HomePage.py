@@ -6,6 +6,7 @@ from notificationBar import notificationBar
 from pages import PatientQueuePage
 from pages import NotificationPage
 from pages import MedicalRecordPage
+from pages import SoftwareHardware
 from pages import DEarLoadingPage
 
 from config import LANG_CODE
@@ -70,7 +71,7 @@ class HomePage(Canvas, BasePage):
         
         create_hover_button(self.window, 815.0,384.0, 271.0, 151.0, 
                             BACKGROUND_COLOUR, inactive_button_4, active_button_4,  
-                            lambda: print("button_4 clicked"))
+                            lambda: goToPage(SoftwareHardware.SoftwareHardware(self.window)))
         
         create_hover_button(self.window, 269.0,591.0, 275.0, 99.0, 
                             BACKGROUND_COLOUR, inactive_button_5, active_button_5,  
