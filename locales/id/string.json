@@ -15,5 +15,11 @@
     "telinga" : "telinga",
     "hidung" : "hidung",
     "tenggorokan" : "tenggorokan",
-    "disease" : "penyakit"
+    "disease" : "penyakit",
+    "select_diagnosis" : "silakan pilih diagnosa yang akan anda lakukan.\n      kami akan menyiapkannya untuk anda.",
+    "before_proceed" : "Sebelum mengambil gambar silakan ambil Otoscope dan pastikan sudah diarahkan dengan benar.",
+    "tool_control" : "Kontrol Alat",
+    "water_pressure" : "Tekanan Air (Spray)",
+    "pump_pressure" : "Tekanan Pompa Penghisap",
+    "information_patient" : "Informasi Pasien"
 }

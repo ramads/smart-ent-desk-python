@@ -73,7 +73,7 @@ class HomePage(Canvas, BasePage):
                             lambda: print("button_6 clicked"))
 
         image_image_1 = PhotoImage(
-            file=relative_to_assets(f"control/HomeFrame/{LANG_CODE}/image_1.png"))
+            file=relative_to_assets(f"control/HomeFrame/image_1.png"))
         image_1 = self.create_image(
             566.0,
             89.0,
@@ -99,7 +99,7 @@ class HomePage(Canvas, BasePage):
         )
 
         image_image_4 = PhotoImage(
-            file=relative_to_assets(f"control/HomeFrame/{LANG_CODE}/image_4.png"))
+            file=relative_to_assets(f"control/HomeFrame/image_4.png"))
         image_4 = self.create_image(
             89.0,
             139.0,
