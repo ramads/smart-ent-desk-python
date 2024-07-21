@@ -6,6 +6,7 @@ from notificationBar import notificationBar
 
 
 from pages import HomePage
+from pages import MedicalRecordDetailPage
 
 from database.models.Diagnosis import DiagnosisModel
 
@@ -220,11 +221,11 @@ class MedicalRecordPage(Canvas, BasePage):
             button_image_1 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/button_1.png"))
             button_images.append(button_image_1)
             button_1 = Button(self.canvas_scroll, image=button_image_1, borderwidth=0, highlightthickness=0,
-                              command=lambda: print("button_1 clicked"), relief="flat")
+                              command=lambda: goToPage(MedicalRecordDetailPage.MedicalRecordDetailPage(self.window)), relief="flat")
             self.canvas_scroll.create_window(914.22119140625, 329.20361328125 + y_offset, anchor="nw", window=button_1,
                                              width=23.592920303344727, height=23.592920303344727)
 
-            button_image_2 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/image_2.png"))
+            button_image_2 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/button_2.png"))
             button_images.append(button_image_2)
             button_2 = Button(self.canvas_scroll, image=button_image_2, borderwidth=0, highlightthickness=0,
                               command=lambda: print("button_2 clicked"), relief="flat")

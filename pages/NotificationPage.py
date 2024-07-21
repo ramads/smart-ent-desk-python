@@ -137,6 +137,7 @@ class NotificationPage(Canvas, BasePage):
             75.51806640625,
             377.444091796875,
             anchor="nw",
+            width=980,
             text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Iaculis tempus tellus adipiscing eget non arcu egestas elementum faucibus. Senectus cras nunc et, arcu ultricies tristique. Mi purus ut eget euismod orci, odio eu, non. Massa sapien magna volutpat lorem. Aliquet amet elit sed ac. ",
             fill="#404040",
             font=("Nunito SemiBold", 14 * -1)
@@ -146,6 +147,7 @@ class NotificationPage(Canvas, BasePage):
             75.51806640625,
             508.918212890625,
             anchor="nw",
+            width=980,
             text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Iaculis tempus tellus adipiscing eget non arcu egestas elementum faucibus. Senectus cras nunc et, arcu ultricies tristique. Mi purus ut eget euismod orci, odio eu, non. Massa sapien magna volutpat lorem. Aliquet amet elit sed ac. ",
             fill="#404040",
             font=("Nunito SemiBold", 14 * -1)
