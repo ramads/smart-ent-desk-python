@@ -9,6 +9,8 @@ from pages import MedicalRecordPage
 from pages import SoftwareHardware
 from pages import Settings
 
+# from pages import NotificationDetailv2Page
+
 from config import LANG_CODE
 import json
 
@@ -79,7 +81,7 @@ class HomePage(Canvas, BasePage):
         
         create_hover_button(self.window, 590.0,591.0, 274.0, 99.0,
                             BACKGROUND_COLOUR, inactive_button_6, active_button_6,  
-                            lambda: print("button_6 clicked"))
+                            lambda: print("Button Clicked!"))
 
         image_image_1 = PhotoImage(
             file=relative_to_assets(f"control/HomeFrame/image_1.png"))
