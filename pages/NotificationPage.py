@@ -82,7 +82,7 @@ class NotificationPage(Canvas, BasePage):
         )
 
         button_image_2 = PhotoImage(
-            file=relative_to_assets("control/NotificationFrame/button_2.png"))
+            file=relative_to_assets("control/NotificationFrame/image_2.png"))
         button_2 = Button(
             image=button_image_2,
             borderwidth=0,

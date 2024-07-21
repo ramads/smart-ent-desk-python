@@ -322,7 +322,7 @@ class PatientQueuePage(Canvas, BasePage):
         )
 
         button_image_2 = PhotoImage(
-            file=relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/button_2.png"))
+            file=relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/image_2.png"))
         button_2 = Button(
             image=button_image_2,
             borderwidth=0,

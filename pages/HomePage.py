@@ -7,7 +7,7 @@ from pages import PatientQueuePage
 from pages import NotificationPage
 from pages import MedicalRecordPage
 from pages import SoftwareHardware
-from pages import DEarLoadingPage
+from pages import Settings
 
 from config import LANG_CODE
 import json
@@ -75,7 +75,7 @@ class HomePage(Canvas, BasePage):
         
         create_hover_button(self.window, 269.0,591.0, 275.0, 99.0, 
                             BACKGROUND_COLOUR, inactive_button_5, active_button_5,  
-                            lambda: print("button_5 clicked"))
+                            lambda: goToPage(Settings.Settings(self.window)))
         
         create_hover_button(self.window, 590.0,591.0, 274.0, 99.0,
                             BACKGROUND_COLOUR, inactive_button_6, active_button_6,  
