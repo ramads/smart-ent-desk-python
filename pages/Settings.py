@@ -1,5 +1,6 @@
 import customtkinter
 from tkinter import *
+from tkinter import ttk
 from colors import *
 from helpers import *
 from notificationBar import notificationBar
@@ -39,6 +40,40 @@ class Settings(Canvas, BasePage):
         with open(path, "r") as file:
             data = json.load(file)
         return data
+
+    def show(self, label):
+        print(label)
+        # self.temp_data['result_1'] = (label, self.temp_data['result_1'][1])
+        # self.temp_data['is_corrected'] = False
+        # self.temp_data['correction_reason'] = entry_1.get("1.0", "end-1c")
+        # goToPage(DEarResultPage.DEarResultPage(self.window, self.temp_data))
+
+    def create_option_menu(self, parent, options, geometry):
+        clicked = StringVar()
+        clicked.set("Pilih Label")
+
+        style = ttk.Style()
+        style.theme_use('clam')
+        style.configure("Rounded.TMenubutton",
+                        relief="flat",
+                        padding=2,
+                        background="#FFFFFF",
+                        foreground="black",
+                        borderwidth=1,
+                        bordercolor="black",
+                        border=8,
+                        focusthickness=3,
+                        focuscolor="#FFFFFF",
+                        anchor="w")
+        style.map("Rounded.TMenubutton",
+                  background=[("active", "skyblue")])
+
+        drop = ttk.OptionMenu(parent, clicked, options[0], *options, command=lambda x: self.show(clicked.get()))
+        drop.config(style="Rounded.TMenubutton")
+        drop.pack(pady=0)
+
+        x, y, width, height = geometry
+        drop.place(x=x, y=y, width=width, height=height)
 
     def drawPage(self):
         self.place(x=0, y=0)
@@ -89,11 +124,13 @@ class Settings(Canvas, BasePage):
                                                          border_width=0)
 
         self.my_frame.place(x=75, y=230)
-        self.canvas_scroll = Canvas(self.my_frame, width=955, height=1560, bg="#FFFFFF")
+        self.canvas_scroll = Canvas(self.my_frame, width=955, height=1030, bg="#FFFFFF")
         self.canvas_scroll.pack()
 
 
         self.update_cards()
+
+
 
     def update_cards(self):
         self.canvas_scroll.delete("all")
@@ -102,6 +139,17 @@ class Settings(Canvas, BasePage):
 
         # for i in range(len(self.history_data)):
         #     y_offset = i * 50
+
+
+        # Define options and geometries
+        options_1 = ['Indonesia', 'English']
+        options_2 = ["v.1.1", "v.1.2"]
+        options_3 = ["v.1.1", "v.1.2"]
+
+        self.create_option_menu(self.canvas_scroll, options_1, (760, 255, 155, 27))
+        self.create_option_menu(self.canvas_scroll, options_2, (810, 86, 105, 27))
+        self.create_option_menu(self.canvas_scroll, options_3, (760, 590, 155, 27))
+
 
         self.canvas_scroll.create_text(
             121.0,
@@ -205,7 +253,7 @@ class Settings(Canvas, BasePage):
         image_image_2 = PhotoImage(
             file=relative_to_assets(f"control/SettingsFrame/image_2.png"))
         image_2 = self.canvas_scroll.create_image(
-            900.0,
+            913.0,
             847.0,
             image=image_image_2
         )
