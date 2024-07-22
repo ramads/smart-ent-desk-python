@@ -44,7 +44,6 @@ class DEarProcessPage(Canvas, BasePage):
         self.window = window
         self.vidCap = None
         self.camera_thread = None
-        self.running = False
 
         cam_index = 0
         while (cam_index < 20):
@@ -70,21 +69,19 @@ class DEarProcessPage(Canvas, BasePage):
         return data
 
     def startCameraThread(self):
-        self.running = True
         self.camera_thread = threading.Thread(target=self.updateCameraFrame)
         self.camera_thread.start()
 
     def updateCameraFrame(self):
-        if self.running:
-            self.ret, self.frame = self.vidCap.read()
+        self.ret, self.frame = self.vidCap.read()
 
-            if self.ret:
-                self.frame = cv2.resize(self.frame, (604, 538))
-                opencv_image = cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGBA)
-                self.captured_image = ImageTk.PhotoImage(image=Image.fromarray(opencv_image))
-                self.create_image(354.0, 339.0, image=self.captured_image)
+        if self.ret:
+            self.frame = cv2.resize(self.frame, (604, 538))
+            opencv_image = cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGBA)
+            self.captured_image = ImageTk.PhotoImage(image=Image.fromarray(opencv_image))
+            self.create_image(354.0, 339.0, image=self.captured_image)
 
-            self.window.after(1, self.updateCameraFrame)
+        self.after_cam_id = self.after(20, self.updateCameraFrame)
 
     def onCapture(self, image_name):
         if self.frame is not None:
@@ -98,11 +95,12 @@ class DEarProcessPage(Canvas, BasePage):
             goToPage(PreviewImagePage.PreviewImagePage(self.window, self.temp_data))
 
     def onStopCamera(self):
-        self.running = False
+        # self.running = False
         if self.camera_thread is not None:
             self.camera_thread.join()
         self.vidCap.release()
         cv2.destroyAllWindows()
+        self.after_cancel(self.after_cam_id)
 
     def backToPrevPage(self):
         self.onStopCamera()
