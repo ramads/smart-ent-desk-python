@@ -10,7 +10,7 @@ class InsuranceModel:
         self.db.connect()
 
     def close_connection(self):
-        self.db.connection.close()
+        self.db.close()
     
     def create_table(self):
         try:

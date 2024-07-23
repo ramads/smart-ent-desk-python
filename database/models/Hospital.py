@@ -9,6 +9,9 @@ class HospitalModel:
         self.db = Database(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD, DB_PORT)
         self.db.connect()
 
+    def close_connection(self):
+        self.db.close()
+
     def create_table(self):
         try:
             self.open_connection()
@@ -32,7 +35,7 @@ class HospitalModel:
         except Exception as e:
             print(f"Error: {e}")
         finally:
-            self.close_connection
+            self.close_connection()
 
     def insert_hospital(self, hospital_name, hospital_address, hospital_phone_number):
         try:

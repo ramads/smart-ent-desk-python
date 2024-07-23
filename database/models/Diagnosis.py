@@ -10,7 +10,7 @@ class DiagnosisModel:
         self.db.connect()
 
     def close_connection(self):
-        self.db.connection.close()
+        self.db.close()
 
     def create_table(self):
         try:
@@ -104,6 +104,18 @@ class DiagnosisModel:
             cursor = self.db.connection.cursor(dictionary=True)
             cursor.execute(query)
             return cursor.fetchall()
+        except Exception as e:
+            print(f"Error: {e}")
+        finally:
+            self.close_connection()
+
+    def delete_diagnosis(self, diagnosis_id):
+        try:
+            self.open_connection()
+            query = "DELETE FROM Diagnosa WHERE id_diagnosa = %s"
+            cursor = self.db.connection.cursor()
+            cursor.execute(query, (diagnosis_id,))
+            self.db.connection.commit()
         except Exception as e:
             print(f"Error: {e}")
         finally:

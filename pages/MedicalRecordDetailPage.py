@@ -7,21 +7,18 @@ from notificationBar import notificationBar
 
 from pages import MedicalRecordPage
 
-from database.models.Diagnosis import DiagnosisModel
-
 from config import LANG_CODE
 import json
+from pprint import pprint
 
 
 class MedicalRecordDetailPage(Canvas, BasePage):
 
-    def __init__(self, window):
-        self.window = window
-        self.dignosisModel = DiagnosisModel()
-        self.temp_data = self.dignosisModel.get_patient_joint_diagnoses()
-        self.history_data = self.temp_data
-        self.data_localization = self.get_localization()
+    def __init__(self, window, clicked_data):
 
+        self.window = window
+        self.clicked_data = clicked_data
+        pprint(clicked_data)
         super().__init__(
             window,
             bg=BACKGROUND_COLOUR,
@@ -96,7 +93,7 @@ class MedicalRecordDetailPage(Canvas, BasePage):
                               highlightthickness=0)
         text_widget.place(x=72, y=525, width=380, height=100)
 
-        text_content = "OMA Perofrasi adalah gangguan adalah gangguan adalah gangguan adalah gangguan adalah gangguan ........ . Dicirikan dengan .......Lorem ipsum dolor sit amet, consectetur adipiscing elit. Iaculis tempus tellus adipiscing eget non arcu egestas elementum faucibus. ",
+        text_content = self.clicked_data['hasil_diagnosa'],
         text_widget.insert(tk.END, text_content)
 
         text_widget.tag_configure("justify", justify="left")
@@ -106,7 +103,7 @@ class MedicalRecordDetailPage(Canvas, BasePage):
         text_widget.configure(state="disabled")
 
         image_image_5 = PhotoImage(
-            file=relative_to_assets("control/MedicalRecordDetailFrame/image_5.png"))
+            file=relative_to_image_capture(f"{self.clicked_data['gambar_diagnosa']}"))
         image_5 = self.create_image(
             790.0,
             388.0,
@@ -118,7 +115,7 @@ class MedicalRecordDetailPage(Canvas, BasePage):
             288.0,
             492.0,
             anchor="nw",
-            text="65%",
+            text=self.clicked_data['tingkat_keyakinan'],
             fill="#1E5C2A",
             font=("Nunito Bold", 16 * -1)
         )
@@ -136,7 +133,7 @@ class MedicalRecordDetailPage(Canvas, BasePage):
             257.0,
             455.0,
             anchor="nw",
-            text="OMA PERFORASI",
+            text=self.clicked_data['diagnosa'],
             fill="#1E5C2A",
             font=("Nunito Bold", 19 * -1)
         )
@@ -154,7 +151,7 @@ class MedicalRecordDetailPage(Canvas, BasePage):
             257.0,
             421.0,
             anchor="nw",
-            text="Selasa, 16 April 2024",
+            text=self.clicked_data['tanggal_diagnosa'].strftime("%d %B %Y"),
             fill="#404040",
             font=("Nunito Regular", 16 * -1)
         )
@@ -172,7 +169,7 @@ class MedicalRecordDetailPage(Canvas, BasePage):
             72.0,
             362.0,
             anchor="nw",
-            text="Alma Liakua Mutia",
+            text=self.clicked_data['nama_pasien'],
             fill="#404040",
             font=("Nunito Bold", 24 * -1)
         )

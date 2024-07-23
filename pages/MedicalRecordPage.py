@@ -54,6 +54,12 @@ class MedicalRecordPage(Canvas, BasePage):
 
         self.update_cards()
 
+    def delete_diagnosis(self, id):
+        self.dignosisModel.delete_diagnosis(id)
+        self.temp_data = self.dignosisModel.get_patient_joint_diagnoses()
+        self.history_data = self.temp_data
+        self.update_cards()
+
     def drawPage(self):
         self.place(x=0, y=0)
 
@@ -221,7 +227,7 @@ class MedicalRecordPage(Canvas, BasePage):
             button_image_1 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/button_1.png"))
             button_images.append(button_image_1)
             button_1 = Button(self.canvas_scroll, image=button_image_1, borderwidth=0, highlightthickness=0,
-                              command=lambda: goToPage(MedicalRecordDetailPage.MedicalRecordDetailPage(self.window)), relief="flat")
+                              command=lambda: goToPage(MedicalRecordDetailPage.MedicalRecordDetailPage(self.window, self.history_data[i])), relief="flat")
             self.canvas_scroll.create_window(914.22119140625, 329.20361328125 + y_offset, anchor="nw", window=button_1,
                                              width=23.592920303344727, height=23.592920303344727)
 
@@ -235,7 +241,7 @@ class MedicalRecordPage(Canvas, BasePage):
             button_image_3 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/button_3.png"))
             button_images.append(button_image_3)
             button_3 = Button(self.canvas_scroll, image=button_image_3, borderwidth=0, highlightthickness=0,
-                              command=lambda: print("button_3 clicked"), relief="flat")
+                              command=lambda i=i: self.delete_diagnosis(self.history_data[i]['id_diagnosa']), relief="flat")
             self.canvas_scroll.create_window(971.406982421875, 329.20361328125 + y_offset, anchor="nw", window=button_3,
                                              width=23.592920303344727, height=23.592920303344727)
 

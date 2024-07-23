@@ -65,10 +65,11 @@ class DEarCompletePage(Canvas, BasePage):
     def insert_data(self):
         current_date = datetime.now().strftime('%Y-%m-%d')
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-        image_path = f"temp_image/{self.temp_data['id_patient']}_{self.temp_data['id_hospital']}_{timestamp}.jpg"
+        image_path = f"{self.temp_data['id_patient']}_{self.temp_data['id_hospital']}_{timestamp}.png"
         
         image = Image.open(self.temp_data['image_path_temp'])
-        image.save(image_path)
+        image = image.resize((559, 471))
+        image.save(f"temp_image/{image_path}", format='PNG')
         
         confidence = self.temp_data['result_1'][1]
         confidence = int(round(confidence, 2) * 100)

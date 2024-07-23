@@ -11,7 +11,7 @@ class DEarPage(Canvas, BasePage):
     def __init__(self, window, temp_data=None, diagnosis_type=None):
         self.window = window
         self.data_localization = self.get_localization()
-        self.get_disease_title(diagnosis_type)
+
         super().__init__(
             window,
             bg=BACKGROUND_COLOUR,
@@ -22,7 +22,11 @@ class DEarPage(Canvas, BasePage):
             relief="ridge"
         )
         self.temp_data = temp_data
-        self.temp_data['diagnosis_type'] = diagnosis_type
+        if diagnosis_type:
+            self.get_disease_title(diagnosis_type)
+            self.temp_data['diagnosis_type'] = diagnosis_type
+        else:
+            self.get_disease_title(self.temp_data['diagnosis_type'])
 
     def get_disease_title(self, disease):
         if LANG_CODE == 'id' :
