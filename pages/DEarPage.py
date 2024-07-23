@@ -4,12 +4,12 @@ from helpers import *
 from pages import DEarProcessPage, DiagnosisPage
 from notificationBar import notificationBar
 
-from config import LANG_CODE
 import json
 class DEarPage(Canvas, BasePage):
 
     def __init__(self, window, temp_data=None, diagnosis_type=None):
         self.window = window
+        self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
 
         super().__init__(
@@ -29,13 +29,13 @@ class DEarPage(Canvas, BasePage):
             self.get_disease_title(self.temp_data['diagnosis_type'])
 
     def get_disease_title(self, disease):
-        if LANG_CODE == 'id' :
+        if self.lang_code == 'id' :
             self.disease_title = f"{self.data_localization['disease']} {self.data_localization[disease]}"
         else:
             self.disease_title = f"{self.data_localization[disease]} {self.data_localization['disease']}"
 
     def get_localization(self):
-        path = f"locales/{LANG_CODE}/string.json"
+        path = f"locales/{self.lang_code}/string.json"
         with open(path, "r") as file:
             data = json.load(file)
         return data
@@ -45,11 +45,11 @@ class DEarPage(Canvas, BasePage):
 
         wifi_clock_app = notificationBar(self.window)
 
-        inactive_button_1 = relative_to_assets(f"control/DEarFrame/{LANG_CODE}/button_1.png")
-        active_button_1 = relative_to_assets(f"control/DEarFrame/{LANG_CODE}/active_button_1.png")
+        inactive_button_1 = relative_to_assets(f"control/DEarFrame/{self.lang_code}/button_1.png")
+        active_button_1 = relative_to_assets(f"control/DEarFrame/{self.lang_code}/active_button_1.png")
         
-        inactive_button_2 = relative_to_assets(f"control/DEarFrame/{LANG_CODE}/button_2.png")
-        active_button_2 = relative_to_assets(f"control/DEarFrame/{LANG_CODE}/active_button_2.png")
+        inactive_button_2 = relative_to_assets(f"control/DEarFrame/{self.lang_code}/button_2.png")
+        active_button_2 = relative_to_assets(f"control/DEarFrame/{self.lang_code}/active_button_2.png")
 
         create_hover_button(self.window, 431.0, 600.0, 136.0, 42.0,
                             "#FFFFFF", inactive_button_1, active_button_1, 

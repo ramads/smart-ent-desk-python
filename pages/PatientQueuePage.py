@@ -13,7 +13,6 @@ from database.models.Diagnosis import DiagnosisModel
 from database.models.Insurance import InsuranceModel
 from database.models.Hospital import HospitalModel
 
-from config import LANG_CODE
 import json
 
 
@@ -21,6 +20,7 @@ import json
 class PatientQueuePage(Canvas, BasePage):
     def __init__(self, window):
         self.window = window
+        self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
         super().__init__(
             window,
@@ -40,7 +40,7 @@ class PatientQueuePage(Canvas, BasePage):
         
 
     def get_disease_title(self):
-        if LANG_CODE == "id":
+        if self.lang_code == "id":
             self.disease_title_1 = f"{self.data_localization['disease']} {self.data_localization[self.current_history_data[0]['jenis_diagnosa']]}" if len(self.current_history_data)>0 else self.data_localization['no_data_yet']
             self.disease_title_2 = f"{self.data_localization['disease']} {self.data_localization[self.current_history_data[1]['jenis_diagnosa']]}" if len(self.current_history_data)>1 else self.data_localization['no_data_yet']
         else:
@@ -48,7 +48,7 @@ class PatientQueuePage(Canvas, BasePage):
             self.disease_title_2 = f"{self.data_localization[self.current_history_data[1]['jenis_diagnosa']]} {self.data_localization['disease']}" if len(self.current_history_data)>1 else self.data_localization['no_data_yet']
 
     def get_localization(self):
-        path = f"locales/{LANG_CODE}/string.json"
+        path = f"locales/{self.lang_code}/string.json"
         with open(path, "r") as file:
             data = json.load(file)
         return data
@@ -329,14 +329,14 @@ class PatientQueuePage(Canvas, BasePage):
             image=image_image_9
         )
 
-        inactive_button_3 = relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/button_3.png")
-        active_button_3 = relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/active_button_3.png")
+        inactive_button_3 = relative_to_assets(f"control/PatientQueueFrame/{self.lang_code}/button_3.png")
+        active_button_3 = relative_to_assets(f"control/PatientQueueFrame/{self.lang_code}/active_button_3.png")
         
-        inactive_button_4 = relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/button_4.png")
-        active_button_4 = relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/active_button_4.png")
+        inactive_button_4 = relative_to_assets(f"control/PatientQueueFrame/{self.lang_code}/button_4.png")
+        active_button_4 = relative_to_assets(f"control/PatientQueueFrame/{self.lang_code}/active_button_4.png")
         
-        inactive_button_5 = relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/button_5.png")
-        active_button_5 = relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/active_button_5.png")
+        inactive_button_5 = relative_to_assets(f"control/PatientQueueFrame/{self.lang_code}/button_5.png")
+        active_button_5 = relative_to_assets(f"control/PatientQueueFrame/{self.lang_code}/active_button_5.png")
 
         create_hover_button(self.window, 59.5, 633.5, 192.0, 54.0, 
                             BACKGROUND_COLOUR, inactive_button_3, active_button_3,  
@@ -386,7 +386,7 @@ class PatientQueuePage(Canvas, BasePage):
         for i in range(3):
             y_offset = i * 75
 
-            button_image_1 = PhotoImage(file=relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/button_1.png"))
+            button_image_1 = PhotoImage(file=relative_to_assets(f"control/PatientQueueFrame/{self.lang_code}/button_1.png"))
             button_images.append(button_image_1)
             button_1 = Button(self.canvas_scroll, background="white", activebackground="white", image=button_image_1, borderwidth=0, highlightthickness=0,
                               command=lambda: print("woke"),

@@ -11,14 +11,13 @@ from pages import Settings
 
 # from pages import NotificationDetailv2Page
 
-from config import LANG_CODE
 import json
 
 
 class HomePage(Canvas, BasePage):
-
     def __init__(self, window):
         self.window = window
+        self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
         super().__init__(
             window,
@@ -31,7 +30,7 @@ class HomePage(Canvas, BasePage):
         )
 
     def get_localization(self):
-        path = f"locales/{LANG_CODE}/string.json"
+        path = f"locales/{self.lang_code}/string.json"
         with open(path, "r") as file:
             data = json.load(file)
         return data
@@ -41,23 +40,23 @@ class HomePage(Canvas, BasePage):
 
         wifi_clock_app = notificationBar(self.window)
 
-        inactive_button_1 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/button_1.png")
-        active_button_1 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/active_button_1.png")
+        inactive_button_1 = relative_to_assets(f"control/HomeFrame/{self.lang_code}/button_1.png")
+        active_button_1 = relative_to_assets(f"control/HomeFrame/{self.lang_code}/active_button_1.png")
         
-        inactive_button_2 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/button_2.png")
-        active_button_2 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/active_button_2.png")
+        inactive_button_2 = relative_to_assets(f"control/HomeFrame/{self.lang_code}/button_2.png")
+        active_button_2 = relative_to_assets(f"control/HomeFrame/{self.lang_code}/active_button_2.png")
 
-        inactive_button_3 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/button_3.png")
-        active_button_3 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/active_button_3.png")
+        inactive_button_3 = relative_to_assets(f"control/HomeFrame/{self.lang_code}/button_3.png")
+        active_button_3 = relative_to_assets(f"control/HomeFrame/{self.lang_code}/active_button_3.png")
         
-        inactive_button_4 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/button_4.png")
-        active_button_4 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/active_button_4.png")
+        inactive_button_4 = relative_to_assets(f"control/HomeFrame/{self.lang_code}/button_4.png")
+        active_button_4 = relative_to_assets(f"control/HomeFrame/{self.lang_code}/active_button_4.png")
         
-        inactive_button_5 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/button_5.png")
-        active_button_5 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/active_button_5.png")
+        inactive_button_5 = relative_to_assets(f"control/HomeFrame/{self.lang_code}/button_5.png")
+        active_button_5 = relative_to_assets(f"control/HomeFrame/{self.lang_code}/active_button_5.png")
         
-        inactive_button_6 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/button_6.png")
-        active_button_6 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/active_button_6.png")
+        inactive_button_6 = relative_to_assets(f"control/HomeFrame/{self.lang_code}/button_6.png")
+        active_button_6 = relative_to_assets(f"control/HomeFrame/{self.lang_code}/active_button_6.png")
         
         create_hover_button(self.window, 47.0, 216.0, 447.0, 319.0, 
                             BACKGROUND_COLOUR, inactive_button_1, active_button_1, 

@@ -7,7 +7,6 @@ from notificationBar import notificationBar
 
 from pages import MedicalRecordPage
 
-from config import LANG_CODE
 import json
 from pprint import pprint
 
@@ -18,6 +17,8 @@ class MedicalRecordDetailPage(Canvas, BasePage):
 
         self.window = window
         self.clicked_data = clicked_data
+        self.lang_code = json.load(open("config.json", "r"))["language"]
+        self.data_localization = self.get_localization()
         pprint(clicked_data)
         super().__init__(
             window,
@@ -32,7 +33,7 @@ class MedicalRecordDetailPage(Canvas, BasePage):
         self.drawPage()
 
     def get_localization(self):
-        path = f"locales/{LANG_CODE}/string.json"
+        path = f"locales/{self.lang_code}/string.json"
         with open(path, "r") as file:
             data = json.load(file)
         return data
@@ -112,10 +113,10 @@ class MedicalRecordDetailPage(Canvas, BasePage):
 
 
         self.create_text(
-            288.0,
+            300.0,
             492.0,
             anchor="nw",
-            text=self.clicked_data['tingkat_keyakinan'],
+            text=f"{self.clicked_data['tingkat_keyakinan']}%",
             fill="#1E5C2A",
             font=("Nunito Bold", 16 * -1)
         )
@@ -124,13 +125,13 @@ class MedicalRecordDetailPage(Canvas, BasePage):
             72.0,
             492.0,
             anchor="nw",
-            text="Tingkat keyakinan dignosa : ",
+            text=f"{self.data_localization['confidence_level']}:",
             fill="#404040",
             font=("Nunito Regular", 16 * -1)
         )
 
         self.create_text(
-            257.0,
+            270.0,
             455.0,
             anchor="nw",
             text=self.clicked_data['diagnosa'],
@@ -142,7 +143,7 @@ class MedicalRecordDetailPage(Canvas, BasePage):
             72.0,
             455.0,
             anchor="nw",
-            text="Hasil Diagnosa            :",
+            text=f"{self.data_localization['diagnosis_result']}\t: ",
             fill="#404040",
             font=("Nunito Regular", 16 * -1)
         )
@@ -160,7 +161,7 @@ class MedicalRecordDetailPage(Canvas, BasePage):
             72.0,
             421.0,
             anchor="nw",
-            text="Tanggal Pemeriksaan : ",
+            text=f"{self.data_localization['check_date'].title()} :",
             fill="#404040",
             font=("Nunito Regular", 16 * -1)
         )

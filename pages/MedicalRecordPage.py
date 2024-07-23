@@ -10,7 +10,6 @@ from pages import MedicalRecordDetailPage
 
 from database.models.Diagnosis import DiagnosisModel
 
-from config import LANG_CODE
 import json
 
 
@@ -21,6 +20,7 @@ class MedicalRecordPage(Canvas, BasePage):
         self.dignosisModel = DiagnosisModel()
         self.temp_data = self.dignosisModel.get_patient_joint_diagnoses()
         self.history_data = self.temp_data
+        self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
 
         super().__init__(
@@ -36,7 +36,7 @@ class MedicalRecordPage(Canvas, BasePage):
         self.drawPage()
 
     def get_localization(self):
-        path = f"locales/{LANG_CODE}/string.json"
+        path = f"locales/{self.lang_code}/string.json"
         with open(path, "r") as file:
             data = json.load(file)
         return data
@@ -190,11 +190,11 @@ class MedicalRecordPage(Canvas, BasePage):
             height=30.0
         )
 
-        inactive_button_4 = relative_to_assets(f"control/MedicalRecordFrame/{LANG_CODE}/button_4.png")
-        active_button_4 = relative_to_assets(f"control/MedicalRecordFrame/{LANG_CODE}/active_button_4.png")
+        inactive_button_4 = relative_to_assets(f"control/MedicalRecordFrame/{self.lang_code}/button_4.png")
+        active_button_4 = relative_to_assets(f"control/MedicalRecordFrame/{self.lang_code}/active_button_4.png")
 
-        inactive_button_5 = relative_to_assets(f"control/MedicalRecordFrame/{LANG_CODE}/button_5.png")
-        active_button_5 = relative_to_assets(f"control/MedicalRecordFrame/{LANG_CODE}/active_button_5.png")
+        inactive_button_5 = relative_to_assets(f"control/MedicalRecordFrame/{self.lang_code}/button_5.png")
+        active_button_5 = relative_to_assets(f"control/MedicalRecordFrame/{self.lang_code}/active_button_5.png")
 
         create_hover_button(self.window, 471.0, 662.0, 192.0, 54.0,
                             BACKGROUND_COLOUR, inactive_button_4, active_button_4,
@@ -215,35 +215,35 @@ class MedicalRecordPage(Canvas, BasePage):
             y_offset = i * 50
             self.canvas_scroll.create_rectangle(81.0, 367.0 + y_offset, 1278.0, 367.0 + y_offset, fill="#F3F3F3", outline="")
             self.canvas_scroll.create_text(81.0, 322.0 + y_offset, anchor="nw", text=self.history_data[i]['nama_pasien'], 
-                                           fill="#404040",
-                                           font=("Nunito Regular", 20 * -1))
+                                        fill="#404040",
+                                        font=("Nunito Regular", 20 * -1))
             self.canvas_scroll.create_text(380, 322.0 + y_offset, anchor="nw", text=self.history_data[i]['diagnosa'], 
-                                           fill="#404040",
-                                           font=("Nunito Regular", 20 * -1))
+                                        fill="#404040",
+                                        font=("Nunito Regular", 20 * -1))
             self.canvas_scroll.create_text(650, 322.0 + y_offset, anchor="nw", text=self.history_data[i]['tanggal_diagnosa'].strftime("%d %B %Y"), 
-                                           fill="#404040",
-                                           font=("Nunito Regular", 20 * -1))
+                                        fill="#404040",
+                                        font=("Nunito Regular", 20 * -1))
 
             button_image_1 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/button_1.png"))
             button_images.append(button_image_1)
             button_1 = Button(self.canvas_scroll, image=button_image_1, borderwidth=0, highlightthickness=0,
-                              command=lambda: goToPage(MedicalRecordDetailPage.MedicalRecordDetailPage(self.window, self.history_data[i])), relief="flat")
+                            command=lambda i=i: goToPage(MedicalRecordDetailPage.MedicalRecordDetailPage(self.window, self.history_data[i])), relief="flat")
             self.canvas_scroll.create_window(914.22119140625, 329.20361328125 + y_offset, anchor="nw", window=button_1,
-                                             width=23.592920303344727, height=23.592920303344727)
+                                            width=23.592920303344727, height=23.592920303344727)
 
             button_image_2 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/button_2.png"))
             button_images.append(button_image_2)
             button_2 = Button(self.canvas_scroll, image=button_image_2, borderwidth=0, highlightthickness=0,
-                              command=lambda: print("button_2 clicked"), relief="flat")
+                            command=lambda: print("button_2 clicked"), relief="flat")
             self.canvas_scroll.create_window(942.814208984375, 329.20361328125 + y_offset, anchor="nw", window=button_2,
-                                             width=23.592920303344727, height=23.592920303344727)
+                                            width=23.592920303344727, height=23.592920303344727)
 
             button_image_3 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/button_3.png"))
             button_images.append(button_image_3)
             button_3 = Button(self.canvas_scroll, image=button_image_3, borderwidth=0, highlightthickness=0,
-                              command=lambda i=i: self.delete_diagnosis(self.history_data[i]['id_diagnosa']), relief="flat")
+                            command=lambda i=i: self.delete_diagnosis(self.history_data[i]['id_diagnosa']), relief="flat")
             self.canvas_scroll.create_window(971.406982421875, 329.20361328125 + y_offset, anchor="nw", window=button_3,
-                                             width=23.592920303344727, height=23.592920303344727)
+                                            width=23.592920303344727, height=23.592920303344727)
 
         self.canvas_scroll.configure(scrollregion=self.canvas_scroll.bbox("all"))
         self.window.mainloop()

@@ -4,7 +4,6 @@ from helpers import *
 from notificationBar import notificationBar
 
 from pages import HomePage
-from config import LANG_CODE
 import json
 
 
@@ -12,6 +11,7 @@ class SoftwareHardware(Canvas, BasePage):
 
     def __init__(self, window):
         self.window = window
+        self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
         super().__init__(
             window,
@@ -24,7 +24,7 @@ class SoftwareHardware(Canvas, BasePage):
         )
 
     def get_localization(self):
-        path = f"locales/{LANG_CODE}/string.json"
+        path = f"locales/{self.lang_code}/string.json"
         with open(path, "r") as file:
             data = json.load(file)
         return data

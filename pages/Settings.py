@@ -9,8 +9,6 @@ from notificationBar import notificationBar
 from pages import HomePage
 
 from database.models.Diagnosis import DiagnosisModel
-
-from config import LANG_CODE
 import json
 
 
@@ -18,10 +16,7 @@ class Settings(Canvas, BasePage):
 
     def __init__(self, window):
         self.window = window
-        self.dignosisModel = DiagnosisModel()
-        self.temp_data = self.dignosisModel.get_patient_joint_diagnoses()
-        self.history_data = self.temp_data
-        self.data_localization = self.get_localization()
+        self.lang_code = json.load(open("config.json", "r"))["language"]
 
         super().__init__(
             window,
@@ -36,10 +31,24 @@ class Settings(Canvas, BasePage):
         self.drawPage()
 
     def get_localization(self):
-        path = f"locales/{LANG_CODE}/string.json"
+        path = f"locales/{self.lang_code}/string.json"
         with open(path, "r") as file:
             data = json.load(file)
         return data
+
+    def change_language(self, language):
+        if language == "Indonesia" or language == "Indonesian":
+            lang_code = "id"
+        else:
+            lang_code = "en"
+
+        with open("config.json", "r") as file:
+            data = json.load(file)
+            data["language"] = lang_code
+        
+        with open("config.json", "w") as file:
+            json.dump(data, file)
+
 
     def show(self, label):
         print(label)
@@ -48,7 +57,7 @@ class Settings(Canvas, BasePage):
         # self.temp_data['correction_reason'] = entry_1.get("1.0", "end-1c")
         # goToPage(DEarResultPage.DEarResultPage(self.window, self.temp_data))
 
-    def create_option_menu(self, parent, options, geometry):
+    def create_option_menu(self, parent, options, geometry, action=None):
         clicked = StringVar()
         clicked.set("Pilih Label")
 
@@ -68,7 +77,7 @@ class Settings(Canvas, BasePage):
         style.map("Rounded.TMenubutton",
                   background=[("active", "skyblue")])
 
-        drop = ttk.OptionMenu(parent, clicked, options[0], *options, command=lambda x: self.show(clicked.get()))
+        drop = ttk.OptionMenu(parent, clicked, options[0], *options, command=lambda x: action(clicked.get()))
         drop.config(style="Rounded.TMenubutton")
         drop.pack(pady=0)
 
@@ -105,8 +114,8 @@ class Settings(Canvas, BasePage):
             font=("Nunito SemiBold", 25 * -1)
         )
 
-        inactive_button_4 = relative_to_assets(f"control/MedicalRecordFrame/{LANG_CODE}/button_4.png")
-        active_button_4 = relative_to_assets(f"control/MedicalRecordFrame/{LANG_CODE}/active_button_4.png")
+        inactive_button_4 = relative_to_assets(f"control/MedicalRecordFrame/{self.lang_code}/button_4.png")
+        active_button_4 = relative_to_assets(f"control/MedicalRecordFrame/{self.lang_code}/active_button_4.png")
 
         create_hover_button(self.window, 471.0, 662.0, 192.0, 54.0,
                             BACKGROUND_COLOUR, inactive_button_4, active_button_4,
@@ -142,13 +151,16 @@ class Settings(Canvas, BasePage):
 
 
         # Define options and geometries
-        options_1 = ['Indonesia', 'English']
+        if self.lang_code == "id":
+            options_1 = ['Indonesia', 'Inggris']
+        else:
+            options_1 = ['English', 'Indonesian']
         options_2 = ["v.1.1", "v.1.2"]
         options_3 = ["v.1.1", "v.1.2"]
 
-        self.create_option_menu(self.canvas_scroll, options_1, (760, 255, 155, 27))
-        self.create_option_menu(self.canvas_scroll, options_2, (810, 86, 105, 27))
-        self.create_option_menu(self.canvas_scroll, options_3, (760, 590, 155, 27))
+        self.create_option_menu(self.canvas_scroll, options_1, (760, 255, 155, 27), self.change_language)
+        self.create_option_menu(self.canvas_scroll, options_2, (810, 86, 105, 27), self.show)
+        self.create_option_menu(self.canvas_scroll, options_3, (760, 590, 155, 27), self.show)
 
 
         self.canvas_scroll.create_text(
