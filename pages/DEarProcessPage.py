@@ -8,7 +8,7 @@ from helpers import *
 from PIL import Image, ImageTk
 from pages import DEarPage, PreviewImagePage
 from libs.serial_com import SerialCom
-from notificationBar import notificationBar
+# from notificationBar import notificationBar
 
 from database.models.Patient import PatientModel
 from database.models.Insurance import InsuranceModel
@@ -46,14 +46,17 @@ class DEarProcessPage(Canvas, BasePage):
         self.camera_thread = None
 
         cam_index = 0
-        while (cam_index < 20):
-            self.vidCap = cv2.VideoCapture(cam_index)
-            self.ret, self.frame = self.vidCap.read()
-            if not self.ret:
-                print(f"Failed to grab frame in index {cam_index}")
-                cam_index = cam_index + 1
+        for cam_index in range(20):
+            vidCap = cv2.VideoCapture(cam_index)
+            if vidCap.isOpened():
+                ret, frame = vidCap.read()
+                if ret:
+                    self.vidCap = vidCap
+                    self.frame = frame
+                    break
+                vidCap.release()
             else:
-                break
+                print(f"Failed to open camera at index {cam_index}")
 
         self.startCameraThread()
 
@@ -131,7 +134,7 @@ class DEarProcessPage(Canvas, BasePage):
     def drawPage(self):
         self.place(x=0, y=0)
 
-        wifi_clock_app = notificationBar(self.window)
+        # wifi_clock_app = notificationBar(self.window)
 
         image_image_1 = PhotoImage(
             file=relative_to_assets("control/DEarProcessFrame/image_1.png"))

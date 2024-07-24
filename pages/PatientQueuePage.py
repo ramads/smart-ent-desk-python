@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter import *
 from colors import *
 from helpers import *
-from notificationBar import notificationBar
+# from notificationBar import notificationBar
 
 from pages import DiagnosisPage
 from pages import HomePage
@@ -38,6 +38,10 @@ class PatientQueuePage(Canvas, BasePage):
         self.get_patient_insurance()
         self.get_disease_title()
         
+
+    def destroy_all_widgets(self):
+        for widget in self.window.winfo_children():
+            widget.destroy()
 
     def get_disease_title(self):
         if self.lang_code == "id":
@@ -89,7 +93,7 @@ class PatientQueuePage(Canvas, BasePage):
     def drawPage(self, data = None):
         self.place(x = 0, y = 0)
 
-        wifi_clock_app = notificationBar(self.window)
+        # wifi_clock_app = notificationBar(self.window)
 
         image_image_1 = PhotoImage(
             file=relative_to_assets(f"control/PatientQueueFrame/image_1.png"))
@@ -341,7 +345,9 @@ class PatientQueuePage(Canvas, BasePage):
         create_hover_button(self.window, 59.5, 633.5, 192.0, 54.0, 
                             BACKGROUND_COLOUR, inactive_button_3, active_button_3,  
                             lambda: goToPage(HomePage.HomePage(self.window)))
-        
+                            # lambda: [self.destroy_all_widgets, goToPage(HomePage.HomePage(self.window))])
+
+
         create_hover_button(self.window, 284.5, 633.5, 192.0, 54.0,
                             BACKGROUND_COLOUR, inactive_button_4, active_button_4,  
                             lambda: goToPage(DiagnosisPage.DiagnosisPage(self.window, self.patient_data[self.current_patient]['id_pasien'])))
@@ -453,5 +459,7 @@ class PatientQueuePage(Canvas, BasePage):
 
 
         self.canvas_scroll.configure(scrollregion=self.canvas_scroll.bbox("all"))
+
+        self.destroy()
 
         self.window.mainloop()

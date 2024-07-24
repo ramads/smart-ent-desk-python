@@ -1,7 +1,7 @@
 from tkinter import *
 from colors import *
 from helpers import *
-from notificationBar import notificationBar
+# from notificationBar import notificationBar
 
 from pages import PatientQueuePage
 from pages import NotificationPage
@@ -34,11 +34,15 @@ class HomePage(Canvas, BasePage):
         with open(path, "r") as file:
             data = json.load(file)
         return data
+
+    def destroy_all_widgets(self):
+        for widget in self.window.winfo_children():
+            widget.destroy()
     
     def drawPage(self):
         self.place(x=0, y=0)
 
-        wifi_clock_app = notificationBar(self.window)
+        # wifi_clock_app = notificationBar(self.window)
 
         inactive_button_1 = relative_to_assets(f"control/HomeFrame/{self.lang_code}/button_1.png")
         active_button_1 = relative_to_assets(f"control/HomeFrame/{self.lang_code}/active_button_1.png")
@@ -59,8 +63,8 @@ class HomePage(Canvas, BasePage):
         active_button_6 = relative_to_assets(f"control/HomeFrame/{self.lang_code}/active_button_6.png")
         
         create_hover_button(self.window, 47.0, 216.0, 447.0, 319.0, 
-                            BACKGROUND_COLOUR, inactive_button_1, active_button_1, 
-                            lambda: goToPage(PatientQueuePage.PatientQueuePage(self.window)))
+                            BACKGROUND_COLOUR, inactive_button_1, active_button_1,
+                            lambda: [self.destroy_all_widgets(), goToPage(PatientQueuePage.PatientQueuePage(self.window))])
         
         create_hover_button(self.window, 523.0,216.0, 263.0, 319.0, 
                             BACKGROUND_COLOUR, inactive_button_2, active_button_2,  

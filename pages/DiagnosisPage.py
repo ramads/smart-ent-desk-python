@@ -1,7 +1,7 @@
 from tkinter import *
 from colors import *
 from helpers import *
-from notificationBar import notificationBar
+# from notificationBar import notificationBar
 
 from pages.DEarPage import DEarPage
 from pages import PatientQueuePage
@@ -36,7 +36,7 @@ class DiagnosisPage(Canvas, BasePage):
     def drawPage(self, data = None):
         self.place(x=0, y=0)
 
-        wifi_clock_app = notificationBar(self.window)
+        # wifi_clock_app = notificationBar(self.window)
 
         inactive_button_1 = relative_to_assets(f"control/DiagnosisFrame/{self.lang_code}/button_1.png")
         active_button_1 = relative_to_assets(f"control/DiagnosisFrame/{self.lang_code}/active_button_1.png")

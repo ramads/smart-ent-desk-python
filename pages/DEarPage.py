@@ -2,7 +2,7 @@ from tkinter import *
 from colors import *
 from helpers import *
 from pages import DEarProcessPage, DiagnosisPage
-from notificationBar import notificationBar
+# from notificationBar import notificationBar
 
 import json
 class DEarPage(Canvas, BasePage):
@@ -43,7 +43,7 @@ class DEarPage(Canvas, BasePage):
     def drawPage(self):
         self.place(x=0, y=0)
 
-        wifi_clock_app = notificationBar(self.window)
+        # wifi_clock_app = notificationBar(self.window)
 
         inactive_button_1 = relative_to_assets(f"control/DEarFrame/{self.lang_code}/button_1.png")
         active_button_1 = relative_to_assets(f"control/DEarFrame/{self.lang_code}/active_button_1.png")
