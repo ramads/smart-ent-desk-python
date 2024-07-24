@@ -8,6 +8,7 @@ from pages import NotificationPage
 from pages import MedicalRecordPage
 from pages import SoftwareHardware
 from pages import Settings
+from pages import EndQueuePage
 
 # from pages import NotificationDetailv2Page
 
@@ -34,10 +35,6 @@ class HomePage(Canvas, BasePage):
         with open(path, "r") as file:
             data = json.load(file)
         return data
-
-    def destroy_all_widgets(self):
-        for widget in self.window.winfo_children():
-            widget.destroy()
     
     def drawPage(self):
         self.place(x=0, y=0)
@@ -64,7 +61,7 @@ class HomePage(Canvas, BasePage):
         
         create_hover_button(self.window, 47.0, 216.0, 447.0, 319.0, 
                             BACKGROUND_COLOUR, inactive_button_1, active_button_1,
-                            lambda: [self.destroy_all_widgets(), goToPage(PatientQueuePage.PatientQueuePage(self.window))])
+                            lambda: goToPage(PatientQueuePage.PatientQueuePage(self.window)))
         
         create_hover_button(self.window, 523.0,216.0, 263.0, 319.0, 
                             BACKGROUND_COLOUR, inactive_button_2, active_button_2,  
@@ -84,7 +81,7 @@ class HomePage(Canvas, BasePage):
         
         create_hover_button(self.window, 590.0,591.0, 274.0, 99.0,
                             BACKGROUND_COLOUR, inactive_button_6, active_button_6,  
-                            lambda: print("Button Clicked!"))
+                            lambda: goToPage(EndQueuePage.EndQueuePage(self.window)))
 
         image_image_1 = PhotoImage(
             file=relative_to_assets(f"control/HomeFrame/image_1.png"))

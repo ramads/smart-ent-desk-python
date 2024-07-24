@@ -7,6 +7,7 @@ from helpers import *
 
 from pages import DiagnosisPage
 from pages import HomePage
+from pages import EndQueuePage
 
 from database.models.Patient import PatientModel
 from database.models.Diagnosis import DiagnosisModel
@@ -37,11 +38,6 @@ class PatientQueuePage(Canvas, BasePage):
         self.get_patient_data()
         self.get_patient_insurance()
         self.get_disease_title()
-        
-
-    def destroy_all_widgets(self):
-        for widget in self.window.winfo_children():
-            widget.destroy()
 
     def get_disease_title(self):
         if self.lang_code == "id":
@@ -83,7 +79,7 @@ class PatientQueuePage(Canvas, BasePage):
             self.get_current_patient_data()
             self.drawPage()
         else:
-            print("No more patients")
+            goToPage(EndQueuePage.EndQueuePage(self.window))
     
 
     def loadImage(self):
@@ -459,7 +455,5 @@ class PatientQueuePage(Canvas, BasePage):
 
 
         self.canvas_scroll.configure(scrollregion=self.canvas_scroll.bbox("all"))
-
-        self.destroy()
 
         self.window.mainloop()

@@ -7,6 +7,7 @@ from helpers import *
 
 from pages import HomePage
 from pages import MedicalRecordDetailPage
+from pages import MedicalRecordEditPage
 
 from database.models.Diagnosis import DiagnosisModel
 
@@ -224,23 +225,23 @@ class MedicalRecordPage(Canvas, BasePage):
                                         fill="#404040",
                                         font=("Nunito Regular", 20 * -1))
 
-            button_image_1 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/button_1.png"))
+            button_image_1 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/edit_button.png"))
             button_images.append(button_image_1)
-            button_1 = Button(self.canvas_scroll, image=button_image_1, borderwidth=0, highlightthickness=0,
-                            command=lambda i=i: goToPage(MedicalRecordDetailPage.MedicalRecordDetailPage(self.window, self.history_data[i])), relief="flat")
+            button_1 = Button(self.canvas_scroll, image=button_image_1, borderwidth=0, highlightthickness=0, background="#FFFFFF",
+                            command=lambda: goToPage(MedicalRecordEditPage.MedicalRecordEditPage(self.window)))
             self.canvas_scroll.create_window(914.22119140625, 329.20361328125 + y_offset, anchor="nw", window=button_1,
                                             width=23.592920303344727, height=23.592920303344727)
 
-            button_image_2 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/button_2.png"))
+            button_image_2 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/view_button.png"))
             button_images.append(button_image_2)
-            button_2 = Button(self.canvas_scroll, image=button_image_2, borderwidth=0, highlightthickness=0,
-                            command=lambda: print("button_2 clicked"), relief="flat")
+            button_2 = Button(self.canvas_scroll, image=button_image_2, borderwidth=0, highlightthickness=0, background="#FFFFFF",
+                            command=lambda i=i: goToPage(MedicalRecordDetailPage.MedicalRecordDetailPage(self.window, self.history_data[i])), relief="flat")
             self.canvas_scroll.create_window(942.814208984375, 329.20361328125 + y_offset, anchor="nw", window=button_2,
                                             width=23.592920303344727, height=23.592920303344727)
 
             button_image_3 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/button_3.png"))
             button_images.append(button_image_3)
-            button_3 = Button(self.canvas_scroll, image=button_image_3, borderwidth=0, highlightthickness=0,
+            button_3 = Button(self.canvas_scroll, image=button_image_3, borderwidth=0, highlightthickness=0, background="#FFFFFF",
                             command=lambda i=i: self.delete_diagnosis(self.history_data[i]['id_diagnosa']), relief="flat")
             self.canvas_scroll.create_window(971.406982421875, 329.20361328125 + y_offset, anchor="nw", window=button_3,
                                             width=23.592920303344727, height=23.592920303344727)

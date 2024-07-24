@@ -78,7 +78,7 @@ class NotificationDetailPage(Canvas, BasePage):
             font=("Nunito Bold", 24 * -1)
         )
 
-        inactive_button_1 = relative_to_assets("control/NotificationDetailFrame/button_1.png")
+        inactive_button_1 = relative_to_assets("control/NotificationDetailFrame/edit_button.png")
         active_button_1 = relative_to_assets("control/NotificationDetailFrame/active_button_1.png")
 
         create_hover_button(self.window, 471.0, 662.0, 192.0, 54.0,
