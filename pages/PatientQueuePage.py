@@ -1,3 +1,4 @@
+import customtkinter
 import tkinter as tk
 from tkinter import *
 from colors import *
@@ -12,7 +13,6 @@ from database.models.Diagnosis import DiagnosisModel
 from database.models.Insurance import InsuranceModel
 from database.models.Hospital import HospitalModel
 
-from config import LANG_CODE
 import json
 
 
@@ -20,6 +20,7 @@ import json
 class PatientQueuePage(Canvas, BasePage):
     def __init__(self, window):
         self.window = window
+        self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
         super().__init__(
             window,
@@ -39,7 +40,7 @@ class PatientQueuePage(Canvas, BasePage):
         
 
     def get_disease_title(self):
-        if LANG_CODE == "id":
+        if self.lang_code == "id":
             self.disease_title_1 = f"{self.data_localization['disease']} {self.data_localization[self.current_history_data[0]['jenis_diagnosa']]}" if len(self.current_history_data)>0 else self.data_localization['no_data_yet']
             self.disease_title_2 = f"{self.data_localization['disease']} {self.data_localization[self.current_history_data[1]['jenis_diagnosa']]}" if len(self.current_history_data)>1 else self.data_localization['no_data_yet']
         else:
@@ -47,7 +48,7 @@ class PatientQueuePage(Canvas, BasePage):
             self.disease_title_2 = f"{self.data_localization[self.current_history_data[1]['jenis_diagnosa']]} {self.data_localization['disease']}" if len(self.current_history_data)>1 else self.data_localization['no_data_yet']
 
     def get_localization(self):
-        path = f"locales/{LANG_CODE}/string.json"
+        path = f"locales/{self.lang_code}/string.json"
         with open(path, "r") as file:
             data = json.load(file)
         return data
@@ -203,148 +204,7 @@ class PatientQueuePage(Canvas, BasePage):
             image=image_image_2
         )
 
-        self.create_rectangle(
-            738.0,
-            349.99997228697987,
-            1056.0,
-            351.0,
-            fill="#E0E0E0",
-            outline="")
-
-        self.create_text(
-            744.5,
-            277.5,
-            anchor="nw",
-            text= self.disease_title_1.title(),
-            fill="#404040",
-            font=("Nunito Bold", 19 * -1)
-        )
-
-        image_image_3 = PhotoImage(
-            file=relative_to_assets(f"control/PatientQueueFrame/image_3.png"))
-        image_3 = self.create_image(
-            754.5,
-            313.0,
-            image=image_image_3
-        )
-
-        self.create_text(
-            774.5,
-            301.5,
-            anchor="nw",
-            text= self.current_history_data[0]['tanggal_diagnosa'].strftime("%d %B %Y") if len(self.current_history_data)>0 else self.data_localization['no_data_yet'],
-            fill="#404040",
-            font=("Nunito Regular", 12 * -1)
-        )
-
-        image_image_4 = PhotoImage(
-            file=relative_to_assets(f"control/PatientQueueFrame/image_4.png"))
-        image_4 = self.create_image(
-            754.5,
-            334.5,
-            image=image_image_4
-        )
-
-        self.create_text(
-            773.5,
-            326.0,
-            anchor="nw",
-            text= self.hospital.get_hospital(self.current_history_data[0]['id_rumah_sakit'])['nama_rumah_sakit'] if len(self.current_history_data)>0 else self.data_localization['no_data_yet'],
-            fill="#404040",
-            font=("Nunito Regular", 12 * -1)
-        )
-
-        button_image_1 = PhotoImage(
-            file=relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/button_1.png"))
-        button_1 = Button(
-            image=button_image_1,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: print(f"control/PatientQueueFrame/{LANG_CODE}/button_1 clicked"),
-            relief="flat"
-        )
-        button_1.place(
-            x=994.5,
-            y=289.0,
-            width=44.0,
-            height=44.0
-        )
-
-        self.create_rectangle(
-            738.0,
-            430.49997228697987,
-            1056.0,
-            431.5,
-            fill="#E0E0E0",
-            outline="")
-
-        self.create_text(
-            744.5,
-            358.0,
-            anchor="nw",
-            text= self.disease_title_2.title(),
-            fill="#404040",
-            font=("Nunito Bold", 19 * -1)
-        )
-
-        image_image_5 = PhotoImage(
-            file=relative_to_assets(f"control/PatientQueueFrame/image_5.png"))
-        image_5 = self.create_image(
-            754.5,
-            393.5,
-            image=image_image_5
-        )
-
-        self.create_text(
-            774.5,
-            382.0,
-            anchor="nw",
-            text= self.current_history_data[1]['tanggal_diagnosa'].strftime("%d %B %Y") if len(self.current_history_data)>1 else self.data_localization['no_data_yet'],
-            fill="#404040",
-            font=("Nunito Regular", 12 * -1)
-        )
-
-        image_image_6 = PhotoImage(
-            file=relative_to_assets(f"control/PatientQueueFrame/image_6.png"))
-        image_6 = self.create_image(
-            754.5,
-            415.0,
-            image=image_image_6
-        )
-
-        self.create_text(
-            773.5,
-            406.5,
-            anchor="nw",
-            text= self.hospital.get_hospital(self.current_history_data[1]['id_rumah_sakit'])['nama_rumah_sakit'] if len(self.current_history_data)>1 else self.data_localization['no_data_yet'],
-            fill="#404040",
-            font=("Nunito Regular", 12 * -1)
-        )
-
-        button_image_2 = PhotoImage(
-            file=relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/button_2.png"))
-        button_2 = Button(
-            image=button_image_2,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: print("button_2 clicked"),
-            relief="flat"
-        )
-        button_2.place(
-            x=994.5,
-            y=369.5,
-            width=44.0,
-            height=44.0
-        )
-
-        self.create_text(
-            752.0,
-            224.0,
-            anchor="nw",
-            text=f"{self.data_localization['medical_record']}".title(),
-            fill="#404040",
-            font=("Nunito Bold", 24 * -1)
-        )
+        # Tampilan Asuransi
 
         image_image_7 = PhotoImage(
             file=relative_to_assets(f"control/PatientQueueFrame/image_7.png"))
@@ -443,16 +303,6 @@ class PatientQueuePage(Canvas, BasePage):
             image=image_image_8
         )
 
-
-        inactive_button_3 = relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/button_3.png")
-        active_button_3 = relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/active_button_3.png")
-        
-        inactive_button_4 = relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/button_4.png")
-        active_button_4 = relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/active_button_4.png")
-        
-        inactive_button_5 = relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/button_5.png")
-        active_button_5 = relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/active_button_5.png")
-
         self.create_text(
             130.0,
             117.5,
@@ -479,14 +329,14 @@ class PatientQueuePage(Canvas, BasePage):
             image=image_image_9
         )
 
-        inactive_button_3 = relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/button_3.png")
-        active_button_3 = relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/active_button_3.png")
+        inactive_button_3 = relative_to_assets(f"control/PatientQueueFrame/{self.lang_code}/button_3.png")
+        active_button_3 = relative_to_assets(f"control/PatientQueueFrame/{self.lang_code}/active_button_3.png")
         
-        inactive_button_4 = relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/button_4.png")
-        active_button_4 = relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/active_button_4.png")
+        inactive_button_4 = relative_to_assets(f"control/PatientQueueFrame/{self.lang_code}/button_4.png")
+        active_button_4 = relative_to_assets(f"control/PatientQueueFrame/{self.lang_code}/active_button_4.png")
         
-        inactive_button_5 = relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/button_5.png")
-        active_button_5 = relative_to_assets(f"control/PatientQueueFrame/{LANG_CODE}/active_button_5.png")
+        inactive_button_5 = relative_to_assets(f"control/PatientQueueFrame/{self.lang_code}/button_5.png")
+        active_button_5 = relative_to_assets(f"control/PatientQueueFrame/{self.lang_code}/active_button_5.png")
 
         create_hover_button(self.window, 59.5, 633.5, 192.0, 54.0, 
                             BACKGROUND_COLOUR, inactive_button_3, active_button_3,  
@@ -499,5 +349,109 @@ class PatientQueuePage(Canvas, BasePage):
         create_hover_button(self.window, 509.5, 633.5, 192.0, 54.0,
                             BACKGROUND_COLOUR, inactive_button_5, active_button_5,  
                             lambda: self.next_patient())
+
+        # Kolom riwayat penyakit
+        self.create_text(
+            752.0,
+            224.0,
+            anchor="nw",
+            text=f"{self.data_localization['medical_record']}".title(),
+            fill="#404040",
+            font=("Nunito Bold", 24 * -1)
+        )
+
+        self.my_frame = customtkinter.CTkScrollableFrame(self.window,
+                                                         orientation="vertical",
+                                                         width=300,
+                                                         height=200,
+                                                         fg_color="#FFFFFF",
+                                                         scrollbar_button_hover_color="#404040",
+                                                         scrollbar_fg_color="#FFFFFF",
+                                                         bg_color="#FFFFFF",
+                                                         border_width=0)
+
+        self.my_frame.place(x=740, y=255)
+        self.canvas_scroll = Canvas(self.my_frame, width=300, height=500, bg="#FFFFFF")
+        self.canvas_scroll.pack()
+
+        self.update_cards()
+
+    def update_cards(self):
+        self.canvas_scroll.delete("all")
+
+        button_images = []
+        location_images = []
+        schedule_images = []
+
+        for i in range(3):
+            y_offset = i * 75
+
+            button_image_1 = PhotoImage(file=relative_to_assets(f"control/PatientQueueFrame/{self.lang_code}/button_1.png"))
+            button_images.append(button_image_1)
+            button_1 = Button(self.canvas_scroll, background="white", activebackground="white", image=button_image_1, borderwidth=0, highlightthickness=0,
+                              command=lambda: print("woke"),
+                              relief="flat")
+            self.canvas_scroll.create_window(240, 15 + y_offset, anchor="nw", window=button_1,
+                                             width=44, height=44)
+
+            # self.canvas_scroll.create_rectangle(
+            #     0.0,
+            #     0 + y_offset,
+            #     0,
+            #     0,
+            #     fill="#E0E0E0",
+            #     outline="")
+
+            self.canvas_scroll.create_text(
+                0,
+                0 + y_offset,
+                anchor="nw",
+                text=self.disease_title_1.title(),
+                fill="#404040",
+                font=("Nunito Bold", 19 * -1)
+            )
+
+            self.canvas_scroll.create_text(
+                30,
+                27 + y_offset,
+                anchor="nw",
+                text=self.current_history_data[0]['tanggal_diagnosa'].strftime("%d %B %Y") if len(
+                    self.current_history_data) > 0 else self.data_localization['no_data_yet'],
+                fill="#404040",
+                font=("Nunito Regular", 11 * -1)
+            )
+
+            image_image_3 = PhotoImage(
+                file=relative_to_assets(f"control/PatientQueueFrame/image_3.png"))
+            schedule_images.append(image_image_3)
+            image_3 = self.canvas_scroll.create_image(
+                10,
+                35 + y_offset,
+                image=image_image_3
+            )
+
+            image_image_4 = PhotoImage(
+                file=relative_to_assets(f"control/PatientQueueFrame/image_4.png"))
+            schedule_images.append(image_image_4)
+            image_4 = self.canvas_scroll.create_image(
+                10,
+                55 + y_offset,
+                image=image_image_4
+            )
+
+            self.canvas_scroll.create_text(
+                30,
+                50.0 + y_offset,
+                anchor="nw",
+                text=self.hospital.get_hospital(self.current_history_data[0]['id_rumah_sakit'])[
+                    'nama_rumah_sakit'] if len(self.current_history_data) > 0 else self.data_localization[
+                    'no_data_yet'],
+                fill="#404040",
+                font=("Nunito Regular", 11 * -1)
+            )
+
+
+
+        self.canvas_scroll.configure(scrollregion=self.canvas_scroll.bbox("all"))
 
         self.window.mainloop()

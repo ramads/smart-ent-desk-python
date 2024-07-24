@@ -20,8 +20,6 @@ class Database:
                 password=self.password,
                 port=self.port
             )
-            if self.connection.is_connected():
-                print("Koneksi ke database berhasil")
         except Error as e:
             print(f"Error: {e}")
             self.connection = None
@@ -29,4 +27,4 @@ class Database:
     def close(self):
         if self.connection and self.connection.is_connected():
             self.connection.close()
-            print("Koneksi ke database ditutup")
+

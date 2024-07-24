@@ -7,12 +7,12 @@ from notificationBar import notificationBar
 from pages import DEarProcessPage
 from pages import DEarLoadingPage
 
-from config import LANG_CODE
 import json
 
 class PreviewImagePage(Canvas, BasePage):
     def __init__(self, window, temp_data=None):
         self.window = window
+        self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
         super().__init__(
             window,
@@ -26,7 +26,7 @@ class PreviewImagePage(Canvas, BasePage):
         self.temp_data = temp_data
 
     def get_localization(self):
-        path = f"locales/{LANG_CODE}/string.json"
+        path = f"locales/{self.lang_code}/string.json"
         with open(path, "r") as file:
             data = json.load(file)
         return data
@@ -64,11 +64,11 @@ class PreviewImagePage(Canvas, BasePage):
         )
 
 
-        inactive_button_1 = relative_to_assets(f"control/PreviewImageFrame/{LANG_CODE}/button_1.png")
-        active_button_1 = relative_to_assets(f"control/PreviewImageFrame/{LANG_CODE}/active_button_1.png")
+        inactive_button_1 = relative_to_assets(f"control/PreviewImageFrame/{self.lang_code}/button_1.png")
+        active_button_1 = relative_to_assets(f"control/PreviewImageFrame/{self.lang_code}/active_button_1.png")
         
-        inactive_button_2 = relative_to_assets(f"control/PreviewImageFrame/{LANG_CODE}/button_2.png")
-        active_button_2 = relative_to_assets(f"control/PreviewImageFrame/{LANG_CODE}/active_button_2.png")
+        inactive_button_2 = relative_to_assets(f"control/PreviewImageFrame/{self.lang_code}/button_2.png")
+        active_button_2 = relative_to_assets(f"control/PreviewImageFrame/{self.lang_code}/active_button_2.png")
         
         create_hover_button(self.window, 370.5, 631.0, 192.0, 54.0, 
                             "#FFFFFF", inactive_button_1, active_button_1, 

@@ -10,8 +10,6 @@ from pprint import pprint
 from datetime import datetime
 
 from database.models.Diagnosis import DiagnosisModel
-
-from config import LANG_CODE
 import json
 
 
@@ -19,6 +17,7 @@ class DEarCompletePage(Canvas, BasePage):
     def __init__(self, window, temp_data=None):
         self.window = window
         self.temp_data = temp_data
+        self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
         pprint(temp_data)
         super().__init__(
@@ -57,7 +56,7 @@ class DEarCompletePage(Canvas, BasePage):
         self.insert_data()
 
     def get_localization(self):
-        path = f"locales/{LANG_CODE}/string.json"
+        path = f"locales/{self.lang_code}/string.json"
         with open(path, "r") as file:
             data = json.load(file)
         return data
@@ -65,10 +64,11 @@ class DEarCompletePage(Canvas, BasePage):
     def insert_data(self):
         current_date = datetime.now().strftime('%Y-%m-%d')
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-        image_path = f"temp_image/{self.temp_data['id_patient']}_{self.temp_data['id_hospital']}_{timestamp}.jpg"
+        image_path = f"{self.temp_data['id_patient']}_{self.temp_data['id_hospital']}_{timestamp}.png"
         
         image = Image.open(self.temp_data['image_path_temp'])
-        image.save(image_path)
+        image = image.resize((559, 471))
+        image.save(f"temp_image/{image_path}", format='PNG')
         
         confidence = self.temp_data['result_1'][1]
         confidence = int(round(confidence, 2) * 100)

@@ -13,7 +13,6 @@ from notificationBar import notificationBar
 from database.models.Patient import PatientModel
 from database.models.Insurance import InsuranceModel
 
-from config import LANG_CODE
 import json
 
 
@@ -35,6 +34,7 @@ class DEarProcessPage(Canvas, BasePage):
             relief="ridge"
         )
         self.temp_data = temp_data
+        self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
         self.patient = PatientModel()
         self.insurance = InsuranceModel()
@@ -44,7 +44,6 @@ class DEarProcessPage(Canvas, BasePage):
         self.window = window
         self.vidCap = None
         self.camera_thread = None
-        self.running = False
 
         cam_index = 0
         while (cam_index < 20):
@@ -64,26 +63,25 @@ class DEarProcessPage(Canvas, BasePage):
         return patient_data, insurance_data
     
     def get_localization(self):
-        path = f"locales/{LANG_CODE}/string.json"
+        path = f"locales/{self.lang_code}/string.json"
         with open(path, "r") as file:
             data = json.load(file)
         return data
 
     def startCameraThread(self):
-        self.running = True
-        self.updateCameraFrame()
+        self.camera_thread = threading.Thread(target=self.updateCameraFrame)
+        self.camera_thread.start()
 
     def updateCameraFrame(self):
-        if self.running:
-            self.ret, self.frame = self.vidCap.read()
+        self.ret, self.frame = self.vidCap.read()
 
-            if self.ret:
-                self.frame = cv2.resize(self.frame, (604, 538))
-                opencv_image = cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGBA)
-                self.captured_image = ImageTk.PhotoImage(image=Image.fromarray(opencv_image))
-                self.create_image(354.0, 339.0, image=self.captured_image)
+        if self.ret:
+            self.frame = cv2.resize(self.frame, (604, 538))
+            opencv_image = cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGBA)
+            self.captured_image = ImageTk.PhotoImage(image=Image.fromarray(opencv_image))
+            self.create_image(354.0, 339.0, image=self.captured_image)
 
-            self.window.after(1, self.updateCameraFrame)
+        self.after_cam_id = self.after(20, self.updateCameraFrame)
 
     def onCapture(self, image_name):
         if self.frame is not None:
@@ -97,11 +95,12 @@ class DEarProcessPage(Canvas, BasePage):
             goToPage(PreviewImagePage.PreviewImagePage(self.window, self.temp_data))
 
     def onStopCamera(self):
-        self.running = False
+        # self.running = False
         if self.camera_thread is not None:
             self.camera_thread.join()
         self.vidCap.release()
         cv2.destroyAllWindows()
+        self.after_cancel(self.after_cam_id)
 
     def backToPrevPage(self):
         self.onStopCamera()
@@ -142,11 +141,11 @@ class DEarProcessPage(Canvas, BasePage):
             image=image_image_1
         )
 
-        inactive_button_1 = relative_to_assets(f"control/DEarProcessFrame/{LANG_CODE}/button_1.png")
-        active_button_1 = relative_to_assets(f"control/DEarProcessFrame/{LANG_CODE}/active_button_1.png")
+        inactive_button_1 = relative_to_assets(f"control/DEarProcessFrame/{self.lang_code}/button_1.png")
+        active_button_1 = relative_to_assets(f"control/DEarProcessFrame/{self.lang_code}/active_button_1.png")
         
-        inactive_button_2 = relative_to_assets(f"control/DEarProcessFrame/{LANG_CODE}/button_2.png")
-        active_button_2 = relative_to_assets(f"control/DEarProcessFrame/{LANG_CODE}/active_button_2.png")
+        inactive_button_2 = relative_to_assets(f"control/DEarProcessFrame/{self.lang_code}/button_2.png")
+        active_button_2 = relative_to_assets(f"control/DEarProcessFrame/{self.lang_code}/active_button_2.png")
 
         create_hover_button(self.window, 158.0, 632.0, 192.0, 54.0,
                             "#FFFFFF", inactive_button_1, active_button_1, 

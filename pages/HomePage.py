@@ -6,16 +6,18 @@ from notificationBar import notificationBar
 from pages import PatientQueuePage
 from pages import NotificationPage
 from pages import MedicalRecordPage
-from pages import DEarLoadingPage
+from pages import SoftwareHardware
+from pages import Settings
 
-from config import LANG_CODE
+# from pages import NotificationDetailv2Page
+
 import json
 
 
 class HomePage(Canvas, BasePage):
-
     def __init__(self, window):
         self.window = window
+        self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
         super().__init__(
             window,
@@ -28,7 +30,7 @@ class HomePage(Canvas, BasePage):
         )
 
     def get_localization(self):
-        path = f"locales/{LANG_CODE}/string.json"
+        path = f"locales/{self.lang_code}/string.json"
         with open(path, "r") as file:
             data = json.load(file)
         return data
@@ -38,23 +40,23 @@ class HomePage(Canvas, BasePage):
 
         wifi_clock_app = notificationBar(self.window)
 
-        inactive_button_1 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/button_1.png")
-        active_button_1 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/active_button_1.png")
+        inactive_button_1 = relative_to_assets(f"control/HomeFrame/{self.lang_code}/button_1.png")
+        active_button_1 = relative_to_assets(f"control/HomeFrame/{self.lang_code}/active_button_1.png")
         
-        inactive_button_2 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/button_2.png")
-        active_button_2 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/active_button_2.png")
+        inactive_button_2 = relative_to_assets(f"control/HomeFrame/{self.lang_code}/button_2.png")
+        active_button_2 = relative_to_assets(f"control/HomeFrame/{self.lang_code}/active_button_2.png")
 
-        inactive_button_3 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/button_3.png")
-        active_button_3 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/active_button_3.png")
+        inactive_button_3 = relative_to_assets(f"control/HomeFrame/{self.lang_code}/button_3.png")
+        active_button_3 = relative_to_assets(f"control/HomeFrame/{self.lang_code}/active_button_3.png")
         
-        inactive_button_4 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/button_4.png")
-        active_button_4 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/active_button_4.png")
+        inactive_button_4 = relative_to_assets(f"control/HomeFrame/{self.lang_code}/button_4.png")
+        active_button_4 = relative_to_assets(f"control/HomeFrame/{self.lang_code}/active_button_4.png")
         
-        inactive_button_5 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/button_5.png")
-        active_button_5 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/active_button_5.png")
+        inactive_button_5 = relative_to_assets(f"control/HomeFrame/{self.lang_code}/button_5.png")
+        active_button_5 = relative_to_assets(f"control/HomeFrame/{self.lang_code}/active_button_5.png")
         
-        inactive_button_6 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/button_6.png")
-        active_button_6 = relative_to_assets(f"control/HomeFrame/{LANG_CODE}/active_button_6.png")
+        inactive_button_6 = relative_to_assets(f"control/HomeFrame/{self.lang_code}/button_6.png")
+        active_button_6 = relative_to_assets(f"control/HomeFrame/{self.lang_code}/active_button_6.png")
         
         create_hover_button(self.window, 47.0, 216.0, 447.0, 319.0, 
                             BACKGROUND_COLOUR, inactive_button_1, active_button_1, 
@@ -70,15 +72,15 @@ class HomePage(Canvas, BasePage):
         
         create_hover_button(self.window, 815.0,384.0, 271.0, 151.0, 
                             BACKGROUND_COLOUR, inactive_button_4, active_button_4,  
-                            lambda: print("button_4 clicked"))
+                            lambda: goToPage(SoftwareHardware.SoftwareHardware(self.window)))
         
         create_hover_button(self.window, 269.0,591.0, 275.0, 99.0, 
                             BACKGROUND_COLOUR, inactive_button_5, active_button_5,  
-                            lambda: print("button_5 clicked"))
+                            lambda: goToPage(Settings.Settings(self.window)))
         
         create_hover_button(self.window, 590.0,591.0, 274.0, 99.0,
                             BACKGROUND_COLOUR, inactive_button_6, active_button_6,  
-                            lambda: print("button_6 clicked"))
+                            lambda: print("Button Clicked!"))
 
         image_image_1 = PhotoImage(
             file=relative_to_assets(f"control/HomeFrame/image_1.png"))

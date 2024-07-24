@@ -8,7 +8,6 @@ from notificationBar import notificationBar
 from pages import DEarResultPage
 from machine_learning.image_predictor import ImagePredictor
 
-from config import LANG_CODE
 import json
 
 
@@ -19,6 +18,7 @@ class DEarLoadingPage(Canvas, BasePage):
 
     def __init__(self, window, temp_data):
         self.window = window
+        self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
         super().__init__(
             window,
@@ -33,7 +33,7 @@ class DEarLoadingPage(Canvas, BasePage):
         self.drawPage()
     
     def get_localization(self):
-        path = f"locales/{LANG_CODE}/string.json"
+        path = f"locales/{self.lang_code}/string.json"
         with open(path, "r") as file:
             data = json.load(file)
         return data

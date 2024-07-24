@@ -15,8 +15,6 @@ class App(Tk):
 
         self.homePage = HomePage.HomePage(self)
 
-        Generate_Database().create_tables()
-
         goToPage(self.homePage)
 
 app = App()
