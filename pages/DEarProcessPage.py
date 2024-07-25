@@ -4,6 +4,8 @@ import cv2
 import time
 
 from tkinter import *
+
+import config
 from colors import *
 from helpers import *
 from PIL import Image, ImageTk
@@ -46,38 +48,34 @@ class DEarProcessPage(Canvas, BasePage):
         self.window = window
         self.vidCap = None
         self.camera_thread = None
+        self.camera_open_thread = None
+        self.cam_index = config.CAMERA_PORT
+        # self.cam_index_list = []
 
-        self.find_camera()
+        # self.find_camera()
+        self.open_camera_in_thread()
         self.startCameraThread()
 
-    def find_camera(self):
-        self.vidCap = None
-        threads = []
-        for cam_index in range(10):
-            t = threading.Thread(target=self.try_open_camera, args=(cam_index,))
-            t.start()
-            threads.append(t)
+    def open_camera_in_thread(self):
+        camera_open_thread = threading.Thread(target=self.try_open_camera)
+        camera_open_thread.start()
 
-        for t in threads:
-            t.join()
+        camera_open_thread.join()
 
-        if self.vidCap is None:
-            print("No camera found.")
-        else:
-            print("Camera found and opened successfully.")
-
-    def try_open_camera(self, cam_index):
-        vidCap = cv2.VideoCapture(cam_index)
+    def try_open_camera(self):
+        vidCap = cv2.VideoCapture(self.cam_index)
         if vidCap.isOpened():
             ret, frame = vidCap.read()
             if ret:
                 if self.vidCap is None:
                     self.vidCap = vidCap
                     self.frame = frame
+                    print("----------->masuk")
                 else:
                     vidCap.release()
+                    print("masuk ga----------")
         else:
-            print(f"Failed to open camera at index {cam_index}")
+            print(f"Failed to open camera at index {self.cam_index}")
 
     def get_patient_data(self):
         patient_data = self.patient.get_patient(self.temp_data['id_patient'])
