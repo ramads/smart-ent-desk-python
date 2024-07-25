@@ -40,6 +40,20 @@
     "name" : "name",
     "check_date" : "Check Date",
     "action" : "Action",
-    "patient_history" : "Patient History"
+    "patient_history" : "Patient History",
+    "settings" : "Settings",
+    "system_update_title" : "System Update",
+    "system_update_subtitle" : "System Version",
+    "system_update_description" : "Our latest system version offers improved performance and security. Please ensure you update to the latest version for the best experience.",
+    "system_language_title" : "Language",
+    "system_language_subtitle" : "System Language",
+    "system_language_description" : "Select your preferred language for the system interface.",
+    "dongle_network_title" : "Dongle & Network",
+    "dongle_network_subtitle" : "Networking",
+    "dongle_network_description" : "Please ensure your dongle is connected and your network is stable for the best experience.",
+    "realtime_gps_title" : "Realtime GPS",
+    "realtime_gps_subtitle" : "GPS & Device Location",
+    "realtime_gps_description" : "Please ensure your GPS is enabled for the best experience."
+
 
 }

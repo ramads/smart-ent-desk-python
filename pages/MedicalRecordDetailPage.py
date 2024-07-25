@@ -6,6 +6,7 @@ from helpers import *
 
 
 from pages import MedicalRecordPage
+from pages import PatientQueuePage
 
 import json
 from pprint import pprint
@@ -13,12 +14,13 @@ from pprint import pprint
 
 class MedicalRecordDetailPage(Canvas, BasePage):
 
-    def __init__(self, window, clicked_data):
+    def __init__(self, window, clicked_data, previous_page):
 
         self.window = window
         self.clicked_data = clicked_data
         self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
+        self.previous_page = previous_page
         pprint(clicked_data)
         super().__init__(
             window,
@@ -63,7 +65,7 @@ class MedicalRecordDetailPage(Canvas, BasePage):
 
         create_hover_button(self.window, 471.0, 662.0, 192.0, 54.0,
                             BACKGROUND_COLOUR, inactive_button_4, active_button_4,
-                            lambda: goToPage(MedicalRecordPage.MedicalRecordPage(self.window)))
+                            lambda: goToPage(MedicalRecordPage.MedicalRecordPage(self.window) if self.previous_page == "medical_record" else PatientQueuePage.PatientQueuePage(self.window)))
 
 
         image_image_2 = PhotoImage(

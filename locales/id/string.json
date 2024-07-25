@@ -40,6 +40,19 @@
     "name" : "nama",
     "check_date" : "Tanggal Periksa",
     "action" : "Aksi",
-    "patient_history" : "Riwayat Pasien"
+    "patient_history" : "Riwayat Pasien",
+    "settings" : "Pengaturan",
+    "system_update_title" : "Pembaruan Sistem",
+    "system_update_subtitle" : "Versi Sistem",
+    "system_update_description" : "Versi sistem terbaru kami menawarkan kinerja dan keamanan yang lebih baik. Pastikan Anda memperbarui ke versi terbaru untuk pengalaman terbaik.",
+    "system_language_title" : "Bahasa",
+    "system_language_subtitle" : "Bahasa Sistem",
+    "system_language_description" : "Pilih bahasa yang Anda inginkan untuk antarmuka sistem.",
+    "dongle_network_title" : "Dongle & Jaringan",
+    "dongle_network_subtitle" : "Jaringan",
+    "dongle_network_description" : "Pastikan dongle Anda terhubung dan jaringan Anda stabil untuk pengalaman terbaik.",
+    "realtime_gps_title" : "GPS Realtime",
+    "realtime_gps_subtitle" : "GPS & Lokasi Perangkat",
+    "realtime_gps_description" : "Pastikan GPS Anda diaktifkan untuk pengalaman terbaik."
 
 }
