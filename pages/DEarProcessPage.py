@@ -93,7 +93,10 @@ class DEarProcessPage(Canvas, BasePage):
 
         if self.ret:
             self.frame = cv2.resize(self.frame, (604, 538))
-            opencv_image = cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGBA)
+
+            zoomed_frame = crop_image(self.frame, 1.5)
+
+            opencv_image = cv2.cvtColor(zoomed_frame, cv2.COLOR_BGR2RGBA)
             self.captured_image = ImageTk.PhotoImage(image=Image.fromarray(opencv_image))
             self.create_image(354.0, 339.0, image=self.captured_image)
 

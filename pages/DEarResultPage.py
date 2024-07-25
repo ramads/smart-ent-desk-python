@@ -104,7 +104,7 @@ class DEarResultPage(Canvas, BasePage):
         centre_circle = plt.Circle((0, 0), 0.70, fc='white')
         ax.add_artist(centre_circle)
 
-        fig.savefig('pie_chart.png')
+        # fig.savefig('pie_chart.png')
 
         chart_canvas = FigureCanvasTkAgg(fig, master=self)
         chart_canvas.draw()
