@@ -8,6 +8,7 @@ from helpers import *
 from pages import DiagnosisPage
 from pages import HomePage
 from pages import EndQueuePage
+from pages import MedicalRecordDetailPage
 
 from database.models.Patient import PatientModel
 from database.models.Diagnosis import DiagnosisModel
@@ -385,13 +386,13 @@ class PatientQueuePage(Canvas, BasePage):
         location_images = []
         schedule_images = []
 
-        for i in range(3):
+        for i in range(len(self.current_history_data)):
             y_offset = i * 75
-
+            self.current_history_data[i]['nama_pasien'] = self.patient_data[self.current_patient]['nama_pasien']
             button_image_1 = PhotoImage(file=relative_to_assets(f"control/PatientQueueFrame/{self.lang_code}/button_1.png"))
             button_images.append(button_image_1)
             button_1 = Button(self.canvas_scroll, background="white", activebackground="white", image=button_image_1, borderwidth=0, highlightthickness=0,
-                              command=lambda: print("woke"),
+                              command=lambda i=i: goToPage(MedicalRecordDetailPage.MedicalRecordDetailPage(self.window, self.current_history_data[i], "patient_queue")),
                               relief="flat")
             self.canvas_scroll.create_window(240, 15 + y_offset, anchor="nw", window=button_1,
                                              width=44, height=44)
@@ -417,8 +418,7 @@ class PatientQueuePage(Canvas, BasePage):
                 30,
                 27 + y_offset,
                 anchor="nw",
-                text=self.current_history_data[0]['tanggal_diagnosa'].strftime("%d %B %Y") if len(
-                    self.current_history_data) > 0 else self.data_localization['no_data_yet'],
+                text=self.current_history_data[i]['diagnosa'],
                 fill="#404040",
                 font=("Nunito Regular", 11 * -1)
             )
@@ -445,9 +445,7 @@ class PatientQueuePage(Canvas, BasePage):
                 30,
                 50.0 + y_offset,
                 anchor="nw",
-                text=self.hospital.get_hospital(self.current_history_data[0]['id_rumah_sakit'])[
-                    'nama_rumah_sakit'] if len(self.current_history_data) > 0 else self.data_localization[
-                    'no_data_yet'],
+                text=self.hospital.get_hospital(self.current_history_data[i]['id_rumah_sakit'])['nama_rumah_sakit'],
                 fill="#404040",
                 font=("Nunito Regular", 11 * -1)
             )

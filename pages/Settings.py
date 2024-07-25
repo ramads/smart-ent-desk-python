@@ -17,6 +17,7 @@ class Settings(Canvas, BasePage):
     def __init__(self, window):
         self.window = window
         self.lang_code = json.load(open("config.json", "r"))["language"]
+        self.data_localization = self.get_localization()
 
         super().__init__(
             window,
@@ -48,6 +49,10 @@ class Settings(Canvas, BasePage):
         
         with open("config.json", "w") as file:
             json.dump(data, file)
+
+        self.lang_code = lang_code
+        self.data_localization = self.get_localization()
+        self.drawPage()
 
 
     def show(self, label):
@@ -109,7 +114,7 @@ class Settings(Canvas, BasePage):
             77.0,
             184.0,
             anchor="nw",
-            text="Settings",
+            text=self.data_localization['settings'],
             fill="#000000",
             font=("Nunito SemiBold", 25 * -1)
         )
@@ -167,7 +172,7 @@ class Settings(Canvas, BasePage):
             121.0,
             249.0,
             anchor="nw",
-            text="System Updates",
+            text=self.data_localization["system_update_title"],
             fill="#000000",
             font=("Nunito SemiBold", 20 * -1)
         )
@@ -249,7 +254,7 @@ class Settings(Canvas, BasePage):
             851.0,
             width=680,
             anchor="nw",
-            text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Iaculis tempus tellus adipiscing eget non arcu egestas elementum faucibus. Senectus cras nunc et, arcu ultricies",
+            text=self.data_localization["realtime_gps_description"],
             fill="#404040",
             font=("Nunito regular", 14 * -1)
         )
@@ -258,7 +263,7 @@ class Settings(Canvas, BasePage):
             150.0,
             809.0,
             anchor="nw",
-            text="Realtime GPS",
+            text=self.data_localization["realtime_gps_title"],
             fill="#404040",
             font=("Nunito Bold", 19 * -1)
         )
@@ -274,7 +279,7 @@ class Settings(Canvas, BasePage):
             121.0,
             753.0,
             anchor="nw",
-            text="GPS & Device Location",
+            text=self.data_localization["realtime_gps_subtitle"],
             fill="#000000",
             font=("Nunito SemiBold", 20 * -1)
         )
@@ -292,7 +297,7 @@ class Settings(Canvas, BasePage):
             682.0,
             width=680,
             anchor="nw",
-            text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Iaculis tempus tellus adipiscing eget non arcu egestas elementum faucibus. Senectus cras nunc et, arcu ultricies",
+            text=self.data_localization["dongle_network_description"],
             fill="#404040",
             font=("Nunito Regular", 14 * -1)
         )
@@ -301,7 +306,7 @@ class Settings(Canvas, BasePage):
             150.0,
             640.0,
             anchor="nw",
-            text="Networking",
+            text=self.data_localization["dongle_network_subtitle"],
             fill="#404040",
             font=("Nunito Bold", 19 * -1)
         )
@@ -310,7 +315,7 @@ class Settings(Canvas, BasePage):
             121.0,
             586.0,
             anchor="nw",
-            text="Dongle & Network",
+            text=self.data_localization["dongle_network_title"],
             fill="#000000",
             font=("Nunito SemiBold", 20 * -1)
         )
@@ -328,7 +333,7 @@ class Settings(Canvas, BasePage):
             515.0,
             width=680,
             anchor="nw",
-            text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Iaculis tempus tellus adipiscing eget non arcu egestas elementum faucibus. Senectus cras nunc et, arcu u",
+            text=self.data_localization["system_language_description"],
             fill="#404040",
             font=("Nunito Regular", 14 * -1)
         )
@@ -337,7 +342,7 @@ class Settings(Canvas, BasePage):
             150.0,
             473.0,
             anchor="nw",
-            text="System Language",
+            text=self.data_localization["system_language_subtitle"],
             fill="#404040",
             font=("Nunito Bold", 19 * -1)
         )
@@ -346,7 +351,7 @@ class Settings(Canvas, BasePage):
             121.0,
             417.0,
             anchor="nw",
-            text="Languages",
+            text=self.data_localization["system_language_title"],
             fill="#000000",
             font=("Nunito SemiBold", 20 * -1)
         )
@@ -356,7 +361,7 @@ class Settings(Canvas, BasePage):
             346.0,
             width=680,
             anchor="nw",
-            text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Iaculis tempus tellus adipiscing eget non arcu egestas elementum faucibus. Senectus cras nunc et, arcu ultricies tristique. Mi purus",
+            text=self.data_localization["system_update_description"],
             fill="#404040",
             font=("Nunito Regular", 14 * -1)
         )
@@ -365,7 +370,7 @@ class Settings(Canvas, BasePage):
             150.0,
             304.0,
             anchor="nw",
-            text="System Version",
+            text=self.data_localization["system_update_subtitle"],
             fill="#404040",
             font=("Nunito Bold", 19 * -1)
         )
