@@ -37,6 +37,8 @@
     "new_label" : "Label Baru",
     "diagnosis_complete" : "Proses Diagnosa Selesai",
     "diagnosis_complete_hint" : "Diagnosis berhasil dilakukan. Hasil diagnosis dapat di akses kembali pada menu riwayat pasien.",
+    "diagnosis_queue_complete": "Semua Pasien Sudah Diperiksa",
+    "diagnosis_queue_complete_hint": "Terima kasih atas kerja keras anda, hari ini semua pasien telah selesai diperiksa. \n       Anda dapat melakukan review ulang diagnosa pada menu rekam medis.",
     "name" : "nama",
     "check_date" : "Tanggal Periksa",
     "action" : "Aksi",
