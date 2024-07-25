@@ -47,20 +47,37 @@ class DEarProcessPage(Canvas, BasePage):
         self.vidCap = None
         self.camera_thread = None
 
-        cam_index = 0
-        for cam_index in range(20):
-            vidCap = cv2.VideoCapture(cam_index)
-            if vidCap.isOpened():
-                ret, frame = vidCap.read()
-                if ret:
+        self.find_camera()
+        self.startCameraThread()
+
+    def find_camera(self):
+        self.vidCap = None
+        threads = []
+        for cam_index in range(10):
+            t = threading.Thread(target=self.try_open_camera, args=(cam_index,))
+            t.start()
+            threads.append(t)
+
+        for t in threads:
+            t.join()
+
+        if self.vidCap is None:
+            print("No camera found.")
+        else:
+            print("Camera found and opened successfully.")
+
+    def try_open_camera(self, cam_index):
+        vidCap = cv2.VideoCapture(cam_index)
+        if vidCap.isOpened():
+            ret, frame = vidCap.read()
+            if ret:
+                if self.vidCap is None:
                     self.vidCap = vidCap
                     self.frame = frame
-                    break
-                vidCap.release()
-            else:
-                print(f"Failed to open camera at index {cam_index}")
-
-        self.startCameraThread()
+                else:
+                    vidCap.release()
+        else:
+            print(f"Failed to open camera at index {cam_index}")
 
     def get_patient_data(self):
         patient_data = self.patient.get_patient(self.temp_data['id_patient'])
@@ -74,7 +91,7 @@ class DEarProcessPage(Canvas, BasePage):
         return data
 
     def countdown(self, seconds):
-        self.countdown_seconds = seconds  # Set hitungan mundur
+        self.countdown_seconds = seconds
         self.window.after(1000, self.updateCountdown)
 
     def updateCountdown(self):
