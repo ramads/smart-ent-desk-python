@@ -60,6 +60,7 @@ class DEarProcessPage(Canvas, BasePage):
         camera_open_thread = threading.Thread(target=self.try_open_camera)
         camera_open_thread.start()
 
+
         camera_open_thread.join()
 
     def try_open_camera(self):

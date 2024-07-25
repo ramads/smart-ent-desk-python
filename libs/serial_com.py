@@ -14,7 +14,7 @@ class SerialCom():
             try:
                 self.com = serial.Serial(THT_UNIT_PORT_ADDR, 115200, timeout=1)
             except:
-                if(time.time() - prev > 5):
+                if(time.time() - prev > 5): # waiting time
                     print("No serial detected, please plug your Controller")
                     break
 
