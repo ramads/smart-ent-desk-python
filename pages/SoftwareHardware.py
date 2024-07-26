@@ -34,8 +34,8 @@ class SoftwareHardware(Canvas, BasePage):
 
         # wifi_clock_app = notificationBar(self.window)
 
-        inactive_button_1 = relative_to_assets(f"control/SoftwareHardware/button_1.png")
-        active_button_1 = relative_to_assets(f"control/SoftwareHardware/active_button_1.png")
+        inactive_button_1 = relative_to_assets(f"control/SoftwareHardware/{self.lang_code}/button_1.png")
+        active_button_1 = relative_to_assets(f"control/SoftwareHardware/{self.lang_code}/active_button_1.png")
 
         create_hover_button(self.window, 471.0,662.0, 192.0, 54.0,
                             BACKGROUND_COLOUR, inactive_button_1, active_button_1,
@@ -85,7 +85,7 @@ class SoftwareHardware(Canvas, BasePage):
             77.0,
             175.0,
             anchor="nw",
-            text="Hardware & Software",
+            text=self.data_localization["hardware_software"].title(),
             fill="#000000",
             font=("Nunito Bold", 25 * -1)
         )

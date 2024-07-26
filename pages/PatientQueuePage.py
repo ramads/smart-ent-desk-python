@@ -68,8 +68,7 @@ class PatientQueuePage(Canvas, BasePage):
 
     def get_current_patient_data(self):
         self.current_history_data = self.diagnosis.get_patient_diagnoses(self.patient_data[self.current_patient]['id_pasien'])
-        if self.current_history_data:
-            self.get_patient_insurance()
+        self.get_patient_insurance()
 
     def get_patient_insurance(self):
         self.patient_insurance = self.insurance.get_patient_insurances(self.patient_data[self.current_patient]['id_pasien'])

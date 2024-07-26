@@ -11,10 +11,14 @@ from database.models.Notification import NotificationModel
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
+import json
+
 class NotificationPage(Canvas, BasePage):
 
     def __init__(self, window):
         self.window = window
+        self.lang_code = json.loads(open("config.json", "r").read())["language"]
+        self.data_localization = self.get_localization()
         self.notification = NotificationModel()
         self.temp_data = self.notification.get_notifications()
         self.data_notifications = self.temp_data
@@ -28,6 +32,11 @@ class NotificationPage(Canvas, BasePage):
             relief="ridge"
         )
 
+    def get_localization(self):
+        path = f"locales/{self.lang_code}/string.json"
+        with open(path, "r") as file:
+            data = json.load(file)
+        return data
     def drawPage(self):
         self.place(x=0, y=0)
 
@@ -61,7 +70,7 @@ class NotificationPage(Canvas, BasePage):
             82.0,
             183.0,
             anchor="nw",
-            text="Notifikasi",
+            text=self.data_localization["notification"].title(),
             fill="#404040",
             font=("Nunito Bold", 25 * -1)
         )
@@ -95,7 +104,7 @@ class NotificationPage(Canvas, BasePage):
             fg="#000716",
             highlightthickness=0,
             font=("Nunito Bold", 12),
-            placeholder="Enter your text here..."
+            placeholder=self.data_localization["enter_text"],
         )
         self.searchingBox.place(
             x=630.0,
@@ -104,17 +113,17 @@ class NotificationPage(Canvas, BasePage):
             height=30.0
         )
 
-        inactive_button_1 = relative_to_assets("control/NotificationFrame/button_1.png")
-        active_button_1 = relative_to_assets("control/NotificationFrame/active_button_1.png")
+        inactive_button_1 = relative_to_assets(f"control/NotificationFrame/{self.lang_code}/button_1.png")
+        active_button_1 = relative_to_assets(f"control/NotificationFrame/{self.lang_code}/active_button_1.png")
 
-        inactive_button_2 = relative_to_assets("control/NotificationFrame/button_2.png")
-        active_button_2 = relative_to_assets("control/NotificationFrame/active_button_2.png")
+        inactive_button_2 = relative_to_assets(f"control/NotificationFrame/{self.lang_code}/button_2.png")
+        active_button_2 = relative_to_assets(f"control/NotificationFrame/{self.lang_code}/active_button_2.png")
         
         create_hover_button(self.window, 471.0, 662.0, 192.0, 54.0, 
                             BACKGROUND_COLOUR, inactive_button_1, active_button_1, 
                             lambda: goToPage(HomePage.HomePage(self.window)))
         
-        create_hover_button(self.window, 960.0, 183.0, 88.0, 45.0, 
+        create_hover_button(self.window, 960.0, 183.0, 120.0, 45.0, 
                             '#FFFFFF', inactive_button_2, active_button_2, 
                             lambda: self.searching())        
 
@@ -125,7 +134,7 @@ class NotificationPage(Canvas, BasePage):
         input_text = self.searchingBox.get("1.0", "end-1c").lower().strip()
         input_text = input_text.replace("\n", "").replace("\t", "").replace(" ", "")
         print(input_text)
-        if input_text == "" or input_text == "enteryourtexthere...":
+        if input_text == "" or input_text == "enteryourtexthere..." or input_text == "masukkanteksandadisini...":
             self.data_notifications = self.temp_data
         else:
             self.data_notifications = [
@@ -139,17 +148,17 @@ class NotificationPage(Canvas, BasePage):
         delta = today - notif_datetime
     
         if delta.days == 0:
-            return "Today"
+            return self.data_localization["today"]
         elif delta.days == 1:
-            return "1 day ago"
+            return self.data_localization["yesterday"]
         elif delta.days < 30:
-            return f"{delta.days} days ago"
+            return f"{delta.days} {self.data_localization['day']}{'s' if self.lang_code == 'en' else ''} {self.data_localization['ago']}"
         elif delta.days < 365:
             months = delta.days // 30
-            return f"{months} month{'s' if months > 1 else ''} ago"
+            return f"{months} {self.data_localization['month']}{'s' if months > 1 and self.lang_code == 'en' else ''} {self.data_localization['ago']}"
         else:
             years = delta.days // 365
-            return f"{years} year{'s' if years > 1 else ''} ago"
+            return f"{years} {self.data_localization['year']}{'s' if years > 1 and self.lang_code == 'en' else ''} {self.data_localization['ago']}"
     
     def draw_rounded_rectangle(self, canvas, x1, y1, x2, y2, radius=25, **kwargs):
         points = [x1+radius, y1,
@@ -175,7 +184,7 @@ class NotificationPage(Canvas, BasePage):
         return canvas.create_polygon(points, **kwargs, smooth=True)
     
     def create_date_label(self, canvas, y_offset, date_label_text):
-        x1, y1, x2, y2 = 60, y_offset, 137, y_offset + 30
+        x1, y1, x2, y2 = 48, y_offset, 130 if self.lang_code == 'en' else 150, y_offset + 30
         self.draw_rounded_rectangle(canvas, x1, y1, x2, y2, radius=10, fill='#ffffff', outline="")
         date_label = Label(canvas, text=date_label_text, bg='#ffffff', font=("Nunito Bold", 10), fg="#9E9E9E")
         canvas.create_window((x1 + x2) // 2, (y1 + y2) // 2, anchor="center", window=date_label)

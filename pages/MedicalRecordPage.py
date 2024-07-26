@@ -46,7 +46,7 @@ class MedicalRecordPage(Canvas, BasePage):
         input_text = self.searchingBox.get("1.0", "end-1c").lower().strip()
         input_text = input_text.replace("\n", "").replace("\t", "").replace(" ", "")
         print(input_text)
-        if input_text == "" or input_text == "enteryourtexthere...":
+        if input_text == "" or input_text == "enteryourtexthere..." or input_text == "masukkanteksandadisini...":
             self.history_data = self.temp_data
         else:
             self.history_data = [
@@ -187,7 +187,7 @@ class MedicalRecordPage(Canvas, BasePage):
             fg="#000716",
             highlightthickness=0,
             font=("Nunito Bold", 12),
-            placeholder="Enter your text here..."
+            placeholder=self.data_localization["enter_text"]
         )
         self.searchingBox.place(
             x=611.0,

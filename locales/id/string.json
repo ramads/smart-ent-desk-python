@@ -57,5 +57,15 @@
     "realtime_gps_subtitle" : "GPS & Lokasi Perangkat",
     "realtime_gps_description" : "Pastikan GPS Anda diaktifkan untuk pengalaman terbaik.",
     "medical_record_edit_title" : "Pastikan Data Pasien Benar",
-    "medical_record_edit_hint" : "Mohon pastikan data pasien yang tampil di atas sesuai!\nJika data tidak sesuai, silakan kembali untuk memilih data yang benar."
+    "medical_record_edit_hint" : "Mohon pastikan data pasien yang tampil di atas sesuai!\nJika data tidak sesuai, silakan kembali untuk memilih data yang benar.",
+    "notification" : "Notifikasi",
+    "enter_text" : "Masukkan teks anda di sini...",
+    "today" : "Hari Ini",
+    "yesterday" : "Kemarin",
+    "ago" : "yang lalu",
+    "day" : "hari",
+    "week" : "minggu",
+    "month" : "bulan",
+    "year" : "tahun",
+    "hardware_software" : "Perangkat Keras & Lunak"
 }
