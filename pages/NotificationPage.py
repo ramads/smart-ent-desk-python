@@ -68,19 +68,19 @@ class NotificationPage(Canvas, BasePage):
 
         self.my_frame = customtkinter.CTkScrollableFrame(self.window,
                                                          orientation="vertical",
-                                                         width=1034,
+                                                         width=1028,
                                                          height=370,
                                                          fg_color=BACKGROUND_COLOUR,
-                                                         scrollbar_button_color="#bfbfbf",
+                                                         scrollbar_button_color="#404040",
                                                          scrollbar_button_hover_color="#e0e0e0",
                                                          scrollbar_fg_color=BACKGROUND_COLOUR,
                                                          bg_color=BACKGROUND_COLOUR,
                                                          label_fg_color=BACKGROUND_COLOUR,
                                                          border_width=0)
 
-        self.my_frame.place(x=48, y=270)
+        self.my_frame.place(x=35, y=270)
         self.canvas_scroll = Canvas(self.my_frame, 
-                                    width=1034, 
+                                    width=1028,
                                     height=4000, 
                                     bg=BACKGROUND_COLOUR,
                                     highlightthickness=0,
@@ -175,7 +175,7 @@ class NotificationPage(Canvas, BasePage):
         return canvas.create_polygon(points, **kwargs, smooth=True)
     
     def create_date_label(self, canvas, y_offset, date_label_text):
-        x1, y1, x2, y2 = 48, y_offset, 130, y_offset + 30
+        x1, y1, x2, y2 = 60, y_offset, 137, y_offset + 30
         self.draw_rounded_rectangle(canvas, x1, y1, x2, y2, radius=10, fill='#ffffff', outline="")
         date_label = Label(canvas, text=date_label_text, bg='#ffffff', font=("Nunito Bold", 10), fg="#9E9E9E")
         canvas.create_window((x1 + x2) // 2, (y1 + y2) // 2, anchor="center", window=date_label)
@@ -187,19 +187,19 @@ class NotificationPage(Canvas, BasePage):
                           command=lambda: goToPage(NotificationDetailPage.NotificationDetailPage(self.window, notification)))
         canvas.create_window(48, y_offset, anchor="nw", window=card_btn, width=1034, height=121.63)
     
-        header_label = Label(canvas, text=notification['notif_header'], bg=bg_color, font=("Nunito Bold", 16))
+        header_label = Label(canvas, text=notification['notif_header'], bg=bg_color, fg="#404040", font=("Nunito Bold", 14))
         canvas.create_window(75.51806640625, y_offset + 12.074, anchor="nw", window=header_label)
     
-        sub_header_label = Label(canvas, text=notification['notif_subheader'], bg=bg_color, font=("Nunito Regular", 10), fg="#9E9E9E")
-        canvas.create_window(75.51806640625, y_offset + 42.074, anchor="nw", window=sub_header_label)
+        sub_header_label = Label(canvas, text=notification['notif_subheader'], bg=bg_color, font=("Nunito Regular", 8), fg="#9E9E9E")
+        canvas.create_window(75.51806640625, y_offset + 43.074, anchor="nw", window=sub_header_label)
     
-        content_label = Label(canvas, text=notification['notif_content'], bg=bg_color, font=("Nunito Regular", 12))
+        content_label = Label(canvas, text=notification['notif_content'], bg=bg_color, fg="#404040", font=("Nunito Regular", 10))
         canvas.create_window(75.51806640625, y_offset + 72.074, anchor="nw", window=content_label)
     
     def update_cards(self):
         self.canvas_scroll.delete("all")
-        card_bg = PhotoImage(file=relative_to_assets("control/NotificationFrame/image_2.png"))
-        card_read_bg = PhotoImage(file=relative_to_assets("control/NotificationFrame/image_3.png"))
+        card_bg = PhotoImage(file=relative_to_assets("control/NotificationFrame/unread.png"))
+        card_read_bg = PhotoImage(file=relative_to_assets("control/NotificationFrame/read.png"))
     
         previous_date_label = None
         y_offset = 0
