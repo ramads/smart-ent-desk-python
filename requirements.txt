@@ -5,7 +5,9 @@ cachetools==5.3.3
 certifi==2024.7.4
 charset-normalizer==3.3.2
 contourpy==1.2.1
+customtkinter==5.2.2
 cycler==0.12.1
+darkdetect==0.8.0
 efficientnet==1.1.1
 flatbuffers==24.3.25
 fonttools==4.53.1
@@ -30,6 +32,7 @@ macholib==1.16.3
 Markdown==3.6
 MarkupSafe==2.1.5
 matplotlib==3.9.1
+matplotlib-inline==0.1.6
 ml-dtypes==0.4.0
 mysql-connector-python==9.0.0
 networkx==3.3
@@ -59,13 +62,11 @@ tensorflow==2.12.0
 tensorflow-estimator==2.12.0
 tensorflow-io-gcs-filesystem==0.37.1
 termcolor==2.4.0
+threadpoolctl==3.4.0
 tifffile==2024.7.2
 tk==0.1.0
+traitlets==5.14.3
 typing_extensions==4.12.2
 urllib3==2.2.2
 Werkzeug==3.0.3
 wrapt==1.14.1
-mysql-connector-python-rf==2.2.2
-matplotlib==3.7.2
-matplotlib-inline==0.1.6
-threadpoolctl==3.4.0
