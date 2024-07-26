@@ -3,13 +3,17 @@ from colors import *
 from helpers import *
 # from notificationBar import notificationBar
 
-from pages import HomePage
+from pages import HomePage, NotificationPage
+from database.models.Notification import NotificationModel
 
 
 class NotificationDetailPage(Canvas, BasePage):
 
-    def __init__(self, window):
+    def __init__(self, window, clicked_notification):
         self.window = window
+        self.clicked_notification = clicked_notification
+        self.notification = NotificationModel()
+        self.notification.mark_as_read(clicked_notification["id_notifikasi"])
         super().__init__(
             window,
             bg=BACKGROUND_COLOUR,
@@ -46,7 +50,7 @@ class NotificationDetailPage(Canvas, BasePage):
             267.447265625,
             anchor="nw",
             width=1000,
-            text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Iaculis tempus tellus adipiscing eget non arcu egestas elementum faucibus. Senectus cras nunc et, arcu ultricies tristique. Mi purus ut eget euismod orci, odio eu, non. Massa sapien magna volutpat lorem. Aliquet amet elit sed ac. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Iaculis tempus tellus adipiscing eget non arcu egestas elementum faucibus. Senectus cras nunc et, arcu ultricies tristique. Mi purus ut eget euismod orci, odio eu, non. Massa sapien magna volutpat lorem. Aliquet amet elit sed ac. \n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Iaculis tempus tellus adipiscing eget non arcu egestas elementum faucibus. Senectus cras nunc et, arcu ultricies tristique. Mi purus ut eget euismod orci, odio eu, non. Massa sapien magna volutpat lorem. Aliquet amet elit sed ac. ",
+            text=self.clicked_notification["notif_content"],
             fill="#404040",
             font=("Nunito SemiBold", 16 * -1)
         )
@@ -55,7 +59,7 @@ class NotificationDetailPage(Canvas, BasePage):
             75.9208984375,
             236.447265625,
             anchor="nw",
-            text="Subhead",
+            text=self.clicked_notification["notif_subheader"],
             fill="#9E9E9E",
             font=("Nunito Regular", 16 * -1)
         )
@@ -64,7 +68,7 @@ class NotificationDetailPage(Canvas, BasePage):
             924.0,
             192.447265625,
             anchor="nw",
-            text="Selasa, 16 April 2024",
+            text=self.clicked_notification["notif_datetime"].strftime("%d %B %Y %H:%M"),
             fill="#9E9E9E",
             font=("Nunito Regular", 14 * -1)
         )
@@ -73,16 +77,16 @@ class NotificationDetailPage(Canvas, BasePage):
             75.9208984375,
             192.447265625,
             anchor="nw",
-            text="Weekly Maintenance",
+            text=self.clicked_notification["notif_header"],
             fill="#404040",
             font=("Nunito Bold", 24 * -1)
         )
 
-        inactive_button_1 = relative_to_assets("control/NotificationDetailFrame/edit_button.png")
-        active_button_1 = relative_to_assets("control/NotificationDetailFrame/active_continue.png")
+        inactive_button_1 = relative_to_assets("control/NotificationDetailFrame/button_1.png")
+        active_button_1 = relative_to_assets("control/NotificationDetailFrame/active_button_1.png")
 
         create_hover_button(self.window, 471.0, 662.0, 192.0, 54.0,
                             BACKGROUND_COLOUR, inactive_button_1, active_button_1,
-                            lambda: goToPage(HomePage.HomePage(self.window)))
+                            lambda: goToPage(NotificationPage.NotificationPage(self.window)))
 
         self.window.mainloop()

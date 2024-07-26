@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 12, 2024 at 10:21 AM
+-- Generation Time: Jul 26, 2024 at 08:13 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -66,13 +66,42 @@ CREATE TABLE `Diagnosa` (
   `id_rumah_sakit` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `Diagnosa`
+-- Table structure for table `Notifikasi`
 --
 
-INSERT INTO `Diagnosa` (`id_diagnosa`, `diagnosa`, `tanggal_diagnosa`, `hasil_diagnosa`, `tingkat_keyakinan`, `gambar_diagnosa`, `prediksi_benar`, `alasan_koreksi`, `jenis_diagnosa`, `id_pasien`, `id_rumah_sakit`) VALUES
-(21, 'OMed Efusi', '2024-07-12', 'Otitis Media dengan efusi, yaitu adanya cairan di telinga tengah tanpa adanya infeksi akut.', 23, 'temp_image/1_1_20240712_152757.jpg', 1, 'None', 'telinga', 1, 1),
-(22, 'Aerotitis Barotrauma', '2024-07-12', 'Kondisi yang disebabkan oleh perbedaan tekanan antara telinga tengah dan lingkungan sekitarnya, sering terjadi saat naik atau turun pesawat.', 50, 'temp_image/2_1_20240712_152921.jpg', 1, 'None', 'telinga', 2, 1);
+CREATE TABLE `Notifikasi` (
+  `id_notifikasi` int(11) NOT NULL,
+  `notif_header` varchar(255) DEFAULT NULL,
+  `notif_subheader` varchar(255) DEFAULT NULL,
+  `notif_content` text DEFAULT NULL,
+  `already_read` tinyint(1) DEFAULT NULL,
+  `notif_datetime` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `Notifikasi`
+--
+
+INSERT INTO `Notifikasi` (`id_notifikasi`, `notif_header`, `notif_subheader`, `notif_content`, `already_read`, `notif_datetime`) VALUES
+(11, 'Peringatan Diagnosa', 'Tingkat Kritis', 'Pasien menunjukkan gejala infeksi tenggorokan yang parah. Segera lakukan pemeriksaan lebih lanjut.', 0, '2024-07-26 08:45:00'),
+(12, 'Update Kasus', 'Pemeriksaan Lengkap', 'Kasus pasien John Doe telah diperbarui dengan hasil laboratorium terbaru. Mohon periksa laporan.', 1, '2024-07-26 09:30:00'),
+(13, 'Reminder', 'Jadwal Konsultasi', 'Jangan lupa jadwal konsultasi dengan pasien Jane Smith pada pukul 11:00 hari ini.', 1, '2024-07-26 10:00:00'),
+(14, 'Notifikasi Sistem', 'Pembaruan Versi', 'Aplikasi telah diperbarui ke versi terbaru. Mohon restart aplikasi untuk menerapkan perubahan.', 1, '2024-07-26 11:00:00'),
+(15, 'Peringatan Diagnosa', 'Gejala Baru', 'Pasien baru dengan gejala sinusitis. Segera lakukan pemeriksaan.', 0, '2024-07-25 14:15:00'),
+(16, 'Update Kasus', 'Histori Medis', 'Pasien Mary Johnson telah mengunggah histori medis terbarunya.', 1, '2024-07-24 16:45:00'),
+(17, 'Reminder', 'Jadwal Operasi', 'Jadwal operasi pasien Michael Brown pada pukul 15:00 besok.', 0, '2024-07-23 17:00:00'),
+(18, 'Notifikasi Sistem', 'Maintenance Server', 'Server akan menjalani pemeliharaan rutin pada 2024-07-22 mulai pukul 02:00 hingga 04:00.', 1, '2024-07-21 12:30:00'),
+(19, 'Peringatan Diagnosa', 'Alergi', 'Pasien dengan alergi berat terhadap obat-obatan tertentu. Periksa detail lebih lanjut.', 0, '2024-07-20 08:00:00'),
+(20, 'Update Kasus', 'Hasil Pemeriksaan', 'Hasil pemeriksaan pasien David Wilson telah tersedia. Mohon periksa laporan.', 1, '2024-07-19 09:45:00'),
+(21, 'Reminder', 'Vaksinasi', 'Pasien Sarah Davis dijadwalkan untuk vaksinasi pada 2024-07-18 pukul 14:00.', 0, '2024-07-17 10:15:00'),
+(22, 'Notifikasi Sistem', 'Fitur Baru', 'Fitur baru telah ditambahkan ke aplikasi. Baca dokumentasi untuk informasi lebih lanjut.', 1, '2024-07-16 13:00:00'),
+(23, 'Peringatan Diagnosa', 'Kondisi Darurat', 'Pasien mengalami kesulitan bernapas. Segera lakukan tindakan darurat.', 0, '2024-07-15 07:30:00'),
+(24, 'Update Kasus', 'Rekomendasi Dokter', 'Dokter merekomendasikan pemeriksaan lanjutan untuk pasien Emma Thomas.', 1, '2024-07-14 10:00:00'),
+(25, 'Reminder', 'Konsultasi Online', 'Konsultasi online dengan pasien James Lee dijadwalkan pada 2024-07-13 pukul 13:30.', 0, '2024-07-12 11:00:00'),
+(26, 'Notifikasi Sistem', 'Keamanan Data', 'Pembaruan keamanan telah diterapkan. Mohon restart aplikasi.', 1, '2024-07-11 12:45:00');
 
 -- --------------------------------------------------------
 
@@ -144,6 +173,12 @@ ALTER TABLE `Diagnosa`
   ADD KEY `Diagnosa_Rumah_Sakit_id_rumah_sakit_fk` (`id_rumah_sakit`);
 
 --
+-- Indexes for table `Notifikasi`
+--
+ALTER TABLE `Notifikasi`
+  ADD PRIMARY KEY (`id_notifikasi`);
+
+--
 -- Indexes for table `Pasien`
 --
 ALTER TABLE `Pasien`
@@ -169,7 +204,13 @@ ALTER TABLE `Asuransi`
 -- AUTO_INCREMENT for table `Diagnosa`
 --
 ALTER TABLE `Diagnosa`
-  MODIFY `id_diagnosa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id_diagnosa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+
+--
+-- AUTO_INCREMENT for table `Notifikasi`
+--
+ALTER TABLE `Notifikasi`
+  MODIFY `id_notifikasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `Pasien`
