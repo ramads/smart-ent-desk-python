@@ -67,5 +67,14 @@
     "week" : "week",
     "month" : "month",
     "year" : "year",
-    "hardware_software" : "Hardware & Software"
+    "hardware_software" : "Hardware & Software",
+    "about_us": "About Us",
+    "hospital_partner": "    Hospital Partner",
+    "award": "       Award",
+    "experts": "     Experts",
+    "contact" : "Contact",
+    "office_address" : "Office Address",
+    "email" : "Email",
+    "telephone" : "Telephone",
+    "website" : "Website"
 }

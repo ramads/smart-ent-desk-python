@@ -4,12 +4,12 @@ from colors import *
 from helpers import *
 # from notificationBar import notificationBar
 
-
 from pages import HomePage
 from pages import MedicalRecordDetailPage
 from pages import MedicalRecordEditPage
 
-from database.models.Diagnosis import DiagnosisModel
+from database.models.Hospital import HospitalModel
+from config import DUMMY_HOSPITAL
 
 import json
 
@@ -20,6 +20,7 @@ class AboutUsPage(Canvas, BasePage):
         self.window = window
         self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
+        self.data_hospital = HospitalModel().get_hospital(DUMMY_HOSPITAL)
 
         super().__init__(
             window,
@@ -145,7 +146,7 @@ class AboutUsPage(Canvas, BasePage):
             248.0,
             anchor="nw",
             width=520,
-            text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Iaculis tempus tellus adipiscing eget non arcu egestas elementum faucibus. Senectus cras nunc et, arcu ultricies tristique. Mi purus ut eget euismod orci, odio eu, non. Massa sapien magna volutpat lorem. Aliquet amet elit sed ac. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Iaculis tempus tellus adipiscing eget non arcu egestas elementum faucibus. Senectus cras nunc et, arcu ultricies tristique. Mi purus ut eget euismod orci, odio eu, non. Massa sapien magna volutpat lorem. Aliquet amet elit sed ac. \n\nSenectus cras nunc et, arcu ultricies tristique. Mi purus ut eget euismod orci, odio eu, non. Massa sapien magna volutpat lorem. Aliquet amet elit sed ac. Aliquet amet elit sed ac. ",
+            text=self.data_hospital['tentang_rumah_sakit'],
             fill="#404040",
             font=("Nunito regular", 14 * -1)
         )
@@ -154,7 +155,7 @@ class AboutUsPage(Canvas, BasePage):
             78.0,
             186.0,
             anchor="nw",
-            text="Tentang Kami",
+            text=self.data_localization["about_us"].title(),
             fill="#404040",
             font=("Nunito Bold", 28 * -1)
         )
@@ -163,7 +164,7 @@ class AboutUsPage(Canvas, BasePage):
             150.0,
             595.5,
             anchor="nw",
-            text="25",
+            text=self.data_hospital['jumlah_partner'],
             fill="#85C13D",
             font=("Nunito Bold", 92 * -1)
         )
@@ -172,16 +173,16 @@ class AboutUsPage(Canvas, BasePage):
             110.0,
             572.0,
             anchor="nw",
-            text="Partner Rumah Sakit",
+            text=self.data_localization["hospital_partner"].title(),
             fill="#404040",
             font=("Nunito Bold", 19 * -1)
         )
 
         self.canvas_scroll.create_text(
-            490.0,
+            550.0,
             698.0,
             anchor="nw",
-            text="Piala Gubernur",
+            text=self.data_hospital['jumlah_award'],
             fill="#404040",
             font=("Nunito Bold", 19 * -1)
         )
@@ -195,19 +196,19 @@ class AboutUsPage(Canvas, BasePage):
         )
 
         self.canvas_scroll.create_text(
-            530.0,
+            500.0,
             572.0,
             anchor="nw",
-            text="Award",
+            text=self.data_localization["award"].title(),
             fill="#404040",
             font=("Nunito Bold", 19 * -1)
         )
 
         self.canvas_scroll.create_text(
-            880.0,
+            830.0,
             595.5,
             anchor="nw",
-            text="5",
+            text=self.data_hospital['jumlah_tenang_ahli'],
             fill="#85C13D",
             font=("Nunito Bold", 92 * -1)
         )
@@ -216,7 +217,7 @@ class AboutUsPage(Canvas, BasePage):
             850.0,
             572.0,
             anchor="nw",
-            text="Tenaga Ahli",
+            text=self.data_localization["experts"].title(),
             fill="#404040",
             font=("Nunito Bold", 19 * -1)
         )
@@ -249,7 +250,7 @@ class AboutUsPage(Canvas, BasePage):
             694.0,
             985.0,
             anchor="nw",
-            text="smartent@gmail.com",
+            text=self.data_hospital['email_rumah_sakit'],
             fill="#404040",
             font=("Nunito regular", 14 * -1)
         )
@@ -267,7 +268,7 @@ class AboutUsPage(Canvas, BasePage):
             895.0,
             anchor="nw",
             width=350,
-            text="Jl. Majapahit No.62, Gomong, Kec. Selaparang, Kota Mataram, Nusa Tenggara Bar. 83115",
+            text=self.data_hospital['alamat_rumah_sakit'],
             fill="#404040",
             font=("Nunito regular", 14 * -1)
         )
@@ -284,7 +285,7 @@ class AboutUsPage(Canvas, BasePage):
             637.0,
             804.5,
             anchor="nw",
-            text="Kontak",
+            text=self.data_localization["contact"].title(),
             fill="#404040",
             font=("Nunito Bold", 28 * -1)
         )
@@ -293,7 +294,7 @@ class AboutUsPage(Canvas, BasePage):
             694.0,
             1127.0,
             anchor="nw",
-            text="smartent.id",
+            text=self.data_hospital['situs_rumah_sakit'],
             fill="#404040",
             font=("Nunito regular", 14 * -1)
         )
@@ -302,7 +303,7 @@ class AboutUsPage(Canvas, BasePage):
             694.0,
             1095.5,
             anchor="nw",
-            text="Situs Website",
+            text=self.data_localization["website"].title(),
             fill="#404040",
             font=("Nunito Bold", 19 * -1)
         )
@@ -311,7 +312,7 @@ class AboutUsPage(Canvas, BasePage):
             694.0,
             1056.0,
             anchor="nw",
-            text="(021) 000012",
+            text=self.data_hospital['phone_number_rumah_sakit'],
             fill="#404040",
             font=("Nunito regular", 14 * -1)
         )
@@ -320,7 +321,7 @@ class AboutUsPage(Canvas, BasePage):
             694.0,
             1024.5,
             anchor="nw",
-            text="Telpon",
+            text=self.data_localization["telephone"].title(),
             fill="#404040",
             font=("Nunito Bold", 19 * -1)
         )
@@ -329,7 +330,7 @@ class AboutUsPage(Canvas, BasePage):
             694.0,
             953.5,
             anchor="nw",
-            text="Email",
+            text=self.data_localization["email"].title(),
             fill="#404040",
             font=("Nunito Bold", 19 * -1)
         )
@@ -338,7 +339,7 @@ class AboutUsPage(Canvas, BasePage):
             694.0,
             863.5,
             anchor="nw",
-            text="Alamat Kantor",
+            text=self.data_localization["office_address"].title(),
             fill="#404040",
             font=("Nunito Bold", 19 * -1)
         )

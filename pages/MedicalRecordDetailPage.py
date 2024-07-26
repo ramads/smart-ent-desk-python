@@ -56,8 +56,8 @@ class MedicalRecordDetailPage(Canvas, BasePage):
         inactive_button_3 = relative_to_assets("control/MedicalRecordDetailFrame/button_3.png")
         active_button_3 = relative_to_assets("control/MedicalRecordDetailFrame/active_button_3.png")
 
-        inactive_button_4 = relative_to_assets("control/MedicalRecordDetailFrame/button_4.png")
-        active_button_4 = relative_to_assets("control/MedicalRecordDetailFrame/active_button_4.png")
+        inactive_button_4 = relative_to_assets(f"control/MedicalRecordDetailFrame/{self.lang_code}/button_4.png")
+        active_button_4 = relative_to_assets(f"control/MedicalRecordDetailFrame/{self.lang_code}/active_button_4.png")
 
         create_hover_button(self.window, 1008.0, 563.0, 52.0, 52.0,
                             "#000000", inactive_button_3, active_button_3,

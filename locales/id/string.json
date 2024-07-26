@@ -67,5 +67,14 @@
     "week" : "minggu",
     "month" : "bulan",
     "year" : "tahun",
-    "hardware_software" : "Perangkat Keras & Lunak"
+    "hardware_software" : "Perangkat Keras & Lunak",
+    "about_us" : "Tentang Kami",
+    "hospital_partner" : "Partner Rumah Sakit",
+    "award" : "Penghargaan",
+    "experts" : "Tenaga Ahli",
+    "contact" : "Kontak",
+    "office_address" : "Alamat Kantor",
+    "email" : "Email",
+    "telephone" : "Telepon",
+    "website" : "Situs Web"
 }

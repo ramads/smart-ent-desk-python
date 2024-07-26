@@ -16,7 +16,7 @@ from database.models.Insurance import InsuranceModel
 from database.models.Hospital import HospitalModel
 
 import json
-
+from config import DUMMY_HOSPITAL
 
 
 class PatientQueuePage(Canvas, BasePage):
@@ -36,6 +36,7 @@ class PatientQueuePage(Canvas, BasePage):
         self.window = window
         self.current_patient = 0
         self.initialize_models()
+        self.hospital_data = self.hospital.get_hospital(DUMMY_HOSPITAL)
         self.get_patient_data()
         self.get_patient_insurance()
         self.get_disease_title()
@@ -307,7 +308,7 @@ class PatientQueuePage(Canvas, BasePage):
             130.0,
             117.5,
             anchor="nw",
-            text="RS. Universitas Mataram",
+            text=self.hospital_data['nama_rumah_sakit'],
             fill="#FFFFFF",
             font=("Nunito Black", 14 * -1)
         )

@@ -10,7 +10,9 @@ from pages import MedicalRecordDetailPage
 from pages import MedicalRecordEditPage
 
 from database.models.Diagnosis import DiagnosisModel
+from database.models.Hospital import HospitalModel
 
+from config import DUMMY_HOSPITAL
 import json
 
 
@@ -21,6 +23,7 @@ class MedicalRecordPage(Canvas, BasePage):
         self.dignosisModel = DiagnosisModel()
         self.temp_data = self.dignosisModel.get_patient_joint_diagnoses()
         self.history_data = self.temp_data
+        self.hospital_data = HospitalModel().get_hospital(DUMMY_HOSPITAL)
         self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
 
@@ -141,7 +144,7 @@ class MedicalRecordPage(Canvas, BasePage):
             130.0,
             117.5,
             anchor="nw",
-            text="RS. Universitas Mataram",
+            text=self.hospital_data['nama_rumah_sakit'],
             fill="#FFFFFF",
             font=("Nunito Black", 14 * -1)
         )

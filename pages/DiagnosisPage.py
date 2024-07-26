@@ -6,6 +6,8 @@ from helpers import *
 from pages.DEarPage import DEarPage
 from pages import PatientQueuePage
 
+from database.models.Hospital import HospitalModel
+from config import DUMMY_HOSPITAL
 import json
 
 class DiagnosisPage(Canvas, BasePage):
@@ -13,6 +15,7 @@ class DiagnosisPage(Canvas, BasePage):
         self.window = window
         self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
+        self.hospital_data = HospitalModel().get_hospital(DUMMY_HOSPITAL)
         super().__init__(
             window,
             bg=BACKGROUND_COLOUR,
@@ -97,7 +100,7 @@ class DiagnosisPage(Canvas, BasePage):
             130.0,
             117.5,
             anchor="nw",
-            text="RS. Universitas Mataram",
+            text=self.hospital_data['nama_rumah_sakit'],
             fill="#FFFFFF",
             font=("Nunito Black", 14 * -1)
         )
