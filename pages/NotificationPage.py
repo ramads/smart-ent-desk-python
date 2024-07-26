@@ -8,6 +8,8 @@ from pages import HomePage, NotificationDetailPage
 
 from database.models.Notification import NotificationModel
 
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 class NotificationPage(Canvas, BasePage):
 
@@ -39,23 +41,6 @@ class NotificationPage(Canvas, BasePage):
             image=image_image_1
         )
 
-
-        image_image_4 = PhotoImage(
-            file=relative_to_assets("control/NotificationFrame/image_4.png"))
-        image_4 = self.create_image(
-            93.3388671875,
-            284.869140625,
-            image=image_image_4
-        )
-
-        image_image_5 = PhotoImage(
-            file=relative_to_assets("control/NotificationFrame/image_5.png"))
-        image_5 = self.create_image(
-            986.0,
-            283.0,
-            image=image_image_5
-        )
-
         image_image_6 = PhotoImage(
             file=relative_to_assets("control/NotificationFrame/image_6.png"))
         image_6 = self.create_image(
@@ -81,19 +66,10 @@ class NotificationPage(Canvas, BasePage):
             font=("Nunito Bold", 25 * -1)
         )
 
-        self.create_text(
-            62.35595703125,
-            274.894775390625,
-            anchor="nw",
-            text="Hari ini",
-            fill="#404040",
-            font=("Nunito Regular", 16 * -1)
-        )
-
         self.my_frame = customtkinter.CTkScrollableFrame(self.window,
                                                          orientation="vertical",
                                                          width=1034,
-                                                         height=320,
+                                                         height=370,
                                                          fg_color=BACKGROUND_COLOUR,
                                                          scrollbar_button_color="#bfbfbf",
                                                          scrollbar_button_hover_color="#e0e0e0",
@@ -102,10 +78,10 @@ class NotificationPage(Canvas, BasePage):
                                                          label_fg_color=BACKGROUND_COLOUR,
                                                          border_width=0)
 
-        self.my_frame.place(x=48, y=315)
+        self.my_frame.place(x=48, y=270)
         self.canvas_scroll = Canvas(self.my_frame, 
                                     width=1034, 
-                                    height=2000, 
+                                    height=4000, 
                                     bg=BACKGROUND_COLOUR,
                                     highlightthickness=0,
                                     relief="ridge"
@@ -157,33 +133,90 @@ class NotificationPage(Canvas, BasePage):
             ]
 
         self.update_cards()
-
-
+    
+    def get_date_label(self, notif_datetime):
+        today = datetime.now()
+        delta = today - notif_datetime
+    
+        if delta.days == 0:
+            return "Today"
+        elif delta.days == 1:
+            return "1 day ago"
+        elif delta.days < 30:
+            return f"{delta.days} days ago"
+        elif delta.days < 365:
+            months = delta.days // 30
+            return f"{months} month{'s' if months > 1 else ''} ago"
+        else:
+            years = delta.days // 365
+            return f"{years} year{'s' if years > 1 else ''} ago"
+    
+    def draw_rounded_rectangle(self, canvas, x1, y1, x2, y2, radius=25, **kwargs):
+        points = [x1+radius, y1,
+                  x1+radius, y1,
+                  x2-radius, y1,
+                  x2-radius, y1,
+                  x2, y1,
+                  x2, y1+radius,
+                  x2, y1+radius,
+                  x2, y2-radius,
+                  x2, y2-radius,
+                  x2, y2,
+                  x2-radius, y2,
+                  x2-radius, y2,
+                  x1+radius, y2,
+                  x1+radius, y2,
+                  x1, y2,
+                  x1, y2-radius,
+                  x1, y2-radius,
+                  x1, y1+radius,
+                  x1, y1+radius,
+                  x1, y1]
+        return canvas.create_polygon(points, **kwargs, smooth=True)
+    
+    def create_date_label(self, canvas, y_offset, date_label_text):
+        x1, y1, x2, y2 = 48, y_offset, 130, y_offset + 30
+        self.draw_rounded_rectangle(canvas, x1, y1, x2, y2, radius=10, fill='#ffffff', outline="")
+        date_label = Label(canvas, text=date_label_text, bg='#ffffff', font=("Nunito Bold", 10), fg="#9E9E9E")
+        canvas.create_window((x1 + x2) // 2, (y1 + y2) // 2, anchor="center", window=date_label)
+        return y_offset + 40
+    
+    def create_notification_card(self, canvas, y_offset, notification, card_bg, card_read_bg, bg_color, goToPage):
+        card_btn = Button(canvas, image=card_read_bg if notification['already_read'] else card_bg, 
+                          activebackground=BACKGROUND_COLOUR, borderwidth=0, highlightthickness=0, background=BACKGROUND_COLOUR,
+                          command=lambda: goToPage(NotificationDetailPage.NotificationDetailPage(self.window, notification)))
+        canvas.create_window(48, y_offset, anchor="nw", window=card_btn, width=1034, height=121.63)
+    
+        header_label = Label(canvas, text=notification['notif_header'], bg=bg_color, font=("Nunito Bold", 16))
+        canvas.create_window(75.51806640625, y_offset + 12.074, anchor="nw", window=header_label)
+    
+        sub_header_label = Label(canvas, text=notification['notif_subheader'], bg=bg_color, font=("Nunito Regular", 10), fg="#9E9E9E")
+        canvas.create_window(75.51806640625, y_offset + 42.074, anchor="nw", window=sub_header_label)
+    
+        content_label = Label(canvas, text=notification['notif_content'], bg=bg_color, font=("Nunito Regular", 12))
+        canvas.create_window(75.51806640625, y_offset + 72.074, anchor="nw", window=content_label)
+    
     def update_cards(self):
         self.canvas_scroll.delete("all")
         card_bg = PhotoImage(file=relative_to_assets("control/NotificationFrame/image_2.png"))
         card_read_bg = PhotoImage(file=relative_to_assets("control/NotificationFrame/image_3.png"))
-
-
-
-        for i in range(len(self.data_notifications)):
-            y_offset = i * 130
-            bg_color = "#BAED7C" if self.data_notifications[i]['already_read'] else "#ffffff"
-            card_btn = Button(self.canvas_scroll, image=card_read_bg if self.data_notifications[i]['already_read'] else card_bg, 
-                              activebackground=BACKGROUND_COLOUR, borderwidth=0, highlightthickness=0, background=BACKGROUND_COLOUR,
-                        command=lambda i=i: goToPage(NotificationDetailPage.NotificationDetailPage(self.window, self.data_notifications[i])))
-            btn_window = self.canvas_scroll.create_window(48, 307.37 + y_offset, anchor="nw", window=card_btn,
-                                            width=1034, height=121.63)
-
-            header_label = Label(self.canvas_scroll, text=self.data_notifications[i]['notif_header'], bg=bg_color, font=("Nunito Bold", 16))
-            self.canvas_scroll.create_window(75.51806640625, 319.444091796875 + y_offset, anchor="nw", window=header_label)
-
-            sub_header_label = Label(self.canvas_scroll, text=self.data_notifications[i]['notif_subheader'], bg=bg_color, font=("Nunito Regular", 10), fg="#9E9E9E")
-            self.canvas_scroll.create_window(75.51806640625, 349.444091796875 + y_offset, anchor="nw", window=sub_header_label)
-
-            content_label = Label(self.canvas_scroll, text=self.data_notifications[i]['notif_content'], bg=bg_color, font=("Nunito Regular", 12))
-            self.canvas_scroll.create_window(75.51806640625, 379.444091796875 + y_offset, anchor="nw", window=content_label)
-
+    
+        previous_date_label = None
+        y_offset = 0
+    
+        for i, notification in enumerate(self.data_notifications):
+            notif_datetime = notification['notif_datetime']
+            bg_color = "#BAED7C" if notification['already_read'] else "#ffffff"
+    
+            current_date_label = self.get_date_label(notif_datetime)
+    
+            if current_date_label != previous_date_label:
+                y_offset = self.create_date_label(self.canvas_scroll, y_offset, current_date_label)
+                previous_date_label = current_date_label
+    
+            self.create_notification_card(self.canvas_scroll, y_offset, notification, card_bg, card_read_bg, bg_color, goToPage)
+            y_offset += 140
+    
         self.canvas_scroll.configure(scrollregion=self.canvas_scroll.bbox("all"))
         self.window.mainloop()
 
