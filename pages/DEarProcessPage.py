@@ -1,14 +1,17 @@
 import os
 import threading
 import cv2
+import time
 
 from tkinter import *
+
+import config
 from colors import *
 from helpers import *
 from PIL import Image, ImageTk
 from pages import DEarPage, PreviewImagePage
 from libs.serial_com import SerialCom
-from notificationBar import notificationBar
+# from notificationBar import notificationBar
 
 from database.models.Patient import PatientModel
 from database.models.Insurance import InsuranceModel
@@ -22,6 +25,7 @@ class DEarProcessPage(Canvas, BasePage):
     after_cam_id = 0
     image_dir = "./" + DIR_TEMP_IMAGE
     text_command = ""
+    countdown_seconds = 0
 
     def __init__(self, window, temp_data=None):
         super().__init__(
@@ -44,18 +48,35 @@ class DEarProcessPage(Canvas, BasePage):
         self.window = window
         self.vidCap = None
         self.camera_thread = None
+        self.camera_open_thread = None
+        self.cam_index = config.CAMERA_PORT
+        # self.cam_index_list = []
 
-        cam_index = 0
-        while (cam_index < 20):
-            self.vidCap = cv2.VideoCapture(cam_index)
-            self.ret, self.frame = self.vidCap.read()
-            if not self.ret:
-                print(f"Failed to grab frame in index {cam_index}")
-                cam_index = cam_index + 1
-            else:
-                break
-
+        # self.find_camera()
+        self.open_camera_in_thread()
         self.startCameraThread()
+
+    def open_camera_in_thread(self):
+        camera_open_thread = threading.Thread(target=self.try_open_camera)
+        camera_open_thread.start()
+
+
+        camera_open_thread.join()
+
+    def try_open_camera(self):
+        vidCap = cv2.VideoCapture(self.cam_index)
+        if vidCap.isOpened():
+            ret, frame = vidCap.read()
+            if ret:
+                if self.vidCap is None:
+                    self.vidCap = vidCap
+                    self.frame = frame
+                    print("----------->masuk")
+                else:
+                    vidCap.release()
+                    print("masuk ga----------")
+        else:
+            print(f"Failed to open camera at index {self.cam_index}")
 
     def get_patient_data(self):
         patient_data = self.patient.get_patient(self.temp_data['id_patient'])
@@ -68,6 +89,17 @@ class DEarProcessPage(Canvas, BasePage):
             data = json.load(file)
         return data
 
+    def countdown(self, seconds):
+        self.countdown_seconds = seconds
+        self.window.after(1000, self.updateCountdown)
+
+    def updateCountdown(self):
+        if self.countdown_seconds > 0:
+            self.countdown_seconds -= 1
+            self.window.after(1000, self.updateCountdown)
+        else:
+            self.onCapture("test_image")
+
     def startCameraThread(self):
         self.camera_thread = threading.Thread(target=self.updateCameraFrame)
         self.camera_thread.start()
@@ -77,9 +109,22 @@ class DEarProcessPage(Canvas, BasePage):
 
         if self.ret:
             self.frame = cv2.resize(self.frame, (604, 538))
-            opencv_image = cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGBA)
+
+            zoomed_frame = crop_image(self.frame, 1.5)
+
+            opencv_image = cv2.cvtColor(zoomed_frame, cv2.COLOR_BGR2RGBA)
             self.captured_image = ImageTk.PhotoImage(image=Image.fromarray(opencv_image))
             self.create_image(354.0, 339.0, image=self.captured_image)
+
+        if self.countdown_seconds > 0:
+            self.create_text(
+                590.0,
+                525.0,
+                anchor='nw',
+                text=str(self.countdown_seconds),
+                fill="#FFFFFF",
+                font=("Nunito Bold", 60 * -1)
+            )
 
         self.after_cam_id = self.after(20, self.updateCameraFrame)
 
@@ -131,7 +176,7 @@ class DEarProcessPage(Canvas, BasePage):
     def drawPage(self):
         self.place(x=0, y=0)
 
-        wifi_clock_app = notificationBar(self.window)
+        # wifi_clock_app = notificationBar(self.window)
 
         image_image_1 = PhotoImage(
             file=relative_to_assets("control/DEarProcessFrame/image_1.png"))
@@ -147,13 +192,20 @@ class DEarProcessPage(Canvas, BasePage):
         inactive_button_2 = relative_to_assets(f"control/DEarProcessFrame/{self.lang_code}/button_2.png")
         active_button_2 = relative_to_assets(f"control/DEarProcessFrame/{self.lang_code}/active_button_2.png")
 
-        create_hover_button(self.window, 158.0, 632.0, 192.0, 54.0,
+        inactive_button_3 = relative_to_assets(f"control/DEarProcessFrame/{self.lang_code}/pewaktu.png")
+        active_button_3 = relative_to_assets(f"control/DEarProcessFrame/{self.lang_code}/active_pewaktu.png")
+
+        create_hover_button(self.window, 50.0, 632.0, 192.0, 54.0,
                             "#FFFFFF", inactive_button_1, active_button_1, 
                             lambda: self.backToPrevPage())
         
-        create_hover_button(self.window, 358.0, 632.0, 192.0, 54.0,
+        create_hover_button(self.window, 250.0, 632.0, 192.0, 54.0,
                             "#FFFFFF", inactive_button_2, active_button_2,  
                             lambda: self.onCapture("test_image"))
+
+        create_hover_button(self.window, 450.0, 632.0, 192.0, 54.0,
+                            "#FFFFFF", inactive_button_3, active_button_3,
+                            lambda: self.countdown(5))
         
         image_image_3 = PhotoImage(
             file=relative_to_assets("control/DEarProcessFrame/image_3.png"))
@@ -482,15 +534,6 @@ class DEarProcessPage(Canvas, BasePage):
             text=self.insurance_data[0]['fasilitas_kesehatan'],
             fill="#404040",
             font=("Nunito Bold", 15 * -1)
-        )
-
-        self.create_text(
-            21.0,
-            13.0,
-            anchor="nw",
-            text="9:41",
-            fill="#FFFFFF",
-            font=("SFProText Semibold", 15 * -1)
         )
 
         self.drawDemoSerialCommand()

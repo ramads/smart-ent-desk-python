@@ -3,7 +3,8 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from tkinter import *
 from colors import *
 from helpers import *
-from notificationBar import notificationBar
+
+# from notificationBar import notificationBar
 
 from PIL import ImageTk, Image
 
@@ -25,6 +26,7 @@ class DEarResultPage(Canvas, BasePage):
         self.temp_data = temp_data
         self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
+        # self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
 
         super().__init__(
             window,
@@ -60,7 +62,7 @@ class DEarResultPage(Canvas, BasePage):
     def drawPage(self):
         self.place(x = 0, y = 0)
 
-        wifi_clock_app = notificationBar(self.window)
+        # wifi_clock_app = notificationBar(self.window)
 
         image_image_1 = PhotoImage(
             file=relative_to_assets("control/DEarResultFrame/image_1.png"))
@@ -88,7 +90,7 @@ class DEarResultPage(Canvas, BasePage):
             image=image_image_4
         )
 
-        #pie chart
+        # #pie chart
         # labels = [self.temp_data['result_1'][0], self.temp_data['result_2'][0], self.temp_data['result_3'][0], "Lainnya"]
         sizes = [int(self.temp_data['result_1'][1] * 100), int(self.temp_data['result_2'][1] * 100), int(self.temp_data['result_3'][1] * 100), (100-int((self.temp_data['result_1'][1]+ self.temp_data['result_2'][1]+ self.temp_data['result_3'][1])*100))]
         colors = ['lightcoral',  'gold', 'yellowgreen', 'lightskyblue']
@@ -102,9 +104,13 @@ class DEarResultPage(Canvas, BasePage):
         centre_circle = plt.Circle((0, 0), 0.70, fc='white')
         ax.add_artist(centre_circle)
 
+        # fig.savefig('pie_chart.png')
+
         chart_canvas = FigureCanvasTkAgg(fig, master=self)
         chart_canvas.draw()
         chart_canvas.get_tk_widget().place(x=740.5, y=100.0)
+
+        plt.close('all')
 
         self.create_text(
             726.0,
@@ -370,3 +376,4 @@ class DEarResultPage(Canvas, BasePage):
 
 
         self.window.mainloop()
+        self.destroy()

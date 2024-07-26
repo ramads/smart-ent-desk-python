@@ -2,7 +2,7 @@ from tkinter import *
 from colors import *
 from helpers import *
 from PIL import ImageTk, Image
-from notificationBar import notificationBar
+# from notificationBar import notificationBar
 
 from pages import DEarProcessPage
 from pages import DEarLoadingPage
@@ -37,7 +37,7 @@ class PreviewImagePage(Canvas, BasePage):
     def drawPage(self, data = None):
         self.place(x=0, y=0)
 
-        wifi_clock_app = notificationBar(self.window)
+        # wifi_clock_app = notificationBar(self.window)
 
         image_image_1 = PhotoImage(
             file=relative_to_assets("control/PreviewImageFrame/image_1.png"))
@@ -55,9 +55,10 @@ class PreviewImagePage(Canvas, BasePage):
         )
 
         self.create_text(
-            560.0,
+            1133/2,
             600.0,
             anchor="center",
+            justify="center",
             text=self.data_localization["make_sure"],
             fill="#8A8C8F",
             font=("Nunito Regular", 15 * -1)
@@ -80,9 +81,10 @@ class PreviewImagePage(Canvas, BasePage):
 
 
         self.create_text(
-            565.0,
+            1133/2,
             550.0,
             anchor="center",
+            justify="center",
             text=self.data_localization["taken_success"],
             fill="#404040",
             font=("Nunito Bold", 24 * -1)

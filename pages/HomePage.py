@@ -1,13 +1,14 @@
 from tkinter import *
 from colors import *
 from helpers import *
-from notificationBar import notificationBar
+# from notificationBar import notificationBar
 
 from pages import PatientQueuePage
 from pages import NotificationPage
 from pages import MedicalRecordPage
 from pages import SoftwareHardware
 from pages import Settings
+from pages import EndQueuePage
 
 # from pages import NotificationDetailv2Page
 
@@ -38,7 +39,7 @@ class HomePage(Canvas, BasePage):
     def drawPage(self):
         self.place(x=0, y=0)
 
-        wifi_clock_app = notificationBar(self.window)
+        # wifi_clock_app = notificationBar(self.window)
 
         inactive_button_1 = relative_to_assets(f"control/HomeFrame/{self.lang_code}/button_1.png")
         active_button_1 = relative_to_assets(f"control/HomeFrame/{self.lang_code}/active_button_1.png")
@@ -59,7 +60,7 @@ class HomePage(Canvas, BasePage):
         active_button_6 = relative_to_assets(f"control/HomeFrame/{self.lang_code}/active_button_6.png")
         
         create_hover_button(self.window, 47.0, 216.0, 447.0, 319.0, 
-                            BACKGROUND_COLOUR, inactive_button_1, active_button_1, 
+                            BACKGROUND_COLOUR, inactive_button_1, active_button_1,
                             lambda: goToPage(PatientQueuePage.PatientQueuePage(self.window)))
         
         create_hover_button(self.window, 523.0,216.0, 263.0, 319.0, 
@@ -80,7 +81,7 @@ class HomePage(Canvas, BasePage):
         
         create_hover_button(self.window, 590.0,591.0, 274.0, 99.0,
                             BACKGROUND_COLOUR, inactive_button_6, active_button_6,  
-                            lambda: print("Button Clicked!"))
+                            lambda: goToPage(EndQueuePage.EndQueuePage(self.window)))
 
         image_image_1 = PhotoImage(
             file=relative_to_assets(f"control/HomeFrame/image_1.png"))

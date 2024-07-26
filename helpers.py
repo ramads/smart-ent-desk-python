@@ -2,6 +2,8 @@ from pathlib import Path
 from tkinter import Button, PhotoImage
 from pages.BasePage import BasePage
 import tkinter as tk
+import cv2
+import threading
 
 # default ukuran window
 DEFAULT_APP_VIEW_GEOMETRY = "1512x982"
@@ -52,6 +54,54 @@ def create_hover_button(window, x, y, width, height, bg_color, image_path, hover
     button.place(x=x, y=y, width=width, height=height)
     button.image = button_image
     button.hover_image = hover_button_image
+
+    return button
+
+def crop_image(img, ratio):
+    # Calculate coordinate and zoom ratio
+    height, width, _ = img.shape
+    new_width, new_height = width // ratio, height // ratio  # zoom ratio
+    x_center, y_center = width // 2, height // 2
+    x1, y1 = int(x_center - new_width // 2), int(y_center - new_height // 2)
+    x2, y2 = int(x_center + new_width // 2), int(y_center + new_height // 2)
+
+    # Crop image
+    cropped_frame = img[y1:y2, x1:x2]
+
+    # Resize back to original size for zoom effect
+    zoomed_frame = cv2.resize(cropped_frame, (width, height))
+
+    return zoomed_frame
+
+
+def find_camera():
+    vidCap_list = []
+    cam_index_list = []
+    threads = []
+
+    for cam_index in range(20):
+        t = threading.Thread(target=try_open_camera, args=(cam_index, vidCap_list, cam_index_list))
+        t.start()
+        threads.append(t)
+
+    for t in threads:
+        t.join()
+
+    if not cam_index_list:
+        print("No camera found.")
+        return None
+    else:
+        print("Camera found and opened successfully.")
+        return cam_index_list[0]
+
+
+def try_open_camera(cam_index, vidCap_list, cam_index_list):
+    vidCap = cv2.VideoCapture(cam_index)
+    if vidCap.isOpened():
+        cam_index_list.append(cam_index)
+        vidCap.release()
+    else:
+        print(f"Failed to open camera at index {cam_index}")
 
 class TextArea(tk.Text):
     def __init__(self, master=None, placeholder="PLACEHOLDER", color='grey', **kwargs):

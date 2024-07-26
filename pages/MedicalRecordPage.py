@@ -2,11 +2,12 @@ import customtkinter
 from tkinter import *
 from colors import *
 from helpers import *
-from notificationBar import notificationBar
+# from notificationBar import notificationBar
 
 
 from pages import HomePage
 from pages import MedicalRecordDetailPage
+from pages import MedicalRecordEditPage
 
 from database.models.Diagnosis import DiagnosisModel
 
@@ -63,7 +64,7 @@ class MedicalRecordPage(Canvas, BasePage):
     def drawPage(self):
         self.place(x=0, y=0)
 
-        wifi_clock_app = notificationBar(self.window)
+        # wifi_clock_app = notificationBar(self.window)
 
         image_image_1 = PhotoImage(
             file=relative_to_assets("control/MedicalRecordFrame/image_1.png"))
@@ -84,7 +85,12 @@ class MedicalRecordPage(Canvas, BasePage):
                                                          border_width=0)
 
         self.my_frame.place(x=75, y=312)
-        self.canvas_scroll = Canvas(self.my_frame, width=955, height=2000, bg="#FFFFFF")
+        self.canvas_scroll = Canvas(self.my_frame,
+                                    width=955,
+                                    height=2000,
+                                    bg="#FFFFFF",
+                                    highlightthickness=0,
+                                    borderwidth=0)
         self.canvas_scroll.pack()
 
         self.create_text(
@@ -214,33 +220,33 @@ class MedicalRecordPage(Canvas, BasePage):
         for i in range(len(self.history_data)):
             y_offset = i * 50
             self.canvas_scroll.create_rectangle(81.0, 367.0 + y_offset, 1278.0, 367.0 + y_offset, fill="#F3F3F3", outline="")
-            self.canvas_scroll.create_text(81.0, 322.0 + y_offset, anchor="nw", text=self.history_data[i]['nama_pasien'], 
+            self.canvas_scroll.create_text(81.0, 331.0 + y_offset, anchor="nw", text=self.history_data[i]['nama_pasien'],
                                         fill="#404040",
-                                        font=("Nunito Regular", 20 * -1))
-            self.canvas_scroll.create_text(380, 322.0 + y_offset, anchor="nw", text=self.history_data[i]['diagnosa'], 
+                                        font=("Nunito Regular", 18 * -1))
+            self.canvas_scroll.create_text(380, 331.0 + y_offset, anchor="nw", text=self.history_data[i]['diagnosa'],
                                         fill="#404040",
-                                        font=("Nunito Regular", 20 * -1))
-            self.canvas_scroll.create_text(650, 322.0 + y_offset, anchor="nw", text=self.history_data[i]['tanggal_diagnosa'].strftime("%d %B %Y"), 
+                                        font=("Nunito Regular", 18 * -1))
+            self.canvas_scroll.create_text(650, 331.0 + y_offset, anchor="nw", text=self.history_data[i]['tanggal_diagnosa'].strftime("%d %B %Y"),
                                         fill="#404040",
-                                        font=("Nunito Regular", 20 * -1))
+                                        font=("Nunito Regular", 16 * -1))
 
-            button_image_1 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/button_1.png"))
+            button_image_1 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/edit_button.png"))
             button_images.append(button_image_1)
-            button_1 = Button(self.canvas_scroll, image=button_image_1, borderwidth=0, highlightthickness=0,
-                            command=lambda i=i: goToPage(MedicalRecordDetailPage.MedicalRecordDetailPage(self.window, self.history_data[i])), relief="flat")
+            button_1 = Button(self.canvas_scroll, image=button_image_1, borderwidth=0, highlightthickness=0, background="#FFFFFF",
+                            command=lambda: goToPage(MedicalRecordEditPage.MedicalRecordEditPage(self.window)))
             self.canvas_scroll.create_window(914.22119140625, 329.20361328125 + y_offset, anchor="nw", window=button_1,
                                             width=23.592920303344727, height=23.592920303344727)
 
-            button_image_2 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/button_2.png"))
+            button_image_2 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/view_button.png"))
             button_images.append(button_image_2)
-            button_2 = Button(self.canvas_scroll, image=button_image_2, borderwidth=0, highlightthickness=0,
-                            command=lambda: print("button_2 clicked"), relief="flat")
+            button_2 = Button(self.canvas_scroll, image=button_image_2, borderwidth=0, highlightthickness=0, background="#FFFFFF",
+                            command=lambda i=i: goToPage(MedicalRecordDetailPage.MedicalRecordDetailPage(self.window, self.history_data[i], "medical_record")), relief="flat")
             self.canvas_scroll.create_window(942.814208984375, 329.20361328125 + y_offset, anchor="nw", window=button_2,
                                             width=23.592920303344727, height=23.592920303344727)
 
             button_image_3 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/button_3.png"))
             button_images.append(button_image_3)
-            button_3 = Button(self.canvas_scroll, image=button_image_3, borderwidth=0, highlightthickness=0,
+            button_3 = Button(self.canvas_scroll, image=button_image_3, borderwidth=0, highlightthickness=0, background="#FFFFFF",
                             command=lambda i=i: self.delete_diagnosis(self.history_data[i]['id_diagnosa']), relief="flat")
             self.canvas_scroll.create_window(971.406982421875, 329.20361328125 + y_offset, anchor="nw", window=button_3,
                                             width=23.592920303344727, height=23.592920303344727)

@@ -3,7 +3,7 @@ from tkinter import *
 from tkinter import ttk
 from colors import *
 from helpers import *
-from notificationBar import notificationBar
+# from notificationBar import notificationBar
 
 from pages import DEarResultPage
 from machine_learning.image_predictor import ImagePredictor
@@ -75,12 +75,13 @@ class DEarLoadingPage(Canvas, BasePage):
         if self.predictor_thread.is_alive():
             self.window.after(5, self.check_thread)
         else:
+            self.window.after_cancel(self.task_id)
             goToPage(DEarResultPage.DEarResultPage(self.window, self.temp_data))
 
     def drawPage(self):
         self.place(x=0, y=0)
 
-        wifi_clock_app = notificationBar(self.window)
+        # wifi_clock_app = notificationBar(self.window)
 
         self.image_image_1 = PhotoImage(
             file=relative_to_assets("control/DEarLoadingFrame/image_1.png"))
@@ -99,9 +100,10 @@ class DEarLoadingPage(Canvas, BasePage):
         )
 
         self.create_text(
-            570.0,
+            1133/2,
             440.0,
             anchor="center",
+            justify="center",
             text=self.data_localization['please_wait'],
             fill="#FFFFFF",
             font=("Nunito SemiBold", 16 * -1)
@@ -113,7 +115,7 @@ class DEarLoadingPage(Canvas, BasePage):
 
         self.p = ttk.Progressbar(self.window, orient="horizontal", style='blue.Horizontal.TProgressbar', length=540, mode='determinate')
         self.p.place(x=297, y=381.5, height=21.2)
-        self.p['maximum'] = 540  # Set maximum to 100 to represent 100%
+        self.p['maximum'] = 540  # Set to represent 100%
 
         self.start()
 

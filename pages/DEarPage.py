@@ -2,7 +2,7 @@ from tkinter import *
 from colors import *
 from helpers import *
 from pages import DEarProcessPage, DiagnosisPage
-from notificationBar import notificationBar
+# from notificationBar import notificationBar
 
 import json
 class DEarPage(Canvas, BasePage):
@@ -43,7 +43,7 @@ class DEarPage(Canvas, BasePage):
     def drawPage(self):
         self.place(x=0, y=0)
 
-        wifi_clock_app = notificationBar(self.window)
+        # wifi_clock_app = notificationBar(self.window)
 
         inactive_button_1 = relative_to_assets(f"control/DEarFrame/{self.lang_code}/button_1.png")
         active_button_1 = relative_to_assets(f"control/DEarFrame/{self.lang_code}/active_button_1.png")
@@ -77,18 +77,20 @@ class DEarPage(Canvas, BasePage):
         )
 
         self.create_text(
-            560.0,
+            1133/2,
             565.0,
             anchor="center",
+            justify="center",
             text=self.data_localization['before_proceed'],
             fill="#8A8C8F",
             font=("Nunito Regular", 15 * -1)
         )
 
         self.create_text(
-            565.0,
+            1133/2,
             522.0,
             anchor="center",
+            justify="center",
             text=self.disease_title.title(),
             fill="#404040",
             font=("Nunito Bold", 24 * -1)
