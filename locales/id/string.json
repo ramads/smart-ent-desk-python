@@ -16,7 +16,7 @@
     "hidung" : "hidung",
     "tenggorokan" : "tenggorokan",
     "disease" : "penyakit",
-    "select_diagnosis" : "silakan pilih diagnosa yang akan anda lakukan.\n      kami akan menyiapkannya untuk anda.",
+    "select_diagnosis" : "silakan pilih diagnosa yang akan anda lakukan.\nkami akan menyiapkannya untuk anda.",
     "before_proceed" : "Sebelum mengambil gambar silakan ambil Otoscope dan pastikan sudah diarahkan dengan benar.",
     "tool_control" : "Kontrol Alat",
     "water_pressure" : "Tekanan Air (Spray)",
@@ -24,7 +24,7 @@
     "information_patient" : "Informasi Pasien",
     "make_sure" : "Pastikan gambar terlihat dengan jelas dan memiliki posisi sempurna. Silakan untuk mengambil ulang gambar jika belum jelas.",
     "taken_success" : "Gambar Berhasil Diambil!",
-    "please_wait" : "              Mohon Tunggu Sebentar,\nkami sedang menyiapkannya untuk anda.",
+    "please_wait" : "Mohon Tunggu Sebentar,\nkami sedang menyiapkannya untuk anda.",
     "graph_information" : "Keterangan Grafik",
     "picture_analysis" : "Analisis Gambar",
     "other_accumulations" : "Akumulasi Lainnya",
@@ -38,7 +38,7 @@
     "diagnosis_complete" : "Proses Diagnosa Selesai",
     "diagnosis_complete_hint" : "Diagnosis berhasil dilakukan. Hasil diagnosis dapat di akses kembali pada menu riwayat pasien.",
     "diagnosis_queue_complete": "Semua Pasien Sudah Diperiksa",
-    "diagnosis_queue_complete_hint": "Terima kasih atas kerja keras anda, hari ini semua pasien telah selesai diperiksa. \n       Anda dapat melakukan review ulang diagnosa pada menu rekam medis.",
+    "diagnosis_queue_complete_hint": "Terima kasih atas kerja keras anda, hari ini semua pasien telah selesai diperiksa.\nAnda dapat melakukan review ulang diagnosa pada menu rekam medis.",
     "name" : "nama",
     "check_date" : "Tanggal Periksa",
     "action" : "Aksi",
@@ -55,6 +55,7 @@
     "dongle_network_description" : "Pastikan dongle Anda terhubung dan jaringan Anda stabil untuk pengalaman terbaik.",
     "realtime_gps_title" : "GPS Realtime",
     "realtime_gps_subtitle" : "GPS & Lokasi Perangkat",
-    "realtime_gps_description" : "Pastikan GPS Anda diaktifkan untuk pengalaman terbaik."
-
+    "realtime_gps_description" : "Pastikan GPS Anda diaktifkan untuk pengalaman terbaik.",
+    "medical_record_edit_title" : "Pastikan Data Pasien Benar",
+    "medical_record_edit_hint" : "Mohon pastikan data pasien yang tampil di atas sesuai!\nJika data tidak sesuai, silakan kembali untuk memilih data yang benar."
 }

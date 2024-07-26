@@ -16,7 +16,7 @@
     "hidung" : "nose",
     "tenggorokan" : "throat",
     "disease" : "disease",
-    "select_diagnosis" : "please select the diagnosis you want to do.\n                 we will prepare it for you.",
+    "select_diagnosis" : "Please select the diagnosis you want to do.\nwe will prepare it for you.",
     "before_proceed" : "Before taking a picture, please take the Otoscope and make sure it is properly directed.",
     "tool_control" : "Tool Control",
     "water_pressure" : "Water Pressure (Spray)",
@@ -24,7 +24,7 @@
     "information_patient" : "Patient Information",
     "make_sure" : "Make sure the image is clear and has a perfect position. Please take the picture again if it is not clear.",
     "taken_success" : "Image Taken Successfully!",
-    "please_wait" : "              Please Wait a Moment,\n        we are preparing it for you.",
+    "please_wait" : "Please Wait a Moment,\nwe are preparing it for you.",
     "graph_information" : "Graph Information",
     "picture_analysis" : "Picture Analysis",
     "other_accumulations" : "Other Accumulations",
@@ -38,7 +38,7 @@
     "diagnosis_complete" : "All Patients Have Been Examined",
     "diagnosis_complete_hint" : "Diagnosis has been successfully carried out. The diagnosis result can be accessed again in the patient history menu.",
     "diagnosis_queue_complete": "All Patients Have Been Examined",
-    "diagnosis_queue_complete_hint": "Thank you for your hard work. Today, all patients have been examined.\n           You can review the diagnoses in the medical records menu.",
+    "diagnosis_queue_complete_hint": "Thank you for your hard work. Today, all patients have been examined.\nYou can review the diagnoses in the medical records menu.",
     "name" : "name",
     "check_date" : "Check Date",
     "action" : "Action",
@@ -55,7 +55,7 @@
     "dongle_network_description" : "Please ensure your dongle is connected and your network is stable for the best experience.",
     "realtime_gps_title" : "Realtime GPS",
     "realtime_gps_subtitle" : "GPS & Device Location",
-    "realtime_gps_description" : "Please ensure your GPS is enabled for the best experience."
-
-
+    "realtime_gps_description" : "Please ensure your GPS is enabled for the best experience.",
+    "medical_record_edit_title" : "Ensure the Patient Data is Correct",
+    "medical_record_edit_hint" : "Please ensure the patient data displayed above is correct!\nIf the data is incorrect, please go back to select the correct data."
 }

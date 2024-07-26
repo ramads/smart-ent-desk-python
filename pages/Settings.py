@@ -138,7 +138,12 @@ class Settings(Canvas, BasePage):
                                                          border_width=0)
 
         self.my_frame.place(x=75, y=230)
-        self.canvas_scroll = Canvas(self.my_frame, width=955, height=1030, bg="#FFFFFF")
+        self.canvas_scroll = Canvas(self.my_frame,
+                                    width=955,
+                                    height=1030,
+                                    bg="#FFFFFF",
+                                    highlightthickness=0,
+                                    borderwidth=0)
         self.canvas_scroll.pack()
 
 

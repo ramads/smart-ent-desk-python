@@ -55,6 +55,8 @@ def create_hover_button(window, x, y, width, height, bg_color, image_path, hover
     button.image = button_image
     button.hover_image = hover_button_image
 
+    return button
+
 def crop_image(img, ratio):
     # Calculate coordinate and zoom ratio
     height, width, _ = img.shape

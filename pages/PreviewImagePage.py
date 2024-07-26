@@ -55,9 +55,10 @@ class PreviewImagePage(Canvas, BasePage):
         )
 
         self.create_text(
-            560.0,
+            1133/2,
             600.0,
             anchor="center",
+            justify="center",
             text=self.data_localization["make_sure"],
             fill="#8A8C8F",
             font=("Nunito Regular", 15 * -1)
@@ -80,9 +81,10 @@ class PreviewImagePage(Canvas, BasePage):
 
 
         self.create_text(
-            565.0,
+            1133/2,
             550.0,
             anchor="center",
+            justify="center",
             text=self.data_localization["taken_success"],
             fill="#404040",
             font=("Nunito Bold", 24 * -1)

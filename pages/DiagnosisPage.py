@@ -75,9 +75,10 @@ class DiagnosisPage(Canvas, BasePage):
         )
 
         self.create_text(
-            555.0,
+            1133/2.0,
             590.0,
             anchor="center",
+            justify="center",
             text=self.data_localization["select_diagnosis"].capitalize(),
             fill="#FFFFFF",
             font=("Nunito SemiBold", 16 * -1)

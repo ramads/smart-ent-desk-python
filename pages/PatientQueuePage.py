@@ -374,7 +374,12 @@ class PatientQueuePage(Canvas, BasePage):
                                                          border_width=0)
 
         self.my_frame.place(x=740, y=255)
-        self.canvas_scroll = Canvas(self.my_frame, width=300, height=500, bg="#FFFFFF")
+        self.canvas_scroll = Canvas(self.my_frame,
+                                    width=300,
+                                    height=500,
+                                    bg="#FFFFFF",
+                                    highlightthickness=0,
+                                    borderwidth=0)
         self.canvas_scroll.pack()
 
         self.update_cards()
@@ -389,21 +394,22 @@ class PatientQueuePage(Canvas, BasePage):
         for i in range(len(self.current_history_data)):
             y_offset = i * 75
             self.current_history_data[i]['nama_pasien'] = self.patient_data[self.current_patient]['nama_pasien']
-            button_image_1 = PhotoImage(file=relative_to_assets(f"control/PatientQueueFrame/{self.lang_code}/button_1.png"))
-            button_images.append(button_image_1)
-            button_1 = Button(self.canvas_scroll, background="white", activebackground="white", image=button_image_1, borderwidth=0, highlightthickness=0,
-                              command=lambda i=i: goToPage(MedicalRecordDetailPage.MedicalRecordDetailPage(self.window, self.current_history_data[i], "patient_queue")),
-                              relief="flat")
+
+            # button_image_1 = PhotoImage(file=relative_to_assets(f"control/PatientQueueFrame/link_button.png"))
+            # button_images.append(button_image_1)
+            # button_1 = Button(self.canvas_scroll, background="white", activebackground="white", image=button_image_1, borderwidth=0, highlightthickness=0,
+            #                   command=lambda i=i: goToPage(MedicalRecordDetailPage.MedicalRecordDetailPage(self.window, self.current_history_data[i], "patient_queue")),
+            #                   relief="flat")
+
+            inactive_link_button = relative_to_assets(f"control/PatientQueueFrame/link_button.png")
+            active_link_button = relative_to_assets(f"control/PatientQueueFrame/active_link_button.png")
+
+            button_1 = create_hover_button(self.canvas_scroll, 0, 0, 0, 0,
+                                "#FFFFFF", inactive_link_button, active_link_button,
+                                lambda: lambda i=i: goToPage(MedicalRecordDetailPage.MedicalRecordDetailPage(self.window, self.current_history_data[i], "patient_queue")))
+
             self.canvas_scroll.create_window(240, 15 + y_offset, anchor="nw", window=button_1,
                                              width=44, height=44)
-
-            # self.canvas_scroll.create_rectangle(
-            #     0.0,
-            #     0 + y_offset,
-            #     0,
-            #     0,
-            #     fill="#E0E0E0",
-            #     outline="")
 
             self.canvas_scroll.create_text(
                 0,

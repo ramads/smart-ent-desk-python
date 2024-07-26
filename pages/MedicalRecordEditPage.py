@@ -61,11 +61,11 @@ class MedicalRecordEditPage(Canvas, BasePage):
             image=image_image_3
         )
 
-        inactive_button_1 = relative_to_assets(f"control/MedicalRecordEditFrame/button_1.png")
-        active_button_1 = relative_to_assets(f"control/MedicalRecordEditFrame/active_button_1.png")
+        inactive_button_1 = relative_to_assets(f"control/MedicalRecordEditFrame/{self.lang_code}/continue.png")
+        active_button_1 = relative_to_assets(f"control/MedicalRecordEditFrame/{self.lang_code}/active_continue.png")
 
-        inactive_button_2 = relative_to_assets(f"control/MedicalRecordEditFrame/button_2.png")
-        active_button_2 = relative_to_assets(f"control/MedicalRecordEditFrame/active_button_2.png")
+        inactive_button_2 = relative_to_assets(f"control/MedicalRecordEditFrame/{self.lang_code}/back.png")
+        active_button_2 = relative_to_assets(f"control/MedicalRecordEditFrame/{self.lang_code}/active_back.png")
 
         create_hover_button(self.window, 575.0, 446.0, 192.0, 54.0,
                             "white", inactive_button_1, active_button_1,
@@ -76,37 +76,38 @@ class MedicalRecordEditPage(Canvas, BasePage):
                             lambda: goToPage(MedicalRecordPage.MedicalRecordPage(self.window)))
 
         self.create_text(
-            270.0,
-            382.0,
-            anchor="nw",
-            text="Mohon pastikan data pasien yang tampil di atas sesuai!\nJika data tidak sesuai, silakan kembali untuk memilih data yang benar.",
+            1133/2,
+            400.0,
+            anchor="center",
+            justify="center",
+            text=self.data_localization['medical_record_edit_hint'],
             fill="#14181F",
             font=("Nunito Regular", 14 * -1)
         )
 
         self.create_text(
-            508.5,
-            347.5,
-            anchor="nw",
+            1133/2,
+            350.5,
+            anchor="center",
             text="Diagnosisis Pasien",
             fill="#14181F",
             font=("Nunito Regular", 14 * -1)
         )
 
         self.create_text(
-            515.5,
-            327.5,
-            anchor="nw",
+            1133/2,
+            330.5,
+            anchor="center",
             text="Nama Pasien",
             fill="#14181F",
             font=("Nunito Bold", 17 * -1)
         )
 
         self.create_text(
-            270.0,
+            1133/2.0,
             286.0,
-            anchor="nw",
-            text="Pastikan Data Pasien Benar",
+            anchor="center",
+            text=self.data_localization['medical_record_edit_title'],
             fill="#404040",
             font=("Nunito Bold", 24 * -1)
         )

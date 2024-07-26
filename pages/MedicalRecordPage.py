@@ -85,7 +85,12 @@ class MedicalRecordPage(Canvas, BasePage):
                                                          border_width=0)
 
         self.my_frame.place(x=75, y=312)
-        self.canvas_scroll = Canvas(self.my_frame, width=955, height=2000, bg="#FFFFFF")
+        self.canvas_scroll = Canvas(self.my_frame,
+                                    width=955,
+                                    height=2000,
+                                    bg="#FFFFFF",
+                                    highlightthickness=0,
+                                    borderwidth=0)
         self.canvas_scroll.pack()
 
         self.create_text(
@@ -215,15 +220,15 @@ class MedicalRecordPage(Canvas, BasePage):
         for i in range(len(self.history_data)):
             y_offset = i * 50
             self.canvas_scroll.create_rectangle(81.0, 367.0 + y_offset, 1278.0, 367.0 + y_offset, fill="#F3F3F3", outline="")
-            self.canvas_scroll.create_text(81.0, 322.0 + y_offset, anchor="nw", text=self.history_data[i]['nama_pasien'], 
+            self.canvas_scroll.create_text(81.0, 331.0 + y_offset, anchor="nw", text=self.history_data[i]['nama_pasien'],
                                         fill="#404040",
-                                        font=("Nunito Regular", 20 * -1))
-            self.canvas_scroll.create_text(380, 322.0 + y_offset, anchor="nw", text=self.history_data[i]['diagnosa'], 
+                                        font=("Nunito Regular", 18 * -1))
+            self.canvas_scroll.create_text(380, 331.0 + y_offset, anchor="nw", text=self.history_data[i]['diagnosa'],
                                         fill="#404040",
-                                        font=("Nunito Regular", 20 * -1))
-            self.canvas_scroll.create_text(650, 322.0 + y_offset, anchor="nw", text=self.history_data[i]['tanggal_diagnosa'].strftime("%d %B %Y"), 
+                                        font=("Nunito Regular", 18 * -1))
+            self.canvas_scroll.create_text(650, 331.0 + y_offset, anchor="nw", text=self.history_data[i]['tanggal_diagnosa'].strftime("%d %B %Y"),
                                         fill="#404040",
-                                        font=("Nunito Regular", 20 * -1))
+                                        font=("Nunito Regular", 16 * -1))
 
             button_image_1 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/edit_button.png"))
             button_images.append(button_image_1)

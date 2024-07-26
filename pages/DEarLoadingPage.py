@@ -75,6 +75,7 @@ class DEarLoadingPage(Canvas, BasePage):
         if self.predictor_thread.is_alive():
             self.window.after(5, self.check_thread)
         else:
+            self.window.after_cancel(self.task_id)
             goToPage(DEarResultPage.DEarResultPage(self.window, self.temp_data))
 
     def drawPage(self):
@@ -99,9 +100,10 @@ class DEarLoadingPage(Canvas, BasePage):
         )
 
         self.create_text(
-            570.0,
+            1133/2,
             440.0,
             anchor="center",
+            justify="center",
             text=self.data_localization['please_wait'],
             fill="#FFFFFF",
             font=("Nunito SemiBold", 16 * -1)
@@ -113,7 +115,7 @@ class DEarLoadingPage(Canvas, BasePage):
 
         self.p = ttk.Progressbar(self.window, orient="horizontal", style='blue.Horizontal.TProgressbar', length=540, mode='determinate')
         self.p.place(x=297, y=381.5, height=21.2)
-        self.p['maximum'] = 540  # Set maximum to 100 to represent 100%
+        self.p['maximum'] = 540  # Set to represent 100%
 
         self.start()
 

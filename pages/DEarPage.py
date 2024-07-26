@@ -77,18 +77,20 @@ class DEarPage(Canvas, BasePage):
         )
 
         self.create_text(
-            560.0,
+            1133/2,
             565.0,
             anchor="center",
+            justify="center",
             text=self.data_localization['before_proceed'],
             fill="#8A8C8F",
             font=("Nunito Regular", 15 * -1)
         )
 
         self.create_text(
-            565.0,
+            1133/2,
             522.0,
             anchor="center",
+            justify="center",
             text=self.disease_title.title(),
             fill="#404040",
             font=("Nunito Bold", 24 * -1)

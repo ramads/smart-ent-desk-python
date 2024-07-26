@@ -57,6 +57,7 @@ class EndQueuePage(Canvas, BasePage):
             1133.0/2,
             472.0,
             anchor="center",
+            justify="center",
             text=self.data_localization['diagnosis_queue_complete'].title(),
             fill="#404040",
             font=("Nunito Bold", 24 * -1),
@@ -66,6 +67,7 @@ class EndQueuePage(Canvas, BasePage):
             1133.0/2,
             520.0,
             anchor="center",
+            justify="center",
             text=self.data_localization['diagnosis_queue_complete_hint'],
             fill="#8A8C8F",
             font=("Nunito Regular", 16 * -1)
