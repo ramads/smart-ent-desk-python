@@ -57,5 +57,15 @@
     "realtime_gps_subtitle" : "GPS & Device Location",
     "realtime_gps_description" : "Please ensure your GPS is enabled for the best experience.",
     "medical_record_edit_title" : "Ensure the Patient Data is Correct",
-    "medical_record_edit_hint" : "Please ensure the patient data displayed above is correct!\nIf the data is incorrect, please go back to select the correct data."
+    "medical_record_edit_hint" : "Please ensure the patient data displayed above is correct!\nIf the data is incorrect, please go back to select the correct data.",
+    "notification" : "Notification",
+    "enter_text" : "Enter your text here...",
+    "today" : "Today",
+    "yesterday" : "Yesterday",
+    "ago" : "ago",
+    "day" : "day",
+    "week" : "week",
+    "month" : "month",
+    "year" : "year",
+    "hardware_software" : "Hardware & Software"
 }
