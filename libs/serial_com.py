@@ -8,19 +8,21 @@ class SerialCom():
         self.com = None
 
     def connect(self):
+        self.com = None
         setup = False
         prev = time.time()
         while(not setup):
             try:
                 self.com = serial.Serial(THT_UNIT_PORT_ADDR, 115200, timeout=1)
             except:
-                if(time.time() - prev > 5): # waiting time
+                if(time.time() - prev > 0.5): # waiting time
                     print("No serial detected, please plug your Controller")
                     break
 
             if(self.com is not None): # We're connected
                 print("Serial Connected!")
                 setup = True
+                return True
 
 
     # read one char (default)
