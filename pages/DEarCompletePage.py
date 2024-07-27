@@ -52,8 +52,8 @@ class DEarCompletePage(Canvas, BasePage):
             'Perforasi Membran Tympani': 'Robekan atau lubang pada gendang telinga yang dapat disebabkan oleh infeksi, trauma, atau tekanan yang tiba-tiba.',
             'Tympanosklerotik': 'Kondisi di mana jaringan parut terbentuk di gendang telinga atau telinga tengah, seringkali sebagai hasil dari infeksi telinga kronis atau berulang.'
         }
-        
-        self.insert_data()
+        if self.temp_data.get('id_diagnosis'): self.update_data()
+        else : self.insert_data()
 
     def get_localization(self):
         path = f"locales/{self.lang_code}/string.json"
@@ -61,6 +61,31 @@ class DEarCompletePage(Canvas, BasePage):
             data = json.load(file)
         return data
     
+    def update_data(self):
+        current_date = datetime.now().strftime('%Y-%m-%d')
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        image_path = f"{self.temp_data['id_patient']}_{self.temp_data['id_hospital']}_{timestamp}.png"
+        
+        image = Image.open(self.temp_data['image_path_temp'])
+        image = image.resize((559, 471))
+        image.save(f"temp_image/{image_path}", format='PNG')
+        
+        confidence = self.temp_data['result_1'][1]
+        confidence = int(round(confidence, 2) * 100)
+        
+        self.diagnosis.update_diagnosis(
+            id_diagnosis=self.temp_data['id_diagnosis'],
+            diagnosis=self.temp_data['result_1'][0],
+            diagnosis_date=current_date,
+            result=self.result_dict[self.temp_data['result_1'][0]],
+            confidence=confidence,
+            image_path=image_path,
+            is_corrected=self.temp_data['is_corrected'],
+            correction_reason=self.temp_data['correction_reason'],
+            hospital_id=self.temp_data['id_hospital'],
+            patient_id=self.temp_data['id_patient'],
+            diagnosis_type=self.temp_data['diagnosis_type']
+        )
     def insert_data(self):
         current_date = datetime.now().strftime('%Y-%m-%d')
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')

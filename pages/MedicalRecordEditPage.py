@@ -2,7 +2,7 @@ from tkinter import *
 from colors import *
 from helpers import *
 
-from pages import HomePage
+from pages import HomePage, DEarPage
 from pprint import pprint
 
 from pages import MedicalRecordPage
@@ -12,12 +12,16 @@ import json
 
 
 class MedicalRecordEditPage(Canvas, BasePage):
-    def __init__(self, window, temp_data=None):
+    def __init__(self, window, clicked_data):
         self.window = window
-        self.temp_data = temp_data
+        self.clicked_data = clicked_data
+        pprint(clicked_data)
+        self.temp_data = {
+            'id_patient': clicked_data['id_pasien'],
+            'id_diagnosis': clicked_data['id_diagnosa']
+        }
         self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
-        pprint(temp_data)
         super().__init__(
             window,
             bg=BACKGROUND_COLOUR,
@@ -69,7 +73,7 @@ class MedicalRecordEditPage(Canvas, BasePage):
 
         create_hover_button(self.window, 575.0, 446.0, 192.0, 54.0,
                             "white", inactive_button_1, active_button_1,
-                            lambda: print("goto edit"))
+                            lambda: goToPage(DEarPage.DEarPage(self.window, self.temp_data, self.clicked_data['jenis_diagnosa'])))
 
         create_hover_button(self.window, 366.0, 446.0, 192.0, 54.0,
                             "white", inactive_button_2, active_button_2,
@@ -89,7 +93,7 @@ class MedicalRecordEditPage(Canvas, BasePage):
             1133/2,
             350.5,
             anchor="center",
-            text="Diagnosisis Pasien",
+            text=self.clicked_data['diagnosa'],
             fill="#14181F",
             font=("Nunito Regular", 14 * -1)
         )
@@ -98,7 +102,7 @@ class MedicalRecordEditPage(Canvas, BasePage):
             1133/2,
             330.5,
             anchor="center",
-            text="Nama Pasien",
+            text=self.clicked_data['nama_pasien'],
             fill="#14181F",
             font=("Nunito Bold", 17 * -1)
         )

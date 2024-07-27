@@ -26,7 +26,7 @@ class DiagnosisPage(Canvas, BasePage):
             relief="ridge"
         )
         self.temp_data = {
-            'id_patient': id_patient
+            'id_patient': id_patient,
         }
 
     def get_localization(self):

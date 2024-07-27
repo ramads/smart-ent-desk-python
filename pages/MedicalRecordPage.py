@@ -236,7 +236,7 @@ class MedicalRecordPage(Canvas, BasePage):
             button_image_1 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/edit_button.png"))
             button_images.append(button_image_1)
             button_1 = Button(self.canvas_scroll, image=button_image_1, borderwidth=0, highlightthickness=0, background="#FFFFFF",
-                            command=lambda: goToPage(MedicalRecordEditPage.MedicalRecordEditPage(self.window)))
+                            command=lambda i=i: goToPage(MedicalRecordEditPage.MedicalRecordEditPage(self.window, self.history_data[i])), relief="flat")
             self.canvas_scroll.create_window(914.22119140625, 329.20361328125 + y_offset, anchor="nw", window=button_1,
                                             width=23.592920303344727, height=23.592920303344727)
 

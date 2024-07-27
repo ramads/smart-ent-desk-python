@@ -120,3 +120,19 @@ class DiagnosisModel:
             print(f"Error: {e}")
         finally:
             self.close_connection()
+
+    def update_diagnosis(self, id_diagnosis, diagnosis, diagnosis_date, result, confidence, image_path, is_corrected, correction_reason, hospital_id, patient_id, diagnosis_type):
+        try:
+            self.open_connection()
+            query = """
+            UPDATE Diagnosa
+            SET diagnosa = %s, tanggal_diagnosa = %s, hasil_diagnosa = %s, tingkat_keyakinan = %s, gambar_diagnosa = %s, prediksi_benar = %s, alasan_koreksi = %s, id_rumah_sakit = %s, id_pasien = %s, jenis_diagnosa = %s
+            WHERE id_diagnosa = %s
+            """
+            cursor = self.db.connection.cursor()
+            cursor.execute(query, (diagnosis, diagnosis_date, result, confidence, image_path, is_corrected, correction_reason, hospital_id, patient_id, diagnosis_type, id_diagnosis))
+            self.db.connection.commit()
+        except Exception as e:
+            print(f"Error: {e}")
+        finally:
+            self.close_connection()
