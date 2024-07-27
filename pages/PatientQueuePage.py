@@ -406,7 +406,7 @@ class PatientQueuePage(Canvas, BasePage):
 
             button_1 = create_hover_button(self.canvas_scroll, 0, 0, 0, 0,
                                 "#FFFFFF", inactive_link_button, active_link_button,
-                                lambda: lambda i=i: goToPage(MedicalRecordDetailPage.MedicalRecordDetailPage(self.window, self.current_history_data[i], "patient_queue")))
+                                lambda i=i: goToPage(MedicalRecordDetailPage.MedicalRecordDetailPage(self.window, self.current_history_data[i], PatientQueuePage)))
 
             self.canvas_scroll.create_window(240, 15 + y_offset, anchor="nw", window=button_1,
                                              width=44, height=44)

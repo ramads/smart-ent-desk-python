@@ -65,7 +65,7 @@ class MedicalRecordDetailPage(Canvas, BasePage):
 
         create_hover_button(self.window, 471.0, 662.0, 192.0, 54.0,
                             BACKGROUND_COLOUR, inactive_button_4, active_button_4,
-                            lambda: goToPage(MedicalRecordPage.MedicalRecordPage(self.window) if self.previous_page == "medical_record" else PatientQueuePage.PatientQueuePage(self.window)))
+                            lambda: goToPage(self.previous_page(self.window)))
 
 
         image_image_2 = PhotoImage(

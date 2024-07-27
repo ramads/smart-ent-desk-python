@@ -5,7 +5,7 @@ from helpers import *
 
 from PIL import ImageTk, Image
 
-from pages import HomePage
+from pages import HomePage, MedicalRecordPage
 from pprint import pprint
 from datetime import datetime
 
@@ -161,10 +161,13 @@ class DEarCompletePage(Canvas, BasePage):
         self.window.update_idletasks()
 
 
-        self.window.after(2000, self.go_to_homepage)
+        self.window.after(2000, self.goToNextPage)
         self.window.mainloop()
 
          # Delay for 3 seconds before navigating to the HomePage
 
-    def go_to_homepage(self):
-        goToPage(HomePage.HomePage(self.window))
+    def goToNextPage(self):
+        if self.temp_data.get('id_diagnosis'):
+            goToPage(MedicalRecordPage.MedicalRecordPage(self.window))
+        else:
+            goToPage(HomePage.HomePage(self.window))
