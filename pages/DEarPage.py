@@ -7,11 +7,11 @@ from pages import DEarProcessPage, DiagnosisPage
 import json
 class DEarPage(Canvas, BasePage):
 
-    def __init__(self, window, temp_data=None, diagnosis_type=None):
+    def __init__(self, window, temp_data=None, diagnosis_type=None, previous_page=None):
         self.window = window
         self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
-
+        self.previous_page = previous_page
         super().__init__(
             window,
             bg=BACKGROUND_COLOUR,
@@ -53,8 +53,7 @@ class DEarPage(Canvas, BasePage):
 
         create_hover_button(self.window, 431.0, 600.0, 136.0, 42.0,
                             "#FFFFFF", inactive_button_1, active_button_1, 
-                            lambda: goToPage(DiagnosisPage.DiagnosisPage(self.window, self.temp_data['id_patient'])))
-        
+                            lambda: goToPage(self.previous_page(self.window, self.temp_data['id_patient'])))        
         create_hover_button(self.window, 575.0, 600.0, 136.0, 42.0,
                             "#FFFFFF", inactive_button_2, active_button_2,  
                             lambda: goToPage(DEarProcessPage.DEarProcessPage(self.window, self.temp_data)))
