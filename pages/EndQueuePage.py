@@ -81,4 +81,4 @@ class EndQueuePage(Canvas, BasePage):
         # self.window.mainloop()
 
     def go_to_homepage(self):
-        goToPage(HomePage.HomePage(self.window))
+        goToPage(self, HomePage.HomePage(self.window))

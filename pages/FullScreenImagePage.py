@@ -56,16 +56,16 @@ class FullScreenImagePage(Canvas, BasePage):
         active_button_3 = relative_to_assets(f"control/FullScreenImageFrame/active_zoom_out.png")
         
         
-        create_hover_button(self.window, 500.5, 648.0, 136.0, 42.0,
+        create_hover_button(self, 500.5, 648.0, 136.0, 42.0,
                             "#FFFFFF", inactive_button_1, active_button_1,
-                            lambda: goToPage(DEarResultPage.DEarResultPage(self.window, self.temp_data)))
+                            lambda: goToPage(self, DEarResultPage.DEarResultPage(self.window, self.temp_data)))
 
-        create_hover_button(self.window, 980.5, 492.0, 52.0, 52.0,
+        create_hover_button(self, 980.5, 492.0, 52.0, 52.0,
                             "#000000", inactive_button_2, active_button_2,
                             lambda: self.zoom_in())
 
 
-        create_hover_button(self.window, 980.5, 556.0, 52.0, 52.0,
+        create_hover_button(self, 980.5, 556.0, 52.0, 52.0,
                             "#000000", inactive_button_3, active_button_3,
                             lambda: self.zoom_out())
 

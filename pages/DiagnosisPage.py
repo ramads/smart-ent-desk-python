@@ -53,21 +53,21 @@ class DiagnosisPage(Canvas, BasePage):
         inactive_button_4 = relative_to_assets(f"control/DiagnosisFrame/{self.lang_code}/button_4.png")
         active_button_4 = relative_to_assets(f"control/DiagnosisFrame/{self.lang_code}/active_button_4.png")
         
-        create_hover_button(self.window, 41.0, 223.0, 332.0, 319.0,
+        create_hover_button(self, 41.0, 223.0, 332.0, 319.0,
                             BACKGROUND_COLOUR, inactive_button_1, active_button_1, 
-                            lambda: goToPage(DEarPage(self.window, self.temp_data, "telinga", DiagnosisPage)))
+                            lambda: goToPage(self, DEarPage(self.window, self.temp_data, "telinga", DiagnosisPage)))
         
-        create_hover_button(self.window, 402.0, 223.0, 330.0, 319.0,
+        create_hover_button(self, 402.0, 223.0, 330.0, 319.0,
                             BACKGROUND_COLOUR, inactive_button_2, active_button_2,  
                             lambda: print("button_2 clicked"))
         
-        create_hover_button(self.window, 761.0, 223.0, 332.0, 319.0,
+        create_hover_button(self, 761.0, 223.0, 332.0, 319.0,
                             BACKGROUND_COLOUR, inactive_button_3, active_button_3,  
                             lambda: print("button_3 clicked"))
         
-        create_hover_button(self.window, 471, 635.0, 192.0, 54.0,
+        create_hover_button(self, 471, 635.0, 192.0, 54.0,
                             BACKGROUND_COLOUR, inactive_button_4, active_button_4,  
-                            lambda: goToPage(PatientQueuePage.PatientQueuePage(self.window)))
+                            lambda: goToPage(self, PatientQueuePage.PatientQueuePage(self.window)))
 
         self.image_image_1 = PhotoImage(
             file=relative_to_assets(f"control/DiagnosisFrame/image_1.png"))

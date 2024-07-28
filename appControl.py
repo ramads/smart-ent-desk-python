@@ -14,7 +14,7 @@ class App(Tk):
         self.title(APP_TITLE)
 
         config.CAMERA_PORT = int(find_camera())
-        if config.CAMERA_PORT  is not None:
+        if config.CAMERA_PORT is not None:
             print(f"Camera found at index {config.CAMERA_PORT } ===============")
             # Pass the cam_index to the kamera.py script or use it as needed
             # For demonstration purposes, we will print it

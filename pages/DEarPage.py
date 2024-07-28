@@ -51,12 +51,12 @@ class DEarPage(Canvas, BasePage):
         inactive_button_2 = relative_to_assets(f"control/DEarFrame/{self.lang_code}/button_2.png")
         active_button_2 = relative_to_assets(f"control/DEarFrame/{self.lang_code}/active_button_2.png")
 
-        create_hover_button(self.window, 431.0, 600.0, 136.0, 42.0,
+        create_hover_button(self, 431.0, 600.0, 136.0, 42.0,
                             "#FFFFFF", inactive_button_1, active_button_1, 
-                            lambda: goToPage(self.previous_page(self.window, self.temp_data['id_patient'])))        
-        create_hover_button(self.window, 575.0, 600.0, 136.0, 42.0,
+                            lambda: goToPage(self, self.previous_page(self.window, self.temp_data['id_patient'])))
+        create_hover_button(self, 575.0, 600.0, 136.0, 42.0,
                             "#FFFFFF", inactive_button_2, active_button_2,  
-                            lambda: goToPage(DEarProcessPage.DEarProcessPage(self.window, self.temp_data)))
+                            lambda: goToPage(self, DEarProcessPage.DEarProcessPage(self.window, self.temp_data)))
         
 
         self.image_image_1 = PhotoImage(

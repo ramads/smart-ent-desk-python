@@ -77,7 +77,7 @@ class MedicalRecordPage(Canvas, BasePage):
             image=self.image_image_1
         )
 
-        self.my_frame = customtkinter.CTkScrollableFrame(self.window,
+        self.my_frame = customtkinter.CTkScrollableFrame(self,
                                                          orientation="vertical",
                                                          width=955,
                                                          height=300,
@@ -205,11 +205,11 @@ class MedicalRecordPage(Canvas, BasePage):
         inactive_button_5 = relative_to_assets(f"control/MedicalRecordFrame/{self.lang_code}/button_5.png")
         active_button_5 = relative_to_assets(f"control/MedicalRecordFrame/{self.lang_code}/active_button_5.png")
 
-        create_hover_button(self.window, 471.0, 662.0, 192.0, 54.0,
+        create_hover_button(self, 471.0, 662.0, 192.0, 54.0,
                             BACKGROUND_COLOUR, inactive_button_4, active_button_4,
-                            lambda: goToPage(HomePage.HomePage(self.window)))
+                            lambda: goToPage(self, HomePage.HomePage(self.window)))
 
-        create_hover_button(self.window, 940.0, 216.0, 120.0, 45.0,
+        create_hover_button(self, 940.0, 216.0, 120.0, 45.0,
                             "#FFFFFF", inactive_button_5, active_button_5,
                             lambda: self.searching())
 
@@ -219,6 +219,10 @@ class MedicalRecordPage(Canvas, BasePage):
         self.canvas_scroll.delete("all")
 
         button_images = []
+
+        self.button_image_1 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/edit_button.png"))
+        self.button_image_2 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/view_button.png"))
+        self.button_image_3 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/button_3.png"))
 
         for i in range(len(self.history_data)):
             y_offset = i * 50
@@ -233,23 +237,22 @@ class MedicalRecordPage(Canvas, BasePage):
                                         fill="#404040",
                                         font=("Nunito Regular", 16 * -1))
 
-            button_image_1 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/edit_button.png"))
-            button_images.append(button_image_1)
-            button_1 = Button(self.canvas_scroll, image=button_image_1, borderwidth=0, highlightthickness=0, background="#FFFFFF",
-                            command=lambda i=i: goToPage(MedicalRecordEditPage.MedicalRecordEditPage(self.window, self.history_data[i])), relief="flat")
+
+            # button_images.append(self.button_image_1)
+            button_1 = Button(self.canvas_scroll, image=self.button_image_1, borderwidth=0, highlightthickness=0, background="#FFFFFF",
+                            command=lambda i=i: goToPage(self, MedicalRecordEditPage.MedicalRecordEditPage(self.window, self.history_data[i])), relief="flat")
             self.canvas_scroll.create_window(914.22119140625, 329.20361328125 + y_offset, anchor="nw", window=button_1,
                                             width=23.592920303344727, height=23.592920303344727)
 
-            button_image_2 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/view_button.png"))
-            button_images.append(button_image_2)
-            button_2 = Button(self.canvas_scroll, image=button_image_2, borderwidth=0, highlightthickness=0, background="#FFFFFF",
-                            command=lambda i=i: goToPage(MedicalRecordDetailPage.MedicalRecordDetailPage(self.window, self.history_data[i], MedicalRecordPage)), relief="flat")
+
+            # button_images.append(self.button_image_2)
+            button_2 = Button(self.canvas_scroll, image=self.button_image_2, borderwidth=0, highlightthickness=0, background="#FFFFFF",
+                            command=lambda i=i: goToPage(self, MedicalRecordDetailPage.MedicalRecordDetailPage(self.window, self.history_data[i], MedicalRecordPage)), relief="flat")
             self.canvas_scroll.create_window(942.814208984375, 329.20361328125 + y_offset, anchor="nw", window=button_2,
                                             width=23.592920303344727, height=23.592920303344727)
 
-            button_image_3 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/button_3.png"))
-            button_images.append(button_image_3)
-            button_3 = Button(self.canvas_scroll, image=button_image_3, borderwidth=0, highlightthickness=0, background="#FFFFFF",
+            # button_images.append(self.button_image_3)
+            button_3 = Button(self.canvas_scroll, image=self.button_image_3, borderwidth=0, highlightthickness=0, background="#FFFFFF",
                             command=lambda i=i: self.delete_diagnosis(self.history_data[i]['id_diagnosa']), relief="flat")
             self.canvas_scroll.create_window(971.406982421875, 329.20361328125 + y_offset, anchor="nw", window=button_3,
                                             width=23.592920303344727, height=23.592920303344727)

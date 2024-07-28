@@ -100,7 +100,7 @@ class DEarCorrectionPage(Canvas, BasePage):
             self.temp_data['result_1'] = (label, self.temp_data['result_1'][1])
             self.temp_data['is_corrected'] = False
             self.temp_data['correction_reason'] = entry_1.get("1.0", "end-1c")
-            goToPage(DEarResultPage.DEarResultPage(self.window, self.temp_data))
+            goToPage(self, DEarResultPage.DEarResultPage(self.window, self.temp_data))
 
         # Define options
         options = [
@@ -184,11 +184,11 @@ class DEarCorrectionPage(Canvas, BasePage):
         inactive_button_3 = relative_to_assets(f"control/DEarCorrectionFrame/{self.lang_code}/button_3.png")
         active_button_3 = relative_to_assets(f"control/DEarCorrectionFrame/{self.lang_code}/active_button_3.png")
 
-        create_hover_button(self.window, 750.0, 463.0, 150.0, 46.0,
+        create_hover_button(self, 750.0, 463.0, 150.0, 46.0,
                             "#FFFFFF", inactive_button_2, active_button_2,  
-                            lambda: goToPage(DEarResultPage.DEarResultPage(self.window, self.temp_data)))
+                            lambda: goToPage(self, DEarResultPage.DEarResultPage(self.window, self.temp_data)))
         
-        create_hover_button(self.window, 908.0, 463.0, 150.0, 46.0,
+        create_hover_button(self, 908.0, 463.0, 150.0, 46.0,
                             "#FFFFFF", inactive_button_3, active_button_3,  
                             show)
 

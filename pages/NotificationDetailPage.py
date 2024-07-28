@@ -87,8 +87,8 @@ class NotificationDetailPage(Canvas, BasePage):
         inactive_button_1 = relative_to_assets(f"control/NotificationDetailFrame/{self.lang_code}/button_1.png")
         active_button_1 = relative_to_assets(f"control/NotificationDetailFrame/{self.lang_code}/active_button_1.png")
 
-        create_hover_button(self.window, 471.0, 662.0, 192.0, 54.0,
+        create_hover_button(self, 471.0, 662.0, 192.0, 54.0,
                             BACKGROUND_COLOUR, inactive_button_1, active_button_1,
-                            lambda: goToPage(NotificationPage.NotificationPage(self.window)))
+                            lambda: goToPage(self, NotificationPage.NotificationPage(self.window)))
 
         # self.window.mainloop()

@@ -71,12 +71,12 @@ class PreviewImagePage(Canvas, BasePage):
         inactive_button_2 = relative_to_assets(f"control/PreviewImageFrame/{self.lang_code}/button_2.png")
         active_button_2 = relative_to_assets(f"control/PreviewImageFrame/{self.lang_code}/active_button_2.png")
         
-        create_hover_button(self.window, 370.5, 631.0, 192.0, 54.0, 
+        create_hover_button(self, 370.5, 631.0, 192.0, 54.0,
                             "#FFFFFF", inactive_button_1, active_button_1, 
-                            lambda: goToPage(DEarProcessPage.DEarProcessPage(self.window, self.temp_data)))
-        create_hover_button(self.window, 570.5, 631.0, 192.0, 54.0, 
+                            lambda: goToPage(self, DEarProcessPage.DEarProcessPage(self.window, self.temp_data)))
+        create_hover_button(self, 570.5, 631.0, 192.0, 54.0,
                             "#FFFFFF", inactive_button_2, active_button_2,  
-                            lambda: goToPage(DEarLoadingPage.DEarLoadingPage(self.window, self.temp_data)))
+                            lambda: goToPage(self, DEarLoadingPage.DEarLoadingPage(self.window, self.temp_data)))
 
 
 

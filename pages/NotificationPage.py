@@ -119,11 +119,11 @@ class NotificationPage(Canvas, BasePage):
         inactive_button_2 = relative_to_assets(f"control/NotificationFrame/{self.lang_code}/button_2.png")
         active_button_2 = relative_to_assets(f"control/NotificationFrame/{self.lang_code}/active_button_2.png")
         
-        create_hover_button(self.window, 471.0, 662.0, 192.0, 54.0, 
+        create_hover_button(self, 471.0, 662.0, 192.0, 54.0,
                             BACKGROUND_COLOUR, inactive_button_1, active_button_1, 
-                            lambda: goToPage(HomePage.HomePage(self.window)))
+                            lambda: goToPage(self, HomePage.HomePage(self.window)))
         
-        create_hover_button(self.window, 960.0, 183.0, 120.0, 45.0, 
+        create_hover_button(self, 960.0, 183.0, 120.0, 45.0,
                             '#FFFFFF', inactive_button_2, active_button_2, 
                             lambda: self.searching())        
 
@@ -193,7 +193,7 @@ class NotificationPage(Canvas, BasePage):
     def create_notification_card(self, canvas, y_offset, notification, card_bg, card_read_bg, bg_color, goToPage):
         card_btn = Button(canvas, image=card_read_bg if notification['already_read'] else card_bg, 
                           activebackground=BACKGROUND_COLOUR, borderwidth=0, highlightthickness=0, background=BACKGROUND_COLOUR,
-                          command=lambda: goToPage(NotificationDetailPage.NotificationDetailPage(self.window, notification)))
+                          command=lambda: goToPage(self, NotificationDetailPage.NotificationDetailPage(self.window, notification)))
         canvas.create_window(48, y_offset, anchor="nw", window=card_btn, width=1034, height=121.63)
     
         header_label = Label(canvas, text=notification['notif_header'], bg=bg_color, fg="#404040", font=("Nunito Bold", 14))

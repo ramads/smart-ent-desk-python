@@ -137,7 +137,7 @@ class DEarProcessPage(Canvas, BasePage):
             print(f"Image captured and saved as '{filename}'")
             self.onStopCamera()
 
-            goToPage(PreviewImagePage.PreviewImagePage(self.window, self.temp_data))
+            goToPage(self, PreviewImagePage.PreviewImagePage(self.window, self.temp_data))
 
     def onStopCamera(self):
         # self.running = False
@@ -149,7 +149,7 @@ class DEarProcessPage(Canvas, BasePage):
 
     def backToPrevPage(self):
         self.onStopCamera()
-        goToPage(DEarPage.DEarPage(self.window, self.temp_data))
+        goToPage(self, DEarPage.DEarPage(self.window, self.temp_data))
 
     def sendSerialCommand(self, command):
         if command == 4: command = 0
@@ -195,15 +195,15 @@ class DEarProcessPage(Canvas, BasePage):
         inactive_button_3 = relative_to_assets(f"control/DEarProcessFrame/{self.lang_code}/pewaktu.png")
         active_button_3 = relative_to_assets(f"control/DEarProcessFrame/{self.lang_code}/active_pewaktu.png")
 
-        create_hover_button(self.window, 50.0, 632.0, 192.0, 54.0,
+        create_hover_button(self, 50.0, 632.0, 192.0, 54.0,
                             "#FFFFFF", inactive_button_1, active_button_1, 
                             lambda: self.backToPrevPage())
         
-        create_hover_button(self.window, 250.0, 632.0, 192.0, 54.0,
+        create_hover_button(self, 250.0, 632.0, 192.0, 54.0,
                             "#FFFFFF", inactive_button_2, active_button_2,  
                             lambda: self.onCapture("test_image"))
 
-        create_hover_button(self.window, 450.0, 632.0, 192.0, 54.0,
+        create_hover_button(self, 450.0, 632.0, 192.0, 54.0,
                             "#FFFFFF", inactive_button_3, active_button_3,
                             lambda: self.countdown(5))
         

@@ -60,7 +60,7 @@ class Settings(Canvas, BasePage):
         # self.temp_data['result_1'] = (label, self.temp_data['result_1'][1])
         # self.temp_data['is_corrected'] = False
         # self.temp_data['correction_reason'] = entry_1.get("1.0", "end-1c")
-        # goToPage(DEarResultPage.DEarResultPage(self.window, self.temp_data))
+        # goToPage(self, DEarResultPage.DEarResultPage(self.window, self.temp_data))
 
     def create_option_menu(self, parent, options, geometry, action=None):
         clicked = StringVar()
@@ -122,9 +122,9 @@ class Settings(Canvas, BasePage):
         inactive_button_4 = relative_to_assets(f"control/MedicalRecordFrame/{self.lang_code}/button_4.png")
         active_button_4 = relative_to_assets(f"control/MedicalRecordFrame/{self.lang_code}/active_button_4.png")
 
-        create_hover_button(self.window, 471.0, 662.0, 192.0, 54.0,
+        create_hover_button(self, 471.0, 662.0, 192.0, 54.0,
                             BACKGROUND_COLOUR, inactive_button_4, active_button_4,
-                            lambda: goToPage(HomePage.HomePage(self.window)))
+                            lambda: goToPage(self, HomePage.HomePage(self.window)))
 
 
         self.my_frame = customtkinter.CTkScrollableFrame(self.window,

@@ -76,9 +76,9 @@ class AboutUsPage(Canvas, BasePage):
         inactive_back = relative_to_assets(f"control/AboutUsFrame/{self.lang_code}/back.png")
         active_back = relative_to_assets(f"control/AboutUsFrame/{self.lang_code}/active_back.png")
 
-        create_hover_button(self.window, 471.0, 662.0, 192.0, 54.0,
+        create_hover_button(self, 471.0, 662.0, 192.0, 54.0,
                             BACKGROUND_COLOUR, inactive_back, active_back,
-                            lambda: goToPage(HomePage.HomePage(self.window)))
+                            lambda: goToPage(self, HomePage.HomePage(self.window)))
 
         self.update_cards()
 

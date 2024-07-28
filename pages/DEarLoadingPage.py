@@ -76,7 +76,7 @@ class DEarLoadingPage(Canvas, BasePage):
             self.window.after(5, self.check_thread)
         else:
             self.window.after_cancel(self.task_id)
-            goToPage(DEarResultPage.DEarResultPage(self.window, self.temp_data))
+            goToPage(self, DEarResultPage.DEarResultPage(self.window, self.temp_data))
 
     def drawPage(self):
         self.place(x=0, y=0)

@@ -63,36 +63,36 @@ class HomePage(Canvas, BasePage):
         inactive_button_6 = relative_to_assets(f"control/HomeFrame/{self.lang_code}/button_6.png")
         active_button_6 = relative_to_assets(f"control/HomeFrame/{self.lang_code}/active_button_6.png")
         
-        create_hover_button(self.window, 47.0, 216.0, 447.0, 319.0, 
+        create_hover_button(self, 47.0, 216.0, 447.0, 319.0,
                             BACKGROUND_COLOUR, inactive_button_1, active_button_1,
-                            lambda: goToPage(PatientQueuePage.PatientQueuePage(self.window)))
+                            lambda: goToPage(self, PatientQueuePage.PatientQueuePage(self.window)))
         
-        create_hover_button(self.window, 523.0,216.0, 263.0, 319.0, 
+        create_hover_button(self, 523.0,216.0, 263.0, 319.0,
                             BACKGROUND_COLOUR, inactive_button_2, active_button_2,  
-                            lambda: goToPage(MedicalRecordPage.MedicalRecordPage(self.window)))
+                            lambda: goToPage(self, MedicalRecordPage.MedicalRecordPage(self.window)))
         
-        create_hover_button(self.window, 815.0,216.0, 271.0, 151.0, 
+        create_hover_button(self, 815.0,216.0, 271.0, 151.0,
                             BACKGROUND_COLOUR, inactive_button_3, active_button_3,  
-                            lambda: goToPage(NotificationPage.NotificationPage(self.window)))
+                            lambda: goToPage(self, NotificationPage.NotificationPage(self.window)))
         
-        create_hover_button(self.window, 815.0,384.0, 271.0, 151.0, 
+        create_hover_button(self, 815.0,384.0, 271.0, 151.0,
                             BACKGROUND_COLOUR, inactive_button_4, active_button_4,  
-                            lambda: goToPage(SoftwareHardware.SoftwareHardware(self.window)))
+                            lambda: goToPage(self, SoftwareHardware.SoftwareHardware(self.window)))
         
-        create_hover_button(self.window, 269.0,591.0, 275.0, 99.0, 
+        create_hover_button(self, 269.0,591.0, 275.0, 99.0,
                             BACKGROUND_COLOUR, inactive_button_5, active_button_5,  
-                            lambda: goToPage(Settings.Settings(self.window)))
+                            lambda: goToPage(self, Settings.Settings(self.window)))
         
-        create_hover_button(self.window, 590.0,591.0, 274.0, 99.0,
+        create_hover_button(self, 590.0,591.0, 274.0, 99.0,
                             BACKGROUND_COLOUR, inactive_button_6, active_button_6,  
-                            lambda: goToPage(AboutUsPage.AboutUsPage(self.window)))
+                            lambda: goToPage(self, AboutUsPage.AboutUsPage(self.window)))
 
-        image_image_1 = PhotoImage(
+        self.image_image_1 = PhotoImage(
             file=relative_to_assets(f"control/HomeFrame/image_1.png"))
         image_1 = self.create_image(
             566.0,
             89.0,
-            image=image_image_1
+            image=self.image_image_1
         )
 
         self.create_text(

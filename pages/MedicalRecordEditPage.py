@@ -70,13 +70,13 @@ class MedicalRecordEditPage(Canvas, BasePage):
         inactive_button_2 = relative_to_assets(f"control/MedicalRecordEditFrame/{self.lang_code}/back.png")
         active_button_2 = relative_to_assets(f"control/MedicalRecordEditFrame/{self.lang_code}/active_back.png")
 
-        create_hover_button(self.window, 575.0, 446.0, 192.0, 54.0,
+        create_hover_button(self, 575.0, 446.0, 192.0, 54.0,
                             "white", inactive_button_1, active_button_1,
-                            lambda: goToPage(DEarPage.DEarPage(self.window, self.temp_data, self.clicked_data['jenis_diagnosa'], MedicalRecordPage.MedicalRecordPage)))
+                            lambda: goToPage(self, DEarPage.DEarPage(self.window, self.temp_data, self.clicked_data['jenis_diagnosa'], MedicalRecordPage.MedicalRecordPage)))
 
-        create_hover_button(self.window, 366.0, 446.0, 192.0, 54.0,
+        create_hover_button(self, 366.0, 446.0, 192.0, 54.0,
                             "white", inactive_button_2, active_button_2,
-                            lambda: goToPage(MedicalRecordPage.MedicalRecordPage(self.window)))
+                            lambda: goToPage(self, MedicalRecordPage.MedicalRecordPage(self.window)))
 
         self.create_text(
             1133/2,

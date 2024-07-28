@@ -80,7 +80,7 @@ class PatientQueuePage(Canvas, BasePage):
             self.get_current_patient_data()
             self.drawPage()
         else:
-            goToPage(EndQueuePage.EndQueuePage(self.window))
+            goToPage(self, EndQueuePage.EndQueuePage(self.window))
     
 
     def loadImage(self):
@@ -339,17 +339,17 @@ class PatientQueuePage(Canvas, BasePage):
         inactive_button_5 = relative_to_assets(f"control/PatientQueueFrame/{self.lang_code}/button_5.png")
         active_button_5 = relative_to_assets(f"control/PatientQueueFrame/{self.lang_code}/active_button_5.png")
 
-        create_hover_button(self.window, 59.5, 633.5, 192.0, 54.0, 
+        create_hover_button(self, 59.5, 633.5, 192.0, 54.0,
                             BACKGROUND_COLOUR, inactive_button_3, active_button_3,  
-                            lambda: goToPage(HomePage.HomePage(self.window)))
-                            # lambda: [self.destroy_all_widgets, goToPage(HomePage.HomePage(self.window))])
+                            lambda: goToPage(self, HomePage.HomePage(self.window)))
+                            # lambda: [self.destroy_all_widgets, goToPage(self, HomePage.HomePage(self.window))])
 
 
-        create_hover_button(self.window, 284.5, 633.5, 192.0, 54.0,
+        create_hover_button(self, 284.5, 633.5, 192.0, 54.0,
                             BACKGROUND_COLOUR, inactive_button_4, active_button_4,  
-                            lambda: goToPage(DiagnosisPage.DiagnosisPage(self.window, self.patient_data[self.current_patient]['id_pasien'])))
+                            lambda: goToPage(self, DiagnosisPage.DiagnosisPage(self.window, self.patient_data[self.current_patient]['id_pasien'])))
         
-        create_hover_button(self.window, 509.5, 633.5, 192.0, 54.0,
+        create_hover_button(self, 509.5, 633.5, 192.0, 54.0,
                             BACKGROUND_COLOUR, inactive_button_5, active_button_5,  
                             lambda: self.next_patient())
 
@@ -398,7 +398,7 @@ class PatientQueuePage(Canvas, BasePage):
             # button_image_1 = PhotoImage(file=relative_to_assets(f"control/PatientQueueFrame/link_button.png"))
             # button_images.append(button_image_1)
             # button_1 = Button(self.canvas_scroll, background="white", activebackground="white", image=button_image_1, borderwidth=0, highlightthickness=0,
-            #                   command=lambda i=i: goToPage(MedicalRecordDetailPage.MedicalRecordDetailPage(self.window, self.current_history_data[i], "patient_queue")),
+            #                   command=lambda i=i: goToPage(self, MedicalRecordDetailPage.MedicalRecordDetailPage(self.window, self.current_history_data[i], "patient_queue")),
             #                   relief="flat")
 
             inactive_link_button = relative_to_assets(f"control/PatientQueueFrame/link_button.png")
@@ -406,7 +406,7 @@ class PatientQueuePage(Canvas, BasePage):
 
             button_1 = create_hover_button(self.canvas_scroll, 0, 0, 0, 0,
                                 "#FFFFFF", inactive_link_button, active_link_button,
-                                lambda i=i: goToPage(MedicalRecordDetailPage.MedicalRecordDetailPage(self.window, self.current_history_data[i], PatientQueuePage)))
+                                lambda i=i: goToPage(self, MedicalRecordDetailPage.MedicalRecordDetailPage(self.window, self.current_history_data[i], PatientQueuePage)))
 
             self.canvas_scroll.create_window(240, 15 + y_offset, anchor="nw", window=button_1,
                                              width=44, height=44)

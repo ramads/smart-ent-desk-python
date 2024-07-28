@@ -59,13 +59,13 @@ class MedicalRecordDetailPage(Canvas, BasePage):
         inactive_button_4 = relative_to_assets(f"control/MedicalRecordDetailFrame/{self.lang_code}/button_4.png")
         active_button_4 = relative_to_assets(f"control/MedicalRecordDetailFrame/{self.lang_code}/active_button_4.png")
 
-        create_hover_button(self.window, 1008.0, 563.0, 52.0, 52.0,
+        create_hover_button(self, 1008.0, 563.0, 52.0, 52.0,
                             "#000000", inactive_button_3, active_button_3,
                             lambda: print("button clicked"))
 
-        create_hover_button(self.window, 471.0, 662.0, 192.0, 54.0,
+        create_hover_button(self, 471.0, 662.0, 192.0, 54.0,
                             BACKGROUND_COLOUR, inactive_button_4, active_button_4,
-                            lambda: goToPage(self.previous_page(self.window)))
+                            lambda: goToPage(self, self.previous_page(self.window)))
 
 
         self.image_image_2 = PhotoImage(

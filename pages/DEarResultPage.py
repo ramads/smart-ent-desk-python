@@ -75,11 +75,11 @@ class DEarResultPage(Canvas, BasePage):
         image_path = relative_to_image_capture("test_image.jpg")
         original_image = Image.open(image_path)
         resized_image = original_image.resize((600, 335)) 
-        captured_img = ImageTk.PhotoImage(resized_image)
+        self.captured_img = ImageTk.PhotoImage(resized_image)
         image_2 = self.create_image(
             361.0,
             235.5,
-            image=captured_img
+            image=self.captured_img
         )
 
         self.image_image_4 = PhotoImage(
@@ -362,18 +362,18 @@ class DEarResultPage(Canvas, BasePage):
         inactive_button_3 = relative_to_assets(f"control/DEarResultFrame/{self.lang_code}/button_3.png")
         active_button_3 = relative_to_assets(f"control/DEarResultFrame/{self.lang_code}/active_button_3.png")
 
-        create_hover_button(self.window, 597.0, 330.0, 52.0, 52.0,
+        create_hover_button(self, 597.0, 330.0, 52.0, 52.0,
                             BACKGROUND_COLOUR, inactive_button_1, active_button_1, 
-                            lambda: goToPage(FullScreenImagePage.FullScreenImagePage(self.window, self.temp_data)))
+                            lambda: goToPage(self, FullScreenImagePage.FullScreenImagePage(self.window, self.temp_data)))
         
-        create_hover_button(self.window, 67.0, 623.0, 192.0, 54.0,
+        create_hover_button(self, 67.0, 623.0, 192.0, 54.0,
                             "#FFFFFF", inactive_button_2, active_button_2, 
-                            lambda: goToPage(DEarCorrectionPage.DEarCorrectionPage(self.window, self.temp_data)))
+                            lambda: goToPage(self, DEarCorrectionPage.DEarCorrectionPage(self.window, self.temp_data)))
         
-        create_hover_button(self.window, 267.0, 623.0, 192.0, 54.0,
+        create_hover_button(self, 267.0, 623.0, 192.0, 54.0,
                             "#FFFFFF", inactive_button_3, active_button_3,  
-                            lambda: goToPage(DEarCompletePage.DEarCompletePage(self.window, self.temp_data)))
+                            lambda: goToPage(self, DEarCompletePage.DEarCompletePage(self.window, self.temp_data)))
 
 
         # self.window.mainloop()
-        self.destroy()
+        # self.destroy()

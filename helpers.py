@@ -22,11 +22,13 @@ def relative_to_image_capture(path: str) -> Path: #
     ASSETS_PATH = OUTPUT_PATH / Path(r"./" + DIR_TEMP_IMAGE)
     return ASSETS_PATH / Path(path)
 
-def goToPage(page:BasePage, data=None):
+def goToPage(prevPage: BasePage, destPage:BasePage, data=None):
+    prevPage.destroy()
+
     if data is None:
-        page.drawPage()
+        destPage.drawPage()
     else:
-        page.drawPage(data)
+        destPage.drawPage(data)
 
 def create_hover_button(window, x, y, width, height, bg_color, image_path, hover_image_path, command):
     button_image = PhotoImage(file=relative_to_assets(image_path))

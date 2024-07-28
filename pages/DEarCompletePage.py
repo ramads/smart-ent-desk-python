@@ -168,6 +168,6 @@ class DEarCompletePage(Canvas, BasePage):
 
     def goToNextPage(self):
         if self.temp_data.get('id_diagnosis'):
-            goToPage(MedicalRecordPage.MedicalRecordPage(self.window))
+            goToPage(self, MedicalRecordPage.MedicalRecordPage(self.window))
         else:
-            goToPage(HomePage.HomePage(self.window))
+            goToPage(self, HomePage.HomePage(self.window))
