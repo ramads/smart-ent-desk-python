@@ -123,4 +123,4 @@ class DEarLoadingPage(Canvas, BasePage):
         self.predictor_thread = threading.Thread(target=self.run_prediction)
         self.predictor_thread.start()
 
-        self.window.mainloop()
+        # self.window.mainloop()

@@ -94,20 +94,20 @@ class Settings(Canvas, BasePage):
 
         # wifi_clock_app = notificationBar(self.window)
 
-        image_image_1 = PhotoImage(
+        self.image_image_1 = PhotoImage(
             file=relative_to_assets("control/SettingsFrame/image_1.png"))
         image_1 = self.create_image(
             566.0,
             390.0,
-            image=image_image_1
+            image=self.image_image_1
         )
 
-        image_image_4 = PhotoImage(
+        self.image_image_4 = PhotoImage(
             file=relative_to_assets("control/MedicalRecordFrame/image_4.png"))
         image_4 = self.create_image(
             566.0,
             89.0,
-            image=image_image_4
+            image=self.image_image_4
         )
 
         self.create_text(
@@ -182,76 +182,76 @@ class Settings(Canvas, BasePage):
             font=("Nunito SemiBold", 20 * -1)
         )
 
-        image_image_3 = PhotoImage(
+        self.image_image_3 = PhotoImage(
             file=relative_to_assets(f"control/SettingsFrame/image_3.png"))
         image_3 = self.canvas_scroll.create_image(
             94.0,
             260.0,
-            image=image_image_3
+            image=self.image_image_3
         )
 
-        image_image_4 = PhotoImage(
+        self.image_image_4 = PhotoImage(
             file=relative_to_assets(f"control/SettingsFrame/image_4.png"))
         image_4 = self.canvas_scroll.create_image(
             570.0,
             1081.0,
-            image=image_image_4
+            image=self.image_image_4
         )
 
-        image_image_5 = PhotoImage(
+        self.image_image_5 = PhotoImage(
             file=relative_to_assets(f"control/SettingsFrame/image_5.png"))
         image_5 = self.canvas_scroll.create_image(
             570.0,
             847.0,
-            image=image_image_5
+            image=self.image_image_5
         )
 
-        image_image_6 = PhotoImage(
+        self.image_image_6 = PhotoImage(
             file=relative_to_assets(f"control/SettingsFrame/image_6.png"))
         image_6 = self.canvas_scroll.create_image(
             915.0,
             675.0,
-            image=image_image_6
+            image=self.image_image_6
         )
 
-        image_image_7 = PhotoImage(
+        self.image_image_7 = PhotoImage(
             file=relative_to_assets(f"control/SettingsFrame/image_7.png"))
         image_7 = self.canvas_scroll.create_image(
             94.0,
             764.0,
-            image=image_image_7
+            image=self.image_image_7
         )
 
-        image_image_8 = PhotoImage(
+        self.image_image_8 = PhotoImage(
             file=relative_to_assets(f"control/SettingsFrame/image_8.png"))
         image_8 = self.canvas_scroll.create_image(
             94.0,
             597.0,
-            image=image_image_8
+            image=self.image_image_8
         )
 
-        image_image_9 = PhotoImage(
+        self.image_image_9 = PhotoImage(
             file=relative_to_assets(f"control/SettingsFrame/image_9.png"))
         image_9 = self.canvas_scroll.create_image(
             570.0,
             511.0,
-            image=image_image_9
+            image=self.image_image_9
         )
 
-        image_image_10 = PhotoImage(
+        self.image_image_10 = PhotoImage(
             file=relative_to_assets(f"control/SettingsFrame/image_10.png"))
         image_10 = self.canvas_scroll.create_image(
             94.0,
             428.0,
-            image=image_image_10
+            image=self.image_image_10
         )
 
-        image_image_11 = PhotoImage(
+        self.image_image_11 = PhotoImage(
             file=relative_to_assets(f"control/SettingsFrame/image_11.png"))
         image_11 = self.canvas_scroll.create_image(
             570.0,
             342.0,
-            image=image_image_11
+            image=self.image_image_11
         )
 
         self.canvas_scroll.create_text(
@@ -272,12 +272,12 @@ class Settings(Canvas, BasePage):
             fill="#404040",
             font=("Nunito Bold", 19 * -1)
         )
-        image_image_2 = PhotoImage(
+        self.image_image_2 = PhotoImage(
             file=relative_to_assets(f"control/SettingsFrame/image_2.png"))
         image_2 = self.canvas_scroll.create_image(
             913.0,
             847.0,
-            image=image_image_2
+            image=self.image_image_2
         )
 
         self.canvas_scroll.create_text(
@@ -289,12 +289,12 @@ class Settings(Canvas, BasePage):
             font=("Nunito SemiBold", 20 * -1)
         )
 
-        image_image_12 = PhotoImage(
+        self.image_image_12 = PhotoImage(
             file=relative_to_assets(f"control/SettingsFrame/image_12.png"))
         image_12 = self.canvas_scroll.create_image(
             570.0,
             678.0,
-            image=image_image_12
+            image=self.image_image_12
         )
 
         self.canvas_scroll.create_text(
@@ -325,12 +325,12 @@ class Settings(Canvas, BasePage):
             font=("Nunito SemiBold", 20 * -1)
         )
 
-        image_image_13 = PhotoImage(
+        self.image_image_13 = PhotoImage(
             file=relative_to_assets(f"control/SettingsFrame/image_13.png"))
         image_13 = self.canvas_scroll.create_image(
             913.0,
             511.0,
-            image=image_image_13
+            image=self.image_image_13
         )
 
         self.canvas_scroll.create_text(
@@ -380,14 +380,14 @@ class Settings(Canvas, BasePage):
             font=("Nunito Bold", 19 * -1)
         )
 
-        image_image_14 = PhotoImage(
+        self.image_image_14 = PhotoImage(
             file=relative_to_assets(f"control/SettingsFrame/image_14.png"))
         image_14 = self.canvas_scroll.create_image(
             940.0,
             342.0,
-            image=image_image_14
+            image=self.image_image_14
         )
 
         self.canvas_scroll.configure(scrollregion=self.canvas_scroll.bbox("all"))
-        self.window.mainloop()
+        # self.window.mainloop()
 

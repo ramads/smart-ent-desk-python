@@ -40,28 +40,28 @@ class MedicalRecordEditPage(Canvas, BasePage):
     def drawPage(self, data = None):
         self.place(x = 0, y = 0)
 
-        image_image_1 = PhotoImage(
+        self.image_image_1 = PhotoImage(
             file=relative_to_assets("control/MedicalRecordEditFrame/image_1.png"))
         image_1 = self.create_image(
             566.0,
             89.0,
-            image=image_image_1
+            image=self.image_image_1
         )
 
-        image_image_2 = PhotoImage(
+        self.image_image_2 = PhotoImage(
             file=relative_to_assets("control/MedicalRecordEditFrame/image_2.png"))
         image_2 = self.create_image(
             566.0,
             371.0,
-            image=image_image_2
+            image=self.image_image_2
         )
 
-        image_image_3 = PhotoImage(
+        self.image_image_3 = PhotoImage(
             file=relative_to_assets("control/MedicalRecordEditFrame/image_3.png"))
         image_3 = self.create_image(
             567.0,
             372.0,
-            image=image_image_3
+            image=self.image_image_3
         )
 
         inactive_button_1 = relative_to_assets(f"control/MedicalRecordEditFrame/{self.lang_code}/continue.png")
@@ -115,4 +115,4 @@ class MedicalRecordEditPage(Canvas, BasePage):
             font=("Nunito Bold", 24 * -1)
         )
 
-        self.window.mainloop()
+        # self.window.mainloop()

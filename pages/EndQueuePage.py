@@ -37,20 +37,20 @@ class EndQueuePage(Canvas, BasePage):
 
         # wifi_clock_app = notificationBar(self.window)
 
-        image_image_1 = PhotoImage(
+        self.image_image_1 = PhotoImage(
             file=relative_to_assets("control/EndQueueFrame/image_1.png"))
         image_1 = self.create_image(
             566.0,
             377.0,
-            image=image_image_1
+            image=self.image_image_1
         )
 
-        image_image_4 = PhotoImage(
+        self.image_image_4 = PhotoImage(
             file=relative_to_assets("control/EndQueueFrame/image_4.png"))
         image_4 = self.create_image(
             566.5,
             304.5,
-            image=image_image_4
+            image=self.image_image_4
         )
 
         self.create_text(
@@ -78,7 +78,7 @@ class EndQueuePage(Canvas, BasePage):
 
 
         self.window.after(5000, self.go_to_homepage)
-        self.window.mainloop()
+        # self.window.mainloop()
 
     def go_to_homepage(self):
         goToPage(HomePage.HomePage(self.window))

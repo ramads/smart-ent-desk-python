@@ -59,20 +59,20 @@ class DEarPage(Canvas, BasePage):
                             lambda: goToPage(DEarProcessPage.DEarProcessPage(self.window, self.temp_data)))
         
 
-        image_image_1 = PhotoImage(
+        self.image_image_1 = PhotoImage(
             file=relative_to_assets(f"control/DEarFrame/image_1.png"))
         image_1 = self.create_image(
             566.0,
             89.0,
-            image=image_image_1
+            image=self.image_image_1
         )
 
-        image_image_2 = PhotoImage(
+        self.image_image_2 = PhotoImage(
             file=relative_to_assets(f"control/DEarFrame/image_2.png"))
         image_2 = self.create_image(
             571.0,
             414.0,
-            image=image_image_2
+            image=self.image_image_2
         )
 
         self.create_text(
@@ -95,12 +95,12 @@ class DEarPage(Canvas, BasePage):
             font=("Nunito Bold", 24 * -1)
         )
 
-        image_image_3 = PhotoImage(
+        self.image_image_3 = PhotoImage(
             file=relative_to_assets(f"control/DEarFrame/image_3.png"))
         image_3 = self.create_image(
             568.0,
             326.0,
-            image=image_image_3
+            image=self.image_image_3
         )
 
-        self.window.mainloop()
+        # self.window.mainloop()

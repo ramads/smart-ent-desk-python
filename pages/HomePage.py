@@ -113,12 +113,12 @@ class HomePage(Canvas, BasePage):
             font=("Nunito SemiBold", 12 * -1)
         )
 
-        image_image_4 = PhotoImage(
+        self.image_image_4 = PhotoImage(
             file=relative_to_assets(f"control/HomeFrame/image_4.png"))
         image_4 = self.create_image(
             89.0,
             139.0,
-            image=image_image_4
+            image=self.image_image_4
         )
 
-        self.window.mainloop()
+        # self.mainloop()

@@ -69,12 +69,12 @@ class DiagnosisPage(Canvas, BasePage):
                             BACKGROUND_COLOUR, inactive_button_4, active_button_4,  
                             lambda: goToPage(PatientQueuePage.PatientQueuePage(self.window)))
 
-        image_image_1 = PhotoImage(
+        self.image_image_1 = PhotoImage(
             file=relative_to_assets(f"control/DiagnosisFrame/image_1.png"))
         image_1 = self.create_image(
             566.0,
             89.0,
-            image=image_image_1
+            image=self.image_image_1
         )
 
         self.create_text(
@@ -114,12 +114,12 @@ class DiagnosisPage(Canvas, BasePage):
             font=("Nunito SemiBold", 12 * -1)
         )
 
-        image_image_4 = PhotoImage(
+        self.image_image_4 = PhotoImage(
             file=relative_to_assets(f"control/DiagnosisFrame/image_4.png"))
         image_4 = self.create_image(
             89.0,
             139.0,
-            image=image_image_4
+            image=self.image_image_4
         )
 
-        self.window.mainloop()
+        # self.window.mainloop()

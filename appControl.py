@@ -23,7 +23,7 @@ class App(Tk):
             print("No camera available.")
 
         self.homePage = HomePage.HomePage(self)
-
-        goToPage(self.homePage)
+        self.homePage.drawPage()
 
 app = App()
+app.mainloop()

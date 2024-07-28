@@ -42,28 +42,28 @@ class NotificationPage(Canvas, BasePage):
 
         # wifi_clock_app = notificationBar(self.window)
 
-        image_image_1 = PhotoImage(
+        self.image_image_1 = PhotoImage(
             file=relative_to_assets("control/NotificationFrame/image_1.png"))
         image_1 = self.create_image(
             565.0,
             201.0,
-            image=image_image_1
+            image=self.image_image_1
         )
 
-        image_image_6 = PhotoImage(
+        self.image_image_6 = PhotoImage(
             file=relative_to_assets("control/NotificationFrame/image_6.png"))
         image_6 = self.create_image(
             566.0,
             89.0,
-            image=image_image_6
+            image=self.image_image_6
         )
 
-        image_image_7 = PhotoImage(
+        self.image_image_7 = PhotoImage(
             file=relative_to_assets("control/NotificationFrame/image_7.png"))
         image_7 = self.create_image(
             786.0,
             206.0,
-            image=image_image_7
+            image=self.image_image_7
         )
 
         self.create_text(
@@ -227,6 +227,6 @@ class NotificationPage(Canvas, BasePage):
             y_offset += 140
     
         self.canvas_scroll.configure(scrollregion=self.canvas_scroll.bbox("all"))
-        self.window.mainloop()
+        # self.window.mainloop()
 
         

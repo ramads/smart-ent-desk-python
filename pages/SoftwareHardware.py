@@ -50,29 +50,29 @@ class SoftwareHardware(Canvas, BasePage):
                             BACKGROUND_COLOUR, inactive_button_1, active_button_1,
                             lambda: goToPage(HomePage.HomePage(self.window)))
 
-        image_image_1 = PhotoImage(
+        self.image_image_1 = PhotoImage(
             file=relative_to_assets("control/SoftwareHardware/image_1.png"))
         image_1 = self.create_image(
             566.0,
             89.0,
-            image=image_image_1
+            image=self.image_image_1
         )
 
-        image_image_2 = PhotoImage(
+        self.image_image_2 = PhotoImage(
             file=relative_to_assets("control/SoftwareHardware/image_2.png"))
         image_2 = self.create_image(
             566.0,
             392.0,
-            image=image_image_2
+            image=self.image_image_2
         )
 
-        image_image_3 = PhotoImage(
+        self.image_image_3 = PhotoImage(
             file=relative_to_assets("control/SoftwareHardware/vacuum_card.png"
                                     ) if self.seriCom_conn is True else relative_to_assets("control/SoftwareHardware/disconnected_vacuum_card.png"))
         image_3 = self.create_image(
             819.0,
             431.0,
-            image=image_image_3
+            image=self.image_image_3
         )
 
         endoscope_card = PhotoImage(
@@ -102,13 +102,13 @@ class SoftwareHardware(Canvas, BasePage):
             font=("Nunito Bold", 25 * -1)
         )
 
-        image_image_6 = PhotoImage(
+        self.image_image_6 = PhotoImage(
             file=relative_to_assets("control/SoftwareHardware/sprayer_card.png"
                                     ) if self.seriCom_conn is True else relative_to_assets("control/SoftwareHardware/disconnected_sprayer_card.png"))
         image_6 = self.create_image(
             819.0,
             293.0,
-            image=image_image_6
+            image=self.image_image_6
         )
 
-        self.window.mainloop()
+        # self.window.mainloop()

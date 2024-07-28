@@ -25,20 +25,20 @@ class NotificationDetailv2Page(Canvas, BasePage):
 
         # wifi_clock_app = notificationBar(self.window)
 
-        image_image_1 = PhotoImage(
+        self.image_image_1 = PhotoImage(
             file=relative_to_assets("control/NotificationDetailv2Frame/image_1.png"))
         image_1 = self.create_image(
             566.0,
             89.0,
-            image=image_image_1
+            image=self.image_image_1
         )
 
-        image_image_2 = PhotoImage(
+        self.image_image_2 = PhotoImage(
             file=relative_to_assets("control/NotificationDetailv2Frame/image_2.png"))
         image_2 = self.create_image(
             566.0,
             388.0,
-            image=image_image_2
+            image=self.image_image_2
         )
 
         self.create_text(
@@ -69,12 +69,12 @@ class NotificationDetailv2Page(Canvas, BasePage):
             font=("Nunito Bold", 24 * -1)
         )
 
-        image_image_3 = PhotoImage(
+        self.image_image_3 = PhotoImage(
             file=relative_to_assets("control/NotificationDetailv2Frame/image_3.png"))
         image_3 = self.create_image(
             566.0,
             281.0,
-            image=image_image_3
+            image=self.image_image_3
         )
 
         inactive_button_1 = relative_to_assets("control/NotificationDetailFrame/edit_button.png")
@@ -84,4 +84,4 @@ class NotificationDetailv2Page(Canvas, BasePage):
                             BACKGROUND_COLOUR, inactive_button_1, active_button_1,
                             lambda: goToPage(HomePage.HomePage(self.window)))
 
-        self.window.mainloop()
+        # self.window.mainloop()

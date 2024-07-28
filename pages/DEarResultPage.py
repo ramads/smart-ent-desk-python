@@ -64,12 +64,12 @@ class DEarResultPage(Canvas, BasePage):
 
         # wifi_clock_app = notificationBar(self.window)
 
-        image_image_1 = PhotoImage(
+        self.image_image_1 = PhotoImage(
             file=relative_to_assets("control/DEarResultFrame/image_1.png"))
         image_1 = self.create_image(
             361.0,
             233.0,
-            image=image_image_1
+            image=self.image_image_1
         )
         
         image_path = relative_to_image_capture("test_image.jpg")
@@ -82,12 +82,12 @@ class DEarResultPage(Canvas, BasePage):
             image=captured_img
         )
 
-        image_image_4 = PhotoImage(
+        self.image_image_4 = PhotoImage(
             file=relative_to_assets("control/DEarResultFrame/image_4.png"))
         image_4 = self.create_image(
             895.0,
             233.0,
-            image=image_image_4
+            image=self.image_image_4
         )
 
         # #pie chart
@@ -130,12 +130,12 @@ class DEarResultPage(Canvas, BasePage):
             font=("Nunito Bold", 24 * -1)
         )
 
-        image_image_5 = PhotoImage(
+        self.image_image_5 = PhotoImage(
             file=relative_to_assets("control/DEarResultFrame/image_5.png"))
         image_5 = self.create_image(
             910.0,
             377.0,
-            image=image_image_5
+            image=self.image_image_5
         )
 
         self.create_text(
@@ -149,12 +149,12 @@ class DEarResultPage(Canvas, BasePage):
             width=150
         )
 
-        image_image_6 = PhotoImage(
+        self.image_image_6 = PhotoImage(
             file=relative_to_assets("control/DEarResultFrame/image_6.png"))
         image_6 = self.create_image(
             735.0,
             380,
-            image=image_image_6
+            image=self.image_image_6
         )
 
         self.create_text(
@@ -176,12 +176,12 @@ class DEarResultPage(Canvas, BasePage):
             width=150
         )
 
-        image_image_7 = PhotoImage(
+        self.image_image_7 = PhotoImage(
             file=relative_to_assets("control/DEarResultFrame/image_7.png"))
         image_7 = self.create_image(
             910.0,
             343.0,
-            image=image_image_7
+            image=self.image_image_7
         )
 
         self.create_text(
@@ -194,20 +194,20 @@ class DEarResultPage(Canvas, BasePage):
             width=100
         )
 
-        image_image_8 = PhotoImage(
+        self.image_image_8 = PhotoImage(
             file=relative_to_assets("control/DEarResultFrame/image_8.png"))
         image_8 = self.create_image(
             735.0,
             343.0,
-            image=image_image_8
+            image=self.image_image_8
         )
 
-        image_image_9 = PhotoImage(
+        self.image_image_9 = PhotoImage(
             file=relative_to_assets("control/DEarResultFrame/image_9.png"))
         image_9 = self.create_image(
             361.0,
             568.0,
-            image=image_image_9
+            image=self.image_image_9
         )
 
         self.create_text(
@@ -255,12 +255,12 @@ class DEarResultPage(Canvas, BasePage):
             font=("Nunito Bold", 12 * -1)
         )
 
-        image_image_10 = PhotoImage(
+        self.image_image_10 = PhotoImage(
             file=relative_to_assets("control/DEarResultFrame/image_10.png"))
         image_10 = self.create_image(
             895.0,
             570.0,
-            image=image_image_10
+            image=self.image_image_10
         )
 
         self.create_text(
@@ -375,5 +375,5 @@ class DEarResultPage(Canvas, BasePage):
                             lambda: goToPage(DEarCompletePage.DEarCompletePage(self.window, self.temp_data)))
 
 
-        self.window.mainloop()
+        # self.window.mainloop()
         self.destroy()

@@ -65,12 +65,12 @@ class AboutUsPage(Canvas, BasePage):
                                     borderwidth=0)
         self.canvas_scroll.pack()
 
-        image_image_6 = PhotoImage(
+        self.image_image_6 = PhotoImage(
             file=relative_to_assets("control/NotificationFrame/image_6.png"))
         image_6 = self.create_image(
             566.0,
             89.0,
-            image=image_image_6
+            image=self.image_image_6
         )
 
         inactive_back = relative_to_assets(f"control/AboutUsFrame/{self.lang_code}/back.png")
@@ -85,60 +85,60 @@ class AboutUsPage(Canvas, BasePage):
     def update_cards(self):
         self.canvas_scroll.delete("all")
 
-        image_image_2 = PhotoImage(
+        self.image_image_2 = PhotoImage(
             file=relative_to_assets("control/AboutUsFrame/image_2.png"))
         image_2 = self.canvas_scroll.create_image(
             560.0,
             332.0,
-            image=image_image_2
+            image=self.image_image_2
         )
 
-        image_image_3 = PhotoImage(
+        self.image_image_3 = PhotoImage(
             file=relative_to_assets("control/AboutUsFrame/image_3.png"))
         image_3 = self.canvas_scroll.create_image(
             840.0,
             973.0,
-            image=image_image_3
+            image=self.image_image_3
         )
 
-        image_image_4 = PhotoImage(
+        self.image_image_4 = PhotoImage(
             file=relative_to_assets("control/AboutUsFrame/image_4.png"))
         image_4 = self.canvas_scroll.create_image(
             322.0,
             973.0,
-            image=image_image_4
+            image=self.image_image_4
         )
 
-        image_image_5 = PhotoImage(
+        self.image_image_5 = PhotoImage(
             file=relative_to_assets("control/AboutUsFrame/image_5.png"))
         image_5 = self.canvas_scroll.create_image(
             213.0,
             644.0,
-            image=image_image_5
+            image=self.image_image_5
         )
 
-        image_image_6 = PhotoImage(
+        self.image_image_6 = PhotoImage(
             file=relative_to_assets("control/AboutUsFrame/image_6.png"))
         image_6 = self.canvas_scroll.create_image(
             560.0,
             644.0,
-            image=image_image_6
+            image=self.image_image_6
         )
 
-        image_image_7 = PhotoImage(
+        self.image_image_7 = PhotoImage(
             file=relative_to_assets("control/AboutUsFrame/image_7.png"))
         image_7 = self.canvas_scroll.create_image(
             907.0,
             644.0,
-            image=image_image_7
+            image=self.image_image_7
         )
 
-        image_image_8 = PhotoImage(
+        self.image_image_8 = PhotoImage(
             file=relative_to_assets("control/AboutUsFrame/image_8.png"))
         image_8 = self.canvas_scroll.create_image(
             837.0,
             361.0361328125,
-            image=image_image_8
+            image=self.image_image_8
         )
 
         self.canvas_scroll.create_text(
@@ -187,12 +187,12 @@ class AboutUsPage(Canvas, BasePage):
             font=("Nunito Bold", 19 * -1)
         )
 
-        image_image_9 = PhotoImage(
+        self.image_image_9 = PhotoImage(
             file=relative_to_assets("control/AboutUsFrame/image_9.png"))
         image_9 = self.canvas_scroll.create_image(
             560.5,
             643.5,
-            image=image_image_9
+            image=self.image_image_9
         )
 
         self.canvas_scroll.create_text(
@@ -222,28 +222,28 @@ class AboutUsPage(Canvas, BasePage):
             font=("Nunito Bold", 19 * -1)
         )
 
-        image_image_10 = PhotoImage(
+        self.image_image_10 = PhotoImage(
             file=relative_to_assets("control/AboutUsFrame/image_10.png"))
         image_10 = self.canvas_scroll.create_image(
             322.0,
             973.5,
-            image=image_image_10
+            image=self.image_image_10
         )
 
-        image_image_11 = PhotoImage(
+        self.image_image_11 = PhotoImage(
             file=relative_to_assets("control/AboutUsFrame/image_11.png"))
         image_11 = self.canvas_scroll.create_image(
             654.0,
             1122.0,
-            image=image_image_11
+            image=self.image_image_11
         )
 
-        image_image_12 = PhotoImage(
+        self.image_image_12 = PhotoImage(
             file=relative_to_assets("control/AboutUsFrame/image_12.png"))
         image_12 = self.canvas_scroll.create_image(
             654.0,
             1051.0,
-            image=image_image_12
+            image=self.image_image_12
         )
 
         self.canvas_scroll.create_text(
@@ -255,12 +255,12 @@ class AboutUsPage(Canvas, BasePage):
             font=("Nunito regular", 14 * -1)
         )
 
-        image_image_13 = PhotoImage(
+        self.image_image_13 = PhotoImage(
             file=relative_to_assets("control/AboutUsFrame/image_13.png"))
         image_13 = self.canvas_scroll.create_image(
             654.0,
             980.0,
-            image=image_image_13
+            image=self.image_image_13
         )
 
         self.canvas_scroll.create_text(
@@ -273,12 +273,12 @@ class AboutUsPage(Canvas, BasePage):
             font=("Nunito regular", 14 * -1)
         )
 
-        image_image_14 = PhotoImage(
+        self.image_image_14 = PhotoImage(
             file=relative_to_assets("control/AboutUsFrame/image_14.png"))
         image_14 = self.canvas_scroll.create_image(
             654.0,
             890.0,
-            image=image_image_14
+            image=self.image_image_14
         )
 
         self.canvas_scroll.create_text(
@@ -345,5 +345,5 @@ class AboutUsPage(Canvas, BasePage):
         )
 
         self.canvas_scroll.configure(scrollregion=self.canvas_scroll.bbox("all"))
-        self.window.mainloop()
+        # self.window.mainloop()
 

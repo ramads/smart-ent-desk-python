@@ -121,20 +121,20 @@ class DEarCompletePage(Canvas, BasePage):
 
         # wifi_clock_app = notificationBar(self.window)
 
-        image_image_1 = PhotoImage(
+        self.image_image_1 = PhotoImage(
             file=relative_to_assets("control/DEarCompleteFrame/image_1.png"))
         image_1 = self.create_image(
             566.0,
             377.0,
-            image=image_image_1
+            image=self.image_image_1
         )
 
-        image_image_4 = PhotoImage(
+        self.image_image_4 = PhotoImage(
             file=relative_to_assets("control/DEarCompleteFrame/image_4.png"))
         image_4 = self.create_image(
             566.5,
             304.5,
-            image=image_image_4
+            image=self.image_image_4
         )
 
         self.create_text(
@@ -162,7 +162,7 @@ class DEarCompletePage(Canvas, BasePage):
 
 
         self.window.after(2000, self.goToNextPage)
-        self.window.mainloop()
+        # self.window.mainloop()
 
          # Delay for 3 seconds before navigating to the HomePage
 

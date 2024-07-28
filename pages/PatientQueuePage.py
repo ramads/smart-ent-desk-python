@@ -92,12 +92,12 @@ class PatientQueuePage(Canvas, BasePage):
 
         # wifi_clock_app = notificationBar(self.window)
 
-        image_image_1 = PhotoImage(
+        self.image_image_1 = PhotoImage(
             file=relative_to_assets(f"control/PatientQueueFrame/image_1.png"))
         image_1 = self.create_image(
             382.0,
             405.0,
-            image=image_image_1
+            image=self.image_image_1
         )
 
         self.create_text(
@@ -197,22 +197,22 @@ class PatientQueuePage(Canvas, BasePage):
         # Menonaktifkan Text Widget agar tidak dapat diedit
         text_widget.configure(state="disabled")
 
-        image_image_2 = PhotoImage(
+        self.image_image_2 = PhotoImage(
             file=relative_to_assets(f"control/PatientQueueFrame/image_2.png"))
         image_2 = self.create_image(
             897.0,
             339.0,
-            image=image_image_2
+            image=self.image_image_2
         )
 
         # Tampilan Asuransi
 
-        image_image_7 = PhotoImage(
+        self.image_image_7 = PhotoImage(
             file=relative_to_assets(f"control/PatientQueueFrame/image_7.png"))
         image_7 = self.create_image(
             897.0,
             592.0,
-            image=image_image_7
+            image=self.image_image_7
         )
 
         self.create_text(
@@ -296,12 +296,12 @@ class PatientQueuePage(Canvas, BasePage):
             font=("Nunito Bold", 13 * -1)
         )
 
-        image_image_8 = PhotoImage(
+        self.image_image_8 = PhotoImage(
             file=relative_to_assets(f"control/PatientQueueFrame/image_8.png"))
         image_8 = self.create_image(
             566.0,
             89.0,
-            image=image_image_8
+            image=self.image_image_8
         )
 
         self.create_text(
@@ -322,12 +322,12 @@ class PatientQueuePage(Canvas, BasePage):
             font=("Nunito SemiBold", 12 * -1)
         )
 
-        image_image_9 = PhotoImage(
+        self.image_image_9 = PhotoImage(
             file=relative_to_assets(f"control/PatientQueueFrame/image_9.png"))
         image_9 = self.create_image(
             89.0,
             139.0,
-            image=image_image_9
+            image=self.image_image_9
         )
 
         inactive_button_3 = relative_to_assets(f"control/PatientQueueFrame/{self.lang_code}/button_3.png")
@@ -429,22 +429,22 @@ class PatientQueuePage(Canvas, BasePage):
                 font=("Nunito Regular", 11 * -1)
             )
 
-            image_image_3 = PhotoImage(
+            self.image_image_3 = PhotoImage(
                 file=relative_to_assets(f"control/PatientQueueFrame/image_3.png"))
-            schedule_images.append(image_image_3)
+            schedule_images.append(self.image_image_3)
             image_3 = self.canvas_scroll.create_image(
                 10,
                 35 + y_offset,
-                image=image_image_3
+                image=self.image_image_3
             )
 
-            image_image_4 = PhotoImage(
+            self.image_image_4 = PhotoImage(
                 file=relative_to_assets(f"control/PatientQueueFrame/image_4.png"))
-            schedule_images.append(image_image_4)
+            schedule_images.append(self.image_image_4)
             image_4 = self.canvas_scroll.create_image(
                 10,
                 55 + y_offset,
-                image=image_image_4
+                image=self.image_image_4
             )
 
             self.canvas_scroll.create_text(
@@ -460,4 +460,4 @@ class PatientQueuePage(Canvas, BasePage):
 
         self.canvas_scroll.configure(scrollregion=self.canvas_scroll.bbox("all"))
 
-        self.window.mainloop()
+        # self.window.mainloop()

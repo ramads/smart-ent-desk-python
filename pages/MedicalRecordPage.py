@@ -69,12 +69,12 @@ class MedicalRecordPage(Canvas, BasePage):
 
         # wifi_clock_app = notificationBar(self.window)
 
-        image_image_1 = PhotoImage(
+        self.image_image_1 = PhotoImage(
             file=relative_to_assets("control/MedicalRecordFrame/image_1.png"))
         image_1 = self.create_image(
             566.0,
             413.0,
-            image=image_image_1
+            image=self.image_image_1
         )
 
         self.my_frame = customtkinter.CTkScrollableFrame(self.window,
@@ -132,12 +132,12 @@ class MedicalRecordPage(Canvas, BasePage):
             font=("Nunito Bold", 20 * -1)
         )
 
-        image_image_4 = PhotoImage(
+        self.image_image_4 = PhotoImage(
             file=relative_to_assets("control/MedicalRecordFrame/image_4.png"))
         image_4 = self.create_image(
             566.0,
             89.0,
-            image=image_image_4
+            image=self.image_image_4
         )
 
         self.create_text(
@@ -158,20 +158,20 @@ class MedicalRecordPage(Canvas, BasePage):
             font=("Nunito SemiBold", 12 * -1)
         )
 
-        image_image_5 = PhotoImage(
+        self.image_image_5 = PhotoImage(
             file=relative_to_assets("control/MedicalRecordFrame/image_5.png"))
         image_5 = self.create_image(
             89.0,
             139.0,
-            image=image_image_5
+            image=self.image_image_5
         )
 
-        image_image_6 = PhotoImage(
+        self.image_image_6 = PhotoImage(
             file=relative_to_assets("control/MedicalRecordFrame/image_6.png"))
         image_6 = self.create_image(
             764.0,
             239.0,
-            image=image_image_6
+            image=self.image_image_6
         )
 
         self.create_text(
@@ -255,5 +255,5 @@ class MedicalRecordPage(Canvas, BasePage):
                                             width=23.592920303344727, height=23.592920303344727)
 
         self.canvas_scroll.configure(scrollregion=self.canvas_scroll.bbox("all"))
-        self.window.mainloop()
+        # self.window.mainloop()
 

@@ -39,19 +39,19 @@ class PreviewImagePage(Canvas, BasePage):
 
         # wifi_clock_app = notificationBar(self.window)
 
-        image_image_1 = PhotoImage(
+        self.image_image_1 = PhotoImage(
             file=relative_to_assets("control/PreviewImageFrame/image_1.png"))
         image_1 = self.create_image(
             566.0,
             378.0,
-            image=image_image_1
+            image=self.image_image_1
         )
 
-        captured_img = ImageTk.PhotoImage(Image.open(relative_to_image_capture("test_image.jpg")))
+        self.captured_img = ImageTk.PhotoImage(Image.open(relative_to_image_capture("test_image.jpg")))
         image_2 = self.create_image(
             566.0,
             292.5,
-            image=captured_img
+            image=self.captured_img
         )
 
         self.create_text(
@@ -98,4 +98,4 @@ class PreviewImagePage(Canvas, BasePage):
             fill="#FFFFFF",
             font=("SFProText Semibold", 15 * -1))
 
-        self.window.mainloop()
+        # self.window.mainloop()

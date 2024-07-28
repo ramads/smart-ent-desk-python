@@ -178,12 +178,12 @@ class DEarProcessPage(Canvas, BasePage):
 
         # wifi_clock_app = notificationBar(self.window)
 
-        image_image_1 = PhotoImage(
+        self.image_image_1 = PhotoImage(
             file=relative_to_assets("control/DEarProcessFrame/image_1.png"))
         image_1 = self.create_image(
             354.0,
             378.0,
-            image=image_image_1
+            image=self.image_image_1
         )
 
         inactive_button_1 = relative_to_assets(f"control/DEarProcessFrame/{self.lang_code}/button_1.png")
@@ -207,12 +207,12 @@ class DEarProcessPage(Canvas, BasePage):
                             "#FFFFFF", inactive_button_3, active_button_3,
                             lambda: self.countdown(5))
         
-        image_image_3 = PhotoImage(
+        self.image_image_3 = PhotoImage(
             file=relative_to_assets("control/DEarProcessFrame/image_3.png"))
         image_3 = self.create_image(
             901.0,
             500.0,
-            image=image_image_3
+            image=self.image_image_3
         )
 
         self.create_text(
@@ -438,12 +438,12 @@ class DEarProcessPage(Canvas, BasePage):
             font=("Nunito Bold", 19 * -1)
         )
 
-        image_image_4 = PhotoImage(
+        self.image_image_4 = PhotoImage(
             file=relative_to_assets("control/DEarProcessFrame/image_4.png"))
         image_4 = self.create_image(
             901.0,
             161.0,
-            image=image_image_4
+            image=self.image_image_4
         )
 
         self.create_text(
@@ -540,4 +540,4 @@ class DEarProcessPage(Canvas, BasePage):
 
         switch_button_image(0)
         # self.after(10, self.updateCameraFrame)
-        self.window.mainloop()
+        # self.window.mainloop()

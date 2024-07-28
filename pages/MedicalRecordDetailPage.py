@@ -45,12 +45,12 @@ class MedicalRecordDetailPage(Canvas, BasePage):
 
         # wifi_clock_app = notificationBar(self.window)
 
-        image_image_1 = PhotoImage(
+        self.image_image_1 = PhotoImage(
             file=relative_to_assets("control/MedicalRecordDetailFrame/image_1.png"))
         image_1 = self.create_image(
             566.0,
             89.0,
-            image=image_image_1
+            image=self.image_image_1
         )
 
         inactive_button_3 = relative_to_assets("control/MedicalRecordDetailFrame/button_3.png")
@@ -68,28 +68,28 @@ class MedicalRecordDetailPage(Canvas, BasePage):
                             lambda: goToPage(self.previous_page(self.window)))
 
 
-        image_image_2 = PhotoImage(
+        self.image_image_2 = PhotoImage(
             file=relative_to_assets("control/MedicalRecordDetailFrame/image_2.png"))
         image_2 = self.create_image(
             262.0,
             389.0,
-            image=image_image_2
+            image=self.image_image_2
         )
 
-        image_image_3 = PhotoImage(
+        self.image_image_3 = PhotoImage(
             file=relative_to_assets("control/MedicalRecordDetailFrame/image_3.png"))
         image_3 = self.create_image(
             792.0,
             389.0,
-            image=image_image_3
+            image=self.image_image_3
         )
 
-        image_image_4 = PhotoImage(
+        self.image_image_4 = PhotoImage(
             file=relative_to_assets("control/MedicalRecordDetailFrame/image_4.png"))
         image_4 = self.create_image(
             262.0,
             247.5,
-            image=image_image_4
+            image=self.image_image_4
         )
 
         text_widget = tk.Text(self.window, wrap="word", font=("Nunito Regular", 12), bg="#FFFFFF", fg="#404040", bd=0,
@@ -105,12 +105,12 @@ class MedicalRecordDetailPage(Canvas, BasePage):
         # Menonaktifkan Text Widget agar tidak dapat diedit
         text_widget.configure(state="disabled")
 
-        image_image_5 = PhotoImage(
+        self.image_image_5 = PhotoImage(
             file=relative_to_image_capture(f"{self.clicked_data['gambar_diagnosa']}"))
         image_5 = self.create_image(
             790.0,
             388.0,
-            image=image_image_5
+            image=self.image_image_5
         )
 
 
@@ -177,5 +177,5 @@ class MedicalRecordDetailPage(Canvas, BasePage):
             font=("Nunito Bold", 24 * -1)
         )
 
-        self.window.mainloop()
+        # self.window.mainloop()
 

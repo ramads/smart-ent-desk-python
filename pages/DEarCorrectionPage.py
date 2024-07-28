@@ -40,12 +40,12 @@ class DEarCorrectionPage(Canvas, BasePage):
 
         # wifi_clock_app = notificationBar(self.window)
 
-        image_image_1 = PhotoImage(
+        self.image_image_1 = PhotoImage(
             file=relative_to_assets("control/DEarCorrectionFrame/image_1.png"))
         image_1 = self.create_image(
             376.0,
             378.0,
-            image=image_image_1
+            image=self.image_image_1
         )
 
         image_path = relative_to_image_capture("test_image.jpg")
@@ -58,12 +58,12 @@ class DEarCorrectionPage(Canvas, BasePage):
             image=captured_img
         )
 
-        image_image_3 = PhotoImage(
+        self.image_image_3 = PhotoImage(
             file=relative_to_assets("control/DEarCorrectionFrame/image_3.png"))
         image_3 = self.create_image(
             904.0,
             295.0,
-            image=image_image_3
+            image=self.image_image_3
         )
 
         self.create_text(
@@ -193,4 +193,4 @@ class DEarCorrectionPage(Canvas, BasePage):
                             show)
 
 
-        self.window.mainloop()
+        # self.window.mainloop()

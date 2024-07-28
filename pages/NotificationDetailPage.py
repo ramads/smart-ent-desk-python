@@ -31,20 +31,20 @@ class NotificationDetailPage(Canvas, BasePage):
 
         # wifi_clock_app = notificationBar(self.window)
 
-        image_image_1 = PhotoImage(
+        self.image_image_1 = PhotoImage(
             file=relative_to_assets("control/NotificationDetailFrame/image_1.png"))
         image_1 = self.create_image(
             566.0,
             89.0,
-            image=image_image_1
+            image=self.image_image_1
         )
 
-        image_image_2 = PhotoImage(
+        self.image_image_2 = PhotoImage(
             file=relative_to_assets("control/NotificationDetailFrame/image_2.png"))
         image_2 = self.create_image(
             572.0,
             335.0,
-            image=image_image_2
+            image=self.image_image_2
         )
 
         self.create_text(
@@ -91,4 +91,4 @@ class NotificationDetailPage(Canvas, BasePage):
                             BACKGROUND_COLOUR, inactive_button_1, active_button_1,
                             lambda: goToPage(NotificationPage.NotificationPage(self.window)))
 
-        self.window.mainloop()
+        # self.window.mainloop()

@@ -30,13 +30,13 @@ class FullScreenImagePage(Canvas, BasePage):
 
         # wifi_clock_app = notificationBar(self.window)
 
-        image_image_1 = PhotoImage(
+        self.image_image_1 = PhotoImage(
             file=relative_to_assets("control/FullScreenImageFrame/image_1.png"))
 
         self.create_image(
             568.0,
             378.0,
-            image=image_image_1
+            image=self.image_image_1
         )
 
         self.image_path = relative_to_image_capture("test_image.jpg")
@@ -69,7 +69,7 @@ class FullScreenImagePage(Canvas, BasePage):
                             "#000000", inactive_button_3, active_button_3,
                             lambda: self.zoom_out())
 
-        self.window.mainloop()
+        # self.window.mainloop()
 
     def update_image(self):
         # Calculate the new size of the image based on zoom factor
