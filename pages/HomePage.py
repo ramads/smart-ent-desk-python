@@ -8,7 +8,6 @@ from pages import NotificationPage
 from pages import MedicalRecordPage
 from pages import SoftwareHardware
 from pages import Settings
-from pages import EndQueuePage
 from pages import AboutUsPage
 
 # from pages import NotificationDetailv2Page
@@ -67,23 +66,23 @@ class HomePage(Canvas, BasePage):
                             BACKGROUND_COLOUR, inactive_button_1, active_button_1,
                             lambda: goToPage(PatientQueuePage.PatientQueuePage(self.window)))
         
-        create_hover_button(self.window, 523.0,216.0, 263.0, 319.0, 
+        create_hover_button(self.window, 523.0, 216.0, 263.0, 319.0,
                             BACKGROUND_COLOUR, inactive_button_2, active_button_2,  
                             lambda: goToPage(MedicalRecordPage.MedicalRecordPage(self.window)))
         
-        create_hover_button(self.window, 815.0,216.0, 271.0, 151.0, 
+        create_hover_button(self.window, 815.0, 216.0, 271.0, 151.0,
                             BACKGROUND_COLOUR, inactive_button_3, active_button_3,  
                             lambda: goToPage(NotificationPage.NotificationPage(self.window)))
         
-        create_hover_button(self.window, 815.0,384.0, 271.0, 151.0, 
+        create_hover_button(self.window, 815.0, 384.0, 271.0, 151.0,
                             BACKGROUND_COLOUR, inactive_button_4, active_button_4,  
                             lambda: goToPage(SoftwareHardware.SoftwareHardware(self.window)))
         
-        create_hover_button(self.window, 269.0,591.0, 275.0, 99.0, 
+        create_hover_button(self.window, 269.0, 591.0, 275.0, 99.0,
                             BACKGROUND_COLOUR, inactive_button_5, active_button_5,  
                             lambda: goToPage(Settings.Settings(self.window)))
         
-        create_hover_button(self.window, 590.0,591.0, 274.0, 99.0,
+        create_hover_button(self.window, 590.0, 591.0, 274.0, 99.0,
                             BACKGROUND_COLOUR, inactive_button_6, active_button_6,  
                             lambda: goToPage(AboutUsPage.AboutUsPage(self.window)))
 
@@ -99,7 +98,7 @@ class HomePage(Canvas, BasePage):
             130.0,
             117.5,
             anchor="nw",
-            text= self.hospital_data['nama_rumah_sakit'],
+            text=self.hospital_data['nama_rumah_sakit'],
             fill="#FFFFFF",
             font=("Nunito Black", 14 * -1)
         )

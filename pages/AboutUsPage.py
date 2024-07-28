@@ -2,11 +2,8 @@ import customtkinter
 from tkinter import *
 from colors import *
 from helpers import *
-# from notificationBar import notificationBar
 
 from pages import HomePage
-from pages import MedicalRecordDetailPage
-from pages import MedicalRecordEditPage
 
 from database.models.Hospital import HospitalModel
 from config import DUMMY_HOSPITAL
@@ -44,7 +41,6 @@ class AboutUsPage(Canvas, BasePage):
         self.place(x=0, y=0)
 
         # wifi_clock_app = notificationBar(self.window)
-
 
         self.my_frame = customtkinter.CTkScrollableFrame(self.window,
                                                          orientation="vertical",
@@ -346,4 +342,3 @@ class AboutUsPage(Canvas, BasePage):
 
         self.canvas_scroll.configure(scrollregion=self.canvas_scroll.bbox("all"))
         self.window.mainloop()
-

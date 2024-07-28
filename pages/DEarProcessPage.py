@@ -1,7 +1,4 @@
 import os
-import threading
-import cv2
-import time
 
 from tkinter import *
 
@@ -59,7 +56,6 @@ class DEarProcessPage(Canvas, BasePage):
     def open_camera_in_thread(self):
         camera_open_thread = threading.Thread(target=self.try_open_camera)
         camera_open_thread.start()
-
 
         camera_open_thread.join()
 
@@ -152,8 +148,10 @@ class DEarProcessPage(Canvas, BasePage):
         goToPage(DEarPage.DEarPage(self.window, self.temp_data))
 
     def sendSerialCommand(self, command):
-        if command == 4: command = 0
-        elif command > 4: command = command - 1
+        if command == 4:
+            command = 0
+        elif command > 4:
+            command = command - 1
 
         self.text_command = f"Send serial command: {command}"
         self.itemconfig(self.commandText, text=self.text_command)

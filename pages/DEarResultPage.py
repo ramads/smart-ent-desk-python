@@ -19,6 +19,7 @@ from pages import FullScreenImagePage
 from pprint import pprint
 import json
 
+
 class DEarResultPage(Canvas, BasePage):
     def __init__(self, window, temp_data=None):
 
@@ -57,10 +58,9 @@ class DEarResultPage(Canvas, BasePage):
     
     def loadImage(self):
         return PhotoImage(file=relative_to_assets("image_3.png"))
-    
 
     def drawPage(self):
-        self.place(x = 0, y = 0)
+        self.place(x=0, y=0)
 
         # wifi_clock_app = notificationBar(self.window)
 
@@ -91,14 +91,17 @@ class DEarResultPage(Canvas, BasePage):
         )
 
         # #pie chart
-        # labels = [self.temp_data['result_1'][0], self.temp_data['result_2'][0], self.temp_data['result_3'][0], "Lainnya"]
-        sizes = [int(self.temp_data['result_1'][1] * 100), int(self.temp_data['result_2'][1] * 100), int(self.temp_data['result_3'][1] * 100), (100-int((self.temp_data['result_1'][1]+ self.temp_data['result_2'][1]+ self.temp_data['result_3'][1])*100))]
+        sizes = [int(self.temp_data['result_1'][1] * 100), int(self.temp_data['result_2'][1] * 100),
+                 int(self.temp_data['result_3'][1] * 100), (100-int((self.temp_data['result_1'][1]
+                                                                     + self.temp_data['result_2'][1]
+                                                                     + self.temp_data['result_3'][1])*100))]
+
         colors = ['lightcoral',  'gold', 'yellowgreen', 'lightskyblue']
         explode = (0.1, 0, 0, 0)
 
         fig, ax = plt.subplots(figsize=(3, 2), dpi=100)
         ax.pie(sizes, explode=explode, colors=colors,
-            autopct='%d%%', shadow=True, startangle=140)
+               autopct='%d%%', shadow=True, startangle=140)
         ax.axis('equal')
 
         centre_circle = plt.Circle((0, 0), 0.70, fc='white')
@@ -241,7 +244,7 @@ class DEarResultPage(Canvas, BasePage):
             280.0,
             547.0,
             anchor="nw",
-            text = "{} %".format(int(self.temp_data['result_1'][1] * 100)),
+            text="{} %".format(int(self.temp_data['result_1'][1] * 100)),
             fill="#1E5C2A",
             font=("Nunito Bold", 15 * -1)
         )
@@ -373,7 +376,6 @@ class DEarResultPage(Canvas, BasePage):
         create_hover_button(self.window, 267.0, 623.0, 192.0, 54.0,
                             "#FFFFFF", inactive_button_3, active_button_3,  
                             lambda: goToPage(DEarCompletePage.DEarCompletePage(self.window, self.temp_data)))
-
 
         self.window.mainloop()
         self.destroy()

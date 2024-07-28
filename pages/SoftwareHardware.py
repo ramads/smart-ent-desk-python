@@ -18,7 +18,7 @@ class SoftwareHardware(Canvas, BasePage):
         self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
         self.camera_conn = config.CAMERA_PORT
-        self.dongle_conn = config.DONGLE_ID == "123" #sementara
+        self.dongle_conn = config.DONGLE_ID == "123"  # sementara
         self.seriCom_conn = self.seriCom.connect()
 
         super().__init__(
@@ -39,7 +39,6 @@ class SoftwareHardware(Canvas, BasePage):
 
     def drawPage(self):
         self.place(x=0, y=0)
-
 
         # wifi_clock_app = notificationBar(self.window)
 

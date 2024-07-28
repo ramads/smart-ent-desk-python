@@ -2,12 +2,11 @@ from tkinter import *
 from colors import *
 from helpers import *
 
-from pages import HomePage, DEarPage
-from pprint import pprint
+from pages import DEarPage
 
 from pages import MedicalRecordPage
 
-from database.models.Diagnosis import DiagnosisModel
+# from database.models.Diagnosis import DiagnosisModel
 import json
 
 
@@ -37,8 +36,8 @@ class MedicalRecordEditPage(Canvas, BasePage):
             data = json.load(file)
         return data
 
-    def drawPage(self, data = None):
-        self.place(x = 0, y = 0)
+    def drawPage(self, data=None):
+        self.place(x=0, y=0)
 
         image_image_1 = PhotoImage(
             file=relative_to_assets("control/MedicalRecordEditFrame/image_1.png"))
@@ -72,7 +71,9 @@ class MedicalRecordEditPage(Canvas, BasePage):
 
         create_hover_button(self.window, 575.0, 446.0, 192.0, 54.0,
                             "white", inactive_button_1, active_button_1,
-                            lambda: goToPage(DEarPage.DEarPage(self.window, self.temp_data, self.clicked_data['jenis_diagnosa'], MedicalRecordPage.MedicalRecordPage)))
+                            lambda: goToPage(DEarPage.DEarPage(self.window, self.temp_data,
+                                                               self.clicked_data['jenis_diagnosa'],
+                                                               MedicalRecordPage.MedicalRecordPage)))
 
         create_hover_button(self.window, 366.0, 446.0, 192.0, 54.0,
                             "white", inactive_button_2, active_button_2,

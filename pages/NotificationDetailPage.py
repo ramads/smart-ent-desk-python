@@ -3,10 +3,11 @@ from colors import *
 from helpers import *
 # from notificationBar import notificationBar
 
-from pages import HomePage, NotificationPage
+from pages import NotificationPage
 from database.models.Notification import NotificationModel
 
 import json
+
 
 class NotificationDetailPage(Canvas, BasePage):
 

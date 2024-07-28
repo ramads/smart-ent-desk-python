@@ -1,17 +1,17 @@
 from tkinter import *
 from colors import *
 from helpers import *
-# from notificationBar import notificationBar
 from PIL import ImageTk, Image
 
 from pages import DEarResultPage
 
 import json
 
+
 class FullScreenImagePage(Canvas, BasePage):
     def __init__(self, window, temp_data=None):
         self.window = window
-        self.temp_data =temp_data
+        self.temp_data = temp_data
         self.lang_code = json.load(open("config.json", "r"))["language"]
         self.zoom_factor = 1.0
 
@@ -25,7 +25,7 @@ class FullScreenImagePage(Canvas, BasePage):
             relief="ridge"
         )
         
-    def drawPage(self, data = None):
+    def drawPage(self, data=None):
         self.place(x=0, y=0)
 
         # wifi_clock_app = notificationBar(self.window)
@@ -45,7 +45,6 @@ class FullScreenImagePage(Canvas, BasePage):
 
         self.update_image()
 
-
         inactive_button_1 = relative_to_assets(f"control/FullScreenImageFrame/{self.lang_code}/button_1.png")
         active_button_1 = relative_to_assets(f"control/FullScreenImageFrame/{self.lang_code}/active_button_1.png")
 
@@ -54,8 +53,7 @@ class FullScreenImagePage(Canvas, BasePage):
 
         inactive_button_3 = relative_to_assets(f"control/FullScreenImageFrame/zoom_out.png")
         active_button_3 = relative_to_assets(f"control/FullScreenImageFrame/active_zoom_out.png")
-        
-        
+
         create_hover_button(self.window, 500.5, 648.0, 136.0, 42.0,
                             "#FFFFFF", inactive_button_1, active_button_1,
                             lambda: goToPage(DEarResultPage.DEarResultPage(self.window, self.temp_data)))
@@ -63,7 +61,6 @@ class FullScreenImagePage(Canvas, BasePage):
         create_hover_button(self.window, 980.5, 492.0, 52.0, 52.0,
                             "#000000", inactive_button_2, active_button_2,
                             lambda: self.zoom_in())
-
 
         create_hover_button(self.window, 980.5, 556.0, 52.0, 52.0,
                             "#000000", inactive_button_3, active_button_3,

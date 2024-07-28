@@ -1,12 +1,11 @@
 from tkinter import *
 from colors import *
 from helpers import *
-from pages import DEarProcessPage, DiagnosisPage
+from pages import DEarProcessPage
 # from notificationBar import notificationBar
 
 import json
 class DEarPage(Canvas, BasePage):
-
     def __init__(self, window, temp_data=None, diagnosis_type=None, previous_page=None):
         self.window = window
         self.lang_code = json.load(open("config.json", "r"))["language"]
@@ -29,7 +28,7 @@ class DEarPage(Canvas, BasePage):
             self.get_disease_title(self.temp_data['diagnosis_type'])
 
     def get_disease_title(self, disease):
-        if self.lang_code == 'id' :
+        if self.lang_code == 'id':
             self.disease_title = f"{self.data_localization['disease']} {self.data_localization[disease]}"
         else:
             self.disease_title = f"{self.data_localization[disease]} {self.data_localization['disease']}"
@@ -57,7 +56,6 @@ class DEarPage(Canvas, BasePage):
         create_hover_button(self.window, 575.0, 600.0, 136.0, 42.0,
                             "#FFFFFF", inactive_button_2, active_button_2,  
                             lambda: goToPage(DEarProcessPage.DEarProcessPage(self.window, self.temp_data)))
-        
 
         image_image_1 = PhotoImage(
             file=relative_to_assets(f"control/DEarFrame/image_1.png"))

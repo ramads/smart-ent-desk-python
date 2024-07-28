@@ -1,5 +1,5 @@
 import customtkinter
-import tkinter as tk
+
 from tkinter import *
 from colors import *
 from helpers import *
@@ -43,18 +43,17 @@ class PatientQueuePage(Canvas, BasePage):
 
     def get_disease_title(self):
         if self.lang_code == "id":
-            self.disease_title_1 = f"{self.data_localization['disease']} {self.data_localization[self.current_history_data[0]['jenis_diagnosa']]}" if len(self.current_history_data)>0 else self.data_localization['no_data_yet']
-            self.disease_title_2 = f"{self.data_localization['disease']} {self.data_localization[self.current_history_data[1]['jenis_diagnosa']]}" if len(self.current_history_data)>1 else self.data_localization['no_data_yet']
+            self.disease_title_1 = f"{self.data_localization['disease']} {self.data_localization[self.current_history_data[0]['jenis_diagnosa']]}" if len(self.current_history_data) > 0 else self.data_localization['no_data_yet']
+            self.disease_title_2 = f"{self.data_localization['disease']} {self.data_localization[self.current_history_data[1]['jenis_diagnosa']]}" if len(self.current_history_data) > 1 else self.data_localization['no_data_yet']
         else:
-            self.disease_title_1 = f"{self.data_localization[self.current_history_data[0]['jenis_diagnosa']]} {self.data_localization['disease']}" if len(self.current_history_data)>0 else self.data_localization['no_data_yet']
-            self.disease_title_2 = f"{self.data_localization[self.current_history_data[1]['jenis_diagnosa']]} {self.data_localization['disease']}" if len(self.current_history_data)>1 else self.data_localization['no_data_yet']
+            self.disease_title_1 = f"{self.data_localization[self.current_history_data[0]['jenis_diagnosa']]} {self.data_localization['disease']}" if len(self.current_history_data) > 0 else self.data_localization['no_data_yet']
+            self.disease_title_2 = f"{self.data_localization[self.current_history_data[1]['jenis_diagnosa']]} {self.data_localization['disease']}" if len(self.current_history_data) > 1 else self.data_localization['no_data_yet']
 
     def get_localization(self):
         path = f"locales/{self.lang_code}/string.json"
         with open(path, "r") as file:
             data = json.load(file)
         return data
-
 
     def initialize_models(self):
         self.patient = PatientModel()
@@ -85,10 +84,9 @@ class PatientQueuePage(Canvas, BasePage):
 
     def loadImage(self):
         return PhotoImage(file=relative_to_assets("image_3.png"))
-    
 
-    def drawPage(self, data = None):
-        self.place(x = 0, y = 0)
+    def drawPage(self, data=None):
+        self.place(x=0, y=0)
 
         # wifi_clock_app = notificationBar(self.window)
 
@@ -176,12 +174,18 @@ class PatientQueuePage(Canvas, BasePage):
             257.0,
             384.5,
             anchor="nw",
-            text= " " * 4 + self.current_history_data[0]['diagnosa'] if self.current_history_data and self.current_history_data[0]['diagnosa'] else self.data_localization['no_data_yet'],
+            text=" " * 4 + self.current_history_data[0]['diagnosa'] if self.current_history_data and self.current_history_data[0]['diagnosa'] else self.data_localization['no_data_yet'],
             fill="#1E5C2A",
             font=("Nunito Bold", 19 * -1)
         )
         
-        text_widget = tk.Text(self.window, wrap="word", font=("Nunito regular", 12), bg="#FFFFFF", fg="#404040", bd=0, highlightthickness=0)
+        text_widget = tk.Text(self.window,
+                              wrap="word",
+                              font=("Nunito regular", 12),
+                              bg="#FFFFFF",
+                              fg="#404040",
+                              bd=0,
+                              highlightthickness=0)
         text_widget.place(x=86, y=417.5, width=600, height=150)  # ukuran box
 
         # Mengisi teks ke Text Widget
@@ -342,8 +346,6 @@ class PatientQueuePage(Canvas, BasePage):
         create_hover_button(self.window, 59.5, 633.5, 192.0, 54.0, 
                             BACKGROUND_COLOUR, inactive_button_3, active_button_3,  
                             lambda: goToPage(HomePage.HomePage(self.window)))
-                            # lambda: [self.destroy_all_widgets, goToPage(HomePage.HomePage(self.window))])
-
 
         create_hover_button(self.window, 284.5, 633.5, 192.0, 54.0,
                             BACKGROUND_COLOUR, inactive_button_4, active_button_4,  
@@ -386,20 +388,11 @@ class PatientQueuePage(Canvas, BasePage):
 
     def update_cards(self):
         self.canvas_scroll.delete("all")
-
-        button_images = []
-        location_images = []
         schedule_images = []
 
         for i in range(len(self.current_history_data)):
             y_offset = i * 75
             self.current_history_data[i]['nama_pasien'] = self.patient_data[self.current_patient]['nama_pasien']
-
-            # button_image_1 = PhotoImage(file=relative_to_assets(f"control/PatientQueueFrame/link_button.png"))
-            # button_images.append(button_image_1)
-            # button_1 = Button(self.canvas_scroll, background="white", activebackground="white", image=button_image_1, borderwidth=0, highlightthickness=0,
-            #                   command=lambda i=i: goToPage(MedicalRecordDetailPage.MedicalRecordDetailPage(self.window, self.current_history_data[i], "patient_queue")),
-            #                   relief="flat")
 
             inactive_link_button = relative_to_assets(f"control/PatientQueueFrame/link_button.png")
             active_link_button = relative_to_assets(f"control/PatientQueueFrame/active_link_button.png")
@@ -455,8 +448,6 @@ class PatientQueuePage(Canvas, BasePage):
                 fill="#404040",
                 font=("Nunito Regular", 11 * -1)
             )
-
-
 
         self.canvas_scroll.configure(scrollregion=self.canvas_scroll.bbox("all"))
 

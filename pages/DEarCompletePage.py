@@ -3,7 +3,7 @@ from colors import *
 from helpers import *
 # from notificationBar import notificationBar
 
-from PIL import ImageTk, Image
+from PIL import Image
 
 from pages import HomePage, MedicalRecordPage
 from pprint import pprint
@@ -52,8 +52,10 @@ class DEarCompletePage(Canvas, BasePage):
             'Perforasi Membran Tympani': 'Robekan atau lubang pada gendang telinga yang dapat disebabkan oleh infeksi, trauma, atau tekanan yang tiba-tiba.',
             'Tympanosklerotik': 'Kondisi di mana jaringan parut terbentuk di gendang telinga atau telinga tengah, seringkali sebagai hasil dari infeksi telinga kronis atau berulang.'
         }
-        if self.temp_data.get('id_diagnosis'): self.update_data()
-        else : self.insert_data()
+        if self.temp_data.get('id_diagnosis'):
+            self.update_data()
+        else:
+            self.insert_data()
 
     def get_localization(self):
         path = f"locales/{self.lang_code}/string.json"
@@ -86,6 +88,7 @@ class DEarCompletePage(Canvas, BasePage):
             patient_id=self.temp_data['id_patient'],
             diagnosis_type=self.temp_data['diagnosis_type']
         )
+
     def insert_data(self):
         current_date = datetime.now().strftime('%Y-%m-%d')
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
@@ -110,14 +113,12 @@ class DEarCompletePage(Canvas, BasePage):
             patient_id=self.temp_data['id_patient'],
             diagnosis_type=self.temp_data['diagnosis_type']
         )
-        
-
 
     def loadImage(self):
         return PhotoImage(file=relative_to_assets("image_3.png"))
 
-    def drawPage(self, data = None):
-        self.place(x = 0, y = 0)
+    def drawPage(self, data=None):
+        self.place(x=0, y=0)
 
         # wifi_clock_app = notificationBar(self.window)
 
@@ -160,11 +161,8 @@ class DEarCompletePage(Canvas, BasePage):
         # Update the UI to ensure all elements are rendered
         self.window.update_idletasks()
 
-
-        self.window.after(2000, self.goToNextPage)
+        self.window.after(2000, self.goToNextPage)  # Delay
         self.window.mainloop()
-
-         # Delay for 3 seconds before navigating to the HomePage
 
     def goToNextPage(self):
         if self.temp_data.get('id_diagnosis'):

@@ -2,11 +2,6 @@ import customtkinter
 from tkinter import *
 from colors import *
 from helpers import *
-# from notificationBar import notificationBar
-
-
-from pages import MedicalRecordPage
-from pages import PatientQueuePage
 
 import json
 from pprint import pprint
@@ -67,7 +62,6 @@ class MedicalRecordDetailPage(Canvas, BasePage):
                             BACKGROUND_COLOUR, inactive_button_4, active_button_4,
                             lambda: goToPage(self.previous_page(self.window)))
 
-
         image_image_2 = PhotoImage(
             file=relative_to_assets("control/MedicalRecordDetailFrame/image_2.png"))
         image_2 = self.create_image(
@@ -112,7 +106,6 @@ class MedicalRecordDetailPage(Canvas, BasePage):
             388.0,
             image=image_image_5
         )
-
 
         self.create_text(
             300.0,
@@ -178,4 +171,3 @@ class MedicalRecordDetailPage(Canvas, BasePage):
         )
 
         self.window.mainloop()
-

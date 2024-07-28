@@ -10,8 +10,9 @@ from database.models.Hospital import HospitalModel
 from config import DUMMY_HOSPITAL
 import json
 
+
 class DiagnosisPage(Canvas, BasePage):
-    def __init__(self, window, id_patient = None):
+    def __init__(self, window, id_patient=None):
         self.window = window
         self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
@@ -35,8 +36,7 @@ class DiagnosisPage(Canvas, BasePage):
             data = json.load(file)
         return data
 
-
-    def drawPage(self, data = None):
+    def drawPage(self, data=None):
         self.place(x=0, y=0)
 
         # wifi_clock_app = notificationBar(self.window)

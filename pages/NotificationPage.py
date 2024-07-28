@@ -9,9 +9,9 @@ from pages import HomePage, NotificationDetailPage
 from database.models.Notification import NotificationModel
 
 from datetime import datetime
-from dateutil.relativedelta import relativedelta
 
 import json
+
 
 class NotificationPage(Canvas, BasePage):
 
@@ -37,6 +37,7 @@ class NotificationPage(Canvas, BasePage):
         with open(path, "r") as file:
             data = json.load(file)
         return data
+
     def drawPage(self):
         self.place(x=0, y=0)
 
@@ -127,7 +128,6 @@ class NotificationPage(Canvas, BasePage):
                             '#FFFFFF', inactive_button_2, active_button_2, 
                             lambda: self.searching())        
 
-
         self.update_cards()
 
     def searching(self):
@@ -196,14 +196,35 @@ class NotificationPage(Canvas, BasePage):
                           command=lambda: goToPage(NotificationDetailPage.NotificationDetailPage(self.window, notification)))
         canvas.create_window(48, y_offset, anchor="nw", window=card_btn, width=1034, height=121.63)
     
-        header_label = Label(canvas, text=notification['notif_header'], bg=bg_color, fg="#404040", font=("Nunito Bold", 14))
-        canvas.create_window(75.51806640625, y_offset + 12.074, anchor="nw", window=header_label)
+        header_label = Label(canvas,
+                             text=notification['notif_header'],
+                             bg=bg_color,
+                             fg="#404040",
+                             font=("Nunito Bold", 14))
+        canvas.create_window(75.51806640625,
+                             y_offset + 12.074,
+                             anchor="nw",
+                             window=header_label)
     
-        sub_header_label = Label(canvas, text=notification['notif_subheader'], bg=bg_color, font=("Nunito Regular", 8), fg="#9E9E9E")
-        canvas.create_window(75.51806640625, y_offset + 43.074, anchor="nw", window=sub_header_label)
+        sub_header_label = Label(canvas,
+                                 text=notification['notif_subheader'],
+                                 bg=bg_color,
+                                 font=("Nunito Regular", 8),
+                                 fg="#9E9E9E")
+        canvas.create_window(75.51806640625,
+                             y_offset + 43.074,
+                             anchor="nw",
+                             window=sub_header_label)
     
-        content_label = Label(canvas, text=notification['notif_content'], bg=bg_color, fg="#404040", font=("Nunito Regular", 10))
-        canvas.create_window(75.51806640625, y_offset + 72.074, anchor="nw", window=content_label)
+        content_label = Label(canvas,
+                              text=notification['notif_content'],
+                              bg=bg_color,
+                              fg="#404040",
+                              font=("Nunito Regular", 10))
+        canvas.create_window(75.51806640625,
+                             y_offset + 72.074,
+                             anchor="nw",
+                             window=content_label)
     
     def update_cards(self):
         self.canvas_scroll.delete("all")
