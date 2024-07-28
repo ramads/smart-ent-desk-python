@@ -17,7 +17,8 @@ class MedicalRecordEditPage(Canvas, BasePage):
         self.clicked_data = clicked_data
         self.temp_data = {
             'id_patient': clicked_data['id_pasien'],
-            'id_diagnosis': clicked_data['id_diagnosa']
+            'id_diagnosis': clicked_data['id_diagnosa'],
+            'previous_page': MedicalRecordPage.MedicalRecordPage,
         }
         self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
@@ -72,7 +73,7 @@ class MedicalRecordEditPage(Canvas, BasePage):
 
         create_hover_button(self.window, 575.0, 446.0, 192.0, 54.0,
                             "white", inactive_button_1, active_button_1,
-                            lambda: goToPage(DEarPage.DEarPage(self.window, self.temp_data, self.clicked_data['jenis_diagnosa'], MedicalRecordPage.MedicalRecordPage)))
+                            lambda: goToPage(DEarPage.DEarPage(self.window, self.temp_data, self.clicked_data['jenis_diagnosa'])))
 
         create_hover_button(self.window, 366.0, 446.0, 192.0, 54.0,
                             "white", inactive_button_2, active_button_2,
