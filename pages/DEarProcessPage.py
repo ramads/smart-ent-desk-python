@@ -46,7 +46,9 @@ class DEarProcessPage(Canvas, BasePage):
         self.vidCap = None
         self.camera_thread = None
         self.camera_open_thread = None
+        self.timer = 0
         self.cam_index = config.CAMERA_PORT
+        self.countdown_seconds = 0
         # self.cam_index_list = []
 
         # self.find_camera()
@@ -85,6 +87,12 @@ class DEarProcessPage(Canvas, BasePage):
             data = json.load(file)
         return data
 
+    def set_timer (self, second):
+        if self.timer == second:
+            self.timer = 0
+        else:
+            self.timer = second
+
     def countdown(self, seconds):
         self.countdown_seconds = seconds
         self.window.after(1000, self.updateCountdown)
@@ -114,10 +122,19 @@ class DEarProcessPage(Canvas, BasePage):
 
         if self.countdown_seconds > 0:
             self.create_text(
-                590.0,
+                575.0,
                 525.0,
                 anchor='nw',
                 text=str(self.countdown_seconds),
+                fill="#FFFFFF",
+                font=("Nunito Bold", 60 * -1)
+            )
+        else:
+            self.create_text(
+                575.0,
+                525.0,
+                anchor='nw',
+                text=str(self.timer),
                 fill="#FFFFFF",
                 font=("Nunito Bold", 60 * -1)
             )
@@ -190,8 +207,14 @@ class DEarProcessPage(Canvas, BasePage):
         inactive_button_2 = relative_to_assets(f"control/DEarProcessFrame/{self.lang_code}/button_2.png")
         active_button_2 = relative_to_assets(f"control/DEarProcessFrame/{self.lang_code}/active_button_2.png")
 
-        inactive_button_3 = relative_to_assets(f"control/DEarProcessFrame/{self.lang_code}/pewaktu.png")
-        active_button_3 = relative_to_assets(f"control/DEarProcessFrame/{self.lang_code}/active_pewaktu.png")
+        inactive_button_3 = relative_to_assets(f"control/DEarProcessFrame/inactive_3s.png")
+        active_button_3 = relative_to_assets(f"control/DEarProcessFrame/active_3s.png")
+
+        inactive_button_4 = relative_to_assets(f"control/DEarProcessFrame/inactive_5s.png")
+        active_button_4 = relative_to_assets(f"control/DEarProcessFrame/active_5s.png")
+
+        inactive_button_5 = relative_to_assets(f"control/DEarProcessFrame/inactive_10s.png")
+        active_button_5 = relative_to_assets(f"control/DEarProcessFrame/active_10s.png")
 
         create_hover_button(self.window, 50.0, 632.0, 192.0, 54.0,
                             "#FFFFFF", inactive_button_1, active_button_1, 
@@ -199,11 +222,19 @@ class DEarProcessPage(Canvas, BasePage):
         
         create_hover_button(self.window, 250.0, 632.0, 192.0, 54.0,
                             "#FFFFFF", inactive_button_2, active_button_2,  
-                            lambda: self.onCapture("test_image"))
+                            lambda: self.countdown(self.timer))
 
-        create_hover_button(self.window, 450.0, 632.0, 192.0, 54.0,
+        create_hover_button(self.window, 450.0, 632.0, 62.0, 54.0,
                             "#FFFFFF", inactive_button_3, active_button_3,
-                            lambda: self.countdown(5))
+                            lambda: self.set_timer(3))
+
+        create_hover_button(self.window, 520.0, 632.0, 62.0, 54.0,
+                            "#FFFFFF", inactive_button_4, active_button_4,
+                            lambda: self.set_timer(5))
+
+        create_hover_button(self.window, 590.0, 632.0, 62.0, 54.0,
+                            "#FFFFFF", inactive_button_5, active_button_5,
+                            lambda: self.set_timer(10))
         
         image_image_3 = PhotoImage(
             file=relative_to_assets("control/DEarProcessFrame/image_3.png"))
