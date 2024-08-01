@@ -3,7 +3,7 @@ from colors import *
 from helpers import *
 # from notificationBar import notificationBar
 
-from pages.DEarPage import DEarPage
+from pages import DiagnosisQuestionPage
 from pages import PatientQueuePage
 
 from database.models.Hospital import HospitalModel
@@ -56,7 +56,7 @@ class DiagnosisPage(Canvas, BasePage):
         
         create_hover_button(self.window, 41.0, 223.0, 332.0, 319.0,
                             BACKGROUND_COLOUR, inactive_button_1, active_button_1, 
-                            lambda: goToPage(DEarPage(self.window, self.temp_data, "telinga")))
+                            lambda: goToPage(DiagnosisQuestionPage.DiagnosisQuestionPage(self.window)))
         
         create_hover_button(self.window, 402.0, 223.0, 330.0, 319.0,
                             BACKGROUND_COLOUR, inactive_button_2, active_button_2,  

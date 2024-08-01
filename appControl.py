@@ -1,6 +1,7 @@
 from tkinter import *
 
 from pages import HomePage
+from pages import DongleNotification
 from helpers import *
 from colors import *
 import config
@@ -18,6 +19,9 @@ class App(Tk):
             print(f"Camera found at index {config.CAMERA_PORT } ===============")
         else:
             print("No camera available.")
+
+        if config.DONGLE_ID != "12345":     # correct_Id "12345"
+            goToPage(DongleNotification.DongleNotification(self))
 
         self.homePage = HomePage.HomePage(self)
 
