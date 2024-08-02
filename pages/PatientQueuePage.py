@@ -417,7 +417,7 @@ class PatientQueuePage(Canvas, BasePage):
                 30,
                 27 + y_offset,
                 anchor="nw",
-                text=self.current_history_data[i]['diagnosa'],
+                text=self.current_history_data[i]['tanggal_diagnosa'],
                 fill="#404040",
                 font=("Nunito Regular", 11 * -1)
             )
