@@ -76,5 +76,9 @@
     "office_address" : "Office Address",
     "email" : "Email",
     "telephone" : "Telephone",
-    "website" : "Website"
+    "website" : "Website",
+    "question_title": "Ear Diagnosis",
+    "question_description": "Before conducting a physical examination, please select the symptoms that match the patient's current condition.",
+    "dongle_title": "Dongle Disconnected",
+    "dongle_description": "Please ensure that the dongle you are using is compatible with the device!"
 }

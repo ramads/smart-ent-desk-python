@@ -59,8 +59,8 @@ class DongleNotification(Canvas, BasePage):
             image=image_image_3
         )
 
-        inactive_reload = relative_to_assets(f"control/DongleNotificationFrame/inactive_reload.png")
-        active_reload = relative_to_assets(f"control/DongleNotificationFrame/active_reload.png")
+        inactive_reload = relative_to_assets(f"control/DongleNotificationFrame/{self.lang_code}/inactive_reload.png")
+        active_reload = relative_to_assets(f"control/DongleNotificationFrame/{self.lang_code}/active_reload.png")
 
         create_hover_button(self.window, 471.0, 493.0, 192.0, 54.0,
                             "#FFFFFF", inactive_reload, active_reload,
@@ -71,7 +71,7 @@ class DongleNotification(Canvas, BasePage):
             449.0,
             anchor="center",
             justify="center",
-            text="Mohon pastikan dongle yang anda gunakan sesuai!",
+            text=self.data_localization["dongle_description"],
             fill="#14181F",
             font=("Nunito Regular", 14 * -1)
         )
@@ -81,7 +81,7 @@ class DongleNotification(Canvas, BasePage):
             405.0,
             anchor="center",
             justify="center",
-            text="Dongle Disconnected",
+            text=self.data_localization["dongle_title"],
             fill="#404040",
             font=("Nunito Bold", 24 * -1)
         )

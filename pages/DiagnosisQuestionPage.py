@@ -108,15 +108,15 @@ class DiagnosisQuestionPage(Canvas, BasePage):
             image=image_image_2
         )
 
-        inactive_continue = relative_to_assets(f"control/DiagnosisQuestionFrame/active_continue.png")
-        active_continue = relative_to_assets(f"control/DiagnosisQuestionFrame/inactive_continue.png")
+        inactive_continue = relative_to_assets(f"control/DiagnosisQuestionFrame/{self.lang_code}/active_continue.png")
+        active_continue = relative_to_assets(f"control/DiagnosisQuestionFrame/{self.lang_code}/inactive_continue.png")
 
         create_hover_button(self.window, 575.0, 614.0, 136.0, 42.0,
                             "#FFFFFF", inactive_continue, active_continue,
                             lambda: goToPage(DEarPage.DEarPage(self.window, self.temp_data, "telinga")))
 
-        inactive_back = relative_to_assets(f"control/DiagnosisQuestionFrame/inactive_back.png")
-        active_back = relative_to_assets(f"control/DiagnosisQuestionFrame/active_back.png")
+        inactive_back = relative_to_assets(f"control/DiagnosisQuestionFrame/{self.lang_code}/inactive_back.png")
+        active_back = relative_to_assets(f"control/DiagnosisQuestionFrame/{self.lang_code}/active_back.png")
 
         create_hover_button(self.window, 430.0, 614.0, 136.0, 42.0,
                             "#FFFFFF", inactive_back, active_back,
@@ -140,7 +140,7 @@ class DiagnosisQuestionPage(Canvas, BasePage):
             bg="#FFFFFF",
             fg="#000716",
             highlightthickness=0,
-            placeholder="Isi Detail deskripsi disini (optional) ..."
+            placeholder="You can fill more detail here (optional) ..."
         )
 
         entry_1.place(
@@ -155,7 +155,7 @@ class DiagnosisQuestionPage(Canvas, BasePage):
             190.0,
             anchor="center",
             justify="center",
-            text="Diagnosa Telinga",
+            text=self.data_localization["question_title"],
             fill="#404040",
             font=("Nunito Bold", 24 * -1)
         )
@@ -166,7 +166,7 @@ class DiagnosisQuestionPage(Canvas, BasePage):
             anchor="center",
             justify="center",
             width=800,
-            text="Sebelum melakukan pemeriksaan fisik, silakan pilih gejala yang sesuai dengan keadaan yang sedang dirasakan pasien.",
+            text=self.data_localization["question_description"],
             fill="#404040",
             font=("Nunito Regular", 16 * -1)
         )

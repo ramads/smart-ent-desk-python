@@ -76,5 +76,9 @@
     "office_address" : "Alamat Kantor",
     "email" : "Email",
     "telephone" : "Telepon",
-    "website" : "Situs Web"
+    "website" : "Situs Web",
+    "question_title": "Diagnosa Telinga",
+    "question_description": "Sebelum melakukan pemeriksaan fisik, silakan pilih gejala yang sesuai dengan keadaan yang sedang dirasakan pasien.",
+    "dongle_title": "Dongle Terputus",
+    "dongle_description": "Mohon pastikan dongle yang anda kompatibel dengan alat!"
 }
