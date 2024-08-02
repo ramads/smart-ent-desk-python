@@ -49,9 +49,8 @@ class DEarProcessPage(Canvas, BasePage):
         self.timer = 0
         self.cam_index = config.CAMERA_PORT
         self.countdown_seconds = 0
-        # self.cam_index_list = []
+        self.buttons = []
 
-        # self.find_camera()
         self.open_camera_in_thread()
         self.startCameraThread()
 
@@ -92,6 +91,41 @@ class DEarProcessPage(Canvas, BasePage):
             self.timer = 0
         else:
             self.timer = second
+        self.update_button_states()
+
+    def update_button_states(self):
+        for button, sec in self.buttons:
+            if self.timer == sec:
+                button.config(image=button.active_image)
+                button.image = button.active_image  # Simpan referensi gambar aktif
+            else:
+                button.config(image=button.inactive_image)
+                button.image = button.inactive_image  # Simpan referensi gambar inaktif
+
+    def create_button(self, x, y, width, height, bg_color, inactive_image_path, active_image_path, sec):
+        inactive_image = PhotoImage(file=relative_to_assets(inactive_image_path))
+        active_image = PhotoImage(file=relative_to_assets(active_image_path))
+
+        button = Button(
+            self,
+            image=inactive_image,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: self.set_timer(sec),
+            relief="flat",
+            activebackground=bg_color,
+            bg=bg_color
+        )
+
+        button.place(x=x, y=y, width=width, height=height)
+
+        # Simpan referensi gambar
+        button.image = inactive_image
+        button.active_image = active_image
+        button.inactive_image = inactive_image
+
+        # Simpan referensi tombol dan waktunya dalam list
+        self.buttons.append((button, sec))
 
     def countdown(self, seconds):
         self.countdown_seconds = seconds
@@ -224,18 +258,10 @@ class DEarProcessPage(Canvas, BasePage):
                             "#FFFFFF", inactive_button_2, active_button_2,  
                             lambda: self.countdown(self.timer))
 
-        create_hover_button(self.window, 450.0, 632.0, 62.0, 54.0,
-                            "#FFFFFF", inactive_button_3, active_button_3,
-                            lambda: self.set_timer(3))
+        self.create_button(450.0, 632.0, 62.0, 54.0, "#FFFFFF", inactive_button_3, active_button_3, 3)
+        self.create_button(520.0, 632.0, 62.0, 54.0, "#FFFFFF", inactive_button_4, active_button_4, 5)
+        self.create_button(590.0, 632.0, 62.0, 54.0, "#FFFFFF", inactive_button_5, active_button_5, 10)
 
-        create_hover_button(self.window, 520.0, 632.0, 62.0, 54.0,
-                            "#FFFFFF", inactive_button_4, active_button_4,
-                            lambda: self.set_timer(5))
-
-        create_hover_button(self.window, 590.0, 632.0, 62.0, 54.0,
-                            "#FFFFFF", inactive_button_5, active_button_5,
-                            lambda: self.set_timer(10))
-        
         image_image_3 = PhotoImage(
             file=relative_to_assets("control/DEarProcessFrame/image_3.png"))
         image_3 = self.create_image(

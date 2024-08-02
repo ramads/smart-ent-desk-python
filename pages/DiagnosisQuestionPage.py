@@ -43,6 +43,55 @@ class DiagnosisQuestionPage(Canvas, BasePage):
     def loadImage(self):
         return PhotoImage(file=relative_to_assets("image_3.png"))
 
+    def create_checkbox_components(self, num_components):
+        initial_x = 230.5
+        initial_y = 301.0
+        x_offset = 200
+        max_width = 1100    # Maksimal lebar frame checkbox
+        current_x = initial_x
+        current_y = initial_y
+
+        self.vars = []  # Ini output checkbox, simpan di db
+
+        for i in range(num_components):
+            if current_x + x_offset > max_width:
+                current_x = initial_x
+                current_y += 50
+
+            var = IntVar()
+            self.vars.append(var)
+
+            # Buat kolom checkbox
+            checkbox = Checkbutton(
+                self,
+                variable=var,
+                command=self.update_selected_options,
+                bg="white",  # Set background color to white
+                highlightthickness=0,
+                relief="flat"
+            )
+            checkbox.place(
+                x=current_x,
+                y=current_y,
+                anchor="nw"
+            )
+
+            # Buat Text
+            self.create_text(
+                current_x + 25,  # Atur posisi text di kanan
+                current_y,
+                anchor="nw",
+                text=f"Option {i + 1}",
+                fill="#404040",  # Text color
+                font=("Nunito Regular", 16 * -1)
+            )
+
+            current_x += x_offset
+
+    def update_selected_options(self):
+        selected_options = [i + 1 for i, var in enumerate(self.vars) if var.get()]
+        print("Selected options:", selected_options)
+
     def drawPage(self, data=None):
         self.place(x=0, y=0)
 
@@ -84,47 +133,45 @@ class DiagnosisQuestionPage(Canvas, BasePage):
             image=image_image_3
         )
 
-        self.create_text(
-            230.5,
-            301.0,
-            anchor="nw",
-            text="Lorem ipsum",
-            fill="#404040",
-            font=("Nunito Regular", 16 * -1)
-        )
+        # Atur jumlah check box
+        self.create_checkbox_components(7)
 
-        button_image_3 = PhotoImage(
-            file=relative_to_assets("control/DiagnosisQuestionFrame/button_3.png"))
-        button_3 = Button(
-            image=button_image_3,
-            borderwidth=0,
+        # Text area
+        entry_1 = TextArea(
+            self.window,
+            bd=0,
+            bg="#FFFFFF",
+            fg="#000716",
             highlightthickness=0,
-            command=lambda: print("button_3 clicked"),
-            relief="flat"
+            placeholder="Isi Detail deskripsi disini (optional) ..."
         )
-        button_3.place(
-            x=198.5,
-            y=301.5,
-            width=22.0,
-            height=22.0
+
+        entry_1.place(
+            x=150.0,
+            y=475.0,
+            width=840.0,
+            height=95.0
         )
 
         self.create_text(
-            102.0,
-            176.0,
-            anchor="nw",
+            1133/2.0,
+            190.0,
+            anchor="center",
+            justify="center",
             text="Diagnosa Telinga",
             fill="#404040",
             font=("Nunito Bold", 24 * -1)
         )
 
         self.create_text(
-            102.0,
-            229.5,
-            anchor="nw",
+            1133/2.0,
+            250.5,
+            anchor="center",
+            justify="center",
+            width=800,
             text="Sebelum melakukan pemeriksaan fisik, silakan pilih gejala yang sesuai dengan keadaan yang sedang dirasakan pasien.",
             fill="#404040",
-            font=("Nunito Regular", 19 * -1)
+            font=("Nunito Regular", 16 * -1)
         )
 
         # Update the UI to ensure all elements are rendered
