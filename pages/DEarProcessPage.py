@@ -523,7 +523,7 @@ class DEarProcessPage(Canvas, BasePage):
             726.0,
             160.0,
             anchor="nw",
-            text=f"{self.data_localization['insurance_number'].capitalize()} :",
+            text=f"{self.data_localization['gender_type'].capitalize()} :",
             fill="#404040",
             font=("Nunito Regular", 15 * -1)
         )
@@ -541,7 +541,7 @@ class DEarProcessPage(Canvas, BasePage):
             726.0,
             184.0,
             anchor="nw",
-            text=f"{self.data_localization['insurance_type'].capitalize()} :",
+            text=f"{self.data_localization['latest_diagnose'].capitalize()} :",
             fill="#404040",
             font=("Nunito Regular", 15 * -1)
         )
@@ -559,7 +559,7 @@ class DEarProcessPage(Canvas, BasePage):
             726.0,
             208.0,
             anchor="nw",
-            text=f"{self.data_localization['insurance_class'].capitalize()} :",
+            text=f"{self.data_localization['medical_facility'].capitalize()} :",
             fill="#404040",
             font=("Nunito Regular", 15 * -1)
         )
@@ -577,7 +577,7 @@ class DEarProcessPage(Canvas, BasePage):
             726.0,
             232.0,
             anchor="nw",
-            text=f"{self.data_localization['medical_facility'].capitalize()} :",
+            text=f"{self.data_localization['patient_address'].capitalize()} :",
             fill="#404040",
             font=("Nunito Regular", 15 * -1)
         )

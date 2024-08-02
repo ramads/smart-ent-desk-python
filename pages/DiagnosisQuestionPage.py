@@ -42,7 +42,7 @@ class DiagnosisQuestionPage(Canvas, BasePage):
 
     def create_checkbox_components(self, num_components):
         initial_x = 230.5
-        initial_y = 301.0
+        initial_y = 330.0
         x_offset = 200
         max_width = 1100    # Maksimal lebar frame checkbox
         current_x = initial_x

@@ -202,102 +202,11 @@ class PatientQueuePage(Canvas, BasePage):
         text_widget.configure(state="disabled")
 
         image_image_2 = PhotoImage(
-            file=relative_to_assets(f"control/PatientQueueFrame/image_2.png"))
+            file=relative_to_assets(f"control/PatientQueueFrame/history_bg.png"))
         image_2 = self.create_image(
             897.0,
-            339.0,
+            442.0,
             image=image_image_2
-        )
-
-        # Tampilan Asuransi
-
-        image_image_7 = PhotoImage(
-            file=relative_to_assets(f"control/PatientQueueFrame/image_7.png"))
-        image_7 = self.create_image(
-            897.0,
-            592.0,
-            image=image_image_7
-        )
-
-        self.create_text(
-            752.0,
-            520.0,
-            anchor="nw",
-            text=f"{self.data_localization['insurance']}".title(),
-            fill="#404040",
-            font=("Nunito Bold", 24 * -1)
-        )
-
-        self.create_text(
-            752.0,
-            570.0,
-            anchor="nw",
-            text=f"{self.data_localization['insurance_number']}: ".capitalize(),
-            fill="#404040",
-            font=("Nunito Regular", 13 * -1)
-        )
-
-        self.create_text(
-            900.0,
-            570.0,
-            anchor="nw",
-            text=self.patient_insurance[0]['nomor_asuransi'],
-            fill="#404040",
-            font=("Nunito Bold", 13 * -1)
-        )
-
-        self.create_text(
-            752.0,
-            594.0,
-            anchor="nw",
-            text=f"{self.data_localization['insurance_type']}: ".capitalize(),
-            fill="#404040",
-            font=("Nunito Regular", 13 * -1)
-        )
-
-        self.create_text(
-            900.0,
-            594.0,
-            anchor="nw",
-            text=self.patient_insurance[0]['jenis_asuransi'],
-            fill="#404040",
-            font=("Nunito Bold", 13 * -1)
-        )
-
-        self.create_text(
-            752.0,
-            618.0,
-            anchor="nw",
-            text=f"{self.data_localization['insurance_class']}: ".capitalize(),
-            fill="#404040",
-            font=("Nunito Regular", 13 * -1)
-        )
-
-        self.create_text(
-            900.0,
-            618.0,
-            anchor="nw",
-            text=self.patient_insurance[0]['kelas_asuransi'],
-            fill="#404040",
-            font=("Nunito Bold", 13 * -1)
-        )
-
-        self.create_text(
-            752.0,
-            642.0,
-            anchor="nw",
-            text=f"{self.data_localization['medical_facility']}: ".capitalize(),
-            fill="#404040",
-            font=("Nunito Regular", 13 * -1)
-        )
-
-        self.create_text(
-            900.0,
-            642.0,
-            anchor="nw",
-            text=self.patient_insurance[0]['fasilitas_kesehatan'],
-            fill="#404040",
-            font=("Nunito Bold", 13 * -1)
         )
 
         image_image_8 = PhotoImage(
@@ -368,7 +277,7 @@ class PatientQueuePage(Canvas, BasePage):
         self.my_frame = customtkinter.CTkScrollableFrame(self.window,
                                                          orientation="vertical",
                                                          width=300,
-                                                         height=200,
+                                                         height=400,
                                                          fg_color="#FFFFFF",
                                                          scrollbar_button_hover_color="#404040",
                                                          scrollbar_fg_color="#FFFFFF",
@@ -378,7 +287,7 @@ class PatientQueuePage(Canvas, BasePage):
         self.my_frame.place(x=740, y=255)
         self.canvas_scroll = Canvas(self.my_frame,
                                     width=300,
-                                    height=500,
+                                    height=700,
                                     bg="#FFFFFF",
                                     highlightthickness=0,
                                     borderwidth=0)
@@ -391,7 +300,11 @@ class PatientQueuePage(Canvas, BasePage):
         schedule_images = []
 
         for i in range(len(self.current_history_data)):
-            y_offset = i * 75
+            y_offset = i * 80
+
+            self.canvas_scroll.create_rectangle(5.0, 75.0 + y_offset, 300.0, 75.0 + y_offset,
+                                                fill="#F3F3F3", outline="")
+
             self.current_history_data[i]['nama_pasien'] = self.patient_data[self.current_patient]['nama_pasien']
 
             inactive_link_button = relative_to_assets(f"control/PatientQueueFrame/link_button.png")
