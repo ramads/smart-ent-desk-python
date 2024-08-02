@@ -52,6 +52,7 @@ class DEarResultPage(Canvas, BasePage):
 
     def get_patient_data(self):
         self.patient_data = self.patient.get_patient(self.temp_data['id_patient'])
+        pprint(self.patient_data)
 
     def get_insurance_data(self):
         self.insurance_data = self.insurance.get_patient_insurances(self.temp_data['id_patient'])

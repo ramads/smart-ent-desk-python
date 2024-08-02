@@ -14,7 +14,7 @@ import json
 
 
 class DiagnosisQuestionPage(Canvas, BasePage):
-    def __init__(self, window, id_patient=None):
+    def __init__(self, window, temp_data=None):
         self.window = window
         self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
@@ -29,10 +29,7 @@ class DiagnosisQuestionPage(Canvas, BasePage):
             relief="ridge"
         )
 
-        self.temp_data = {
-            'id_patient': id_patient,
-            'previous_page': DiagnosisQuestionPage
-        }
+        self.temp_data = temp_data
 
     def get_localization(self):
         path = f"locales/{self.lang_code}/string.json"

@@ -35,11 +35,11 @@ class DEarProcessPage(Canvas, BasePage):
             relief="ridge"
         )
         self.temp_data = temp_data
-        self.lang_code = json.load(open("config.json", "r"))["language"]
-        self.data_localization = self.get_localization()
         self.patient = PatientModel()
         self.insurance = InsuranceModel()
         self.patient_data, self.insurance_data = self.get_patient_data()
+        self.lang_code = json.load(open("config.json", "r"))["language"]
+        self.data_localization = self.get_localization()
         self.seriCom.connect()
         os.makedirs(self.image_dir, exist_ok=True)
         self.window = window
