@@ -6,10 +6,10 @@
     "last_diagnosis" : "diagnosis terakhir",
     "diagnosis" : "diagnosa",
     "medical_record" : "riwayat pemeriksaan",
-    "insurance" : "asuransi kesehatan",
-    "insurance_number" : "nomor asuransi",
-    "insurance_type" : "jenis asuransi",
-    "insurance_class" : "kelas asuransi",
+    "patient_information" : "Informasi Pasien",
+    "gender_type" : "Jenis Kelamin",
+    "latest_diagnose" : "Diagnosis Terbaru",
+    "patient_address" : "Alamat Pasien",
     "medical_facility" : "fasilitas medis",
     "no_data_yet" : "Belum ada data",
     "telinga" : "telinga",
@@ -76,5 +76,9 @@
     "office_address" : "Alamat Kantor",
     "email" : "Email",
     "telephone" : "Telepon",
-    "website" : "Situs Web"
+    "website" : "Situs Web",
+    "question_title": "Diagnosa Telinga",
+    "question_description": "Sebelum melakukan pemeriksaan fisik, silakan pilih gejala yang sesuai dengan keadaan yang sedang dirasakan pasien.",
+    "dongle_title": "Dongle Terputus",
+    "dongle_description": "Mohon pastikan dongle yang anda kompatibel dengan alat!"
 }
