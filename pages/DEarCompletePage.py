@@ -9,7 +9,7 @@ from pages import HomePage, MedicalRecordPage
 from pprint import pprint
 from datetime import datetime
 
-from database.models.Diagnosis import DiagnosisModel
+from database.models.MedicalRecord import DiagnosisModel
 import json
 
 

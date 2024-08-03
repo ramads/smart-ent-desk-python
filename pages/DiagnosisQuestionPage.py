@@ -8,7 +8,7 @@ from pages import DiagnosisPage
 
 from pprint import pprint
 
-from database.models.Hospital import HospitalModel
+from database.models.MedicalFacility import HospitalModel
 from config import DUMMY_HOSPITAL
 import json
 

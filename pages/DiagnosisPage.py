@@ -6,7 +6,7 @@ from helpers import *
 from pages import DiagnosisQuestionPage
 from pages import PatientQueuePage
 
-from database.models.Hospital import HospitalModel
+from database.models.MedicalFacility import HospitalModel
 from config import DUMMY_HOSPITAL
 import json
 

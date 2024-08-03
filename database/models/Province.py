@@ -1,7 +1,7 @@
 from database.core.database import Database
 from database.config.config import *
 
-class InsuranceModel:
+class ProvinceModel:
     def __init__(self):
         self.db = None
 
@@ -12,37 +12,22 @@ class InsuranceModel:
     def close_connection(self):
         self.db.close()
 
-    def insert_insurance(self, id_asuransi, jenis_asuransi, fasilitas_kesehatan):
+    def get_province(self, id_provinsi):
         try:
             self.open_connection()
-            query = """
-            INSERT INTO Asuransi (id_asuransi, jenis_asuransi, fasilitas_kesehatan)
-            VALUES (%s, %s, %s)
-            """
-            cursor = self.db.connection.cursor()
-            cursor.execute(query, (id_asuransi, jenis_asuransi, fasilitas_kesehatan))
-            self.db.connection.commit()
-        except Exception as e:
-            print(f"Error: {e}")
-        finally:
-            self.close_connection()
-
-
-    def get_insurance(self, insurance_id):
-        try:
-            self.open_connection()
-            query = "SELECT * FROM Asuransi WHERE id_asuransi = %s"
+            query = "SELECT * FROM Provinsi WHERE id_provinsi = %s"
             cursor = self.db.connection.cursor(dictionary=True)
-            cursor.execute(query, (insurance_id,))
+            cursor.execute(query, (id_provinsi,))
             return cursor.fetchone()
         except Exception as e:
             print(f"Error: {e}")
         finally:
             self.close_connection()
     
-    def get_all_insurances(self):
+    def get_all_provinces(self):
         try:
-            query = "SELECT * FROM Asuransi"
+            self.open_connection()
+            query = "SELECT * FROM Provinsi"
             cursor = self.db.connection.cursor(dictionary=True)
             cursor.execute(query)
             return cursor.fetchall()
@@ -50,16 +35,27 @@ class InsuranceModel:
             print(f"Error: {e}")
         finally:
             self.close_connection()
-    
-    def get_patient_insurances(self, patient_id):
+
+    def get_province_id(self, nama_provinsi):
         try:
             self.open_connection()
-            query = "SELECT * FROM Asuransi WHERE id_pasien = %s"
+            query = "SELECT id_provinsi FROM Provinsi WHERE nama_provinsi = %s"
             cursor = self.db.connection.cursor(dictionary=True)
-            cursor.execute(query, (patient_id,))
-            return cursor.fetchall()
+            cursor.execute(query, (nama_provinsi,))
+            return cursor.fetchone()
         except Exception as e:
             print(f"Error: {e}")
         finally:
             self.close_connection()
-            
+
+    def get_province_name(self, id_provinsi):
+        try:
+            self.open_connection()
+            query = "SELECT nama_provinsi FROM Provinsi WHERE id_provinsi = %s"
+            cursor = self.db.connection.cursor(dictionary=True)
+            cursor.execute(query, (id_provinsi,))
+            return cursor.fetchone()
+        except Exception as e:
+            print(f"Error: {e}")
+        finally:
+            self.close_connection()
