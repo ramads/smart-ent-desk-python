@@ -12,35 +12,28 @@ class PatientModel:
     def close_connection(self):
         self.db.close()
 
-    def create_table(self):
+    def get_id_desa(self, nama_desa):
         try:
             self.open_connection()
-            query = """
-                CREATE TABLE IF NOT EXISTS Pasien (
-                    id_pasien INT AUTO_INCREMENT PRIMARY KEY,
-                    nama_pasien VARCHAR(255) NOT NULL,
-                    jenis_kelamin ENUM('Laki-laki', 'Perempuan') NOT NULL,
-                    tanggal_lahir DATE NOT NULL,
-                    alamat TEXT
-                );
-            """
+            query = "SELECT id_desa FROM Desa WHERE nama_desa = %s"
             cursor = self.db.connection.cursor()
-            cursor.execute(query)
-            self.db.connection.commit()
+            cursor.execute(query, (nama_desa,))
+            return cursor.fetchone()
         except Exception as e:
             print(f"Error: {e}")
         finally:
-            self.close_connection
+            self.close_connection()
 
-    def insert_patient(self, name, gender, birth_date, address):
+    def insert_patient(self, NIK, nama_pasien, jenis_kelamin, tanggal_lahir, alamat, nama_desa):
+        id_desa = self.get_id_desa(nama_desa)
         try:
             self.open_connection()
             query = """
-            INSERT INTO Pasien (nama_pasien, jenis_kelamin, tanggal_lahir, alamat)
-            VALUES (%s, %s, STR_TO_DATE(%s, '%d %M %Y'), %s);
+                INSERT INTO Pasien (NIK, nama_pasien, jenis_kelamin, tanggal_lahir, alamat, id_desa)
+                VALUES (%s, %s, %s, %s, %s, %s)   
             """
             cursor = self.db.connection.cursor()
-            cursor.execute(query, (name, gender, birth_date, address))
+            cursor.execute(query, (NIK, nama_pasien, jenis_kelamin, tanggal_lahir, alamat, id_desa))
             self.db.connection.commit()
         except Exception as e:
             print(f"Error: {e}")

@@ -11,9 +11,9 @@ from pages import EndQueuePage
 from pages import MedicalRecordDetailPage
 
 from database.models.Patient import PatientModel
-from database.models.Diagnosis import DiagnosisModel
+from database.models.MedicalRecord import DiagnosisModel
 from database.models.Insurance import InsuranceModel
-from database.models.Hospital import HospitalModel
+from database.models.MedicalFacility import HospitalModel
 
 import json
 from config import DUMMY_HOSPITAL

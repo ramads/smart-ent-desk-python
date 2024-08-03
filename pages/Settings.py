@@ -8,7 +8,7 @@ from helpers import *
 
 from pages import HomePage
 
-from database.models.Diagnosis import DiagnosisModel
+from database.models.MedicalRecord import DiagnosisModel
 import json
 
 

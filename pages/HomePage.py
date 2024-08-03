@@ -13,7 +13,7 @@ from pages import AboutUsPage
 # from pages import NotificationDetailv2Page
 
 from config import DUMMY_HOSPITAL
-from database.models.Hospital import HospitalModel
+from database.models.MedicalFacility import HospitalModel
 import json
 
 

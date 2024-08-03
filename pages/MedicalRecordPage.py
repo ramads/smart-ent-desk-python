@@ -9,8 +9,8 @@ from pages import HomePage
 from pages import MedicalRecordDetailPage
 from pages import MedicalRecordEditPage
 
-from database.models.Diagnosis import DiagnosisModel
-from database.models.Hospital import HospitalModel
+from database.models.MedicalRecord import DiagnosisModel
+from database.models.MedicalFacility import HospitalModel
 
 from config import DUMMY_HOSPITAL
 import json
