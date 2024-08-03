@@ -12,27 +12,6 @@ class NotificationModel:
     def close_connection(self):
         self.db.close()
 
-    def create_table(self):
-        try:
-            self.open_connection()
-            query = """
-                CREATE TABLE IF NOT EXISTS Notifikasi (
-                    id_notifikasi INT AUTO_INCREMENT PRIMARY KEY,
-                    notif_header VARCHAR(255) NOT NULL,
-                    notif_subheader VARCHAR(255) NOT NULL,
-                    notif_content TEXT NOT NULL,
-                    notif_datetime DATETIME NOT NULL,
-                    already_read BOOLEAN DEFAULT FALSE
-                );
-            """
-            cursor = self.db.connection.cursor()
-            cursor.execute(query)
-            self.db.connection.commit()
-        except Exception as e:
-            print(f"Error: {e}")
-        finally:
-            self.close_connection
-
     def insert_notification(self, header, subheader, content, datetime):
         try:
             self.open_connection()
@@ -60,12 +39,12 @@ class NotificationModel:
         finally:
             self.close_connection()
 
-    def mark_as_read(self, id_notifikasi):
+    def mark_as_read(self, id_notif):
         try:
             self.open_connection()
-            query = "UPDATE Notifikasi SET already_read = TRUE WHERE id_notifikasi = %s"
+            query = "UPDATE Notifikasi SET already_read = TRUE WHERE id_notif = %s"
             cursor = self.db.connection.cursor()
-            cursor.execute(query, (id_notifikasi,))
+            cursor.execute(query, (id_notif,))
             self.db.connection.commit()
         except Exception as e:
             print(f"Error: {e}")

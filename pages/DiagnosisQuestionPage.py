@@ -8,8 +8,6 @@ from pages import DiagnosisPage
 
 from pprint import pprint
 
-from database.models.MedicalFacility import HospitalModel
-from config import DUMMY_HOSPITAL
 import json
 
 
@@ -18,7 +16,6 @@ class DiagnosisQuestionPage(Canvas, BasePage):
         self.window = window
         self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
-        self.hospital_data = HospitalModel().get_hospital(DUMMY_HOSPITAL)
         super().__init__(
             window,
             bg=BACKGROUND_COLOUR,
@@ -113,14 +110,14 @@ class DiagnosisQuestionPage(Canvas, BasePage):
 
         create_hover_button(self.window, 575.0, 614.0, 136.0, 42.0,
                             "#FFFFFF", inactive_continue, active_continue,
-                            lambda: goToPage(DEarPage.DEarPage(self.window, self.temp_data, "telinga")))
+                            lambda: goToPage(DEarPage.DEarPage(self.window, self.temp_data, "telinga", DiagnosisQuestionPage)))
 
         inactive_back = relative_to_assets(f"control/DiagnosisQuestionFrame/inactive_back.png")
         active_back = relative_to_assets(f"control/DiagnosisQuestionFrame/active_back.png")
 
         create_hover_button(self.window, 430.0, 614.0, 136.0, 42.0,
                             "#FFFFFF", inactive_back, active_back,
-                            lambda: goToPage(DiagnosisPage.DiagnosisPage(self.window)))
+                            lambda: goToPage(DiagnosisPage.DiagnosisPage(self.window, self.temp_data)))
 
         image_image_3 = PhotoImage(
             file=relative_to_assets("control/DiagnosisQuestionFrame/image_3.png"))

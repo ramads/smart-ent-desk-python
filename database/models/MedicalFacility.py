@@ -30,7 +30,7 @@ class MedicalFacilityModel:
     def get_medical_facility(self, medical_facility_id):
         try:
             self.open_connection()
-            query = "SELECT * FROM Faskes WHERE id_faskes = %s"
+            query = "SELECT * FROM Fasilitas_Kesehatan WHERE id_faskes = %s"
             cursor = self.db.connection.cursor(dictionary=True)
             cursor.execute(query, (medical_facility_id,))
             return cursor.fetchone()
@@ -42,7 +42,7 @@ class MedicalFacilityModel:
     def get_all_medical_facilities(self):
         try:
             self.open_connection()
-            query = "SELECT * FROM Faskes"
+            query = "SELECT * FROM Fasilitas_Kesehatan"
             cursor = self.db.connection.cursor(dictionary=True)
             cursor.execute(query)
             return cursor.fetchall()

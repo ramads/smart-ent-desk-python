@@ -20,9 +20,12 @@ class DEarPage(Canvas, BasePage):
             relief="ridge"
         )
         self.temp_data = temp_data
+        if previous_page:
+            self.temp_data['previous_page'] = previous_page
         if diagnosis_type:
             self.get_disease_title(diagnosis_type)
             self.temp_data['diagnosis_type'] = diagnosis_type
+
         else:
             self.get_disease_title(self.temp_data['diagnosis_type'])
 
@@ -51,7 +54,7 @@ class DEarPage(Canvas, BasePage):
 
         create_hover_button(self.window, 431.0, 600.0, 136.0, 42.0,
                             "#FFFFFF", inactive_button_1, active_button_1, 
-                            lambda: goToPage(self.temp_data['previous_page'](self.window, self.temp_data['id_patient'])))        
+                            lambda: goToPage(self.temp_data['previous_page'](self.window, self.temp_data)))        
         create_hover_button(self.window, 575.0, 600.0, 136.0, 42.0,
                             "#FFFFFF", inactive_button_2, active_button_2,  
                             lambda: goToPage(DEarProcessPage.DEarProcessPage(self.window, self.temp_data)))

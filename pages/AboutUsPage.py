@@ -5,8 +5,8 @@ from helpers import *
 
 from pages import HomePage
 
-from database.models.MedicalFacility import HospitalModel
-from config import DUMMY_HOSPITAL
+from database.models import MedicalFacility
+from config import DUMMY_MEDICAL_FACILITY
 
 import json
 
@@ -17,7 +17,7 @@ class AboutUsPage(Canvas, BasePage):
         self.window = window
         self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
-        self.data_hospital = HospitalModel().get_hospital(DUMMY_HOSPITAL)
+        self.faskes_data = MedicalFacility.MedicalFacilityModel().get_medical_facility(DUMMY_MEDICAL_FACILITY)
 
         super().__init__(
             window,
@@ -142,7 +142,7 @@ class AboutUsPage(Canvas, BasePage):
             248.0,
             anchor="nw",
             width=520,
-            text=self.data_hospital['tentang_rumah_sakit'],
+            text='',
             fill="#404040",
             font=("Nunito regular", 14 * -1)
         )
@@ -160,7 +160,7 @@ class AboutUsPage(Canvas, BasePage):
             150.0,
             595.5,
             anchor="nw",
-            text=self.data_hospital['jumlah_partner'],
+            text=self.faskes_data['jumlah_partner'],
             fill="#85C13D",
             font=("Nunito Bold", 92 * -1)
         )
@@ -178,7 +178,7 @@ class AboutUsPage(Canvas, BasePage):
             550.0,
             698.0,
             anchor="nw",
-            text=self.data_hospital['jumlah_award'],
+            text=self.faskes_data['jumlah_award'],
             fill="#404040",
             font=("Nunito Bold", 19 * -1)
         )
@@ -204,7 +204,7 @@ class AboutUsPage(Canvas, BasePage):
             830.0,
             595.5,
             anchor="nw",
-            text=self.data_hospital['jumlah_tenang_ahli'],
+            text=self.faskes_data['jumlah_tenaga_ahli'],
             fill="#85C13D",
             font=("Nunito Bold", 92 * -1)
         )
@@ -246,7 +246,7 @@ class AboutUsPage(Canvas, BasePage):
             694.0,
             985.0,
             anchor="nw",
-            text=self.data_hospital['email_rumah_sakit'],
+            text=self.faskes_data['email_faskes'],
             fill="#404040",
             font=("Nunito regular", 14 * -1)
         )
@@ -264,7 +264,7 @@ class AboutUsPage(Canvas, BasePage):
             895.0,
             anchor="nw",
             width=350,
-            text=self.data_hospital['alamat_rumah_sakit'],
+            text=self.faskes_data['alamat_faskes'],
             fill="#404040",
             font=("Nunito regular", 14 * -1)
         )
@@ -290,7 +290,7 @@ class AboutUsPage(Canvas, BasePage):
             694.0,
             1127.0,
             anchor="nw",
-            text=self.data_hospital['situs_rumah_sakit'],
+            text=self.faskes_data['situs_faskes'],
             fill="#404040",
             font=("Nunito regular", 14 * -1)
         )
@@ -308,7 +308,7 @@ class AboutUsPage(Canvas, BasePage):
             694.0,
             1056.0,
             anchor="nw",
-            text=self.data_hospital['phone_number_rumah_sakit'],
+            text=self.faskes_data['no_hp_faskes'],
             fill="#404040",
             font=("Nunito regular", 14 * -1)
         )

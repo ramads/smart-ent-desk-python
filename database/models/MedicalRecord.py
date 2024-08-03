@@ -18,7 +18,7 @@ class MedicalRecordModel:
         try:
             self.open_connection()
             query = """
-            INSERT INTO Diagnosa (id_rekam_medis, tanggal_pemeriksaan, tingkat_keyakinan, prediksi_benar, alasan_koreksi, gambar_penyakit, NIK, id_faskes, id_penyakit)
+            INSERT INTO Rekam_Medis (id_rekam_medis, tanggal_pemeriksaan, tingkat_keyakinan, prediksi_benar, alasan_koreksi, gambar_penyakit, NIK, id_faskes, id_penyakit)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
             """
             cursor = self.db.connection.cursor()
@@ -32,7 +32,7 @@ class MedicalRecordModel:
     def get_medical_record(self, medical_record_id):
         try:
             self.open_connection()
-            query = "SELECT * FROM Diagnosa WHERE id_rekam_medis = %s"
+            query = "SELECT * FROM Rekam_Medis WHERE id_rekam_medis = %s"
             cursor = self.db.connection.cursor(dictionary=True)
             cursor.execute(query, (medical_record_id,))
             return cursor.fetchone()
@@ -44,7 +44,7 @@ class MedicalRecordModel:
     def get_all_medical_records(self):
         try:
             self.open_connection()
-            query = "SELECT * FROM Diagnosa"
+            query = "SELECT * FROM Rekam_Medis"
             cursor = self.db.connection.cursor(dictionary=True)
             cursor.execute(query)
             return cursor.fetchall()
@@ -56,7 +56,7 @@ class MedicalRecordModel:
     def get_patient_medical_record(self, NIK):
         try:
             self.open_connection()
-            query = "SELECT * FROM Diagnosa WHERE NIK = %s"
+            query = "SELECT * FROM Rekam_Medis WHERE NIK = %s"
             cursor = self.db.connection.cursor(dictionary=True)
             cursor.execute(query, (NIK,))
             return cursor.fetchall()
@@ -64,15 +64,15 @@ class MedicalRecordModel:
             print(f"Error: {e}")
         finally:
             self.close_connection()
-    
-    def get_patient_join_diagnoses(self, NIK):
+
+    def get_medical_record_join_disease(self, NIK):
         try:
             self.open_connection()
             query = """
-            SELECT * FROM Diagnosa 
-            JOIN Pasien ON Diagnosa.NIK = Pasien.NIK
-            WHERE Diagnosa.NIK = %s
-            ORDER BY Diagnosa.tanggal_pemeriksaan DESC
+            SELECT * FROM Rekam_Medis 
+            JOIN Penyakit ON Rekam_Medis.id_penyakit = Penyakit.id_penyakit
+            WHERE Rekam_Medis.NIK = %s
+            ORDER BY Rekam_Medis.tanggal_pemeriksaan DESC
             """
             cursor = self.db.connection.cursor(dictionary=True)
             cursor.execute(query, (NIK,))
@@ -82,10 +82,27 @@ class MedicalRecordModel:
         finally:
             self.close_connection()
 
+    def get_medical_record_join_disease_join_patient(self):
+        try:
+            self.open_connection()
+            query = """
+            SELECT * FROM Rekam_Medis
+            JOIN Penyakit ON Rekam_Medis.id_penyakit = Penyakit.id_penyakit
+            JOIN Pasien ON Rekam_Medis.NIK = Pasien.NIK
+            ORDER BY Rekam_Medis.tanggal_pemeriksaan DESC
+            """
+            cursor = self.db.connection.cursor(dictionary=True)
+            cursor.execute(query)
+            return cursor.fetchall()
+        except Exception as e:
+            print(f"Error: {e}")
+        finally:
+            self.close_connection()
+
     def delete_medical_record(self, id_rekam_medis):
         try:
             self.open_connection()
-            query = "DELETE FROM Diagnosa WHERE id_rekam_medis = %s"
+            query = "DELETE FROM Rekam_Medis WHERE id_rekam_medis = %s"
             cursor = self.db.connection.cursor()
             cursor.execute(query, (id_rekam_medis,))
             self.db.connection.commit()
@@ -98,7 +115,7 @@ class MedicalRecordModel:
         try:
             self.open_connection()
             query = """
-            UPDATE Diagnosa
+            UPDATE Rekam_Medis
             SET tanggal_pemeriksaan = %s, tingkat_keyakinan = %s, prediksi_benar = %s, alasan_koreksi = %s, gambar_penyakit = %s, NIK = %s, id_faskes = %s, id_penyakit = %s
             WHERE id_rekam_medis = %s
             """

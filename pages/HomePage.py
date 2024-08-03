@@ -12,8 +12,8 @@ from pages import AboutUsPage
 
 # from pages import NotificationDetailv2Page
 
-from config import DUMMY_HOSPITAL
-from database.models.MedicalFacility import HospitalModel
+from config import DUMMY_MEDICAL_FACILITY
+from database.models import MedicalFacility
 import json
 
 
@@ -21,7 +21,7 @@ class HomePage(Canvas, BasePage):
     def __init__(self, window):
         self.window = window
         self.lang_code = json.load(open("config.json", "r"))["language"]
-        self.hospital_data = HospitalModel().get_hospital(DUMMY_HOSPITAL)
+        self.medical_facility = MedicalFacility.MedicalFacilityModel().get_medical_facility(DUMMY_MEDICAL_FACILITY)
         self.data_localization = self.get_localization()
         super().__init__(
             window,
@@ -98,7 +98,7 @@ class HomePage(Canvas, BasePage):
             130.0,
             117.5,
             anchor="nw",
-            text=self.hospital_data['nama_rumah_sakit'],
+            text=self.medical_facility['nama_faskes'],
             fill="#FFFFFF",
             font=("Nunito Black", 14 * -1)
         )

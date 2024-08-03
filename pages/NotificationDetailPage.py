@@ -16,7 +16,7 @@ class NotificationDetailPage(Canvas, BasePage):
         self.lang_code = json.loads(open("config.json", "r").read())["language"]
         self.clicked_notification = clicked_notification
         self.notification = NotificationModel()
-        self.notification.mark_as_read(clicked_notification["id_notifikasi"])
+        self.notification.mark_as_read(clicked_notification["id_notif"])
         super().__init__(
             window,
             bg=BACKGROUND_COLOUR,

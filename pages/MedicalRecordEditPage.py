@@ -8,15 +8,19 @@ from pages import MedicalRecordPage
 
 # from database.models.Diagnosis import DiagnosisModel
 import json
+from pprint import pprint
+from config import DUMMY_MEDICAL_FACILITY
 
 
 class MedicalRecordEditPage(Canvas, BasePage):
     def __init__(self, window, clicked_data):
         self.window = window
         self.clicked_data = clicked_data
+        pprint(clicked_data)
         self.temp_data = {
-            'id_patient': clicked_data['id_pasien'],
-            'id_diagnosis': clicked_data['id_diagnosa'],
+            'NIK': clicked_data['NIK'],
+            'id_rekam_medis': clicked_data['id_rekam_medis'],
+            'id_faskes': DUMMY_MEDICAL_FACILITY,
             'previous_page': MedicalRecordPage.MedicalRecordPage,
         }
         self.lang_code = json.load(open("config.json", "r"))["language"]
@@ -72,7 +76,7 @@ class MedicalRecordEditPage(Canvas, BasePage):
 
         create_hover_button(self.window, 575.0, 446.0, 192.0, 54.0,
                             "white", inactive_button_1, active_button_1,
-                            lambda: goToPage(DEarPage.DEarPage(self.window, self.temp_data, self.clicked_data['jenis_diagnosa'])))
+                            lambda: goToPage(DEarPage.DEarPage(self.window, self.temp_data, self.clicked_data['organ_penyakit'], MedicalRecordPage.MedicalRecordPage)))
 
         create_hover_button(self.window, 366.0, 446.0, 192.0, 54.0,
                             "white", inactive_button_2, active_button_2,
@@ -92,7 +96,7 @@ class MedicalRecordEditPage(Canvas, BasePage):
             1133/2,
             350.5,
             anchor="center",
-            text=self.clicked_data['diagnosa'],
+            text=self.clicked_data['nama_penyakit'],
             fill="#14181F",
             font=("Nunito Regular", 14 * -1)
         )

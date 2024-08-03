@@ -9,21 +9,19 @@ from pages import HomePage
 from pages import MedicalRecordDetailPage
 from pages import MedicalRecordEditPage
 
-from database.models.MedicalRecord import DiagnosisModel
-from database.models.MedicalFacility import HospitalModel
+from database.models import MedicalRecord, Disease, MedicalFacility
 
-from config import DUMMY_HOSPITAL
+from config import DUMMY_MEDICAL_FACILITY
 import json
+from pprint import pprint
 
 
 class MedicalRecordPage(Canvas, BasePage):
 
-    def __init__(self, window, id_patient=None):
+    def __init__(self, window, temp_data=None):
         self.window = window
-        self.dignosisModel = DiagnosisModel()
-        self.temp_data = self.dignosisModel.get_patient_joint_diagnoses()
-        self.history_data = self.temp_data
-        self.hospital_data = HospitalModel().get_hospital(DUMMY_HOSPITAL)
+        self.initialize_models()
+        self.get_histories_data()
         self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
 
@@ -38,6 +36,15 @@ class MedicalRecordPage(Canvas, BasePage):
         )
 
         self.drawPage()
+
+    def initialize_models(self):
+        self.medical_record = MedicalRecord.MedicalRecordModel()
+        self.disease = Disease.DiseaseModel()
+        self.medical_facility = MedicalFacility.MedicalFacilityModel()
+
+    def get_histories_data(self):
+        self.temp_data = self.medical_record.get_medical_record_join_disease_join_patient()
+        self.history_data = self.temp_data
 
     def get_localization(self):
         path = f"locales/{self.lang_code}/string.json"
@@ -58,10 +65,9 @@ class MedicalRecordPage(Canvas, BasePage):
 
         self.update_cards()
 
-    def delete_diagnosis(self, id):
-        self.dignosisModel.delete_diagnosis(id)
-        self.temp_data = self.dignosisModel.get_patient_joint_diagnoses()
-        self.history_data = self.temp_data
+    def delete_diagnosis(self, id_rekam_medis):
+        self.medical_record.delete_medical_record(id_rekam_medis)
+        self.get_histories_data()
         self.update_cards()
 
     def drawPage(self):
@@ -144,7 +150,7 @@ class MedicalRecordPage(Canvas, BasePage):
             130.0,
             117.5,
             anchor="nw",
-            text=self.hospital_data['nama_rumah_sakit'],
+            text=self.medical_facility.get_medical_facility(DUMMY_MEDICAL_FACILITY)['nama_faskes'],
             fill="#FFFFFF",
             font=("Nunito Black", 14 * -1)
         )
@@ -229,11 +235,11 @@ class MedicalRecordPage(Canvas, BasePage):
                                            fill="#404040",
                                            font=("Nunito Regular", 18 * -1))
             self.canvas_scroll.create_text(380, 331.0 + y_offset, anchor="nw",
-                                           text=self.history_data[i]['diagnosa'],
+                                           text=self.history_data[i]['nama_penyakit'],
                                            fill="#404040",
                                            font=("Nunito Regular", 18 * -1))
             self.canvas_scroll.create_text(650, 331.0 + y_offset, anchor="nw",
-                                           text=self.history_data[i]['tanggal_diagnosa'].strftime("%d %B %Y"),
+                                           text=self.history_data[i]['tanggal_pemeriksaan'].strftime("%d %B %Y"),
                                            fill="#404040",
                                            font=("Nunito Regular", 16 * -1))
 
@@ -256,7 +262,7 @@ class MedicalRecordPage(Canvas, BasePage):
             button_image_3 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/button_3.png"))
             button_images.append(button_image_3)
             button_3 = Button(self.canvas_scroll, image=button_image_3, borderwidth=0, highlightthickness=0,
-                              background="#FFFFFF", command=lambda i=i: self.delete_diagnosis(self.history_data[i]['id_diagnosa']), relief="flat")
+                              background="#FFFFFF", command=lambda i=i: self.delete_diagnosis(self.history_data[i]['id_rekam_medis']), relief="flat")
             self.canvas_scroll.create_window(971.406982421875, 329.20361328125 + y_offset, anchor="nw", window=button_3,
                                              width=23.592920303344727, height=23.592920303344727)
 

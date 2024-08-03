@@ -40,12 +40,12 @@ class PatientModel:
         finally:
             self.close_connection()
 
-    def get_patient(self, patient_id):
+    def get_patient(self, NIK):
         try:
             self.open_connection()
-            query = "SELECT * FROM Pasien WHERE id_pasien = %s"
+            query = "SELECT * FROM Pasien WHERE NIK = %s"
             cursor = self.db.connection.cursor(dictionary=True)
-            cursor.execute(query, (patient_id,))
+            cursor.execute(query, (NIK,))
             return cursor.fetchone()
         except Exception as e:
             print(f"Error: {e}")
