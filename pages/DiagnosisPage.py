@@ -6,17 +6,17 @@ from helpers import *
 from pages import DiagnosisQuestionPage
 from pages import PatientQueuePage
 
-from database.models.MedicalFacility import HospitalModel
-from config import DUMMY_HOSPITAL
+from database.models import MedicalFacility
+from config import DUMMY_MEDICAL_FACILITY
 import json
 
 
 class DiagnosisPage(Canvas, BasePage):
-    def __init__(self, window, id_patient=None):
+    def __init__(self, window, temp_data=None):
         self.window = window
         self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
-        self.hospital_data = HospitalModel().get_hospital(DUMMY_HOSPITAL)
+        self.medical_facility_data = MedicalFacility.MedicalFacilityModel().get_medical_facility(DUMMY_MEDICAL_FACILITY)
         super().__init__(
             window,
             bg=BACKGROUND_COLOUR,
@@ -26,11 +26,7 @@ class DiagnosisPage(Canvas, BasePage):
             highlightthickness=0,
             relief="ridge"
         )
-        self.temp_data = {
-            'id_patient': id_patient,
-            'previous_page': DiagnosisPage
-        }
-
+        self.temp_data = temp_data
     def get_localization(self):
         path = f"locales/{self.lang_code}/string.json"
         with open(path, "r") as file:
@@ -101,7 +97,7 @@ class DiagnosisPage(Canvas, BasePage):
             130.0,
             117.5,
             anchor="nw",
-            text=self.hospital_data['nama_rumah_sakit'],
+            text=self.medical_facility_data['nama_faskes'],
             fill="#FFFFFF",
             font=("Nunito Black", 14 * -1)
         )

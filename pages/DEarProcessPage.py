@@ -10,10 +10,10 @@ from pages import DEarPage, PreviewImagePage
 from libs.serial_com import SerialCom
 # from notificationBar import notificationBar
 
-from database.models.Patient import PatientModel
-from database.models.Insurance import InsuranceModel
+from database.models import Patient
 
 import json
+from pprint import pprint
 
 
 class DEarProcessPage(Canvas, BasePage):
@@ -35,9 +35,9 @@ class DEarProcessPage(Canvas, BasePage):
             relief="ridge"
         )
         self.temp_data = temp_data
-        self.patient = PatientModel()
-        self.insurance = InsuranceModel()
-        self.patient_data, self.insurance_data = self.get_patient_data()
+        pprint(temp_data)
+        self.patient = Patient.PatientModel()
+        self.get_patient_data()
         self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
         self.seriCom.connect()
@@ -76,9 +76,7 @@ class DEarProcessPage(Canvas, BasePage):
             print(f"Failed to open camera at index {self.cam_index}")
 
     def get_patient_data(self):
-        patient_data = self.patient.get_patient(self.temp_data['id_patient'])
-        insurance_data = self.insurance.get_patient_insurances(self.temp_data['id_patient'])
-        return patient_data, insurance_data
+        self.patient_data = self.patient.get_patient(self.temp_data['NIK'])
     
     def get_localization(self):
         path = f"locales/{self.lang_code}/string.json"
@@ -532,7 +530,7 @@ class DEarProcessPage(Canvas, BasePage):
             885.0,
             160.0,
             anchor="nw",
-            text=self.insurance_data[0]['nomor_asuransi'],
+            text='',
             fill="#404040",
             font=("Nunito Bold", 15 * -1)
         )
@@ -550,7 +548,7 @@ class DEarProcessPage(Canvas, BasePage):
             885.0,
             184.0,
             anchor="nw",
-            text=self.insurance_data[0]['jenis_asuransi'],
+            text='',
             fill="#404040",
             font=("Nunito Bold", 15 * -1)
         )
@@ -568,7 +566,7 @@ class DEarProcessPage(Canvas, BasePage):
             885.0,
             208.0,
             anchor="nw",
-            text=self.insurance_data[0]['kelas_asuransi'],
+            text='',
             fill="#404040",
             font=("Nunito Bold", 15 * -1)
         )
@@ -586,7 +584,7 @@ class DEarProcessPage(Canvas, BasePage):
             885.0,
             232.0,
             anchor="nw",
-            text=self.insurance_data[0]['fasilitas_kesehatan'],
+            text='',
             fill="#404040",
             font=("Nunito Bold", 15 * -1)
         )

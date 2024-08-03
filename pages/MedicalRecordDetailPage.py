@@ -16,7 +16,6 @@ class MedicalRecordDetailPage(Canvas, BasePage):
         self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
         self.previous_page = previous_page
-        pprint(clicked_data)
         super().__init__(
             window,
             bg=BACKGROUND_COLOUR,
@@ -90,7 +89,7 @@ class MedicalRecordDetailPage(Canvas, BasePage):
                               highlightthickness=0)
         text_widget.place(x=72, y=525, width=380, height=100)
 
-        text_content = self.clicked_data['hasil_diagnosa'],
+        text_content = self.clicked_data['deskripsi_penyakit'],
         text_widget.insert(tk.END, text_content)
 
         text_widget.tag_configure("justify", justify="left")
@@ -99,8 +98,13 @@ class MedicalRecordDetailPage(Canvas, BasePage):
         # Menonaktifkan Text Widget agar tidak dapat diedit
         text_widget.configure(state="disabled")
 
-        image_image_5 = PhotoImage(
-            file=relative_to_image_capture(f"{self.clicked_data['gambar_diagnosa']}"))
+        try :
+            image_image_5 = PhotoImage(
+                file=relative_to_image_capture(f"{self.clicked_data['gambar_penyakit']}"))
+        except:
+            image_image_5 = PhotoImage(
+                file=relative_to_assets("control/MedicalRecordDetailFrame/image_5.png"))
+            
         image_5 = self.create_image(
             790.0,
             388.0,
@@ -129,7 +133,7 @@ class MedicalRecordDetailPage(Canvas, BasePage):
             270.0,
             455.0,
             anchor="nw",
-            text=self.clicked_data['diagnosa'],
+            text=self.clicked_data['nama_penyakit'],
             fill="#1E5C2A",
             font=("Nunito Bold", 19 * -1)
         )
@@ -147,7 +151,7 @@ class MedicalRecordDetailPage(Canvas, BasePage):
             257.0,
             421.0,
             anchor="nw",
-            text=self.clicked_data['tanggal_diagnosa'].strftime("%d %B %Y"),
+            text=self.clicked_data['tanggal_pemeriksaan'].strftime("%d %B %Y"),
             fill="#404040",
             font=("Nunito Regular", 16 * -1)
         )

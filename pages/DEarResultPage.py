@@ -10,13 +10,11 @@ from PIL import ImageTk, Image
 
 from pages import DEarCorrectionPage
 
-from database.models.Patient import PatientModel
-from database.models.Insurance import InsuranceModel
+from database.models import Patient
 
 from pages import DEarCompletePage
 from pages import FullScreenImagePage
 
-from pprint import pprint
 import json
 
 
@@ -38,11 +36,7 @@ class DEarResultPage(Canvas, BasePage):
             highlightthickness=0,
             relief="ridge"
         )
-        self.patient = PatientModel()
-        self.insurance = InsuranceModel()
         self.get_patient_data()
-        self.get_insurance_data()
-        pprint(self.temp_data)
     
     def get_localization(self):
         path = f"locales/{self.lang_code}/string.json"
@@ -51,11 +45,8 @@ class DEarResultPage(Canvas, BasePage):
         return data
 
     def get_patient_data(self):
-        self.patient_data = self.patient.get_patient(self.temp_data['id_patient'])
-        pprint(self.patient_data)
-
-    def get_insurance_data(self):
-        self.insurance_data = self.insurance.get_patient_insurances(self.temp_data['id_patient'])
+        self.patient = Patient.PatientModel()
+        self.patient_data = self.patient.get_patient(self.temp_data['NIK'])
     
     def loadImage(self):
         return PhotoImage(file=relative_to_assets("image_3.png"))
@@ -298,7 +289,7 @@ class DEarResultPage(Canvas, BasePage):
             900.0,
             543.0,
             anchor="nw",
-            text=self.insurance_data[0]['nomor_asuransi'],
+            text='',
             fill="#404040",
             font=("Nunito Bold", 15 * -1)
         )
@@ -316,7 +307,7 @@ class DEarResultPage(Canvas, BasePage):
             900.0,
             567.0,
             anchor="nw",
-            text=self.insurance_data[0]['jenis_asuransi'],
+            text='',
             fill="#404040",
             font=("Nunito Bold", 15 * -1)
         )
@@ -334,7 +325,7 @@ class DEarResultPage(Canvas, BasePage):
             900.0,
             591.0,
             anchor="nw",
-            text=self.insurance_data[0]['kelas_asuransi'],
+            text='',
             fill="#404040",
             font=("Nunito Bold", 15 * -1)
         )
@@ -352,7 +343,7 @@ class DEarResultPage(Canvas, BasePage):
             900.0,
             615.0,
             anchor="nw",
-            text=self.insurance_data[0]['fasilitas_kesehatan'],
+            text='',
             fill="#404040",
             font=("Nunito Bold", 15 * -1)
         )

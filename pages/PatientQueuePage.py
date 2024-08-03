@@ -10,13 +10,11 @@ from pages import HomePage
 from pages import EndQueuePage
 from pages import MedicalRecordDetailPage
 
-from database.models.Patient import PatientModel
-from database.models.MedicalRecord import DiagnosisModel
-from database.models.Insurance import InsuranceModel
-from database.models.MedicalFacility import HospitalModel
+from database.models import Patient, MedicalRecord, PatientMedicalFacility, MedicalFacility
 
 import json
-from config import DUMMY_HOSPITAL
+from config import DUMMY_MEDICAL_FACILITY
+from pprint import pprint
 
 
 class PatientQueuePage(Canvas, BasePage):
@@ -34,20 +32,19 @@ class PatientQueuePage(Canvas, BasePage):
             relief="ridge"
         )
         self.window = window
-        self.current_patient = 0
-        self.initialize_models()
-        self.hospital_data = self.hospital.get_hospital(DUMMY_HOSPITAL)
-        self.get_patient_data()
-        self.get_patient_insurance()
-        self.get_disease_title()
 
+        self.current_queue_index = 0
+        self.initialize_models()
+        self.get_queue_data()
+
+        self.get_disease_title()
     def get_disease_title(self):
         if self.lang_code == "id":
-            self.disease_title_1 = f"{self.data_localization['disease']} {self.data_localization[self.current_history_data[0]['jenis_diagnosa']]}" if len(self.current_history_data) > 0 else self.data_localization['no_data_yet']
-            self.disease_title_2 = f"{self.data_localization['disease']} {self.data_localization[self.current_history_data[1]['jenis_diagnosa']]}" if len(self.current_history_data) > 1 else self.data_localization['no_data_yet']
+            self.disease_title_1 = f"{self.data_localization['disease']} {self.data_localization[self.current_history_data[0]['organ_penyakit']]}" if len(self.current_history_data) > 0 else self.data_localization['no_data_yet']
+            self.disease_title_2 = f"{self.data_localization['disease']} {self.data_localization[self.current_history_data[1]['organ_penyakit']]}" if len(self.current_history_data) > 1 else self.data_localization['no_data_yet']
         else:
-            self.disease_title_1 = f"{self.data_localization[self.current_history_data[0]['jenis_diagnosa']]} {self.data_localization['disease']}" if len(self.current_history_data) > 0 else self.data_localization['no_data_yet']
-            self.disease_title_2 = f"{self.data_localization[self.current_history_data[1]['jenis_diagnosa']]} {self.data_localization['disease']}" if len(self.current_history_data) > 1 else self.data_localization['no_data_yet']
+            self.disease_title_1 = f"{self.data_localization[self.current_history_data[0]['organ_penyakit']]} {self.data_localization['disease']}" if len(self.current_history_data) > 0 else self.data_localization['no_data_yet']
+            self.disease_title_2 = f"{self.data_localization[self.current_history_data[1]['organ_penyakit']]} {self.data_localization['disease']}" if len(self.current_history_data) > 1 else self.data_localization['no_data_yet']
 
     def get_localization(self):
         path = f"locales/{self.lang_code}/string.json"
@@ -56,27 +53,30 @@ class PatientQueuePage(Canvas, BasePage):
         return data
 
     def initialize_models(self):
-        self.patient = PatientModel()
-        self.diagnosis = DiagnosisModel()
-        self.insurance = InsuranceModel()
-        self.hospital = HospitalModel()
+        self.patient = Patient.PatientModel()
+        self.medical_record = MedicalRecord.MedicalRecordModel() 
+        self.queue = PatientMedicalFacility.PatientMedicalFacilityModel()
+        self.medical_facility = MedicalFacility.MedicalFacilityModel()
 
-    def get_patient_data(self):
-        self.patient_data = self.patient.get_all_patients()
-        if self.patient_data:
-            self.get_current_patient_data()
 
-    def get_current_patient_data(self):
-        self.current_history_data = self.diagnosis.get_patient_diagnoses(self.patient_data[self.current_patient]['id_pasien'])
-        self.get_patient_insurance()
+    def get_queue_data(self):
+        self.queue_data = self.queue.get_queue(DUMMY_MEDICAL_FACILITY)
+        if self.queue_data:
+            self.get_current_data()
 
-    def get_patient_insurance(self):
-        self.patient_insurance = self.insurance.get_patient_insurances(self.patient_data[self.current_patient]['id_pasien'])
+    def get_current_data(self):
+        self.current_patient_data = self.patient.get_patient(self.queue_data[self.current_queue_index]['NIK'])
+        self.current_history_data = self.medical_record.get_medical_record_join_disease(self.current_patient_data['NIK'])
+        self.temp_data = {
+            'NIK': self.queue_data[self.current_queue_index]['NIK'],
+            'id_faskes': self.queue_data[self.current_queue_index]['id_faskes'],
+            'tanggal_pendaftaran': self.queue_data[self.current_queue_index]['tanggal_pendaftaran'],
+        }
 
     def next_patient(self):
-        if self.current_patient < len(self.patient_data) - 1:
-            self.current_patient += 1
-            self.get_current_patient_data()
+        if self.current_queue_index < len(self.queue_data) - 1:
+            self.current_queue_index += 1
+            self.get_current_data()
             self.drawPage()
         else:
             goToPage(EndQueuePage.EndQueuePage(self.window))
@@ -102,7 +102,7 @@ class PatientQueuePage(Canvas, BasePage):
             86.0,
             219.5,
             anchor="nw",
-            text=self.patient_data[self.current_patient]['nama_pasien'],
+            text=self.current_patient_data['nama_pasien'],
             fill="#404040",
             font=("Nunito Bold", 24 * -1)
         )
@@ -120,7 +120,7 @@ class PatientQueuePage(Canvas, BasePage):
             275.0,
             278.5,
             anchor="nw",
-            text=self.patient_data[self.current_patient]['jenis_kelamin'],
+            text=self.current_patient_data['jenis_kelamin'],
             fill="#404040",
             font=("Nunito Regular", 16 * -1)
         )
@@ -138,7 +138,7 @@ class PatientQueuePage(Canvas, BasePage):
             275.0,
             312.5,
             anchor="nw",
-            text=self.patient_data[self.current_patient]['tanggal_lahir'].strftime("%d %B %Y"),
+            text=self.current_patient_data['tanggal_lahir'].strftime("%d %B %Y"),
             fill="#404040",
             font=("Nunito Regular", 16 * -1)
         )
@@ -156,7 +156,7 @@ class PatientQueuePage(Canvas, BasePage):
             275.0,
             346.5,
             anchor="nw",
-            text=self.patient_data[self.current_patient]['alamat'],
+            text=self.current_patient_data['alamat'],
             fill="#404040",
             font=("Nunito Regular", 16 * -1)
         )
@@ -174,7 +174,7 @@ class PatientQueuePage(Canvas, BasePage):
             257.0,
             384.5,
             anchor="nw",
-            text=" " * 4 + self.current_history_data[0]['diagnosa'] if self.current_history_data and self.current_history_data[0]['diagnosa'] else self.data_localization['no_data_yet'],
+            text=" " * 4 + self.current_history_data[0]['nama_penyakit'] if self.current_history_data and self.current_history_data[0]['nama_penyakit'] else self.data_localization['no_data_yet'],
             fill="#1E5C2A",
             font=("Nunito Bold", 19 * -1)
         )
@@ -190,7 +190,7 @@ class PatientQueuePage(Canvas, BasePage):
 
         # Mengisi teks ke Text Widget
         if self.current_history_data and len(self.current_history_data) > 0:
-            text_content = self.current_history_data[0]['hasil_diagnosa'] or self.data_localization['no_data_yet']
+            text_content = self.current_history_data[0]['deskripsi_penyakit'] or self.data_localization['no_data_yet']
         else:
             text_content = self.data_localization['no_data_yet']
         text_widget.insert(tk.END, text_content)
@@ -221,7 +221,7 @@ class PatientQueuePage(Canvas, BasePage):
             130.0,
             117.5,
             anchor="nw",
-            text=self.hospital_data['nama_rumah_sakit'],
+            text=self.medical_facility.get_medical_facility(DUMMY_MEDICAL_FACILITY)['nama_faskes'],
             fill="#FFFFFF",
             font=("Nunito Black", 14 * -1)
         )
@@ -258,7 +258,7 @@ class PatientQueuePage(Canvas, BasePage):
 
         create_hover_button(self.window, 284.5, 633.5, 192.0, 54.0,
                             BACKGROUND_COLOUR, inactive_button_4, active_button_4,  
-                            lambda: goToPage(DiagnosisPage.DiagnosisPage(self.window, self.patient_data[self.current_patient]['id_pasien'])))
+                            lambda: goToPage(DiagnosisPage.DiagnosisPage(self.window, self.temp_data)))
         
         create_hover_button(self.window, 509.5, 633.5, 192.0, 54.0,
                             BACKGROUND_COLOUR, inactive_button_5, active_button_5,  
@@ -305,7 +305,7 @@ class PatientQueuePage(Canvas, BasePage):
             self.canvas_scroll.create_rectangle(5.0, 75.0 + y_offset, 300.0, 75.0 + y_offset,
                                                 fill="#F3F3F3", outline="")
 
-            self.current_history_data[i]['nama_pasien'] = self.patient_data[self.current_patient]['nama_pasien']
+            self.current_history_data[i]['nama_pasien'] = self.current_patient_data['nama_pasien']
 
             inactive_link_button = relative_to_assets(f"control/PatientQueueFrame/link_button.png")
             active_link_button = relative_to_assets(f"control/PatientQueueFrame/active_link_button.png")
@@ -330,7 +330,7 @@ class PatientQueuePage(Canvas, BasePage):
                 30,
                 27 + y_offset,
                 anchor="nw",
-                text=self.current_history_data[i]['tanggal_diagnosa'],
+                text=self.current_history_data[i]['tanggal_pemeriksaan'].strftime("%d %B %Y"),
                 fill="#404040",
                 font=("Nunito Regular", 11 * -1)
             )
@@ -357,7 +357,7 @@ class PatientQueuePage(Canvas, BasePage):
                 30,
                 50.0 + y_offset,
                 anchor="nw",
-                text=self.hospital.get_hospital(self.current_history_data[i]['id_rumah_sakit'])['nama_rumah_sakit'],
+                text=self.medical_facility.get_medical_facility(self.current_history_data[i]['id_faskes'])['nama_faskes'],
                 fill="#404040",
                 font=("Nunito Regular", 11 * -1)
             )

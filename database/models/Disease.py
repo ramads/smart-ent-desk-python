@@ -30,7 +30,7 @@ class DiseaseModel:
     def get_disease(self, id_penyakit):
         try:
             self.open_connection()
-            query = "SELECT * FROM penyakit WHERE id_penyakit = %s"
+            query = "SELECT * FROM Penyakit WHERE id_penyakit = %s"
             cursor = self.db.connection.cursor(dictionary=True)
             cursor.execute(query, (id_penyakit,))
             return cursor.fetchone()
@@ -42,10 +42,22 @@ class DiseaseModel:
     def get_all_diseases(self):
         try:
             self.open_connection()
-            query = "SELECT * FROM penyakit"
+            query = "SELECT * FROM Penyakit"
             cursor = self.db.connection.cursor(dictionary=True)
             cursor.execute(query)
             return cursor.fetchall()
+        except Exception as e:
+            print(f"Error: {e}")
+        finally:
+            self.close_connection()
+
+    def get_disease_id(self, nama_penyakit):
+        try:
+            self.open_connection()
+            query = "SELECT id_penyakit FROM Penyakit WHERE nama_penyakit = %s"
+            cursor = self.db.connection.cursor(dictionary=True)
+            cursor.execute(query, (nama_penyakit,))
+            return cursor.fetchone()
         except Exception as e:
             print(f"Error: {e}")
         finally:
