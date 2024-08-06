@@ -37,7 +37,6 @@ class PatientQueuePage(Canvas, BasePage):
         self.initialize_models()
         self.get_queue_data()
 
-        self.get_disease_title()
     def get_disease_title(self):
         if self.lang_code == "id":
             self.disease_title_1 = f"{self.data_localization['disease']} {self.data_localization[self.current_history_data[0]['organ_penyakit']]}" if len(self.current_history_data) > 0 else self.data_localization['no_data_yet']
@@ -63,6 +62,9 @@ class PatientQueuePage(Canvas, BasePage):
         self.queue_data = self.queue.get_queue(DUMMY_MEDICAL_FACILITY)
         if self.queue_data:
             self.get_current_data()
+            self.get_disease_title()
+        else:
+            goToPage(EndQueuePage.EndQueuePage(self.window))
 
     def get_current_data(self):
         self.current_patient_data = self.patient.get_patient(self.queue_data[self.current_queue_index]['NIK'])
