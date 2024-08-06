@@ -21,7 +21,7 @@ class App(Tk):
         else:
             print("No camera available.")
 
-        if config.DONGLE_ID != "12344":     # correct_Id "12345"
+        if config.DONGLE_ID != "12345":     # correct_Id "12345"
             goToPage(DongleNotification.DongleNotification(self))
 
         self.homePage = HomePage.HomePage(self)

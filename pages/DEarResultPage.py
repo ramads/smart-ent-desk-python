@@ -280,16 +280,16 @@ class DEarResultPage(Canvas, BasePage):
             726.0,
             543.0,
             anchor="nw",
-            text=f"{self.data_localization['gender_type'].capitalize()} :",
+            text=f"{self.data_localization['indications'].capitalize()} :",
             fill="#404040",
             font=("Nunito Regular", 15 * -1)
         )
 
         self.create_text(
-            900.0,
+            800.0,
             543.0,
             anchor="nw",
-            text='',
+            text=', '.join([indication[1] for indication in self.temp_data['indications']]).capitalize(),
             fill="#404040",
             font=("Nunito Bold", 15 * -1)
         )
@@ -298,52 +298,16 @@ class DEarResultPage(Canvas, BasePage):
             726.0,
             567.0,
             anchor="nw",
-            text=f"{self.data_localization['latest_diagnose'].capitalize()} :",
+            text=f"{self.data_localization['description'].capitalize()} :",
             fill="#404040",
             font=("Nunito Regular", 15 * -1)
-        )
-
-        self.create_text(
-            900.0,
-            567.0,
-            anchor="nw",
-            text='',
-            fill="#404040",
-            font=("Nunito Bold", 15 * -1)
         )
 
         self.create_text(
             726.0,
-            591.0,
+            589.0,
             anchor="nw",
-            text=f"{self.data_localization['medical_facility'].capitalize()} :",
-            fill="#404040",
-            font=("Nunito Regular", 15 * -1)
-        )
-
-        self.create_text(
-            900.0,
-            591.0,
-            anchor="nw",
-            text='',
-            fill="#404040",
-            font=("Nunito Bold", 15 * -1)
-        )
-
-        self.create_text(
-            726.0,
-            615.0,
-            anchor="nw",
-            text=f"{self.data_localization['patient_address'].capitalize()} :",
-            fill="#404040",
-            font=("Nunito Regular", 15 * -1)
-        )
-
-        self.create_text(
-            900.0,
-            615.0,
-            anchor="nw",
-            text='',
+            text=self.temp_data['detail'] if self.temp_data['detail'] else '-',
             fill="#404040",
             font=("Nunito Bold", 15 * -1)
         )

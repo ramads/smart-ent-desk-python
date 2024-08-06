@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 03, 2024 at 03:42 PM
+-- Generation Time: Aug 06, 2024 at 11:26 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -25586,7 +25586,7 @@ INSERT INTO `Fasilitas_Kesehatan` (`id_faskes`, `nama_faskes`, `alamat_faskes`, 
 CREATE TABLE `Gejala` (
   `id_gejala` int(11) NOT NULL,
   `nama_gejala` varchar(255) DEFAULT NULL,
-  `organ_gejala` enum('telinga','hidung','tenggorakan') DEFAULT NULL
+  `organ_gejala` enum('telinga','hidung','tenggorokan') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -25594,9 +25594,30 @@ CREATE TABLE `Gejala` (
 --
 
 INSERT INTO `Gejala` (`id_gejala`, `nama_gejala`, `organ_gejala`) VALUES
-(1, 'Nyeri Telinga', 'telinga'),
-(2, 'Hidung Tersumbat', 'hidung'),
-(3, 'Sakit Tenggorokan', 'tenggorakan');
+(1, 'kurang dengar', 'telinga'),
+(2, 'sakit telinga', 'telinga'),
+(29, 'keluar cairan', 'telinga'),
+(30, 'berdengung', 'telinga'),
+(32, 'berdenging', 'telinga'),
+(33, 'terasa tersumbat', 'telinga'),
+(34, 'gatal', 'telinga'),
+(35, 'pilek encer', 'hidung'),
+(36, 'tersumbat', 'hidung'),
+(37, 'bersin-bersin berulang', 'hidung'),
+(38, 'pilek berbau', 'hidung'),
+(39, 'sakit di hidung', 'hidung'),
+(40, 'gatal di hidung', 'hidung'),
+(41, 'sakit di sekitar \\n pipi/wajah', 'hidung'),
+(42, 'pilek kental', 'hidung'),
+(43, 'kurang penciuman', 'hidung'),
+(44, 'sakit menelan', 'tenggorokan'),
+(45, 'batuk', 'tenggorokan'),
+(46, 'gatal di tenggorokan', 'tenggorokan'),
+(47, 'rasa mengganjal', 'tenggorokan'),
+(48, 'suara serak', 'tenggorokan'),
+(49, 'rasa lendir', 'tenggorokan'),
+(50, 'kurang pengecapan', 'tenggorokan'),
+(51, 'berdahak', 'tenggorokan');
 
 -- --------------------------------------------------------
 
@@ -33527,7 +33548,7 @@ CREATE TABLE `Pasien_Fasilitas_Kesehatan` (
 --
 
 INSERT INTO `Pasien_Fasilitas_Kesehatan` (`NIK`, `id_faskes`, `status_periksa`, `tanggal_pendaftaran`) VALUES
-('0987654321', 1, 'tunggu', '2024-08-03 16:03:50'),
+('0987654321', 1, 'selesai', '2024-08-03 16:03:50'),
 ('1234567890', 1, 'tunggu', '2024-08-03 16:04:17');
 
 -- --------------------------------------------------------
@@ -33646,9 +33667,14 @@ CREATE TABLE `Rekam_Medis` (
 --
 
 INSERT INTO `Rekam_Medis` (`id_rekam_medis`, `NIK`, `id_penyakit`, `id_faskes`, `tanggal_pemeriksaan`, `tingkat_keyakinan`, `prediksi_benar`, `alasan_koreksi`, `gambar_penyakit`) VALUES
+('05dadaa8-4d75-4d8c-bf2f-07f737f5a8c7', '1234567890', 8, 1, '2024-08-06 00:00:00', 30, 1, 'None', '1234567890_1_20240806_172435.png'),
+('3d9010d6-d69b-4994-a15e-387b051663b2', '0987654321', 1, 1, '2024-08-06 00:00:00', 34, 1, 'None', '0987654321_1_20240806_172555.png'),
 ('46d248c0-b16e-4181-a239-f4848dd77ddb', '0987654321', 8, 1, '2024-08-03 00:00:00', 27, 1, 'None', '0987654321_1_20240803_205713.png'),
+('773d25af-150c-4924-adc6-b8bd22d1eece', '0987654321', 1, 1, '2024-08-03 00:00:00', 41, 1, 'None', '0987654321_1_20240803_220314.png'),
+('80544298-7db5-435e-b9b1-41a7673413ba', '1234567890', 8, 1, '2024-08-06 00:00:00', 31, 1, 'None', '1234567890_1_20240806_102556.png'),
 ('865f87a2-32bc-4a6a-bb46-61fb00c059d8', '0987654321', 1, 1, '2024-08-03 00:00:00', 25, 1, 'None', '0987654321_1_20240803_210550.png'),
 ('9fb73f5a-7802-4103-9393-67980fc31760', '1234567890', 8, 1, '2024-08-03 00:00:00', 23, 1, 'None', '1234567890_1_20240803_205911.png'),
+('a5200d4d-1787-4d9c-9582-86fd52e2ddc4', '0987654321', 8, 1, '2024-08-06 00:00:00', 20, 1, 'None', '0987654321_1_20240806_172225.png'),
 ('cae317c5-5148-11ef-b4b5-f47b095d2bf4', '1234567890', 1, 1, '2024-08-03 00:00:00', 34, 1, 'None', '1234567890_1_20240803_213609.png'),
 ('cae31c7c-5148-11ef-b4b5-f47b095d2bf4', '0987654321', 2, 2, '2024-07-02 11:00:00', 90, 0, 'Diagnosa awal tidak akurat', 'link_to_image_2'),
 ('dc0f27e0-7c56-4c01-a296-558a0c48f953', '0987654321', 8, 1, '2024-08-03 00:00:00', 18, 1, 'None', '0987654321_1_20240803_205609.png'),
@@ -33672,6 +33698,9 @@ CREATE TABLE `Rekam_Medis_Gejala` (
 --
 
 INSERT INTO `Rekam_Medis_Gejala` (`id_rekam_medis`, `id_gejala`) VALUES
+('3d9010d6-d69b-4994-a15e-387b051663b2', 29),
+('3d9010d6-d69b-4994-a15e-387b051663b2', 32),
+('3d9010d6-d69b-4994-a15e-387b051663b2', 34),
 ('cae317c5-5148-11ef-b4b5-f47b095d2bf4', 1),
 ('cae31c7c-5148-11ef-b4b5-f47b095d2bf4', 2);
 
@@ -33835,7 +33864,7 @@ ALTER TABLE `Fasilitas_Kesehatan`
 -- AUTO_INCREMENT for table `Gejala`
 --
 ALTER TABLE `Gejala`
-  MODIFY `id_gejala` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_gejala` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `Notifikasi`

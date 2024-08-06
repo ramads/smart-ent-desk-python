@@ -3,10 +3,10 @@ from colors import *
 from helpers import *
 from pages import DEarProcessPage
 # from notificationBar import notificationBar
-
+from pprint import pprint
 import json
 class DEarPage(Canvas, BasePage):
-    def __init__(self, window, temp_data=None, diagnosis_type=None, previous_page=None):
+    def __init__(self, window, temp_data=None, previous_page=None):
         self.window = window
         self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
@@ -20,14 +20,10 @@ class DEarPage(Canvas, BasePage):
             relief="ridge"
         )
         self.temp_data = temp_data
+        pprint(self.temp_data)
         if previous_page:
             self.temp_data['previous_page'] = previous_page
-        if diagnosis_type:
-            self.get_disease_title(diagnosis_type)
-            self.temp_data['diagnosis_type'] = diagnosis_type
-
-        else:
-            self.get_disease_title(self.temp_data['diagnosis_type'])
+        self.get_disease_title(self.temp_data['diagnosis_type'])
 
     def get_disease_title(self, disease):
         if self.lang_code == 'id':

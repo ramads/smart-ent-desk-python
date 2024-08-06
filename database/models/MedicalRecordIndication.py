@@ -12,16 +12,16 @@ class MedicalRecordIndicationModel:
     def close_connection(self):
         self.db.close()
 
-    def get_insert(self, id_rekam_medis, id_gejala):
+    def insert_medical_record_indication(self, id_rekam_medis, id_gejala):
         try:
             self.open_connection()
             query = """
-            INSERT INTO rekam_medis_gejala (id_rekam_medis, id_gejala)
+            INSERT INTO Rekam_Medis_Gejala (id_rekam_medis, id_gejala)
             VALUES (%s, %s)
             """
             cursor = self.db.connection.cursor(dictionary=True)
             cursor.execute(query, (id_rekam_medis, id_gejala))
-            return cursor.fetchone()
+            self.db.connection.commit()
         except Exception as e:
             print(f"Error: {e}")
         finally:
@@ -30,7 +30,7 @@ class MedicalRecordIndicationModel:
     def get_all_medical_record_indication(self):
         try:
             self.open_connection()
-            query = "SELECT * FROM rekam_medis_gejala"
+            query = "SELECT * FROM Rekam_Medis_Gejala"
             cursor = self.db.connection.cursor(dictionary=True)
             cursor.execute(query)
             return cursor.fetchall()
@@ -42,7 +42,7 @@ class MedicalRecordIndicationModel:
     def get_medical_record_indication_by_id(self, id_rekam_medis, id_gejala):
         try:
             self.open_connection()
-            query = "SELECT * FROM rekam_medis_gejala WHERE id_rekam_medis = %s AND id_gejala = %s"
+            query = "SELECT * FROM Rekam_Medis_Gejala WHERE id_rekam_medis = %s AND id_gejala = %s"
             cursor = self.db.connection.cursor(dictionary=True)
             cursor.execute(query, (id_rekam_medis, id_gejala,))
             return cursor.fetchall()
@@ -51,27 +51,17 @@ class MedicalRecordIndicationModel:
         finally:
             self.close_connection()
 
-    def get_medical_record_indication_by_medical_record(self, id_rekam_medis):
+    def delete_medical_record_indication_by_medical_record(self, id_rekam_medis):
         try:
             self.open_connection()
-            query = "SELECT id_rekam_medis_gejala FROM rekam_medis_gejala WHERE id_rekam_medis = %s"
+            query = "DELETE FROM Rekam_Medis_Gejala WHERE id_rekam_medis = %s"
             cursor = self.db.connection.cursor(dictionary=True)
             cursor.execute(query, (id_rekam_medis,))
-            return cursor.fetchone()
+            self.db.connection.commit()
         except Exception as e:
             print(f"Error: {e}")
         finally:
             self.close_connection()
 
-    def get_medical_record_indication_by_indication(self, id_gejala):
-        try:
-            self.open_connection()
-            query = "SELECT id_rekam_medis_gejala FROM rekam_medis_gejala WHERE id_gejala = %s"
-            cursor = self.db.connection.cursor(dictionary=True)
-            cursor.execute(query, (id_gejala,))
-            return cursor.fetchone()
-        except Exception as e:
-            print(f"Error: {e}")
-        finally:
-            self.close_connection()
+
             

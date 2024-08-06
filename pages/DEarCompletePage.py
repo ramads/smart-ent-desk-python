@@ -9,7 +9,7 @@ from pages import HomePage, MedicalRecordPage
 from pprint import pprint
 from datetime import datetime
 
-from database.models import MedicalRecord, PatientMedicalFacility, Disease
+from database.models import MedicalRecord, PatientMedicalFacility, Disease, MedicalRecordIndication
 import json
 from config import DUMMY_MEDICAL_FACILITY
 
@@ -47,6 +47,7 @@ class DEarCompletePage(Canvas, BasePage):
         self.medical_record = MedicalRecord.MedicalRecordModel()
         self.patient_medical_facility = PatientMedicalFacility.PatientMedicalFacilityModel()
         self.disease = Disease.DiseaseModel()
+        self.medical_record_indication = MedicalRecordIndication.MedicalRecordIndicationModel()
 
     def get_disease_id(self, nama_penyakit):
         return self.disease.get_disease_id(nama_penyakit)['id_penyakit']
@@ -75,6 +76,14 @@ class DEarCompletePage(Canvas, BasePage):
             id_penyakit=self.get_disease_id(self.temp_data['result_1'][0])
         )
 
+        self.medical_record_indication.delete_medical_record_indication_by_medical_record(id_rekam_medis=self.temp_data['id_rekam_medis'])
+
+        for indication in self.temp_data['indications']:
+            self.medical_record_indication.insert_medical_record_indication(
+                id_rekam_medis=self.temp_data['id_rekam_medis'],
+                id_gejala=indication[0]
+            )
+
     def insert_data(self):
         current_date = datetime.now().strftime('%Y-%m-%d')
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
@@ -87,7 +96,7 @@ class DEarCompletePage(Canvas, BasePage):
         confidence = self.temp_data['result_1'][1]
         confidence = int(round(confidence, 2) * 100)
         
-        self.medical_record.insert_medical_record(
+        id_medical_record =  self.medical_record.insert_medical_record(
             tanggal_pemeriksaan=current_date,
             tingkat_keyakinan=confidence,
             prediksi_benar=self.temp_data['is_corrected'],
@@ -103,6 +112,13 @@ class DEarCompletePage(Canvas, BasePage):
             id_faskes=self.temp_data['id_faskes'],
             tanggal_pendaftaran=self.temp_data['tanggal_pendaftaran']
         )
+
+        for indication in self.temp_data['indications']:
+            self.medical_record_indication.insert_medical_record_indication(
+                id_rekam_medis=id_medical_record,
+                id_gejala=indication[0]
+            )
+        
 
 
     def loadImage(self):

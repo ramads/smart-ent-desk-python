@@ -24,6 +24,7 @@ class MedicalRecordModel:
             cursor = self.db.connection.cursor()
             cursor.execute(query, (id_rekam_medis, tanggal_pemeriksaan, tingkat_keyakinan, prediksi_benar, alasan_koreksi, gambar_penyakit, NIK, id_faskes, id_penyakit))
             self.db.connection.commit()
+            return id_rekam_medis 
         except Exception as e:
             print(f"Error: {e}")
         finally:

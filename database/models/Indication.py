@@ -1,7 +1,7 @@
 from database.core.database import Database
 from database.config.config import *
 
-class Indication:
+class IndicationModel:
     def __init__(self):
         self.db = None
 
@@ -51,5 +51,16 @@ class Indication:
         finally:
             self.close_connection()
 
+    def get_indication_by_organ(self, organ_gejala):
+        try:
+            self.open_connection()
+            query = "SELECT * FROM Gejala WHERE organ_gejala = %s"
+            cursor = self.db.connection.cursor(dictionary=True)
+            cursor.execute(query, (organ_gejala,))
+            return cursor.fetchall()
+        except Exception as e:
+            print(f"Error: {e}")
+        finally:
+            self.close_connection()
 
     

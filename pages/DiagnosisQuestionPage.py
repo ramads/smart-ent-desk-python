@@ -6,13 +6,14 @@ from helpers import *
 from pages import DEarPage
 from pages import DiagnosisPage
 
+from database.models import Indication
 from pprint import pprint
 
 import json
 
 
 class DiagnosisQuestionPage(Canvas, BasePage):
-    def __init__(self, window, temp_data=None):
+    def __init__(self, window, temp_data=None, diagnosis_type=None):
         self.window = window
         self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
@@ -27,6 +28,11 @@ class DiagnosisQuestionPage(Canvas, BasePage):
         )
 
         self.temp_data = temp_data
+        if diagnosis_type:
+            self.temp_data["diagnosis_type"] = diagnosis_type
+
+        self.indication_model = Indication.IndicationModel()
+        self.indication_data = self.indication_model.get_indication_by_organ(self.temp_data["diagnosis_type"])
 
     def get_localization(self):
         path = f"locales/{self.lang_code}/string.json"
@@ -53,7 +59,7 @@ class DiagnosisQuestionPage(Canvas, BasePage):
                 current_y += 50
 
             var = IntVar()
-            self.vars.append(var)
+            self.vars.append((self.indication_data[i]["id_gejala"], self.indication_data[i]["nama_gejala"], var))
 
             # Buat kolom checkbox
             checkbox = Checkbutton(
@@ -72,10 +78,10 @@ class DiagnosisQuestionPage(Canvas, BasePage):
 
             # Buat Text
             self.create_text(
-                current_x + 25,  # Atur posisi text di kanan
+                current_x + 30,  # Atur posisi text di kanan
                 current_y,
                 anchor="nw",
-                text=f"Option {i + 1}",
+                text=self.indication_data[i]["nama_gejala"],
                 fill="#404040",  # Text color
                 font=("Nunito Regular", 16 * -1)
             )
@@ -83,8 +89,12 @@ class DiagnosisQuestionPage(Canvas, BasePage):
             current_x += x_offset
 
     def update_selected_options(self):
-        selected_options = [i + 1 for i, var in enumerate(self.vars) if var.get()]
+        selected_options = [ (id_gejala, nama_gejala) for id_gejala, nama_gejala, var in self.vars if var.get() == 1]
         print("Selected options:", selected_options)
+        self.temp_data['indications'] = selected_options
+
+    def get_entry_text(self):
+        self.temp_data['detail'] = self.entry_1.get("1.0", "end-1c") if self.entry_1.get("1.0", "end-1c") != "You can fill more detail here (optional) ..." else ""
 
     def drawPage(self, data=None):
         self.place(x=0, y=0)
@@ -110,7 +120,7 @@ class DiagnosisQuestionPage(Canvas, BasePage):
 
         create_hover_button(self.window, 575.0, 614.0, 136.0, 42.0,
                             "#FFFFFF", inactive_continue, active_continue,
-                            lambda: goToPage(DEarPage.DEarPage(self.window, self.temp_data, "telinga", DiagnosisQuestionPage)))
+                            lambda: [self.get_entry_text(), goToPage(DEarPage.DEarPage(self.window, self.temp_data))])
 
         inactive_back = relative_to_assets(f"control/DiagnosisQuestionFrame/{self.lang_code}/inactive_back.png")
         active_back = relative_to_assets(f"control/DiagnosisQuestionFrame/{self.lang_code}/active_back.png")
@@ -128,10 +138,10 @@ class DiagnosisQuestionPage(Canvas, BasePage):
         )
 
         # Atur jumlah check box
-        self.create_checkbox_components(7)
+        self.create_checkbox_components(len(self.indication_data))
 
         # Text area
-        entry_1 = TextArea(
+        self.entry_1 = TextArea(
             self.window,
             bd=0,
             bg="#FFFFFF",
@@ -140,7 +150,7 @@ class DiagnosisQuestionPage(Canvas, BasePage):
             placeholder="You can fill more detail here (optional) ..."
         )
 
-        entry_1.place(
+        self.entry_1.place(
             x=150.0,
             y=475.0,
             width=840.0,
