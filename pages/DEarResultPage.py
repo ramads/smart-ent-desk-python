@@ -289,7 +289,7 @@ class DEarResultPage(Canvas, BasePage):
             800.0,
             543.0,
             anchor="nw",
-            text=', '.join([indication[1] for indication in self.temp_data['indications']]).capitalize(),
+            text=', '.join([indication[1] for indication in self.temp_data['indications']]).capitalize() if self.temp_data.get('indications') else '-',
             fill="#404040",
             font=("Nunito Bold", 15 * -1)
         )
