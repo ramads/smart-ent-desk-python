@@ -12,7 +12,7 @@ from pages import DEarCorrectionPage
 
 from database.models import Patient
 
-from pages import DEarCompletePage
+from pages import CompletePage
 from pages import FullScreenImagePage
 
 import json
@@ -331,7 +331,7 @@ class DEarResultPage(Canvas, BasePage):
         
         create_hover_button(self.window, 267.0, 623.0, 192.0, 54.0,
                             "#FFFFFF", inactive_button_3, active_button_3,  
-                            lambda: goToPage(DEarCompletePage.DEarCompletePage(self.window, self.temp_data)))
+                            lambda: goToPage(CompletePage.CompletePage(self.window, self.temp_data)))
 
         self.window.mainloop()
         self.destroy()

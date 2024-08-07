@@ -14,7 +14,7 @@ import json
 from config import DUMMY_MEDICAL_FACILITY
 
 
-class DEarCompletePage(Canvas, BasePage):
+class CompletePage(Canvas, BasePage):
     def __init__(self, window, temp_data=None):
         self.window = window
         self.temp_data = temp_data
@@ -107,11 +107,11 @@ class DEarCompletePage(Canvas, BasePage):
             id_penyakit=self.get_disease_id(self.temp_data['result_1'][0])
         )
 
-        self.patient_medical_facility.update_queue(
-            NIK=self.temp_data['NIK'],
-            id_faskes=self.temp_data['id_faskes'],
-            tanggal_pendaftaran=self.temp_data['tanggal_pendaftaran']
-        )
+        # self.patient_medical_facility.update_queue(
+        #     NIK=self.temp_data['NIK'],
+        #     id_faskes=self.temp_data['id_faskes'],
+        #     tanggal_pendaftaran=self.temp_data['tanggal_pendaftaran']
+        # )
 
         for indication in self.temp_data['indications']:
             self.medical_record_indication.insert_medical_record_indication(

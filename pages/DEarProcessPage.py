@@ -51,8 +51,12 @@ class DEarProcessPage(Canvas, BasePage):
         self.countdown_seconds = 0
         self.buttons = []
 
-        self.open_camera_in_thread()
-        self.startCameraThread()
+        # Taruhin pop up reload camera
+
+        self.check_camera = False
+        while(self.check_camera is False):
+            self.open_camera_in_thread()
+            self.startCameraThread()
 
     def open_camera_in_thread(self):
         camera_open_thread = threading.Thread(target=self.try_open_camera)
@@ -72,6 +76,7 @@ class DEarProcessPage(Canvas, BasePage):
                 else:
                     vidCap.release()
                     print("masuk ga----------")
+                self.check_camera = True
         else:
             print(f"Failed to open camera at index {self.cam_index}")
 
