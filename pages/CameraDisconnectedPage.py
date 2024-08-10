@@ -30,6 +30,7 @@ class CameraDisconnectedPage(Canvas, BasePage):
 
         self.camera_availability = False
         self.cam_index = config.CAMERA_PORT
+        self.camera_reconnect_thread = None
 
     def get_localization(self):
         path = f"locales/{self.lang_code}/string.json"
@@ -39,15 +40,15 @@ class CameraDisconnectedPage(Canvas, BasePage):
 
     def check_camera_connection(self):
         # Try to reconnect to the camera
-        camera_reconnect_thread = threading.Thread(target=self.try_reconnect_camera)
-        camera_reconnect_thread.start()
+        self.camera_reconnect_thread = threading.Thread(target=self.try_reconnect_camera)
+        self.camera_reconnect_thread.start()
 
     def try_reconnect_camera(self):
         try:
             vidCap = cv2.VideoCapture(self.cam_index)
             if vidCap.isOpened():
                 vidCap.release()
-                goToPage(DEarProcessPage.DEarProcessPage(self.window, self.temp_data))
+                self.window.after(0, lambda: goToPage(DEarProcessPage.DEarProcessPage(self.window, self.temp_data)))
             else:
                 print("Camera still not available.")
         except Exception as e:

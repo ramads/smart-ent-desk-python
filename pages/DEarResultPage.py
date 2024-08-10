@@ -328,7 +328,7 @@ class DEarResultPage(Canvas, BasePage):
         active_button_3 = relative_to_assets(f"control/DEarResultFrame/{self.lang_code}/active_button_3.png")
 
         create_hover_button(self.window, 597.0, 330.0, 52.0, 52.0,
-                            BACKGROUND_COLOUR, inactive_button_1, active_button_1, 
+                            "#000000", inactive_button_1, active_button_1,
                             lambda: goToPage(FullScreenImagePage.FullScreenImagePage(self.window, self.temp_data)))
         
         create_hover_button(self.window, 67.0, 623.0, 192.0, 54.0,

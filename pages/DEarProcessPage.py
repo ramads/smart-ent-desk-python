@@ -14,7 +14,6 @@ from database.models import Patient
 import json
 from pprint import pprint
 
-
 class DEarProcessPage(Canvas, BasePage):
     capture_image = None
     seriCom = SerialCom()
@@ -52,13 +51,10 @@ class DEarProcessPage(Canvas, BasePage):
 
         # Taruhin pop up reload camera
 
-        self.check_camera = False
-        while (self.check_camera is False):
-            self.open_camera_in_thread()
-            self.startCameraThread()
-        # except:
-
-
+        # self.check_camera = False
+        # while (self.check_camera is False):
+        self.open_camera_in_thread()
+        self.startCameraThread()
 
     def open_camera_in_thread(self):
         camera_open_thread = threading.Thread(target=self.try_open_camera)
@@ -81,15 +77,6 @@ class DEarProcessPage(Canvas, BasePage):
                 self.check_camera = True
         else:
             print(f"Failed to open camera at index {self.cam_index}")
-
-    def get_patient_data(self):
-        self.patient_data = self.patient.get_patient(self.temp_data['NIK'])
-
-    def get_localization(self):
-        path = f"locales/{self.lang_code}/string.json"
-        with open(path, "r") as file:
-            data = json.load(file)
-        return data
 
     def set_timer (self, second):
         if self.timer == second:
@@ -148,7 +135,15 @@ class DEarProcessPage(Canvas, BasePage):
         self.camera_thread.start()
 
     def updateCameraFrame(self):
+        if self.vidCap is None or not self.vidCap.isOpened():
+            self.handle_camera_disconnection()
+            return
+
         self.ret, self.frame = self.vidCap.read()
+
+        if not self.ret:
+            self.handle_camera_disconnection()
+            return
 
         if self.ret:
             # self.frame = cv2.resize(self.frame, (604, 538))
@@ -180,6 +175,11 @@ class DEarProcessPage(Canvas, BasePage):
 
         self.after_cam_id = self.after(20, self.updateCameraFrame)
 
+    def handle_camera_disconnection(self):
+        print("Camera disconnected or not functioning. Redirecting to CameraDisconnectedPage.")
+        self.onStopCamera()
+        self.window.after(0, lambda: goToPage(CameraDisconnectedPage.CameraDisconnectedPage(self.window, self.temp_data)))
+
     def onCapture(self, image_name):
         if self.frame is not None:
             filename = os.path.join(self.image_dir, f"{image_name}.jpg")
@@ -193,12 +193,23 @@ class DEarProcessPage(Canvas, BasePage):
             goToPage(PreviewImagePage.PreviewImagePage(self.window, self.temp_data))
 
     def onStopCamera(self):
-        # self.running = False
-        if self.camera_thread is not None:
+        if self.camera_thread is not None and self.camera_thread != threading.current_thread():
             self.camera_thread.join()
-        self.vidCap.release()
+        if self.vidCap is not None:
+            self.vidCap.release()
         cv2.destroyAllWindows()
-        self.after_cancel(self.after_cam_id)
+        if self.after_cam_id != 0:
+            self.after_cancel(self.after_cam_id)
+
+
+    def get_patient_data(self):
+        self.patient_data = self.patient.get_patient(self.temp_data['NIK'])
+
+    def get_localization(self):
+        path = f"locales/{self.lang_code}/string.json"
+        with open(path, "r") as file:
+            data = json.load(file)
+        return data
 
     def backToPrevPage(self):
         self.onStopCamera()
