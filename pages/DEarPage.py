@@ -1,12 +1,12 @@
 from tkinter import *
 from colors import *
 from helpers import *
-from pages import DEarProcessPage
+from pages import DEarProcessPage, DiagnosisQuestionPage
 # from notificationBar import notificationBar
 from pprint import pprint
 import json
 class DEarPage(Canvas, BasePage):
-    def __init__(self, window, temp_data=None, previous_page=None):
+    def __init__(self, window, temp_data=None):
         self.window = window
         self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
@@ -21,8 +21,6 @@ class DEarPage(Canvas, BasePage):
         )
         self.temp_data = temp_data
         pprint(self.temp_data)
-        if previous_page:
-            self.temp_data['previous_page'] = previous_page
         self.get_disease_title(self.temp_data['diagnosis_type'])
 
     def get_disease_title(self, disease):
@@ -50,7 +48,7 @@ class DEarPage(Canvas, BasePage):
 
         create_hover_button(self.window, 431.0, 600.0, 136.0, 42.0,
                             "#FFFFFF", inactive_button_1, active_button_1, 
-                            lambda: goToPage(self.temp_data['previous_page'](self.window, self.temp_data)))        
+                            lambda: goToPage(DiagnosisQuestionPage.DiagnosisQuestionPage(self.window, self.temp_data)))        
         create_hover_button(self.window, 575.0, 600.0, 136.0, 42.0,
                             "#FFFFFF", inactive_button_2, active_button_2,  
                             lambda: goToPage(DEarProcessPage.DEarProcessPage(self.window, self.temp_data)))

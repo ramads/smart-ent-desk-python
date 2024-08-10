@@ -4,7 +4,7 @@ from helpers import *
 
 from pages import DEarPage
 
-from pages import MedicalRecordPage
+from pages import MedicalRecordPage, DiagnosisQuestionPage
 
 # from database.models.Diagnosis import DiagnosisModel
 import json
@@ -76,7 +76,7 @@ class MedicalRecordEditPage(Canvas, BasePage):
 
         create_hover_button(self.window, 575.0, 446.0, 192.0, 54.0,
                             "white", inactive_button_1, active_button_1,
-                            lambda: goToPage(DEarPage.DEarPage(self.window, self.temp_data, self.clicked_data['organ_penyakit'], MedicalRecordPage.MedicalRecordPage)))
+                            lambda: goToPage(DiagnosisQuestionPage.DiagnosisQuestionPage(self.window, self.temp_data, self.clicked_data['organ_penyakit'], MedicalRecordPage.MedicalRecordPage)))
 
         create_hover_button(self.window, 366.0, 446.0, 192.0, 54.0,
                             "white", inactive_button_2, active_button_2,

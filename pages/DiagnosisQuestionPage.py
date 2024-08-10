@@ -13,7 +13,7 @@ import json
 import customtkinter as ctk
 
 class DiagnosisQuestionPage(Canvas, BasePage):
-    def __init__(self, window, temp_data=None, diagnosis_type=None):
+    def __init__(self, window, temp_data=None, diagnosis_type=None, previous_page=None):
         self.window = window
         self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
@@ -30,6 +30,9 @@ class DiagnosisQuestionPage(Canvas, BasePage):
         self.temp_data = temp_data
         if diagnosis_type:
             self.temp_data["diagnosis_type"] = diagnosis_type
+
+        if previous_page:
+            self.temp_data["previous_page"] = previous_page
 
         self.indication_model = Indication.IndicationModel()
         self.indication_data = self.indication_model.get_indication_by_organ(self.temp_data["diagnosis_type"])
@@ -121,7 +124,7 @@ class DiagnosisQuestionPage(Canvas, BasePage):
 
         create_hover_button(self.window, 430.0, 614.0, 136.0, 42.0,
                             "#FFFFFF", inactive_back, active_back,
-                            lambda: goToPage(DiagnosisPage.DiagnosisPage(self.window, self.temp_data)))
+                            lambda: goToPage(self.temp_data['previous_page'](self.window, self.temp_data)))
 
         image_image_3 = PhotoImage(
             file=relative_to_assets("control/DiagnosisQuestionFrame/image_3.png"))
