@@ -1,4 +1,7 @@
 from tkinter import *
+
+import cv2
+
 from colors import *
 from helpers import *
 from PIL import ImageTk, Image
@@ -48,7 +51,12 @@ class PreviewImagePage(Canvas, BasePage):
             image=image_image_1
         )
 
-        captured_img = ImageTk.PhotoImage(Image.open(relative_to_image_capture("test_image.jpg")))
+        # Show image with original ratio
+        image_cropping = crop_image(cv2.imread(relative_to_image_capture("test_image.jpg")), 1, (1019, 452))
+        image_cropping = cv2.cvtColor(image_cropping, cv2.COLOR_BGR2RGB)
+        pil_image = Image.fromarray(image_cropping)
+
+        captured_img = ImageTk.PhotoImage(pil_image)
         image_2 = self.create_image(
             566.0,
             292.5,

@@ -64,10 +64,16 @@ class DEarResultPage(Canvas, BasePage):
             image=image_image_1
         )
         
-        image_path = relative_to_image_capture("test_image.jpg")
-        original_image = Image.open(image_path)
-        resized_image = original_image.resize((600, 335)) 
-        captured_img = ImageTk.PhotoImage(resized_image)
+        # image_path = relative_to_image_capture("test_image.jpg")
+        # original_image = Image.open(image_path)
+        # resized_image = original_image.resize((600, 335))
+
+        # Resize image wihout changing image ratio
+        image_cropping = crop_image(cv2.imread(relative_to_image_capture("test_image.jpg")), 1, (600, 335))
+        image_cropping = cv2.cvtColor(image_cropping, cv2.COLOR_BGR2RGB)
+        pil_image = Image.fromarray(image_cropping)
+
+        captured_img = ImageTk.PhotoImage(pil_image)
         image_2 = self.create_image(
             361.0,
             235.5,
