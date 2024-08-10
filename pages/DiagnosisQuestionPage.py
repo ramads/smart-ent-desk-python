@@ -10,7 +10,7 @@ from database.models import Indication
 from pprint import pprint
 
 import json
-
+import customtkinter as ctk
 
 class DiagnosisQuestionPage(Canvas, BasePage):
     def __init__(self, window, temp_data=None, diagnosis_type=None):
@@ -44,10 +44,10 @@ class DiagnosisQuestionPage(Canvas, BasePage):
         return PhotoImage(file=relative_to_assets("image_3.png"))
 
     def create_checkbox_components(self, num_components):
-        initial_x = 230.5
+        initial_x = 200.5
         initial_y = 330.0
         x_offset = 200
-        max_width = 1100    # Maksimal lebar frame checkbox
+        max_width = 1100  # Maksimal lebar frame checkbox
         current_x = initial_x
         current_y = initial_y
 
@@ -61,29 +61,23 @@ class DiagnosisQuestionPage(Canvas, BasePage):
             var = IntVar()
             self.vars.append((self.indication_data[i]["id_gejala"], self.indication_data[i]["nama_gejala"], var))
 
-            # Buat kolom checkbox
-            checkbox = Checkbutton(
+            checkbox = ctk.CTkCheckBox(
                 self,
                 variable=var,
                 command=self.update_selected_options,
-                bg="white",  # Set background color to white
-                highlightthickness=0,
-                relief="flat"
+                text=self.indication_data[i]["nama_gejala"],
+                font=("Nunito Regular", 16),  # Atur ukuran font untuk memperbesar checkbox
+                text_color="#404040",
+                checkbox_width=25,  # Atur lebar checkbox
+                checkbox_height=25,  # Atur tinggi checkbox
+                bg_color="white",
+                hover_color="#757575",
+                fg_color="#85C13D"
             )
             checkbox.place(
                 x=current_x,
                 y=current_y,
                 anchor="nw"
-            )
-
-            # Buat Text
-            self.create_text(
-                current_x + 30,  # Atur posisi text di kanan
-                current_y,
-                anchor="nw",
-                text=self.indication_data[i]["nama_gejala"],
-                fill="#404040",  # Text color
-                font=("Nunito Regular", 16 * -1)
             )
 
             current_x += x_offset

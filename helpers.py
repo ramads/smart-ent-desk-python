@@ -3,6 +3,7 @@ from tkinter import Button, PhotoImage
 from pages.BasePage import BasePage
 import tkinter as tk
 import cv2
+import numpy as np
 import threading
 
 # default ukuran window
@@ -57,21 +58,52 @@ def create_hover_button(window, x, y, width, height, bg_color, image_path, hover
 
     return button
 
-def crop_image(img, ratio):
-    # Calculate coordinate and zoom ratio
-    height, width, _ = img.shape
-    new_width, new_height = width // ratio, height // ratio  # zoom ratio
-    x_center, y_center = width // 2, height // 2
-    x1, y1 = int(x_center - new_width // 2), int(y_center - new_height // 2)
-    x2, y2 = int(x_center + new_width // 2), int(y_center + new_height // 2)
 
-    # Crop image
+def crop_image(img, zoom_ratio, target_size):
+    height, width, _ = img.shape
+
+    # Buat ukuran baru image, sesuai dengan zoom ratio
+    new_width = width // zoom_ratio
+    new_height = height // zoom_ratio
+
+    # Calculate coordinates
+    x_center, y_center = width // 2, height // 2
+
+    # Calculate crop coordinates
+    x1 = max(int(x_center - new_width // 2), 0)
+    y1 = max(int(y_center - new_height // 2), 0)
+    x2 = min(int(x_center + new_width // 2), width)
+    y2 = min(int(y_center + new_height // 2), height)
+
+    # Potong sesuai ratio zoom
     cropped_frame = img[y1:y2, x1:x2]
 
-    # Resize back to original size for zoom effect
-    zoomed_frame = cv2.resize(cropped_frame, (width, height))
+    # Resize sesuai target gambar
+    target_width, target_height = target_size
 
-    return zoomed_frame
+    # Add black padding, biar ratio image tetap
+    padded_image = np.zeros((target_height, target_width, 3), dtype=np.uint8)
+
+    # Calculate Scaling Factors
+    scale_width = target_width / cropped_frame.shape[1]
+    scale_height = target_height / cropped_frame.shape[0]
+    scale = min(scale_width, scale_height)  # Choose the smaller scale to maintain aspect ratio
+
+    # Calculate new dimensions for resized image
+    resized_width = int(cropped_frame.shape[1] * scale)
+    resized_height = int(cropped_frame.shape[0] * scale)
+
+    # Resize gambar sesuai target dan tidak merubah ratio ukuran
+    resized_frame = cv2.resize(cropped_frame, (resized_width, resized_height), interpolation=cv2.INTER_LINEAR)
+
+    # Atur posisi gambar ke tenga-tengah
+    x_offset = (target_width - resized_width) // 2
+    y_offset = (target_height - resized_height) // 2
+
+    # Taruh gambar ke tengah-tengah gambar black padding
+    padded_image[y_offset:y_offset + resized_height, x_offset:x_offset + resized_width] = resized_frame
+
+    return padded_image
 
 class TextArea(tk.Text):
     def __init__(self, master=None, placeholder="PLACEHOLDER", color='grey', **kwargs):

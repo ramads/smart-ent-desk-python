@@ -6,9 +6,8 @@ import config
 from colors import *
 from helpers import *
 from PIL import Image, ImageTk
-from pages import DEarPage, PreviewImagePage
+from pages import DEarPage, PreviewImagePage, CameraDisconnectedPage
 from libs.serial_com import SerialCom
-# from notificationBar import notificationBar
 
 from database.models import Patient
 
@@ -54,9 +53,12 @@ class DEarProcessPage(Canvas, BasePage):
         # Taruhin pop up reload camera
 
         self.check_camera = False
-        while(self.check_camera is False):
+        while (self.check_camera is False):
             self.open_camera_in_thread()
             self.startCameraThread()
+        # except:
+
+
 
     def open_camera_in_thread(self):
         camera_open_thread = threading.Thread(target=self.try_open_camera)
@@ -82,7 +84,7 @@ class DEarProcessPage(Canvas, BasePage):
 
     def get_patient_data(self):
         self.patient_data = self.patient.get_patient(self.temp_data['NIK'])
-    
+
     def get_localization(self):
         path = f"locales/{self.lang_code}/string.json"
         with open(path, "r") as file:
@@ -149,9 +151,9 @@ class DEarProcessPage(Canvas, BasePage):
         self.ret, self.frame = self.vidCap.read()
 
         if self.ret:
-            self.frame = cv2.resize(self.frame, (604, 538))
+            # self.frame = cv2.resize(self.frame, (604, 538))
 
-            zoomed_frame = crop_image(self.frame, 1.5)
+            zoomed_frame = crop_image(self.frame, 1.3, (604, 538))
 
             opencv_image = cv2.cvtColor(zoomed_frame, cv2.COLOR_BGR2RGBA)
             self.captured_image = ImageTk.PhotoImage(image=Image.fromarray(opencv_image))
@@ -181,8 +183,9 @@ class DEarProcessPage(Canvas, BasePage):
     def onCapture(self, image_name):
         if self.frame is not None:
             filename = os.path.join(self.image_dir, f"{image_name}.jpg")
-            saved_img = cv2.resize(self.frame, (1019, 452))
-            cv2.imwrite(filename, saved_img)
+            cv2.imwrite(filename, self.frame)
+
+            # saved_img = cv2.resize(self.frame, (1019, 452))
 
             print(f"Image captured and saved as '{filename}'")
             self.onStopCamera()
