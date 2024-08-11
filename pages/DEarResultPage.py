@@ -288,35 +288,44 @@ class DEarResultPage(Canvas, BasePage):
             anchor="nw",
             text=f"{self.data_localization['indications'].capitalize()} :",
             fill="#404040",
-            font=("Nunito Regular", 15 * -1)
+            font=("Nunito Bold", 15 * -1)
         )
 
-        self.create_text(
+        # Mendapatkan bounding box dari gejala (list)
+        bbox_1 = self.bbox(self.create_text(
             800.0,
             543.0,
             anchor="nw",
-            text=', '.join([indication[1] for indication in self.temp_data['indications']]).capitalize() if self.temp_data.get('indications') else '-',
+            width=290,
+            text=', '.join(
+                [indication[1] for indication in self.temp_data['indications']]).capitalize() if self.temp_data.get(
+                'indications') else '-',
             fill="#404040",
-            font=("Nunito Bold", 15 * -1)
-        )
+            font=("Nunito Regular", 15 * -1)
+        ))
+
+        # Menentukan posisi Y untuk teks berikutnya berdasarkan bbox sebelumnya
+        y_position_2 = bbox_1[3] + 10
 
         self.create_text(
             726.0,
-            567.0,
+            y_position_2,
             anchor="nw",
             text=f"{self.data_localization['description'].capitalize()} :",
             fill="#404040",
-            font=("Nunito Regular", 15 * -1)
-        )
-
-        self.create_text(
-            726.0,
-            589.0,
-            anchor="nw",
-            text=self.temp_data['detail'] if self.temp_data['detail'] else '-',
-            fill="#404040",
             font=("Nunito Bold", 15 * -1)
         )
+
+        # Mendapatkan bounding box dari teks kedua
+        bbox_2 = self.bbox(self.create_text(
+            726.0,
+            y_position_2 + 22,  # Sesuaikan dengan tinggi teks kedua
+            anchor="nw",
+            width=340,
+            text=self.temp_data['detail'] if self.temp_data['detail'] else '-',
+            fill="#404040",
+            font=("Nunito Regular", 15 * -1)
+        ))
 
         inactive_button_1 = relative_to_assets("control/DEarResultFrame/button_1.png")
         active_button_1 = relative_to_assets("control/DEarResultFrame/active_button_1.png")

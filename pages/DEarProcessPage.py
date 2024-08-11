@@ -221,7 +221,7 @@ class DEarProcessPage(Canvas, BasePage):
         elif command > 4:
             command = command - 1
 
-        self.text_command = f"Send serial command: {command}"
+        # self.text_command = f"Send serial command: {command}"
         self.itemconfig(self.commandText, text=self.text_command)
 
         command = str(command)
