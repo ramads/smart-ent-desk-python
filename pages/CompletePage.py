@@ -58,7 +58,7 @@ class CompletePage(Canvas, BasePage):
         image_path = f"{self.temp_data['NIK']}_{self.temp_data['id_faskes']}_{timestamp}.png"
         
         image = Image.open(self.temp_data['image_path_temp'])
-        image = image.resize((559, 471))
+        image = image.resize((512, 512))
         image.save(f"temp_image/{image_path}", format='PNG')
         
         confidence = self.temp_data['result_1'][1]
@@ -90,7 +90,7 @@ class CompletePage(Canvas, BasePage):
         image_path = f"{self.temp_data['NIK']}_{self.temp_data['id_faskes']}_{timestamp}.png"
         
         image = Image.open(self.temp_data['image_path_temp'])
-        image = image.resize((559, 471))
+        image = image.resize((512, 512))
         image.save(f"temp_image/{image_path}", format='PNG')
         
         confidence = self.temp_data['result_1'][1]
