@@ -44,7 +44,7 @@ class FullScreenImagePage(Canvas, BasePage):
         # self.original_image = self.original_image.resize((1010, 561))
 
         # Resize image wihout changing image ratio
-        image_cropping = crop_image(cv2.imread(relative_to_image_capture("test_image.jpg")), 1, (1010, 561))
+        image_cropping = crop_with_padding(cv2.imread(relative_to_image_capture("test_image.jpg")), 1, (1010, 561))
         image_cropping = cv2.cvtColor(image_cropping, cv2.COLOR_BGR2RGB)
         self.original_image = Image.fromarray(image_cropping)
 

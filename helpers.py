@@ -59,7 +59,49 @@ def create_hover_button(window, x, y, width, height, bg_color, image_path, hover
     return button
 
 
-def crop_image(img, zoom_ratio, target_size):
+def crop_and_save(img, zoom_ratio, target_size):
+    # Tentukan sisi terpendek untuk menentukan ukuran cropping
+    height, width, _ = img.shape
+    crop_size = min(height, width)
+
+    # Hitung koordinat untuk crop agar gambar berada di tengah
+    x_center, y_center = width // 2, height // 2
+    x1 = x_center - crop_size // 2
+    y1 = y_center - crop_size // 2
+    x2 = x_center + crop_size // 2
+    y2 = y_center + crop_size // 2
+
+    # Crop gambar
+    cropped_image = img[y1:y2, x1:x2]
+
+    # Hitung ukuran baru setelah pembesaran
+    zoomed_width = int(crop_size * zoom_ratio)
+    zoomed_height = int(crop_size * zoom_ratio)
+
+    # Resize gambar hasil crop ke ukuran yang lebih besar
+    zoomed_image = cv2.resize(cropped_image, (zoomed_width, zoomed_height), interpolation=cv2.INTER_LINEAR)
+    target_width, target_height = target_size
+
+    # Buat image dengan background hitam jika hasil zoom lebih kecil dari target size
+    output_image = np.zeros((target_height, target_width, 3), dtype=np.uint8)
+
+    # Hitung posisi tengah dari gambar hasil pembesaran
+    x_offset = (target_width - zoomed_width) // 2
+    y_offset = (target_height - zoomed_height) // 2
+
+    # Jika gambar hasil pembesaran lebih besar dari target size, crop lagi
+    if zoomed_width > target_width or zoomed_height > target_height:
+        x1 = max((zoomed_width - target_width) // 2, 0)
+        y1 = max((zoomed_height - target_height) // 2, 0)
+        x2 = x1 + target_width
+        y2 = y1 + target_height
+        output_image = zoomed_image[y1:y2, x1:x2]
+    else:
+        output_image[y_offset:y_offset + zoomed_height, x_offset:x_offset + zoomed_width] = zoomed_image
+
+    return output_image
+
+def crop_with_padding(img, zoom_ratio, target_size):
     height, width, _ = img.shape
 
     # Buat ukuran baru image, sesuai dengan zoom ratio

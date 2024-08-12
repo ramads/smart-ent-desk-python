@@ -148,7 +148,7 @@ class DEarProcessPage(Canvas, BasePage):
         if self.ret:
             # self.frame = cv2.resize(self.frame, (604, 538))
 
-            zoomed_frame = crop_image(self.frame, 1.3, (604, 538))
+            zoomed_frame = crop_with_padding(self.frame, 1.3, (604, 538))
 
             opencv_image = cv2.cvtColor(zoomed_frame, cv2.COLOR_BGR2RGBA)
             self.captured_image = ImageTk.PhotoImage(image=Image.fromarray(opencv_image))
@@ -183,9 +183,12 @@ class DEarProcessPage(Canvas, BasePage):
     def onCapture(self, image_name):
         if self.frame is not None:
             filename = os.path.join(self.image_dir, f"{image_name}.jpg")
-            cv2.imwrite(filename, self.frame)
+            # cv2.imwrite(filename, self.frame)
 
-            # saved_img = cv2.resize(self.frame, (1019, 452))
+            saved_img = crop_and_save(self.frame, 1.1, (512, 512))
+            cv2.imwrite(filename, saved_img)
+
+
 
             print(f"Image captured and saved as '{filename}'")
             self.onStopCamera()
