@@ -91,7 +91,7 @@ class CompletePage(Canvas, BasePage):
         
         image = Image.open(self.temp_data['image_path_temp'])
         image = image.resize((512, 512))
-        image.save(f"temp_image/{image_path}", format='PNG')ch
+        image.save(f"temp_image/{image_path}", format='PNG')
         
         confidence = self.temp_data['result_1'][1]
         confidence = int(round(confidence, 2) * 100)
