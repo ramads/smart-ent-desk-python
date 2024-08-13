@@ -91,7 +91,7 @@ class CompletePage(Canvas, BasePage):
         
         image = Image.open(self.temp_data['image_path_temp'])
         image = image.resize((512, 512))
-        image.save(f"temp_image/{image_path}", format='PNG')
+        image.save(f"temp_image/{image_path}", format='PNG')ch
         
         confidence = self.temp_data['result_1'][1]
         confidence = int(round(confidence, 2) * 100)
@@ -107,11 +107,11 @@ class CompletePage(Canvas, BasePage):
             id_penyakit=self.get_disease_id(self.temp_data['result_1'][0])
         )
 
-        # self.patient_medical_facility.update_queue(
-        #     NIK=self.temp_data['NIK'],
-        #     id_faskes=self.temp_data['id_faskes'],
-        #     tanggal_pendaftaran=self.temp_data['tanggal_pendaftaran']
-        # )
+        self.patient_medical_facility.update_queue(
+            NIK=self.temp_data['NIK'],
+            id_faskes=self.temp_data['id_faskes'],
+            tanggal_pendaftaran=self.temp_data['tanggal_pendaftaran']
+        )
 
         for indication in self.temp_data['indications']:
             self.medical_record_indication.insert_medical_record_indication(
