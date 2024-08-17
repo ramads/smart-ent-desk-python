@@ -77,12 +77,12 @@ class CompletePage(Canvas, BasePage):
         )
 
         self.medical_record_indication.delete_medical_record_indication_by_medical_record(id_rekam_medis=self.temp_data['id_rekam_medis'])
-
-        for indication in self.temp_data['indications']:
-            self.medical_record_indication.insert_medical_record_indication(
-                id_rekam_medis=self.temp_data['id_rekam_medis'],
-                id_gejala=indication[0]
-            )
+        if self.temp_data.get('indications'):
+            for indication in self.temp_data['indications']:
+                self.medical_record_indication.insert_medical_record_indication(
+                    id_rekam_medis=self.temp_data['id_rekam_medis'],
+                    id_gejala=indication[0]
+                )
 
     def insert_data(self):
         current_date = datetime.now().strftime('%Y-%m-%d')
@@ -109,16 +109,18 @@ class CompletePage(Canvas, BasePage):
 
         # Update Queue
         # self.patient_medical_facility.update_queue(
+        #     status_periksa='selesai',
         #     NIK=self.temp_data['NIK'],
         #     id_faskes=self.temp_data['id_faskes'],
         #     tanggal_pendaftaran=self.temp_data['tanggal_pendaftaran']
         # )
 
-        for indication in self.temp_data['indications']:
-            self.medical_record_indication.insert_medical_record_indication(
-                id_rekam_medis=id_medical_record,
-                id_gejala=indication[0]
-            )
+        if self.temp_data.get('indications'):
+            for indication in self.temp_data['indications']:
+                self.medical_record_indication.insert_medical_record_indication(
+                    id_rekam_medis=id_medical_record,
+                    id_gejala=indication[0]
+                )
 
     def loadImage(self):
         return PhotoImage(file=relative_to_assets("image_3.png"))

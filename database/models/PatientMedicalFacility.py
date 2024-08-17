@@ -51,12 +51,12 @@ class PatientMedicalFacilityModel:
         finally:
             self.close_connection()
 
-    def update_queue(self, NIK, id_faskes, tanggal_pendaftaran):
+    def update_queue(self, NIK, id_faskes, tanggal_pendaftaran, status_periksa):
         try:
             self.open_connection()
-            query = "UPDATE Pasien_Fasilitas_Kesehatan SET status_periksa = 'selesai' WHERE NIK = %s AND id_faskes = %s AND tanggal_pendaftaran = %s"
+            query = "UPDATE Pasien_Fasilitas_Kesehatan SET status_periksa = %s WHERE NIK = %s AND id_faskes = %s AND tanggal_pendaftaran = %s"
             cursor = self.db.connection.cursor(dictionary=True)
-            cursor.execute(query, (NIK, id_faskes, tanggal_pendaftaran))
+            cursor.execute(query, (status_periksa, NIK, id_faskes, tanggal_pendaftaran))
             self.db.connection.commit()
         except Exception as e:
             print(f"Error: {e}")

@@ -9,7 +9,7 @@ from PIL import Image, ImageTk
 from pages import DEarPage, PreviewImagePage, CameraDisconnectedPage
 from libs.serial_com import SerialCom
 
-from database.models import Patient
+from database.models import Patient, MedicalRecord
 
 import json
 from pprint import pprint
@@ -35,6 +35,7 @@ class DEarProcessPage(Canvas, BasePage):
         self.temp_data = temp_data
         pprint(temp_data)
         self.patient = Patient.PatientModel()
+        self.medical_record = MedicalRecord.MedicalRecordModel()
         self.get_patient_data()
         self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
@@ -215,6 +216,10 @@ class DEarProcessPage(Canvas, BasePage):
 
     def get_patient_data(self):
         self.patient_data = self.patient.get_patient(self.temp_data['NIK'])
+        self.medical_record_data = self.medical_record.get_medical_record_join_disease(self.temp_data['NIK'])
+
+
+        pprint(self.patient_data)
 
     def get_localization(self):
         path = f"locales/{self.lang_code}/string.json"
@@ -583,7 +588,7 @@ class DEarProcessPage(Canvas, BasePage):
             885.0,
             160.0,
             anchor="nw",
-            text='',
+            text=self.patient_data['jenis_kelamin'].capitalize(),
             fill="#404040",
             font=("Nunito Bold", 15 * -1)
         )
@@ -601,7 +606,7 @@ class DEarProcessPage(Canvas, BasePage):
             885.0,
             184.0,
             anchor="nw",
-            text='',
+            text=self.medical_record_data[0]['nama_penyakit'].capitalize(),
             fill="#404040",
             font=("Nunito Bold", 15 * -1)
         )
@@ -609,24 +614,6 @@ class DEarProcessPage(Canvas, BasePage):
         self.create_text(
             726.0,
             208.0,
-            anchor="nw",
-            text=f"{self.data_localization['medical_facility'].capitalize()} :",
-            fill="#404040",
-            font=("Nunito Regular", 15 * -1)
-        )
-
-        self.create_text(
-            885.0,
-            208.0,
-            anchor="nw",
-            text='',
-            fill="#404040",
-            font=("Nunito Bold", 15 * -1)
-        )
-
-        self.create_text(
-            726.0,
-            232.0,
             anchor="nw",
             text=f"{self.data_localization['patient_address'].capitalize()} :",
             fill="#404040",
@@ -635,9 +622,9 @@ class DEarProcessPage(Canvas, BasePage):
 
         self.create_text(
             885.0,
-            232.0,
+            208.0,
             anchor="nw",
-            text='',
+            text=self.patient_data['alamat'].title(),
             fill="#404040",
             font=("Nunito Bold", 15 * -1)
         )
