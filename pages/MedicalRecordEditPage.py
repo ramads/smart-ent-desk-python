@@ -2,22 +2,29 @@ from tkinter import *
 from colors import *
 from helpers import *
 
-from pages import HomePage
-from pprint import pprint
+from pages import DEarPage
 
-from pages import MedicalRecordPage
+from pages import MedicalRecordPage, DiagnosisQuestionPage
 
-from database.models.Diagnosis import DiagnosisModel
+# from database.models.Diagnosis import DiagnosisModel
 import json
+from pprint import pprint
+from config import DUMMY_MEDICAL_FACILITY
 
 
 class MedicalRecordEditPage(Canvas, BasePage):
-    def __init__(self, window, temp_data=None):
+    def __init__(self, window, clicked_data):
         self.window = window
-        self.temp_data = temp_data
+        self.clicked_data = clicked_data
+        pprint(clicked_data)
+        self.temp_data = {
+            'NIK': clicked_data['NIK'],
+            'id_rekam_medis': clicked_data['id_rekam_medis'],
+            'id_faskes': DUMMY_MEDICAL_FACILITY,
+            'previous_page': MedicalRecordPage.MedicalRecordPage,
+        }
         self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
-        pprint(temp_data)
         super().__init__(
             window,
             bg=BACKGROUND_COLOUR,
@@ -34,8 +41,8 @@ class MedicalRecordEditPage(Canvas, BasePage):
             data = json.load(file)
         return data
 
-    def drawPage(self, data = None):
-        self.place(x = 0, y = 0)
+    def drawPage(self, data=None):
+        self.place(x=0, y=0)
 
         image_image_1 = PhotoImage(
             file=relative_to_assets("control/MedicalRecordEditFrame/image_1.png"))
@@ -69,7 +76,7 @@ class MedicalRecordEditPage(Canvas, BasePage):
 
         create_hover_button(self.window, 575.0, 446.0, 192.0, 54.0,
                             "white", inactive_button_1, active_button_1,
-                            lambda: print("goto edit"))
+                            lambda: goToPage(DiagnosisQuestionPage.DiagnosisQuestionPage(self.window, self.temp_data, self.clicked_data['organ_penyakit'], MedicalRecordPage.MedicalRecordPage)))
 
         create_hover_button(self.window, 366.0, 446.0, 192.0, 54.0,
                             "white", inactive_button_2, active_button_2,
@@ -89,7 +96,7 @@ class MedicalRecordEditPage(Canvas, BasePage):
             1133/2,
             350.5,
             anchor="center",
-            text="Diagnosisis Pasien",
+            text=self.clicked_data['nama_penyakit'],
             fill="#14181F",
             font=("Nunito Regular", 14 * -1)
         )
@@ -98,7 +105,7 @@ class MedicalRecordEditPage(Canvas, BasePage):
             1133/2,
             330.5,
             anchor="center",
-            text="Nama Pasien",
+            text=self.clicked_data['nama_pasien'],
             fill="#14181F",
             font=("Nunito Bold", 17 * -1)
         )

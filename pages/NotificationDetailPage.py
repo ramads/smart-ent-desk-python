@@ -3,17 +3,20 @@ from colors import *
 from helpers import *
 # from notificationBar import notificationBar
 
-from pages import HomePage, NotificationPage
+from pages import NotificationPage
 from database.models.Notification import NotificationModel
+
+import json
 
 
 class NotificationDetailPage(Canvas, BasePage):
 
     def __init__(self, window, clicked_notification):
         self.window = window
+        self.lang_code = json.loads(open("config.json", "r").read())["language"]
         self.clicked_notification = clicked_notification
         self.notification = NotificationModel()
-        self.notification.mark_as_read(clicked_notification["id_notifikasi"])
+        self.notification.mark_as_read(clicked_notification["id_notif"])
         super().__init__(
             window,
             bg=BACKGROUND_COLOUR,
@@ -82,8 +85,8 @@ class NotificationDetailPage(Canvas, BasePage):
             font=("Nunito Bold", 24 * -1)
         )
 
-        inactive_button_1 = relative_to_assets("control/NotificationDetailFrame/button_1.png")
-        active_button_1 = relative_to_assets("control/NotificationDetailFrame/active_button_1.png")
+        inactive_button_1 = relative_to_assets(f"control/NotificationDetailFrame/{self.lang_code}/button_1.png")
+        active_button_1 = relative_to_assets(f"control/NotificationDetailFrame/{self.lang_code}/active_button_1.png")
 
         create_hover_button(self.window, 471.0, 662.0, 192.0, 54.0,
                             BACKGROUND_COLOUR, inactive_button_1, active_button_1,

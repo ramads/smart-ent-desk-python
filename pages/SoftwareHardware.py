@@ -1,6 +1,8 @@
 from tkinter import *
 from colors import *
 from helpers import *
+from libs.serial_com import SerialCom
+import config
 # from notificationBar import notificationBar
 
 from pages import HomePage
@@ -9,10 +11,16 @@ import json
 
 class SoftwareHardware(Canvas, BasePage):
 
+    seriCom = SerialCom()
+
     def __init__(self, window):
         self.window = window
         self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
+        self.camera_conn = config.CAMERA_PORT
+        self.dongle_conn = config.DONGLE_ID == "123"  # sementara
+        self.seriCom_conn = self.seriCom.connect()
+
         super().__init__(
             window,
             bg=BACKGROUND_COLOUR,
@@ -34,8 +42,8 @@ class SoftwareHardware(Canvas, BasePage):
 
         # wifi_clock_app = notificationBar(self.window)
 
-        inactive_button_1 = relative_to_assets(f"control/SoftwareHardware/button_1.png")
-        active_button_1 = relative_to_assets(f"control/SoftwareHardware/active_button_1.png")
+        inactive_button_1 = relative_to_assets(f"control/SoftwareHardware/{self.lang_code}/button_1.png")
+        active_button_1 = relative_to_assets(f"control/SoftwareHardware/{self.lang_code}/active_button_1.png")
 
         create_hover_button(self.window, 471.0,662.0, 192.0, 54.0,
                             BACKGROUND_COLOUR, inactive_button_1, active_button_1,
@@ -58,40 +66,44 @@ class SoftwareHardware(Canvas, BasePage):
         )
 
         image_image_3 = PhotoImage(
-            file=relative_to_assets("control/SoftwareHardware/connected_image_3.png"))
+            file=relative_to_assets("control/SoftwareHardware/vacuum_card.png"
+                                    ) if self.seriCom_conn is True else relative_to_assets("control/SoftwareHardware/disconnected_vacuum_card.png"))
         image_3 = self.create_image(
             819.0,
             431.0,
             image=image_image_3
         )
 
-        image_image_4 = PhotoImage(
-            file=relative_to_assets("control/SoftwareHardware/connected_image_4.png"))
+        endoscope_card = PhotoImage(
+            file=relative_to_assets("control/SoftwareHardware/endoscope_card.png"
+                                    ) if self.camera_conn is not None else relative_to_assets("control/SoftwareHardware/disconnected_endoscope_card.png"))
         image_4 = self.create_image(
             312.0,
             431.0,
-            image=image_image_4
+            image=endoscope_card
         )
 
-        image_image_5 = PhotoImage(
-            file=relative_to_assets("control/SoftwareHardware/connected_image_5.png"))
+        dongle_card = PhotoImage(
+            file=relative_to_assets("control/SoftwareHardware/dongle_card.png"
+                                    ) if self.dongle_conn is True else relative_to_assets("control/SoftwareHardware/disconnected_dongle_card.png"))
         image_5 = self.create_image(
             312.0,
             293.0,
-            image=image_image_5
+            image=dongle_card
         )
 
         self.create_text(
             77.0,
             175.0,
             anchor="nw",
-            text="Hardware & Software",
+            text=self.data_localization["hardware_software"].title(),
             fill="#000000",
             font=("Nunito Bold", 25 * -1)
         )
 
         image_image_6 = PhotoImage(
-            file=relative_to_assets("control/SoftwareHardware/connected_image_6.png"))
+            file=relative_to_assets("control/SoftwareHardware/sprayer_card.png"
+                                    ) if self.seriCom_conn is True else relative_to_assets("control/SoftwareHardware/disconnected_sprayer_card.png"))
         image_6 = self.create_image(
             819.0,
             293.0,

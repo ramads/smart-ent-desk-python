@@ -1,10 +1,12 @@
 from tkinter import *
 
-from pages import (HomePage, DEarProcessPage as page)
+from libs.camera_port import *
+from pages import HomePage
+from pages import DongleNotification
 from helpers import *
 from colors import *
 import config
-from database.init import Generate_Database
+
 
 class App(Tk):
     def __init__(self):
@@ -14,16 +16,17 @@ class App(Tk):
         self.title(APP_TITLE)
 
         config.CAMERA_PORT = int(find_camera())
-        if config.CAMERA_PORT  is not None:
+        if config.CAMERA_PORT is not None:
             print(f"Camera found at index {config.CAMERA_PORT } ===============")
-            # Pass the cam_index to the kamera.py script or use it as needed
-            # For demonstration purposes, we will print it
-            # You can also use it to initialize or configure other modules
         else:
             print("No camera available.")
+
+        if config.DONGLE_ID != "12345":     # correct_Id "12345"
+            goToPage(DongleNotification.DongleNotification(self))
 
         self.homePage = HomePage.HomePage(self)
 
         goToPage(self.homePage)
+
 
 app = App()

@@ -3,6 +3,7 @@ from tkinter import Button, PhotoImage
 from pages.BasePage import BasePage
 import tkinter as tk
 import cv2
+import numpy as np
 import threading
 
 # default ukuran window
@@ -57,51 +58,94 @@ def create_hover_button(window, x, y, width, height, bg_color, image_path, hover
 
     return button
 
-def crop_image(img, ratio):
-    # Calculate coordinate and zoom ratio
-    height, width, _ = img.shape
-    new_width, new_height = width // ratio, height // ratio  # zoom ratio
-    x_center, y_center = width // 2, height // 2
-    x1, y1 = int(x_center - new_width // 2), int(y_center - new_height // 2)
-    x2, y2 = int(x_center + new_width // 2), int(y_center + new_height // 2)
 
-    # Crop image
+def crop_and_save(img, zoom_ratio, target_size):
+    # Tentukan sisi terpendek untuk menentukan ukuran cropping
+    height, width, _ = img.shape
+    crop_size = min(height, width)
+
+    # Hitung koordinat untuk crop agar gambar berada di tengah
+    x_center, y_center = width // 2, height // 2
+    x1 = x_center - crop_size // 2
+    y1 = y_center - crop_size // 2
+    x2 = x_center + crop_size // 2
+    y2 = y_center + crop_size // 2
+
+    # Crop gambar
+    cropped_image = img[y1:y2, x1:x2]
+
+    # Hitung ukuran baru setelah pembesaran
+    zoomed_width = int(crop_size * zoom_ratio)
+    zoomed_height = int(crop_size * zoom_ratio)
+
+    # Resize gambar hasil crop ke ukuran yang lebih besar
+    zoomed_image = cv2.resize(cropped_image, (zoomed_width, zoomed_height), interpolation=cv2.INTER_LINEAR)
+    target_width, target_height = target_size
+
+    # Buat image dengan background hitam jika hasil zoom lebih kecil dari target size
+    output_image = np.zeros((target_height, target_width, 3), dtype=np.uint8)
+
+    # Hitung posisi tengah dari gambar hasil pembesaran
+    x_offset = (target_width - zoomed_width) // 2
+    y_offset = (target_height - zoomed_height) // 2
+
+    # Jika gambar hasil pembesaran lebih besar dari target size, crop lagi
+    if zoomed_width > target_width or zoomed_height > target_height:
+        x1 = max((zoomed_width - target_width) // 2, 0)
+        y1 = max((zoomed_height - target_height) // 2, 0)
+        x2 = x1 + target_width
+        y2 = y1 + target_height
+        output_image = zoomed_image[y1:y2, x1:x2]
+    else:
+        output_image[y_offset:y_offset + zoomed_height, x_offset:x_offset + zoomed_width] = zoomed_image
+
+    return output_image
+
+def crop_with_padding(img, zoom_ratio, target_size):
+    height, width, _ = img.shape
+
+    # Buat ukuran baru image, sesuai dengan zoom ratio
+    new_width = width // zoom_ratio
+    new_height = height // zoom_ratio
+
+    # Calculate coordinates
+    x_center, y_center = width // 2, height // 2
+
+    # Calculate crop coordinates
+    x1 = max(int(x_center - new_width // 2), 0)
+    y1 = max(int(y_center - new_height // 2), 0)
+    x2 = min(int(x_center + new_width // 2), width)
+    y2 = min(int(y_center + new_height // 2), height)
+
+    # Potong sesuai ratio zoom
     cropped_frame = img[y1:y2, x1:x2]
 
-    # Resize back to original size for zoom effect
-    zoomed_frame = cv2.resize(cropped_frame, (width, height))
+    # Resize sesuai target gambar
+    target_width, target_height = target_size
 
-    return zoomed_frame
+    # Add black padding, biar ratio image tetap
+    padded_image = np.zeros((target_height, target_width, 3), dtype=np.uint8)
 
+    # Calculate Scaling Factors
+    scale_width = target_width / cropped_frame.shape[1]
+    scale_height = target_height / cropped_frame.shape[0]
+    scale = min(scale_width, scale_height)  # Choose the smaller scale to maintain aspect ratio
 
-def find_camera():
-    vidCap_list = []
-    cam_index_list = []
-    threads = []
+    # Calculate new dimensions for resized image
+    resized_width = int(cropped_frame.shape[1] * scale)
+    resized_height = int(cropped_frame.shape[0] * scale)
 
-    for cam_index in range(20):
-        t = threading.Thread(target=try_open_camera, args=(cam_index, vidCap_list, cam_index_list))
-        t.start()
-        threads.append(t)
+    # Resize gambar sesuai target dan tidak merubah ratio ukuran
+    resized_frame = cv2.resize(cropped_frame, (resized_width, resized_height), interpolation=cv2.INTER_LINEAR)
 
-    for t in threads:
-        t.join()
+    # Atur posisi gambar ke tenga-tengah
+    x_offset = (target_width - resized_width) // 2
+    y_offset = (target_height - resized_height) // 2
 
-    if not cam_index_list:
-        print("No camera found.")
-        return None
-    else:
-        print("Camera found and opened successfully.")
-        return cam_index_list[0]
+    # Taruh gambar ke tengah-tengah gambar black padding
+    padded_image[y_offset:y_offset + resized_height, x_offset:x_offset + resized_width] = resized_frame
 
-
-def try_open_camera(cam_index, vidCap_list, cam_index_list):
-    vidCap = cv2.VideoCapture(cam_index)
-    if vidCap.isOpened():
-        cam_index_list.append(cam_index)
-        vidCap.release()
-    else:
-        print(f"Failed to open camera at index {cam_index}")
+    return padded_image
 
 class TextArea(tk.Text):
     def __init__(self, master=None, placeholder="PLACEHOLDER", color='grey', **kwargs):

@@ -11,39 +11,16 @@ class InsuranceModel:
 
     def close_connection(self):
         self.db.close()
-    
-    def create_table(self):
-        try:
-            self.open_connection()
-            query = """
-                CREATE TABLE IF NOT EXISTS Asuransi (
-                    id_asuransi INT AUTO_INCREMENT PRIMARY KEY,
-                    id_pasien INT,
-                    nama_asuransi VARCHAR(255) NOT NULL,
-                    nomor_asuransi VARCHAR(255) NOT NULL,
-                    jenis_asuransi VARCHAR(255),
-                    fasilitas_kesehatan VARCHAR(255),
-                    kelas_asuransi VARCHAR(255),
-                    FOREIGN KEY (id_pasien) REFERENCES Pasien(id_pasien)
-                );
-            """
-            cursor = self.db.connection.cursor()
-            cursor.execute(query)
-            self.db.connection.commit()
-        except Exception as e:
-            print(f"Error: {e}")
-        finally:
-            self.close_connection()
 
-    def insert_insurance(self, patient_id, insurance_name, insurance_number, insurance_type, health_facility, insurance_class):
+    def insert_insurance(self, id_asuransi, jenis_asuransi, fasilitas_kesehatan):
         try:
             self.open_connection()
             query = """
-            INSERT INTO Asuransi (id_pasien, nama_asuransi, nomor_asuransi, jenis_asuransi, fasilitas_kesehatan, kelas_asuransi)
-            VALUES (%s, %s, %s, %s, %s, %s);
+            INSERT INTO Asuransi (id_asuransi, jenis_asuransi, fasilitas_kesehatan)
+            VALUES (%s, %s, %s)
             """
             cursor = self.db.connection.cursor()
-            cursor.execute(query, (patient_id, insurance_name, insurance_number, insurance_type, health_facility, insurance_class))
+            cursor.execute(query, (id_asuransi, jenis_asuransi, fasilitas_kesehatan))
             self.db.connection.commit()
         except Exception as e:
             print(f"Error: {e}")

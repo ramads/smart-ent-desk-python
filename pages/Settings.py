@@ -8,7 +8,6 @@ from helpers import *
 
 from pages import HomePage
 
-from database.models.Diagnosis import DiagnosisModel
 import json
 
 
@@ -53,7 +52,6 @@ class Settings(Canvas, BasePage):
         self.lang_code = lang_code
         self.data_localization = self.get_localization()
         self.drawPage()
-
 
     def show(self, label):
         print(label)
@@ -126,7 +124,6 @@ class Settings(Canvas, BasePage):
                             BACKGROUND_COLOUR, inactive_button_4, active_button_4,
                             lambda: goToPage(HomePage.HomePage(self.window)))
 
-
         self.my_frame = customtkinter.CTkScrollableFrame(self.window,
                                                          orientation="vertical",
                                                          width=955,
@@ -146,19 +143,10 @@ class Settings(Canvas, BasePage):
                                     borderwidth=0)
         self.canvas_scroll.pack()
 
-
         self.update_cards()
-
-
 
     def update_cards(self):
         self.canvas_scroll.delete("all")
-
-        button_images = []
-
-        # for i in range(len(self.history_data)):
-        #     y_offset = i * 50
-
 
         # Define options and geometries
         if self.lang_code == "id":
@@ -171,7 +159,6 @@ class Settings(Canvas, BasePage):
         self.create_option_menu(self.canvas_scroll, options_1, (760, 255, 155, 27), self.change_language)
         self.create_option_menu(self.canvas_scroll, options_2, (810, 86, 105, 27), self.show)
         self.create_option_menu(self.canvas_scroll, options_3, (760, 590, 155, 27), self.show)
-
 
         self.canvas_scroll.create_text(
             121.0,
@@ -390,4 +377,3 @@ class Settings(Canvas, BasePage):
 
         self.canvas_scroll.configure(scrollregion=self.canvas_scroll.bbox("all"))
         self.window.mainloop()
-

@@ -130,8 +130,7 @@ class DEarCorrectionPage(Canvas, BasePage):
                         focuscolor="#FFFFFF",
                         anchor="w")
         style.map("Rounded.TMenubutton",
-                background=[("active", "skyblue")])
-        
+                  background=[("active", "skyblue")])
 
         # Create the OptionMenu with the custom style
         drop = ttk.OptionMenu(self.window, clicked, options[0], *options)
@@ -144,7 +143,6 @@ class DEarCorrectionPage(Canvas, BasePage):
             width=310.0,
             height=40.0
         )
-
 
         self.create_text(
             749.0,
@@ -191,6 +189,5 @@ class DEarCorrectionPage(Canvas, BasePage):
         create_hover_button(self.window, 908.0, 463.0, 150.0, 46.0,
                             "#FFFFFF", inactive_button_3, active_button_3,  
                             show)
-
 
         self.window.mainloop()

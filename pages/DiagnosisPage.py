@@ -3,16 +3,20 @@ from colors import *
 from helpers import *
 # from notificationBar import notificationBar
 
-from pages.DEarPage import DEarPage
+from pages import DiagnosisQuestionPage
 from pages import PatientQueuePage
 
+from database.models import MedicalFacility
+from config import DUMMY_MEDICAL_FACILITY
 import json
 
+
 class DiagnosisPage(Canvas, BasePage):
-    def __init__(self, window, id_patient = None):
+    def __init__(self, window, temp_data=None):
         self.window = window
         self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
+        self.medical_facility_data = MedicalFacility.MedicalFacilityModel().get_medical_facility(DUMMY_MEDICAL_FACILITY)
         super().__init__(
             window,
             bg=BACKGROUND_COLOUR,
@@ -22,18 +26,14 @@ class DiagnosisPage(Canvas, BasePage):
             highlightthickness=0,
             relief="ridge"
         )
-        self.temp_data = {
-            'id_patient': id_patient
-        }
-
+        self.temp_data = temp_data
     def get_localization(self):
         path = f"locales/{self.lang_code}/string.json"
         with open(path, "r") as file:
             data = json.load(file)
         return data
 
-
-    def drawPage(self, data = None):
+    def drawPage(self, data=None):
         self.place(x=0, y=0)
 
         # wifi_clock_app = notificationBar(self.window)
@@ -52,7 +52,7 @@ class DiagnosisPage(Canvas, BasePage):
         
         create_hover_button(self.window, 41.0, 223.0, 332.0, 319.0,
                             BACKGROUND_COLOUR, inactive_button_1, active_button_1, 
-                            lambda: goToPage(DEarPage(self.window, self.temp_data, "telinga")))
+                            lambda: goToPage(DiagnosisQuestionPage.DiagnosisQuestionPage(self.window, self.temp_data, 'telinga', DiagnosisPage)))
         
         create_hover_button(self.window, 402.0, 223.0, 330.0, 319.0,
                             BACKGROUND_COLOUR, inactive_button_2, active_button_2,  
@@ -97,7 +97,7 @@ class DiagnosisPage(Canvas, BasePage):
             130.0,
             117.5,
             anchor="nw",
-            text="RS. Universitas Mataram",
+            text=self.medical_facility_data['nama_faskes'],
             fill="#FFFFFF",
             font=("Nunito Black", 14 * -1)
         )

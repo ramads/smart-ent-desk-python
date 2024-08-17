@@ -5,7 +5,6 @@ from helpers import *
 from pages import HomePage
 from pprint import pprint
 
-from database.models.Diagnosis import DiagnosisModel
 import json
 
 
@@ -32,8 +31,8 @@ class EndQueuePage(Canvas, BasePage):
             data = json.load(file)
         return data
 
-    def drawPage(self, data = None):
-        self.place(x = 0, y = 0)
+    def drawPage(self, data=None):
+        self.place(x=0, y=0)
 
         # wifi_clock_app = notificationBar(self.window)
 
@@ -76,8 +75,7 @@ class EndQueuePage(Canvas, BasePage):
         # Update the UI to ensure all elements are rendered
         self.window.update_idletasks()
 
-
-        self.window.after(5000, self.go_to_homepage)
+        self.window.after(3000, self.go_to_homepage)
         self.window.mainloop()
 
     def go_to_homepage(self):

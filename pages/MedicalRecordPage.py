@@ -9,18 +9,19 @@ from pages import HomePage
 from pages import MedicalRecordDetailPage
 from pages import MedicalRecordEditPage
 
-from database.models.Diagnosis import DiagnosisModel
+from database.models import MedicalRecord, Disease, MedicalFacility
 
+from config import DUMMY_MEDICAL_FACILITY
 import json
+from pprint import pprint
 
 
 class MedicalRecordPage(Canvas, BasePage):
 
-    def __init__(self, window):
+    def __init__(self, window, temp_data=None):
         self.window = window
-        self.dignosisModel = DiagnosisModel()
-        self.temp_data = self.dignosisModel.get_patient_joint_diagnoses()
-        self.history_data = self.temp_data
+        self.initialize_models()
+        self.get_histories_data()
         self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
 
@@ -36,6 +37,15 @@ class MedicalRecordPage(Canvas, BasePage):
 
         self.drawPage()
 
+    def initialize_models(self):
+        self.medical_record = MedicalRecord.MedicalRecordModel()
+        self.disease = Disease.DiseaseModel()
+        self.medical_facility = MedicalFacility.MedicalFacilityModel()
+
+    def get_histories_data(self):
+        self.temp_data = self.medical_record.get_medical_record_join_disease_join_patient()
+        self.history_data = self.temp_data
+
     def get_localization(self):
         path = f"locales/{self.lang_code}/string.json"
         with open(path, "r") as file:
@@ -46,7 +56,7 @@ class MedicalRecordPage(Canvas, BasePage):
         input_text = self.searchingBox.get("1.0", "end-1c").lower().strip()
         input_text = input_text.replace("\n", "").replace("\t", "").replace(" ", "")
         print(input_text)
-        if input_text == "" or input_text == "enteryourtexthere...":
+        if input_text == "" or input_text == "enteryourtexthere..." or input_text == "masukkanteksandadisini...":
             self.history_data = self.temp_data
         else:
             self.history_data = [
@@ -55,10 +65,9 @@ class MedicalRecordPage(Canvas, BasePage):
 
         self.update_cards()
 
-    def delete_diagnosis(self, id):
-        self.dignosisModel.delete_diagnosis(id)
-        self.temp_data = self.dignosisModel.get_patient_joint_diagnoses()
-        self.history_data = self.temp_data
+    def delete_diagnosis(self, id_rekam_medis):
+        self.medical_record.delete_medical_record(id_rekam_medis)
+        self.get_histories_data()
         self.update_cards()
 
     def drawPage(self):
@@ -141,7 +150,7 @@ class MedicalRecordPage(Canvas, BasePage):
             130.0,
             117.5,
             anchor="nw",
-            text="RS. Universitas Mataram",
+            text=self.medical_facility.get_medical_facility(DUMMY_MEDICAL_FACILITY)['nama_faskes'],
             fill="#FFFFFF",
             font=("Nunito Black", 14 * -1)
         )
@@ -187,7 +196,7 @@ class MedicalRecordPage(Canvas, BasePage):
             fg="#000716",
             highlightthickness=0,
             font=("Nunito Bold", 12),
-            placeholder="Enter your text here..."
+            placeholder=self.data_localization["enter_text"]
         )
         self.searchingBox.place(
             x=611.0,
@@ -219,38 +228,43 @@ class MedicalRecordPage(Canvas, BasePage):
 
         for i in range(len(self.history_data)):
             y_offset = i * 50
-            self.canvas_scroll.create_rectangle(81.0, 367.0 + y_offset, 1278.0, 367.0 + y_offset, fill="#F3F3F3", outline="")
-            self.canvas_scroll.create_text(81.0, 331.0 + y_offset, anchor="nw", text=self.history_data[i]['nama_pasien'],
-                                        fill="#404040",
-                                        font=("Nunito Regular", 18 * -1))
-            self.canvas_scroll.create_text(380, 331.0 + y_offset, anchor="nw", text=self.history_data[i]['diagnosa'],
-                                        fill="#404040",
-                                        font=("Nunito Regular", 18 * -1))
-            self.canvas_scroll.create_text(650, 331.0 + y_offset, anchor="nw", text=self.history_data[i]['tanggal_diagnosa'].strftime("%d %B %Y"),
-                                        fill="#404040",
-                                        font=("Nunito Regular", 16 * -1))
+            self.canvas_scroll.create_rectangle(81.0, 367.0 + y_offset, 1278.0, 367.0 + y_offset,
+                                                fill="#F3F3F3", outline="")
+            self.canvas_scroll.create_text(81.0, 331.0 + y_offset, anchor="nw",
+                                           text=self.history_data[i]['nama_pasien'],
+                                           fill="#404040",
+                                           font=("Nunito Regular", 18 * -1))
+            self.canvas_scroll.create_text(380, 331.0 + y_offset, anchor="nw",
+                                           text=self.history_data[i]['nama_penyakit'],
+                                           fill="#404040",
+                                           font=("Nunito Regular", 18 * -1))
+            self.canvas_scroll.create_text(650, 331.0 + y_offset, anchor="nw",
+                                           text=self.history_data[i]['tanggal_pemeriksaan'].strftime("%d %B %Y"),
+                                           fill="#404040",
+                                           font=("Nunito Regular", 16 * -1))
 
             button_image_1 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/edit_button.png"))
             button_images.append(button_image_1)
-            button_1 = Button(self.canvas_scroll, image=button_image_1, borderwidth=0, highlightthickness=0, background="#FFFFFF",
-                            command=lambda: goToPage(MedicalRecordEditPage.MedicalRecordEditPage(self.window)))
+            button_1 = Button(self.canvas_scroll, image=button_image_1, borderwidth=0, highlightthickness=0,
+                              background="#FFFFFF",
+                              command=lambda i=i: goToPage(MedicalRecordEditPage.MedicalRecordEditPage(self.window, self.history_data[i])), relief="flat")
             self.canvas_scroll.create_window(914.22119140625, 329.20361328125 + y_offset, anchor="nw", window=button_1,
-                                            width=23.592920303344727, height=23.592920303344727)
+                                             width=23.592920303344727, height=23.592920303344727)
 
             button_image_2 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/view_button.png"))
             button_images.append(button_image_2)
-            button_2 = Button(self.canvas_scroll, image=button_image_2, borderwidth=0, highlightthickness=0, background="#FFFFFF",
-                            command=lambda i=i: goToPage(MedicalRecordDetailPage.MedicalRecordDetailPage(self.window, self.history_data[i], "medical_record")), relief="flat")
+            button_2 = Button(self.canvas_scroll, image=button_image_2, borderwidth=0, highlightthickness=0,
+                              background="#FFFFFF",
+                              command=lambda i=i: goToPage(MedicalRecordDetailPage.MedicalRecordDetailPage(self.window, self.history_data[i], MedicalRecordPage)), relief="flat")
             self.canvas_scroll.create_window(942.814208984375, 329.20361328125 + y_offset, anchor="nw", window=button_2,
-                                            width=23.592920303344727, height=23.592920303344727)
+                                             width=23.592920303344727, height=23.592920303344727)
 
             button_image_3 = PhotoImage(file=relative_to_assets("control/MedicalRecordFrame/button_3.png"))
             button_images.append(button_image_3)
-            button_3 = Button(self.canvas_scroll, image=button_image_3, borderwidth=0, highlightthickness=0, background="#FFFFFF",
-                            command=lambda i=i: self.delete_diagnosis(self.history_data[i]['id_diagnosa']), relief="flat")
+            button_3 = Button(self.canvas_scroll, image=button_image_3, borderwidth=0, highlightthickness=0,
+                              background="#FFFFFF", command=lambda i=i: self.delete_diagnosis(self.history_data[i]['id_rekam_medis']), relief="flat")
             self.canvas_scroll.create_window(971.406982421875, 329.20361328125 + y_offset, anchor="nw", window=button_3,
-                                            width=23.592920303344727, height=23.592920303344727)
+                                             width=23.592920303344727, height=23.592920303344727)
 
         self.canvas_scroll.configure(scrollregion=self.canvas_scroll.bbox("all"))
         self.window.mainloop()
-

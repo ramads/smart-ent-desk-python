@@ -10,14 +10,13 @@ from PIL import ImageTk, Image
 
 from pages import DEarCorrectionPage
 
-from database.models.Patient import PatientModel
-from database.models.Insurance import InsuranceModel
+from database.models import Patient
 
-from pages import DEarCompletePage
+from pages import CompletePage
 from pages import FullScreenImagePage
 
-from pprint import pprint
 import json
+
 
 class DEarResultPage(Canvas, BasePage):
     def __init__(self, window, temp_data=None):
@@ -37,11 +36,7 @@ class DEarResultPage(Canvas, BasePage):
             highlightthickness=0,
             relief="ridge"
         )
-        self.patient = PatientModel()
-        self.insurance = InsuranceModel()
         self.get_patient_data()
-        self.get_insurance_data()
-        pprint(self.temp_data)
     
     def get_localization(self):
         path = f"locales/{self.lang_code}/string.json"
@@ -50,17 +45,14 @@ class DEarResultPage(Canvas, BasePage):
         return data
 
     def get_patient_data(self):
-        self.patient_data = self.patient.get_patient(self.temp_data['id_patient'])
-
-    def get_insurance_data(self):
-        self.insurance_data = self.insurance.get_patient_insurances(self.temp_data['id_patient'])
+        self.patient = Patient.PatientModel()
+        self.patient_data = self.patient.get_patient(self.temp_data['NIK'])
     
     def loadImage(self):
         return PhotoImage(file=relative_to_assets("image_3.png"))
-    
 
     def drawPage(self):
-        self.place(x = 0, y = 0)
+        self.place(x=0, y=0)
 
         # wifi_clock_app = notificationBar(self.window)
 
@@ -72,10 +64,16 @@ class DEarResultPage(Canvas, BasePage):
             image=image_image_1
         )
         
-        image_path = relative_to_image_capture("test_image.jpg")
-        original_image = Image.open(image_path)
-        resized_image = original_image.resize((600, 335)) 
-        captured_img = ImageTk.PhotoImage(resized_image)
+        # image_path = relative_to_image_capture("test_image.jpg")
+        # original_image = Image.open(image_path)
+        # resized_image = original_image.resize((600, 335))
+
+        # Resize image wihout changing image ratio
+        image_cropping = crop_with_padding(cv2.imread(relative_to_image_capture("test_image.jpg")), 1, (600, 335))
+        image_cropping = cv2.cvtColor(image_cropping, cv2.COLOR_BGR2RGB)
+        pil_image = Image.fromarray(image_cropping)
+
+        captured_img = ImageTk.PhotoImage(pil_image)
         image_2 = self.create_image(
             361.0,
             235.5,
@@ -91,14 +89,17 @@ class DEarResultPage(Canvas, BasePage):
         )
 
         # #pie chart
-        # labels = [self.temp_data['result_1'][0], self.temp_data['result_2'][0], self.temp_data['result_3'][0], "Lainnya"]
-        sizes = [int(self.temp_data['result_1'][1] * 100), int(self.temp_data['result_2'][1] * 100), int(self.temp_data['result_3'][1] * 100), (100-int((self.temp_data['result_1'][1]+ self.temp_data['result_2'][1]+ self.temp_data['result_3'][1])*100))]
+        sizes = [int(self.temp_data['result_1'][1] * 100), int(self.temp_data['result_2'][1] * 100),
+                 int(self.temp_data['result_3'][1] * 100), (100-int((self.temp_data['result_1'][1]
+                                                                     + self.temp_data['result_2'][1]
+                                                                     + self.temp_data['result_3'][1])*100))]
+
         colors = ['lightcoral',  'gold', 'yellowgreen', 'lightskyblue']
         explode = (0.1, 0, 0, 0)
 
         fig, ax = plt.subplots(figsize=(3, 2), dpi=100)
         ax.pie(sizes, explode=explode, colors=colors,
-            autopct='%d%%', shadow=True, startangle=140)
+               autopct='%d%%', shadow=True, startangle=140)
         ax.axis('equal')
 
         centre_circle = plt.Circle((0, 0), 0.70, fc='white')
@@ -241,7 +242,7 @@ class DEarResultPage(Canvas, BasePage):
             280.0,
             547.0,
             anchor="nw",
-            text = "{} %".format(int(self.temp_data['result_1'][1] * 100)),
+            text="{} %".format(int(self.temp_data['result_1'][1] * 100)),
             fill="#1E5C2A",
             font=("Nunito Bold", 15 * -1)
         )
@@ -285,73 +286,46 @@ class DEarResultPage(Canvas, BasePage):
             726.0,
             543.0,
             anchor="nw",
-            text=f"{self.data_localization['insurance_number'].capitalize()} :",
+            text=f"{self.data_localization['indications'].capitalize()} :",
             fill="#404040",
-            font=("Nunito Regular", 15 * -1)
+            font=("Nunito Bold", 15 * -1)
         )
 
-        self.create_text(
-            900.0,
+        # Mendapatkan bounding box dari gejala (list)
+        bbox_1 = self.bbox(self.create_text(
+            800.0,
             543.0,
             anchor="nw",
-            text=self.insurance_data[0]['nomor_asuransi'],
+            width=290,
+            text=', '.join(
+                [indication[1] for indication in self.temp_data['indications']]).capitalize() if self.temp_data.get(
+                'indications') else '-',
             fill="#404040",
-            font=("Nunito Bold", 15 * -1)
-        )
+            font=("Nunito Regular", 15 * -1)
+        ))
+
+        # Menentukan posisi Y untuk teks berikutnya berdasarkan bbox sebelumnya
+        y_position_2 = bbox_1[3] + 10
 
         self.create_text(
             726.0,
-            567.0,
+            y_position_2,
             anchor="nw",
-            text=f"{self.data_localization['insurance_type'].capitalize()} :",
-            fill="#404040",
-            font=("Nunito Regular", 15 * -1)
-        )
-
-        self.create_text(
-            900.0,
-            567.0,
-            anchor="nw",
-            text=self.insurance_data[0]['jenis_asuransi'],
+            text=f"{self.data_localization['description'].capitalize()} :",
             fill="#404040",
             font=("Nunito Bold", 15 * -1)
         )
 
-        self.create_text(
+        # Mendapatkan bounding box dari teks kedua
+        bbox_2 = self.bbox(self.create_text(
             726.0,
-            591.0,
+            y_position_2 + 22,  # Sesuaikan dengan tinggi teks kedua
             anchor="nw",
-            text=f"{self.data_localization['insurance_class'].capitalize()} :",
+            width=340,
+            text=self.temp_data['detail'] if self.temp_data['detail'] else '-',
             fill="#404040",
             font=("Nunito Regular", 15 * -1)
-        )
-
-        self.create_text(
-            900.0,
-            591.0,
-            anchor="nw",
-            text=self.insurance_data[0]['kelas_asuransi'],
-            fill="#404040",
-            font=("Nunito Bold", 15 * -1)
-        )
-
-        self.create_text(
-            726.0,
-            615.0,
-            anchor="nw",
-            text=f"{self.data_localization['medical_facility'].capitalize()} :",
-            fill="#404040",
-            font=("Nunito Regular", 15 * -1)
-        )
-
-        self.create_text(
-            900.0,
-            615.0,
-            anchor="nw",
-            text=self.insurance_data[0]['fasilitas_kesehatan'],
-            fill="#404040",
-            font=("Nunito Bold", 15 * -1)
-        )
+        ))
 
         inactive_button_1 = relative_to_assets("control/DEarResultFrame/button_1.png")
         active_button_1 = relative_to_assets("control/DEarResultFrame/active_button_1.png")
@@ -363,7 +337,7 @@ class DEarResultPage(Canvas, BasePage):
         active_button_3 = relative_to_assets(f"control/DEarResultFrame/{self.lang_code}/active_button_3.png")
 
         create_hover_button(self.window, 597.0, 330.0, 52.0, 52.0,
-                            BACKGROUND_COLOUR, inactive_button_1, active_button_1, 
+                            "#000000", inactive_button_1, active_button_1,
                             lambda: goToPage(FullScreenImagePage.FullScreenImagePage(self.window, self.temp_data)))
         
         create_hover_button(self.window, 67.0, 623.0, 192.0, 54.0,
@@ -372,8 +346,7 @@ class DEarResultPage(Canvas, BasePage):
         
         create_hover_button(self.window, 267.0, 623.0, 192.0, 54.0,
                             "#FFFFFF", inactive_button_3, active_button_3,  
-                            lambda: goToPage(DEarCompletePage.DEarCompletePage(self.window, self.temp_data)))
-
+                            lambda: goToPage(CompletePage.CompletePage(self.window, self.temp_data)))
 
         self.window.mainloop()
         self.destroy()

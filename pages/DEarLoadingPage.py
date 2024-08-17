@@ -1,9 +1,7 @@
-import threading
 from tkinter import *
 from tkinter import ttk
 from colors import *
 from helpers import *
-# from notificationBar import notificationBar
 
 from pages import DEarResultPage
 from machine_learning.image_predictor import ImagePredictor
@@ -12,9 +10,9 @@ import json
 
 
 class DEarLoadingPage(Canvas, BasePage):
-    result_1 = ("",0)
-    result_2 = ("",0)
-    result_3 = ("",0)
+    result_1 = ("", 0)
+    result_2 = ("", 0)
+    result_3 = ("", 0)
 
     def __init__(self, window, temp_data):
         self.window = window
@@ -38,19 +36,18 @@ class DEarLoadingPage(Canvas, BasePage):
             data = json.load(file)
         return data
 
-
     def run_prediction(self):
         predictor = ImagePredictor()
         image_path = 'temp_image/test_image.jpg'
 
         self.result_1, self.result_2, self.result_3 = predictor.predict(image_path)
-        self.update_data(hospital_id=1, result_1=self.result_1, result_2=self.result_2, result_3=self.result_3, image_path_temp=image_path)
+        self.update_data(result_1=self.result_1, result_2=self.result_2, result_3=self.result_3,
+                         image_path_temp=image_path)
 
-    def update_data(self, hospital_id, result_1, result_2, result_3, image_path_temp):
+    def update_data(self, result_1, result_2, result_3, image_path_temp):
         self.temp_data['result_1'] = result_1
         self.temp_data['result_2'] = result_2
         self.temp_data['result_3'] = result_3
-        self.temp_data['id_hospital'] = hospital_id
         self.temp_data['image_path_temp'] = image_path_temp
         self.temp_data['is_corrected'] = True
         self.temp_data['correction_reason'] = "None"
@@ -111,9 +108,11 @@ class DEarLoadingPage(Canvas, BasePage):
 
         self.s = ttk.Style()
         self.s.theme_use('clam')
-        self.s.configure('blue.Horizontal.TProgressbar', background='#85C13D', troughcolor='#E9F4DA', bordercolor='#E9F4DA')
+        self.s.configure('blue.Horizontal.TProgressbar', background='#85C13D',
+                         troughcolor='#E9F4DA', bordercolor='#E9F4DA')
 
-        self.p = ttk.Progressbar(self.window, orient="horizontal", style='blue.Horizontal.TProgressbar', length=540, mode='determinate')
+        self.p = ttk.Progressbar(self.window, orient="horizontal", style='blue.Horizontal.TProgressbar',
+                                 length=540, mode='determinate')
         self.p.place(x=297, y=381.5, height=21.2)
         self.p['maximum'] = 540  # Set to represent 100%
 

@@ -8,10 +8,12 @@ from pages import NotificationPage
 from pages import MedicalRecordPage
 from pages import SoftwareHardware
 from pages import Settings
-from pages import EndQueuePage
+from pages import AboutUsPage
 
 # from pages import NotificationDetailv2Page
 
+from config import DUMMY_MEDICAL_FACILITY
+from database.models import MedicalFacility
 import json
 
 
@@ -19,6 +21,7 @@ class HomePage(Canvas, BasePage):
     def __init__(self, window):
         self.window = window
         self.lang_code = json.load(open("config.json", "r"))["language"]
+        self.medical_facility = MedicalFacility.MedicalFacilityModel().get_medical_facility(DUMMY_MEDICAL_FACILITY)
         self.data_localization = self.get_localization()
         super().__init__(
             window,
@@ -63,25 +66,25 @@ class HomePage(Canvas, BasePage):
                             BACKGROUND_COLOUR, inactive_button_1, active_button_1,
                             lambda: goToPage(PatientQueuePage.PatientQueuePage(self.window)))
         
-        create_hover_button(self.window, 523.0,216.0, 263.0, 319.0, 
+        create_hover_button(self.window, 523.0, 216.0, 263.0, 319.0,
                             BACKGROUND_COLOUR, inactive_button_2, active_button_2,  
                             lambda: goToPage(MedicalRecordPage.MedicalRecordPage(self.window)))
         
-        create_hover_button(self.window, 815.0,216.0, 271.0, 151.0, 
+        create_hover_button(self.window, 815.0, 216.0, 271.0, 151.0,
                             BACKGROUND_COLOUR, inactive_button_3, active_button_3,  
                             lambda: goToPage(NotificationPage.NotificationPage(self.window)))
         
-        create_hover_button(self.window, 815.0,384.0, 271.0, 151.0, 
+        create_hover_button(self.window, 815.0, 384.0, 271.0, 151.0,
                             BACKGROUND_COLOUR, inactive_button_4, active_button_4,  
                             lambda: goToPage(SoftwareHardware.SoftwareHardware(self.window)))
         
-        create_hover_button(self.window, 269.0,591.0, 275.0, 99.0, 
+        create_hover_button(self.window, 269.0, 591.0, 275.0, 99.0,
                             BACKGROUND_COLOUR, inactive_button_5, active_button_5,  
                             lambda: goToPage(Settings.Settings(self.window)))
         
-        create_hover_button(self.window, 590.0,591.0, 274.0, 99.0,
+        create_hover_button(self.window, 590.0, 591.0, 274.0, 99.0,
                             BACKGROUND_COLOUR, inactive_button_6, active_button_6,  
-                            lambda: goToPage(EndQueuePage.EndQueuePage(self.window)))
+                            lambda: goToPage(AboutUsPage.AboutUsPage(self.window)))
 
         image_image_1 = PhotoImage(
             file=relative_to_assets(f"control/HomeFrame/image_1.png"))
@@ -95,7 +98,7 @@ class HomePage(Canvas, BasePage):
             130.0,
             117.5,
             anchor="nw",
-            text="RS. Universitas Mataram",
+            text=self.medical_facility['nama_faskes'],
             fill="#FFFFFF",
             font=("Nunito Black", 14 * -1)
         )

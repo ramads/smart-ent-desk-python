@@ -1,4 +1,7 @@
 from tkinter import *
+
+import cv2
+
 from colors import *
 from helpers import *
 from PIL import ImageTk, Image
@@ -8,6 +11,7 @@ from pages import DEarProcessPage
 from pages import DEarLoadingPage
 
 import json
+
 
 class PreviewImagePage(Canvas, BasePage):
     def __init__(self, window, temp_data=None):
@@ -34,7 +38,7 @@ class PreviewImagePage(Canvas, BasePage):
     def loadImage(self):
         return PhotoImage(file=relative_to_assets("image_3.png"))
 
-    def drawPage(self, data = None):
+    def drawPage(self, data=None):
         self.place(x=0, y=0)
 
         # wifi_clock_app = notificationBar(self.window)
@@ -47,7 +51,12 @@ class PreviewImagePage(Canvas, BasePage):
             image=image_image_1
         )
 
-        captured_img = ImageTk.PhotoImage(Image.open(relative_to_image_capture("test_image.jpg")))
+        # Show image with original ratio
+        image_cropping = crop_with_padding(cv2.imread(relative_to_image_capture("test_image.jpg")), 1, (1019, 452))
+        image_cropping = cv2.cvtColor(image_cropping, cv2.COLOR_BGR2RGB)
+        pil_image = Image.fromarray(image_cropping)
+
+        captured_img = ImageTk.PhotoImage(pil_image)
         image_2 = self.create_image(
             566.0,
             292.5,
@@ -64,7 +73,6 @@ class PreviewImagePage(Canvas, BasePage):
             font=("Nunito Regular", 15 * -1)
         )
 
-
         inactive_button_1 = relative_to_assets(f"control/PreviewImageFrame/{self.lang_code}/button_1.png")
         active_button_1 = relative_to_assets(f"control/PreviewImageFrame/{self.lang_code}/active_button_1.png")
         
@@ -77,8 +85,6 @@ class PreviewImagePage(Canvas, BasePage):
         create_hover_button(self.window, 570.5, 631.0, 192.0, 54.0, 
                             "#FFFFFF", inactive_button_2, active_button_2,  
                             lambda: goToPage(DEarLoadingPage.DEarLoadingPage(self.window, self.temp_data)))
-
-
 
         self.create_text(
             1133/2,
