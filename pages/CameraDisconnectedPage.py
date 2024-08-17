@@ -5,7 +5,7 @@ from colors import *
 from helpers import *
 from config import *
 
-from pages import DEarProcessPage
+from pages import ProcessPage
 
 from pprint import pprint
 import json
@@ -48,7 +48,7 @@ class CameraDisconnectedPage(Canvas, BasePage):
             vidCap = cv2.VideoCapture(self.cam_index)
             if vidCap.isOpened():
                 vidCap.release()
-                self.window.after(0, lambda: goToPage(DEarProcessPage.DEarProcessPage(self.window, self.temp_data)))
+                self.window.after(0, lambda: goToPage(ProcessPage.ProcessPage(self.window, self.temp_data)))
             else:
                 print("Camera still not available.")
         except Exception as e:

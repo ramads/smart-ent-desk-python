@@ -5,12 +5,12 @@ from PIL import ImageTk, Image
 from tkinter import ttk
 # from notificationBar import notificationBar
 
-from pages import DEarResultPage
+from pages import ResultPage
 
 import json
 
 
-class DEarCorrectionPage(Canvas, BasePage):
+class CorrectionPage(Canvas, BasePage):
     def __init__(self, window, temp_data):
         self.window = window
         self.temp_data = temp_data
@@ -100,7 +100,7 @@ class DEarCorrectionPage(Canvas, BasePage):
             self.temp_data['result_1'] = (label, self.temp_data['result_1'][1])
             self.temp_data['is_corrected'] = False
             self.temp_data['correction_reason'] = entry_1.get("1.0", "end-1c")
-            goToPage(DEarResultPage.DEarResultPage(self.window, self.temp_data))
+            goToPage(ResultPage.ResultPage(self.window, self.temp_data))
 
         # Define options
         options = [
@@ -184,7 +184,7 @@ class DEarCorrectionPage(Canvas, BasePage):
 
         create_hover_button(self.window, 750.0, 463.0, 150.0, 46.0,
                             "#FFFFFF", inactive_button_2, active_button_2,  
-                            lambda: goToPage(DEarResultPage.DEarResultPage(self.window, self.temp_data)))
+                            lambda: goToPage(ResultPage.ResultPage(self.window, self.temp_data)))
         
         create_hover_button(self.window, 908.0, 463.0, 150.0, 46.0,
                             "#FFFFFF", inactive_button_3, active_button_3,  

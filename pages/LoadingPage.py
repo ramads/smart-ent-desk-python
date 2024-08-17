@@ -3,13 +3,13 @@ from tkinter import ttk
 from colors import *
 from helpers import *
 
-from pages import DEarResultPage
+from pages import ResultPage
 from machine_learning.image_predictor import ImagePredictor
 
 import json
 
 
-class DEarLoadingPage(Canvas, BasePage):
+class LoadingPage(Canvas, BasePage):
     result_1 = ("", 0)
     result_2 = ("", 0)
     result_3 = ("", 0)
@@ -73,7 +73,7 @@ class DEarLoadingPage(Canvas, BasePage):
             self.window.after(5, self.check_thread)
         else:
             self.window.after_cancel(self.task_id)
-            goToPage(DEarResultPage.DEarResultPage(self.window, self.temp_data))
+            goToPage(ResultPage.ResultPage(self.window, self.temp_data))
 
     def drawPage(self):
         self.place(x=0, y=0)

@@ -14,7 +14,7 @@ from database.models import Patient, MedicalRecord
 import json
 from pprint import pprint
 
-class DEarProcessPage(Canvas, BasePage):
+class ProcessPage(Canvas, BasePage):
     capture_image = None
     seriCom = SerialCom()
     after_cam_id = 0

@@ -3,7 +3,7 @@ from colors import *
 from helpers import *
 from PIL import ImageTk, Image
 
-from pages import DEarResultPage
+from pages import ResultPage
 
 import json
 
@@ -61,7 +61,7 @@ class FullScreenImagePage(Canvas, BasePage):
 
         create_hover_button(self.window, 500.5, 648.0, 136.0, 42.0,
                             "#FFFFFF", inactive_button_1, active_button_1,
-                            lambda: goToPage(DEarResultPage.DEarResultPage(self.window, self.temp_data)))
+                            lambda: goToPage(ResultPage.ResultPage(self.window, self.temp_data)))
 
         create_hover_button(self.window, 980.5, 492.0, 52.0, 52.0,
                             "#000000", inactive_button_2, active_button_2,

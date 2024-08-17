@@ -7,8 +7,8 @@ from helpers import *
 from PIL import ImageTk, Image
 # from notificationBar import notificationBar
 
-from pages import DEarProcessPage
-from pages import DEarLoadingPage
+from pages import ProcessPage
+from pages import LoadingPage
 
 import json
 
@@ -81,10 +81,10 @@ class PreviewImagePage(Canvas, BasePage):
         
         create_hover_button(self.window, 370.5, 631.0, 192.0, 54.0, 
                             "#FFFFFF", inactive_button_1, active_button_1, 
-                            lambda: goToPage(DEarProcessPage.DEarProcessPage(self.window, self.temp_data)))
+                            lambda: goToPage(ProcessPage.ProcessPage(self.window, self.temp_data)))
         create_hover_button(self.window, 570.5, 631.0, 192.0, 54.0, 
                             "#FFFFFF", inactive_button_2, active_button_2,  
-                            lambda: goToPage(DEarLoadingPage.DEarLoadingPage(self.window, self.temp_data)))
+                            lambda: goToPage(LoadingPage.LoadingPage(self.window, self.temp_data)))
 
         self.create_text(
             1133/2,

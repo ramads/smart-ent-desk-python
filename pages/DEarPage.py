@@ -1,7 +1,7 @@
 from tkinter import *
 from colors import *
 from helpers import *
-from pages import DEarProcessPage, DiagnosisQuestionPage
+from pages import DiagnosisQuestionPage, ProcessPage
 # from notificationBar import notificationBar
 from pprint import pprint
 import json
@@ -21,6 +21,7 @@ class DEarPage(Canvas, BasePage):
         )
         self.temp_data = temp_data
         pprint(self.temp_data)
+        print('test')
         self.get_disease_title(self.temp_data['diagnosis_type'])
 
     def get_disease_title(self, disease):
@@ -51,7 +52,7 @@ class DEarPage(Canvas, BasePage):
                             lambda: goToPage(DiagnosisQuestionPage.DiagnosisQuestionPage(self.window, self.temp_data)))        
         create_hover_button(self.window, 575.0, 600.0, 136.0, 42.0,
                             "#FFFFFF", inactive_button_2, active_button_2,  
-                            lambda: goToPage(DEarProcessPage.DEarProcessPage(self.window, self.temp_data)))
+                            lambda: goToPage(ProcessPage.ProcessPage(self.window, self.temp_data)))
 
         image_image_1 = PhotoImage(
             file=relative_to_assets(f"control/DEarFrame/image_1.png"))

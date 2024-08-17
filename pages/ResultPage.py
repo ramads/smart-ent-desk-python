@@ -8,7 +8,7 @@ from helpers import *
 
 from PIL import ImageTk, Image
 
-from pages import DEarCorrectionPage
+from pages import CorrectionPage
 
 from database.models import Patient
 
@@ -342,7 +342,7 @@ class DEarResultPage(Canvas, BasePage):
         
         create_hover_button(self.window, 67.0, 623.0, 192.0, 54.0,
                             "#FFFFFF", inactive_button_2, active_button_2, 
-                            lambda: goToPage(DEarCorrectionPage.DEarCorrectionPage(self.window, self.temp_data)))
+                            lambda: goToPage(CorrectionPage.CorrectionPage(self.window, self.temp_data)))
         
         create_hover_button(self.window, 267.0, 623.0, 192.0, 54.0,
                             "#FFFFFF", inactive_button_3, active_button_3,  
