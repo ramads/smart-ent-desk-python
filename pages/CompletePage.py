@@ -107,19 +107,18 @@ class CompletePage(Canvas, BasePage):
             id_penyakit=self.get_disease_id(self.temp_data['result_1'][0])
         )
 
-        self.patient_medical_facility.update_queue(
-            NIK=self.temp_data['NIK'],
-            id_faskes=self.temp_data['id_faskes'],
-            tanggal_pendaftaran=self.temp_data['tanggal_pendaftaran']
-        )
+        # Update Queue
+        # self.patient_medical_facility.update_queue(
+        #     NIK=self.temp_data['NIK'],
+        #     id_faskes=self.temp_data['id_faskes'],
+        #     tanggal_pendaftaran=self.temp_data['tanggal_pendaftaran']
+        # )
 
         for indication in self.temp_data['indications']:
             self.medical_record_indication.insert_medical_record_indication(
                 id_rekam_medis=id_medical_record,
                 id_gejala=indication[0]
             )
-        
-
 
     def loadImage(self):
         return PhotoImage(file=relative_to_assets("image_3.png"))

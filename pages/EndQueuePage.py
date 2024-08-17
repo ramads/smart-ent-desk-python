@@ -75,7 +75,7 @@ class EndQueuePage(Canvas, BasePage):
         # Update the UI to ensure all elements are rendered
         self.window.update_idletasks()
 
-        self.window.after(5000, self.go_to_homepage)
+        self.window.after(3000, self.go_to_homepage)
         self.window.mainloop()
 
     def go_to_homepage(self):

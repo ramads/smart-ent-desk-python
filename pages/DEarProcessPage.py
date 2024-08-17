@@ -42,6 +42,8 @@ class DEarProcessPage(Canvas, BasePage):
         os.makedirs(self.image_dir, exist_ok=True)
         self.window = window
         self.vidCap = None
+        self.zoom_factor = 1
+        self.save_image = None
         self.camera_thread = None
         self.camera_open_thread = None
         self.timer = 0
@@ -148,11 +150,14 @@ class DEarProcessPage(Canvas, BasePage):
         if self.ret:
             # self.frame = cv2.resize(self.frame, (604, 538))
 
-            zoomed_frame = crop_and_save(self.frame, 1.2, (604, 538))
+            self.save_image = crop_and_save(self.frame, self.zoom_factor, (550, 550))
 
-            opencv_image = cv2.cvtColor(zoomed_frame, cv2.COLOR_BGR2RGBA)
-            self.captured_image = ImageTk.PhotoImage(image=Image.fromarray(opencv_image))
-            self.create_image(354.0, 339.0, image=self.captured_image)
+            opencv_PIL = crop_and_save(self.frame, self.zoom_factor, (604, 538))
+            opencv_to_PIL = cv2.cvtColor(opencv_PIL, cv2.COLOR_BGR2RGBA)
+            # opencv_to_PIL = cv2.cvtColor(self.save_image, cv2.COLOR_BGR2RGBA)
+            self.capture_image = ImageTk.PhotoImage(image=Image.fromarray(opencv_to_PIL))
+            self.create_image(354.0, 339.0, image=self.capture_image)
+
 
         if self.countdown_seconds > 0:
             self.create_text(
@@ -163,6 +168,7 @@ class DEarProcessPage(Canvas, BasePage):
                 fill="#FFFFFF",
                 font=("Nunito Bold", 60 * -1)
             )
+
         else:
             self.create_text(
                 575.0,
@@ -185,8 +191,10 @@ class DEarProcessPage(Canvas, BasePage):
             filename = os.path.join(self.image_dir, f"{image_name}.jpg")
             # cv2.imwrite(filename, self.frame)
 
-            saved_img = crop_and_save(self.frame, 1.2, (512, 512))
-            cv2.imwrite(filename, saved_img)
+            # self.captured_image = np.array(self.captured_image)
+
+            # saved_img = crop_and_save(self.frame, 1.2, (512, 512))
+            cv2.imwrite(filename, self.save_image)
 
 
 
@@ -241,6 +249,14 @@ class DEarProcessPage(Canvas, BasePage):
             fill="#404040",
             font=("Nunito Regular", 15 * -1)
         )
+
+    def zoom_in(self):
+        self.zoom_factor *= 1.1
+        # self.update_image()
+
+    def zoom_out(self):
+        self.zoom_factor /= 1.1
+        # self.update_image()
 
     def drawPage(self):
         self.place(x=0, y=0)
@@ -503,6 +519,21 @@ class DEarProcessPage(Canvas, BasePage):
         button_10.image = button_image_10
         button_10.active_image = active_button_image_10
         buttons.append(button_10)
+
+        # zoom in and zoom out button
+        inactive_button_2 = relative_to_assets(f"control/DEarProcessFrame/zoom_in.png")
+        active_button_2 = relative_to_assets(f"control/DEarProcessFrame/zoom_in_inactive.png")
+
+        inactive_button_3 = relative_to_assets(f"control/DEarProcessFrame/zoom_out.png")
+        active_button_3 = relative_to_assets(f"control/DEarProcessFrame/zoom_out_inactive.png")
+
+        create_hover_button(self.window, 75.5, 475.0, 52.0, 52.0,
+                            "#000000", inactive_button_2, active_button_2,
+                            lambda: self.zoom_in())
+
+        create_hover_button(self.window, 75.5, 535.0, 52.0, 52.0,
+                            "#000000", inactive_button_3, active_button_3,
+                            lambda: self.zoom_out())
 
         self.create_text(
             726.0,
