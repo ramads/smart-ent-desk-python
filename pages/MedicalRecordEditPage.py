@@ -2,8 +2,6 @@ from tkinter import *
 from colors import *
 from helpers import *
 
-from pages import DEarPage
-
 from pages import MedicalRecordPage, DiagnosisQuestionPage
 
 # from database.models.Diagnosis import DiagnosisModel

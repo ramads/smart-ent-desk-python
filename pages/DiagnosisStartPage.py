@@ -5,7 +5,7 @@ from pages import DiagnosisQuestionPage, ProcessPage
 # from notificationBar import notificationBar
 from pprint import pprint
 import json
-class DEarPage(Canvas, BasePage):
+class DiagnosisStartPage(Canvas, BasePage):
     def __init__(self, window, temp_data=None):
         self.window = window
         self.lang_code = json.load(open("config.json", "r"))["language"]

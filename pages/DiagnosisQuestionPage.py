@@ -3,7 +3,7 @@ from colors import *
 from helpers import *
 # from notificationBar import notificationBar
 
-from pages import DEarPage
+from pages import DiagnosisStartPage
 from pages import DiagnosisPage
 
 from database.models import Indication
@@ -117,7 +117,7 @@ class DiagnosisQuestionPage(Canvas, BasePage):
 
         create_hover_button(self.window, 575.0, 614.0, 136.0, 42.0,
                             "#FFFFFF", inactive_continue, active_continue,
-                            lambda: [self.get_entry_text(), goToPage(DEarPage.DEarPage(self.window, self.temp_data))])
+                            lambda: [self.get_entry_text(), goToPage(DiagnosisStartPage.DiagnosisStartPage(self.window, self.temp_data))])
 
         inactive_back = relative_to_assets(f"control/DiagnosisQuestionFrame/{self.lang_code}/inactive_back.png")
         active_back = relative_to_assets(f"control/DiagnosisQuestionFrame/{self.lang_code}/active_back.png")

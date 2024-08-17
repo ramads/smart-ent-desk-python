@@ -6,7 +6,7 @@ import config
 from colors import *
 from helpers import *
 from PIL import Image, ImageTk
-from pages import DEarPage, PreviewImagePage, CameraDisconnectedPage
+from pages import DiagnosisStartPage, PreviewImagePage, CameraDisconnectedPage
 from libs.serial_com import SerialCom
 
 from database.models import Patient, MedicalRecord
@@ -229,7 +229,7 @@ class ProcessPage(Canvas, BasePage):
 
     def backToPrevPage(self):
         self.onStopCamera()
-        goToPage(DEarPage.DEarPage(self.window, self.temp_data))
+        goToPage(DiagnosisStartPage.DiagnosisStartPage(self.window, self.temp_data))
 
     def sendSerialCommand(self, command):
         if command == 4:
