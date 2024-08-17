@@ -36,6 +36,13 @@ class DiagnosisQuestionPage(Canvas, BasePage):
 
         self.indication_model = Indication.IndicationModel()
         self.indication_data = self.indication_model.get_indication_by_organ(self.temp_data["diagnosis_type"])
+        self.get_disease_title(self.temp_data['diagnosis_type'])
+
+    def get_disease_title(self, disease):
+        if self.lang_code == 'id':
+            self.disease_title = f"{self.data_localization['disease']} {self.data_localization[disease]}"
+        else:
+            self.disease_title = f"{self.data_localization[disease]} {self.data_localization['disease']}"
 
     def get_localization(self):
         path = f"locales/{self.lang_code}/string.json"
@@ -159,7 +166,7 @@ class DiagnosisQuestionPage(Canvas, BasePage):
             190.0,
             anchor="center",
             justify="center",
-            text=self.data_localization["question_title"],
+            text=self.disease_title.title(),
             fill="#404040",
             font=("Nunito Bold", 24 * -1)
         )

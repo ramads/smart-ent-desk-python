@@ -18,7 +18,7 @@ from pages import FullScreenImagePage
 import json
 
 
-class DEarResultPage(Canvas, BasePage):
+class ResultPage(Canvas, BasePage):
     def __init__(self, window, temp_data=None):
 
         self.window = window

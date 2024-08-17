@@ -42,7 +42,7 @@ class PatientMedicalFacilityModel:
     def get_queue(self, id_faskes):
         try:
             self.open_connection()
-            query = "SELECT * FROM Pasien_Fasilitas_Kesehatan WHERE id_faskes = %s AND status_periksa = 'tunggu' ORDER BY tanggal_pendaftaran ASC"
+            query = "SELECT * FROM Pasien_Fasilitas_Kesehatan WHERE id_faskes = %s AND status_periksa = 'tunggu' OR status_periksa = 'periksa' ORDER BY tanggal_pendaftaran ASC"
             cursor = self.db.connection.cursor(dictionary=True)
             cursor.execute(query, (id_faskes,))
             return cursor.fetchall()

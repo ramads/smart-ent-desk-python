@@ -51,6 +51,19 @@ class DiseaseModel:
         finally:
             self.close_connection()
 
+    def get_all_diseases_by_diagnosis_type(self, diagnosis_type):
+        print(diagnosis_type)
+        try:
+            self.open_connection()
+            query = "SELECT * FROM Penyakit WHERE organ_penyakit = %s ORDER BY Penyakit.nama_penyakit"
+            cursor = self.db.connection.cursor(dictionary=True)
+            cursor.execute(query, (diagnosis_type,))
+            return cursor.fetchall()
+        except Exception as e:
+            print(f"Error: {e}")
+        finally:
+            self.close_connection()
+
     def get_disease_id(self, nama_penyakit):
         try:
             self.open_connection()

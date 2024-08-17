@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 06, 2024 at 11:26 AM
+-- Generation Time: Aug 17, 2024 at 05:35 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -33539,7 +33539,7 @@ CREATE TABLE `Pasien_Asuransi` (
 CREATE TABLE `Pasien_Fasilitas_Kesehatan` (
   `NIK` varchar(255) NOT NULL,
   `id_faskes` int(11) NOT NULL,
-  `status_periksa` enum('selesai','tunggu','lewat','batal') DEFAULT NULL,
+  `status_periksa` enum('selesai','tunggu','lewat','batal','periksa') DEFAULT NULL,
   `tanggal_pendaftaran` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -33548,8 +33548,8 @@ CREATE TABLE `Pasien_Fasilitas_Kesehatan` (
 --
 
 INSERT INTO `Pasien_Fasilitas_Kesehatan` (`NIK`, `id_faskes`, `status_periksa`, `tanggal_pendaftaran`) VALUES
-('0987654321', 1, 'selesai', '2024-08-03 16:03:50'),
-('1234567890', 1, 'tunggu', '2024-08-03 16:04:17');
+('0987654321', 1, 'periksa', '2024-08-03 16:03:50'),
+('1234567890', 1, 'periksa', '2024-08-03 16:04:17');
 
 -- --------------------------------------------------------
 
@@ -33560,7 +33560,7 @@ INSERT INTO `Pasien_Fasilitas_Kesehatan` (`NIK`, `id_faskes`, `status_periksa`, 
 CREATE TABLE `Penyakit` (
   `id_penyakit` int(11) NOT NULL,
   `nama_penyakit` varchar(255) DEFAULT NULL,
-  `organ_penyakit` enum('telinga','hidung','tenggorakan') DEFAULT NULL,
+  `organ_penyakit` enum('telinga','hidung','tenggorokan') DEFAULT NULL,
   `deskripsi_penyakit` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -33588,7 +33588,21 @@ INSERT INTO `Penyakit` (`id_penyakit`, `nama_penyakit`, `organ_penyakit`, `deskr
 (17, 'OMedK Tipe Bahaya', 'telinga', 'Otitis Media Kronis tipe bahaya, yaitu infeksi telinga tengah kronis yang berpotensi menimbulkan komplikasi serius seperti kerusakan tulang atau infeksi otak.'),
 (18, 'Otomikosis', 'telinga', 'Infeksi telinga yang disebabkan oleh jamur, biasanya terjadi pada telinga luar.'),
 (19, 'Perforasi Membran Tympani', 'telinga', 'Robekan atau lubang pada gendang telinga yang dapat disebabkan oleh infeksi, trauma, atau tekanan yang tiba-tiba.'),
-(20, 'Tympanosklerotik', 'telinga', 'Kondisi di mana jaringan parut terbentuk di gendang telinga atau telinga tengah, seringkali sebagai hasil dari infeksi telinga kronis atau berulang.');
+(20, 'Tympanosklerotik', 'telinga', 'Kondisi di mana jaringan parut terbentuk di gendang telinga atau telinga tengah, seringkali sebagai hasil dari infeksi telinga kronis atau berulang.'),
+(21, 'Pharyngitis Acuta\n', 'tenggorokan', 'Faringitis akut adalah peradangan mendadak pada faring, yaitu bagian belakang tenggorokan. Penyakit ini biasanya disebabkan oleh infeksi virus atau bakteri, yang menyebabkan gejala seperti sakit tenggorokan, kesulitan menelan, dan pembengkakan pada tenggorokan. Kondisi ini sering kali disertai demam dan pembesaran kelenjar getah bening di leher.'),
+(22, 'Pharyngitis Chronica', 'tenggorokan', 'Faringitis kronis adalah peradangan jangka panjang pada faring, yang berlangsung selama beberapa minggu atau lebih. Penyebabnya bisa berupa paparan terus-menerus terhadap iritan seperti asap rokok, polusi udara, atau alergi. Gejalanya meliputi sakit tenggorokan yang berulang, rasa tidak nyaman atau kering di tenggorokan, serta batuk kronis.'),
+(23, 'Hypertrophia', 'tenggorokan', 'Hipertrofi pada konteks ini biasanya merujuk pada pembesaran abnormal jaringan atau organ. Di area tenggorokan, ini dapat mengacu pada pembesaran amandel (tonsil) atau adenoid, yang bisa menyebabkan gangguan pernapasan, kesulitan menelan, dan sleep apnea.'),
+(24, 'Tonsillitis Acuta', 'tenggorokan', 'Tonsilitis akut adalah peradangan mendadak pada amandel, yang disebabkan oleh infeksi virus atau bakteri. Gejalanya termasuk sakit tenggorokan yang parah, demam, kesulitan menelan, dan pembengkakan amandel yang kadang-kadang disertai dengan lapisan putih atau kuning pada amandel.'),
+(25, 'Tonsillitis Chronica', 'tenggorokan', 'Tonsilitis kronis adalah peradangan berulang atau terus-menerus pada amandel. Penderita mungkin mengalami gejala ringan yang terjadi berulang kali seperti tenggorokan sakit, napas bau, pembengkakan amandel, dan penurunan daya tahan tubuh. Kondisi ini seringkali membutuhkan tonsilektomi (pengangkatan amandel) jika terjadi secara berulang atau menyebabkan komplikasi.'),
+(26, 'Tonsillitis acuta Pharyngitis acuta', 'tenggorokan', 'Tonsilo faringitis akut adalah kondisi gabungan antara radang amandel dan radang faring yang terjadi secara bersamaan. Penyakit ini menyebabkan sakit tenggorokan yang parah, pembengkakan amandel dan faring, demam, serta kesulitan menelan. Penyebabnya sering kali adalah infeksi virus atau bakteri, dan pengobatannya tergantung pada penyebabnya, apakah virus atau bakteri.\n'),
+(27, 'Adenoid', 'hidung', 'Adenoid adalah massa jaringan limfatik yang terletak di belakang hidung di area nasofaring. Hipertrofi adenoid, atau pembesaran adenoid, terjadi ketika jaringan adenoid membesar dan menyebabkan penyumbatan saluran napas, gangguan pernapasan, infeksi telinga berulang, atau sleep apnea. Kondisi ini sering ditemukan pada anak-anak dan bisa memerlukan adenoidektomi (pengangkatan adenoid) jika menyebabkan masalah serius.'),
+(28, 'Hiperemis', 'hidung', 'Hiperemis adalah peningkatan aliran darah ke jaringan, yang menyebabkan kemerahan dan pembengkakan. Di hidung, hiperemis sering terjadi akibat iritasi, infeksi, atau alergi, yang menyebabkan pembuluh darah di mukosa hidung membesar dan menimbulkan rasa tidak nyaman, hidung tersumbat, dan lendir berlebihan.'),
+(29, 'Polyp', 'hidung', 'Polip hidung adalah pertumbuhan jaringan lunak yang tidak normal pada lapisan mukosa hidung atau sinus. Polip biasanya tidak berbahaya tetapi bisa menyebabkan penyumbatan saluran napas, penurunan indera penciuman, dan seringkali berhubungan dengan kondisi seperti sinusitis kronis atau asma. Pengobatan bisa melibatkan kortikosteroid atau operasi jika polip menyebabkan gangguan signifikan.'),
+(30, 'Rinitis', 'hidung', 'Rinitis adalah peradangan pada mukosa hidung yang menyebabkan gejala seperti hidung tersumbat, bersin, dan keluarnya lendir dari hidung. Rinitis bisa disebabkan oleh alergi (rinitis alergi) atau infeksi (rinitis non-alergi). Pengobatan tergantung pada penyebabnya, mulai dari antihistamin hingga dekongestan.'),
+(31, 'Sekret', 'hidung', 'Sekret di sini merujuk pada produksi lendir yang berlebihan di saluran hidung, yang bisa menjadi gejala dari berbagai kondisi seperti infeksi saluran pernapasan, rinitis, atau sinusitis. Lendir yang berlebihan bisa menyebabkan hidung tersumbat, rasa tidak nyaman, dan gangguan pernapasan.'),
+(32, 'Septum', 'hidung', 'Deviasi septum adalah kondisi di mana dinding yang memisahkan dua lubang hidung (septum) bergeser dari garis tengah, menyebabkan salah satu lubang hidung lebih sempit dari yang lain. Kondisi ini bisa menyebabkan kesulitan bernapas, hidung tersumbat, dan infeksi sinus berulang. Pengobatan biasanya melibatkan pembedahan (septoplasti) untuk memperbaiki septum.'),
+(33, 'Sinusitis', 'hidung', 'Sinusitis adalah peradangan pada sinus, yaitu rongga udara di sekitar hidung. Sinusitis dapat disebabkan oleh infeksi bakteri, virus, atau jamur, serta alergi. Gejala umum termasuk nyeri wajah, hidung tersumbat, dan keluarnya lendir kental dari hidung. Pengobatan sinusitis bisa berupa antibiotik, dekongestan, atau bahkan pembedahan pada kasus kronis.'),
+(34, 'Tumor Cavum', 'hidung', 'Tumor cavum biasanya merujuk pada tumor yang tumbuh di nasofaring atau rongga hidung. Tumor ini bisa bersifat jinak atau ganas, dengan salah satu jenis ganas yang paling umum adalah Karsinoma Nasofaring (Nasopharyngeal Carcinoma - NPC). Gejalanya bisa berupa hidung tersumbat, mimisan, benjolan di leher, dan gangguan pendengaran. Pengobatan tergantung pada jenis tumor dan bisa melibatkan kombinasi radioterapi, kemoterapi, dan pembedahan.');
 
 -- --------------------------------------------------------
 
@@ -33659,28 +33673,34 @@ CREATE TABLE `Rekam_Medis` (
   `tingkat_keyakinan` int(11) DEFAULT NULL,
   `prediksi_benar` tinyint(1) DEFAULT NULL,
   `alasan_koreksi` text DEFAULT NULL,
-  `gambar_penyakit` text DEFAULT NULL
+  `gambar_penyakit` text DEFAULT NULL,
+  `deskripsi_gejala` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `Rekam_Medis`
 --
 
-INSERT INTO `Rekam_Medis` (`id_rekam_medis`, `NIK`, `id_penyakit`, `id_faskes`, `tanggal_pemeriksaan`, `tingkat_keyakinan`, `prediksi_benar`, `alasan_koreksi`, `gambar_penyakit`) VALUES
-('05dadaa8-4d75-4d8c-bf2f-07f737f5a8c7', '1234567890', 8, 1, '2024-08-06 00:00:00', 30, 1, 'None', '1234567890_1_20240806_172435.png'),
-('3d9010d6-d69b-4994-a15e-387b051663b2', '0987654321', 1, 1, '2024-08-06 00:00:00', 34, 1, 'None', '0987654321_1_20240806_172555.png'),
-('46d248c0-b16e-4181-a239-f4848dd77ddb', '0987654321', 8, 1, '2024-08-03 00:00:00', 27, 1, 'None', '0987654321_1_20240803_205713.png'),
-('773d25af-150c-4924-adc6-b8bd22d1eece', '0987654321', 1, 1, '2024-08-03 00:00:00', 41, 1, 'None', '0987654321_1_20240803_220314.png'),
-('80544298-7db5-435e-b9b1-41a7673413ba', '1234567890', 8, 1, '2024-08-06 00:00:00', 31, 1, 'None', '1234567890_1_20240806_102556.png'),
-('865f87a2-32bc-4a6a-bb46-61fb00c059d8', '0987654321', 1, 1, '2024-08-03 00:00:00', 25, 1, 'None', '0987654321_1_20240803_210550.png'),
-('9fb73f5a-7802-4103-9393-67980fc31760', '1234567890', 8, 1, '2024-08-03 00:00:00', 23, 1, 'None', '1234567890_1_20240803_205911.png'),
-('a5200d4d-1787-4d9c-9582-86fd52e2ddc4', '0987654321', 8, 1, '2024-08-06 00:00:00', 20, 1, 'None', '0987654321_1_20240806_172225.png'),
-('cae317c5-5148-11ef-b4b5-f47b095d2bf4', '1234567890', 1, 1, '2024-08-03 00:00:00', 34, 1, 'None', '1234567890_1_20240803_213609.png'),
-('cae31c7c-5148-11ef-b4b5-f47b095d2bf4', '0987654321', 2, 2, '2024-07-02 11:00:00', 90, 0, 'Diagnosa awal tidak akurat', 'link_to_image_2'),
-('dc0f27e0-7c56-4c01-a296-558a0c48f953', '0987654321', 8, 1, '2024-08-03 00:00:00', 18, 1, 'None', '0987654321_1_20240803_205609.png'),
-('e09f4196-bc3e-488c-892d-1ef11f775a35', '0987654321', NULL, 1, '2024-08-03 00:00:00', 52, 1, 'None', '0987654321_1_20240803_173020.png'),
-('f3330d93-96ed-486e-9ee4-d7beaeabf95f', '0987654321', 8, 1, '2024-08-03 00:00:00', 21, 1, 'None', '0987654321_1_20240803_202636.png'),
-('f6124f8e-60e0-4820-b997-9d8bb9382528', '1234567890', 8, 1, '2024-08-03 00:00:00', 31, 1, 'None', '1234567890_1_20240803_213439.png');
+INSERT INTO `Rekam_Medis` (`id_rekam_medis`, `NIK`, `id_penyakit`, `id_faskes`, `tanggal_pemeriksaan`, `tingkat_keyakinan`, `prediksi_benar`, `alasan_koreksi`, `gambar_penyakit`, `deskripsi_gejala`) VALUES
+('05dadaa8-4d75-4d8c-bf2f-07f737f5a8c7', '1234567890', 8, 1, '2024-08-17 00:00:00', 34, 1, 'None', '1234567890_1_20240817_152259.png', 'None'),
+('1e22be17-2bb3-4a7c-b885-3180a9d9cade', '0987654321', 1, 1, '2024-08-17 00:00:00', 34, 1, 'None', '0987654321_1_20240817_155419.png', NULL),
+('3d9010d6-d69b-4994-a15e-387b051663b2', '0987654321', 1, 1, '2024-08-06 00:00:00', 34, 1, 'None', '0987654321_1_20240806_172555.png', 'None'),
+('46a100fd-821b-43e6-929f-4308b85ad49c', '1234567890', 8, 1, '2024-08-17 00:00:00', 43, 1, 'None', '1234567890_1_20240817_145033.png', 'None'),
+('46d248c0-b16e-4181-a239-f4848dd77ddb', '0987654321', 8, 1, '2024-08-03 00:00:00', 27, 1, 'None', '0987654321_1_20240803_205713.png', 'None'),
+('4791748a-d73b-4c2e-b6bd-c81424fea7ad', '0987654321', 8, 1, '2024-08-17 00:00:00', 23, 1, 'None', '0987654321_1_20240817_151015.png', 'None'),
+('6e7b0b91-ab51-44a4-98d9-ce073af86700', '0987654321', 29, 1, '2024-08-17 00:00:00', 15, 1, 'None', '0987654321_1_20240817_233355.png', NULL),
+('773d25af-150c-4924-adc6-b8bd22d1eece', '0987654321', 1, 1, '2024-08-03 00:00:00', 41, 1, 'None', '0987654321_1_20240803_220314.png', 'None'),
+('775bafd9-0aa8-40a6-8575-7e09ac66d3ed', '0987654321', 25, 1, '2024-08-17 00:00:00', 23, 1, 'None', '0987654321_1_20240817_172043.png', NULL),
+('80544298-7db5-435e-b9b1-41a7673413ba', '1234567890', 8, 1, '2024-08-06 00:00:00', 31, 1, 'None', '1234567890_1_20240806_102556.png', 'None'),
+('865f87a2-32bc-4a6a-bb46-61fb00c059d8', '0987654321', 1, 1, '2024-08-03 00:00:00', 25, 1, 'None', '0987654321_1_20240803_210550.png', 'None'),
+('9fb73f5a-7802-4103-9393-67980fc31760', '1234567890', 8, 1, '2024-08-03 00:00:00', 23, 1, 'None', '1234567890_1_20240803_205911.png', 'None'),
+('a5200d4d-1787-4d9c-9582-86fd52e2ddc4', '0987654321', 8, 1, '2024-08-06 00:00:00', 20, 1, 'None', '0987654321_1_20240806_172225.png', 'None'),
+('cae317c5-5148-11ef-b4b5-f47b095d2bf4', '1234567890', 1, 1, '2024-08-03 00:00:00', 34, 1, 'None', '1234567890_1_20240803_213609.png', 'None'),
+('cae31c7c-5148-11ef-b4b5-f47b095d2bf4', '0987654321', 2, 2, '2024-07-02 11:00:00', 90, 0, 'Diagnosa awal tidak akurat', 'link_to_image_2', 'None'),
+('dc0f27e0-7c56-4c01-a296-558a0c48f953', '0987654321', 8, 1, '2024-08-03 00:00:00', 18, 1, 'None', '0987654321_1_20240803_205609.png', 'None'),
+('e09f4196-bc3e-488c-892d-1ef11f775a35', '0987654321', NULL, 1, '2024-08-03 00:00:00', 52, 1, 'None', '0987654321_1_20240803_173020.png', 'None'),
+('f3330d93-96ed-486e-9ee4-d7beaeabf95f', '0987654321', 8, 1, '2024-08-03 00:00:00', 21, 1, 'None', '0987654321_1_20240803_202636.png', 'None'),
+('f6124f8e-60e0-4820-b997-9d8bb9382528', '1234567890', 8, 1, '2024-08-03 00:00:00', 31, 1, 'None', '1234567890_1_20240803_213439.png', 'None');
 
 -- --------------------------------------------------------
 
@@ -33701,6 +33721,7 @@ INSERT INTO `Rekam_Medis_Gejala` (`id_rekam_medis`, `id_gejala`) VALUES
 ('3d9010d6-d69b-4994-a15e-387b051663b2', 29),
 ('3d9010d6-d69b-4994-a15e-387b051663b2', 32),
 ('3d9010d6-d69b-4994-a15e-387b051663b2', 34),
+('4791748a-d73b-4c2e-b6bd-c81424fea7ad', 32),
 ('cae317c5-5148-11ef-b4b5-f47b095d2bf4', 1),
 ('cae31c7c-5148-11ef-b4b5-f47b095d2bf4', 2);
 
@@ -33876,7 +33897,7 @@ ALTER TABLE `Notifikasi`
 -- AUTO_INCREMENT for table `Penyakit`
 --
 ALTER TABLE `Penyakit`
-  MODIFY `id_penyakit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_penyakit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `Tekanan`

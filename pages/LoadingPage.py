@@ -37,7 +37,7 @@ class LoadingPage(Canvas, BasePage):
         return data
 
     def run_prediction(self):
-        predictor = ImagePredictor()
+        predictor = ImagePredictor(diagnosis_type=self.temp_data['diagnosis_type'])
         image_path = 'temp_image/test_image.jpg'
 
         self.result_1, self.result_2, self.result_3 = predictor.predict(image_path)

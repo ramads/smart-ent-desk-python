@@ -75,11 +75,11 @@ class DiagnosisPage(Canvas, BasePage):
         
         create_hover_button(self.window, 402.0, 223.0, 330.0, 319.0,
                             BACKGROUND_COLOUR, inactive_button_2, active_button_2,  
-                            lambda: print("button_2 clicked"))
+                            lambda: goToPage(DiagnosisQuestionPage.DiagnosisQuestionPage(self.window, self.temp_data, 'tenggorokan', DiagnosisPage)))
         
         create_hover_button(self.window, 761.0, 223.0, 332.0, 319.0,
                             BACKGROUND_COLOUR, inactive_button_3, active_button_3,  
-                            lambda: print("button_3 clicked"))
+                            lambda: goToPage(DiagnosisQuestionPage.DiagnosisQuestionPage(self.window, self.temp_data, 'hidung', DiagnosisPage)))
         
         create_hover_button(self.window, 471, 635.0, 192.0, 54.0,
                             BACKGROUND_COLOUR, inactive_button_4, active_button_4,  

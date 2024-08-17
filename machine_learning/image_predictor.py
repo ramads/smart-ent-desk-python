@@ -3,17 +3,15 @@ from PIL import Image
 import numpy as np
 from efficientnet.tfkeras import EfficientNetB0
 
+from database.models import Disease
+
 class ImagePredictor:
-    def __init__(self):
-        model_path = './machine_learning/models/v2_new_arch.h5'
+    def __init__(self, diagnosis_type):
+        model_path = f'./machine_learning/models/{diagnosis_type}.h5'
+        all_diseases = Disease.DiseaseModel().get_all_diseases_by_diagnosis_type(diagnosis_type=diagnosis_type)
+        self.labels = [disease['nama_penyakit'] for disease in all_diseases]
+        print(self.labels)
         self.model = tf.keras.models.load_model(model_path)
-        self.labels = [
-            'Aerotitis Barotrauma', 'Cerumen', 'Corpus Alienum', 'M Timpani normal', 
-            'Myringitis Bulosa', 'Normal', 'OE Difusa', 'OE Furunkulosa', 'OMA Hiperemis', 
-            'OMA Oklusi Tuba', 'OMA Perforasi', 'OMA Resolusi', 'OMA Supurasi', 'OMed Efusi', 
-            'OMedK Resolusi', 'OMedK Tipe Aman', 'OMedK Tipe Bahaya', 'Otomikosis', 
-            'Perforasi Membran Tympani', 'Tympanosklerotik'
-        ]
 
     def preprocess_image(self, image_path):
         img = Image.open(image_path)
@@ -30,6 +28,7 @@ class ImagePredictor:
         predictions = self.model.predict(processed_image)
         
         # Get the top 3 predicted class indices
+        print("test", predictions)
         top_3_indices = np.argsort(predictions[0])[-3:][::-1]
         top_3_probabilities = predictions[0][top_3_indices]
         top_3_labels = [self.labels[i] for i in top_3_indices]
