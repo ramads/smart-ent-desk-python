@@ -2,6 +2,7 @@ import customtkinter
 from tkinter import *
 from colors import *
 from helpers import *
+from PIL import Image, ImageTk
 
 import json
 from pprint import pprint
@@ -99,16 +100,24 @@ class MedicalRecordDetailPage(Canvas, BasePage):
         text_widget.configure(state="disabled")
 
         try :
-            image_image_5 = PhotoImage(
-                file=relative_to_image_capture(f"{self.clicked_data['gambar_penyakit']}"))
+            img_diagnose_path = relative_to_image_capture(f"{self.clicked_data['gambar_penyakit']}")
+            img = Image.open(img_diagnose_path)
+            img_array = np.array(img)
+
+            # Panggil fungsi crop_with_padding
+            cropped_img_array = crop_with_padding(img_array, 1, (559, 471))
+            cropped_img_pil = Image.fromarray(cropped_img_array)
+            cropped_img = ImageTk.PhotoImage(cropped_img_pil)
+
         except:
-            image_image_5 = PhotoImage(
+            cropped_img = PhotoImage(
                 file=relative_to_assets("control/MedicalRecordDetailFrame/image_5.png"))
-            
+
+        # Tampilkan gambar di tkinter
         image_5 = self.create_image(
             790.0,
             388.0,
-            image=image_image_5
+            image=cropped_img
         )
 
         self.create_text(
