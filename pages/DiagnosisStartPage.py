@@ -89,7 +89,7 @@ class DiagnosisStartPage(Canvas, BasePage):
         )
 
         image_image_3 = PhotoImage(
-            file=relative_to_assets(f"control/DEarFrame/image_3.png"))
+            file=relative_to_assets(f"control/DEarFrame/{self.temp_data['diagnosis_type']}.png"))
         image_3 = self.create_image(
             568.0,
             326.0,

@@ -1,5 +1,8 @@
 THT_UNIT_PORT_ADDR = "/dev/ttyACM0"
 GPS_PORT_ADDR = "/dev/cu.usbmodem14101"
+DONGLE_PORT_ADR ="/dev/"
+SERVER_URL = "http://your-server-address.com/api/check_dongle"
+
 CAMERA_PORT = None
 DONGLE_ID = "12345"
 SERIAL_COM = 0

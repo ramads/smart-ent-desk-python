@@ -60,7 +60,7 @@ def create_hover_button(window, x, y, width, height, bg_color, image_path, hover
 
 
 def crop_and_save(img, zoom_ratio, target_size):
-    # Tentukan sisi terpendek untuk menentukan ukuran cropping
+    # Tentukan sisi terpendek untuk menentukan ukuran cropping, agar dapat menghasilkan ratio 1x1
     height, width, _ = img.shape
     crop_size = min(height, width)
 
@@ -87,7 +87,11 @@ def crop_and_save(img, zoom_ratio, target_size):
 
     # Hitung posisi tengah dari gambar hasil pembesaran
     x_offset = (target_width - zoomed_width) // 2
-    y_offset = (target_height - zoomed_height) // 2
+    y_offset = (target_height - zoomed_height) // 2 + 20  # Geser gambar 100 piksel ke bawah
+
+    # Pastikan offset tidak menyebabkan gambar keluar dari batas target
+    if y_offset + zoomed_height > target_height:
+        y_offset = target_height - zoomed_height
 
     # Jika gambar hasil pembesaran lebih besar dari target size, crop lagi
     if zoomed_width > target_width or zoomed_height > target_height:
@@ -104,7 +108,6 @@ def crop_and_save(img, zoom_ratio, target_size):
 def crop_with_padding(img, zoom_ratio, target_size):
     height, width, _ = img.shape
 
-    # Buat ukuran baru image, sesuai dengan zoom ratio
     new_width = width // zoom_ratio
     new_height = height // zoom_ratio
 
@@ -142,7 +145,6 @@ def crop_with_padding(img, zoom_ratio, target_size):
     x_offset = (target_width - resized_width) // 2
     y_offset = (target_height - resized_height) // 2
 
-    # Taruh gambar ke tengah-tengah gambar black padding
     padded_image[y_offset:y_offset + resized_height, x_offset:x_offset + resized_width] = resized_frame
 
     return padded_image
