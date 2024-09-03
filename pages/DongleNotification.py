@@ -4,6 +4,8 @@ from helpers import *
 # from notificationBar import notificationBar
 from pprint import pprint
 import json
+from libs import dongle_conn
+from pages import HomePage
 
 
 class DongleNotification(Canvas, BasePage):
@@ -32,39 +34,43 @@ class DongleNotification(Canvas, BasePage):
     def loadImage(self):
         return PhotoImage(file=relative_to_assets("image_3.png"))
 
+    def reloadDongle(self):
+        if dongle_conn.DongleCom().isValid():     # correct_Id "12345"
+            goToPage(HomePage.HomePage(self))
+            self.destroy()
     def drawPage(self, data=None):
         self.place(x=0, y=0)
 
-        image_image_1 = PhotoImage(
+        self.image_image_1 = PhotoImage(
             file=relative_to_assets("control/DongleNotificationFrame/image_1.png"))
-        image_1 = self.create_image(
+        self.image_1 = self.create_image(
             566.0,
             89.0,
-            image=image_image_1
+            image=self.image_image_1
         )
 
-        image_image_2 = PhotoImage(
+        self.image_image_2 = PhotoImage(
             file=relative_to_assets("control/DongleNotificationFrame/image_2.png"))
-        image_2 = self.create_image(
+        self.image_2 = self.create_image(
             566.0,
             372.0,
-            image=image_image_2
+            image=self.image_image_2
         )
 
-        image_image_3 = PhotoImage(
+        self.image_image_3 = PhotoImage(
             file=relative_to_assets("control/DongleNotificationFrame/image_3.png"))
-        image_3 = self.create_image(
+        self.image_3 = self.create_image(
             567.0,
             372.0,
-            image=image_image_3
+            image=self.image_image_3
         )
 
-        inactive_reload = relative_to_assets(f"control/DongleNotificationFrame/{self.lang_code}/inactive_reload.png")
-        active_reload = relative_to_assets(f"control/DongleNotificationFrame/{self.lang_code}/active_reload.png")
+        self.inactive_reload = relative_to_assets(f"control/DongleNotificationFrame/{self.lang_code}/inactive_reload.png")
+        self.active_reload = relative_to_assets(f"control/DongleNotificationFrame/{self.lang_code}/active_reload.png")
 
         create_hover_button(self.window, 471.0, 493.0, 192.0, 54.0,
-                            "#FFFFFF", inactive_reload, active_reload,
-                            lambda: self.backToPrevPage())
+                            "#FFFFFF", self.inactive_reload, self.active_reload,
+                            lambda: self.reloadDongle())
 
         self.create_text(
             1133 / 2.0,
@@ -86,12 +92,12 @@ class DongleNotification(Canvas, BasePage):
             font=("Nunito Bold", 24 * -1)
         )
 
-        image_image_4 = PhotoImage(
+        self.image_image_4 = PhotoImage(
             file=relative_to_assets("control/DongleNotificationFrame/image_4.png"))
-        image_4 = self.create_image(
+        self.image_4 = self.create_image(
             567.0,
             281.0,
-            image=image_image_4
+            image=self.image_image_4
         )
 
         # Update the UI to ensure all elements are rendered

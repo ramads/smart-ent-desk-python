@@ -1,7 +1,8 @@
 import time
 import serial
 import requests
-from config import DONGLE_PORT_ADR, SERVER_URL
+from config import DONGLE_PORT_ADR, SERVER_URL, DONGLE_ID
+
 
 class DongleCom():
     def __init__(self):
@@ -25,10 +26,21 @@ class DongleCom():
                 return True
         return False
 
+    def isValid(self):
+        self.connect()
+        dongle_id = self.read_serial()
+        return DONGLE_ID == dongle_id
+
     def read_serial(self, num_char=32):
         if self.com is not None:
-            encrypted_string = self.com.read(num_char)
-            return encrypted_string.decode()
+            dongle_id = None
+            prev = time.time()
+            while not dongle_id:
+                dongle_id = self.com.readline().decode().strip()
+                if dongle_id: return dongle_id
+                if time.time() - prev > 3:  # waiting time
+                    break
+            return None
         return None
 
     def send_to_server(self, encrypted_string):
@@ -55,6 +67,7 @@ class DongleCom():
         else:
             print("Unable to connect to dongle.")
             return False
+
 
 # Example usage
 if __name__ == "__main__":

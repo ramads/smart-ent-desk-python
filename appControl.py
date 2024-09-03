@@ -1,5 +1,6 @@
 from tkinter import *
 
+from libs import dongle_conn
 from libs.camera_port import *
 from pages import HomePage
 from pages import DongleNotification
@@ -17,16 +18,15 @@ class App(Tk):
 
         config.CAMERA_PORT = int(find_camera())
         if config.CAMERA_PORT is not None:
-            print(f"Camera found at index {config.CAMERA_PORT } ===============")
+            print(f"Camera found at index {config.CAMERA_PORT} ===============")
         else:
             print("No camera available.")
 
-        if config.DONGLE_ID != "12345":     # correct_Id "12345"
+        # validate dongle
+        if not dongle_conn.DongleCom().isValid():     # correct_Id "12345"
             goToPage(DongleNotification.DongleNotification(self))
-
-        self.homePage = HomePage.HomePage(self)
-
-        goToPage(self.homePage)
-
+        else:
+            self.homePage = HomePage.HomePage(self)
+            goToPage(self.homePage)
 
 app = App()
