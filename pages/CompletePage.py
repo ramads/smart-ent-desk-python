@@ -53,7 +53,7 @@ class CompletePage(Canvas, BasePage):
         return self.disease.get_disease_id(nama_penyakit)['id_penyakit']
     
     def update_data(self):
-        current_date = datetime.now().strftime('%Y-%m-%d')
+        current_datetime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         image_path = f"{self.temp_data['NIK']}_{self.temp_data['id_faskes']}_{timestamp}.png"
         
@@ -66,14 +66,15 @@ class CompletePage(Canvas, BasePage):
         
         self.medical_record.update_medical_record(
             id_rekam_medis=self.temp_data['id_rekam_medis'],
-            tanggal_pemeriksaan=current_date,
+            tanggal_pemeriksaan=current_datetime,
             tingkat_keyakinan=confidence,
             prediksi_benar=self.temp_data['is_corrected'],
             alasan_koreksi=self.temp_data['correction_reason'],
             gambar_penyakit=image_path,
             NIK=self.temp_data['NIK'],
             id_faskes=self.temp_data['id_faskes'],
-            id_penyakit=self.get_disease_id(self.temp_data['result_1'][0])
+            id_penyakit=self.get_disease_id(self.temp_data['result_1'][0]),
+            deskripsi_gejala=self.temp_data['detail'] if self.temp_data.get('detail') else None
         )
 
         self.medical_record_indication.delete_medical_record_indication_by_medical_record(id_rekam_medis=self.temp_data['id_rekam_medis'])
@@ -85,7 +86,7 @@ class CompletePage(Canvas, BasePage):
                 )
 
     def insert_data(self):
-        current_date = datetime.now().strftime('%Y-%m-%d')
+        current_datetime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         image_path = f"{self.temp_data['NIK']}_{self.temp_data['id_faskes']}_{timestamp}.png"
         
@@ -97,14 +98,15 @@ class CompletePage(Canvas, BasePage):
         confidence = int(round(confidence, 2) * 100)
         
         id_medical_record =  self.medical_record.insert_medical_record(
-            tanggal_pemeriksaan=current_date,
+            tanggal_pemeriksaan=current_datetime,
             tingkat_keyakinan=confidence,
             prediksi_benar=self.temp_data['is_corrected'],
             alasan_koreksi=self.temp_data['correction_reason'],
             gambar_penyakit=image_path,
             NIK=self.temp_data['NIK'],
             id_faskes=self.temp_data['id_faskes'],
-            id_penyakit=self.get_disease_id(self.temp_data['result_1'][0])
+            id_penyakit=self.get_disease_id(self.temp_data['result_1'][0]),
+            deskripsi_gejala=self.temp_data['detail'] if self.temp_data.get('detail') else None
         )
 
         # Update Queue
