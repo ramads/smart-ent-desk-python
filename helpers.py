@@ -87,7 +87,7 @@ def crop_and_save(img, zoom_ratio, target_size):
 
     # Hitung posisi tengah dari gambar hasil pembesaran
     x_offset = (target_width - zoomed_width) // 2
-    y_offset = (target_height - zoomed_height) // 2 + 20  # Geser gambar 100 piksel ke bawah
+    y_offset = (target_height - zoomed_height) // 2 + 20  # Geser gambar 20 piksel ke bawah
 
     # Pastikan offset tidak menyebabkan gambar keluar dari batas target
     if y_offset + zoomed_height > target_height:

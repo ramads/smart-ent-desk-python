@@ -263,6 +263,11 @@ class ProcessPage(Canvas, BasePage):
         self.zoom_factor /= 1.1
         # self.update_image()
 
+    def moving_image(self, direction):
+        if direction=="up":
+            pass
+
+
     def drawPage(self):
         self.place(x=0, y=0)
 
@@ -291,6 +296,18 @@ class ProcessPage(Canvas, BasePage):
         inactive_button_5 = relative_to_assets(f"control/DEarProcessFrame/inactive_10s.png")
         active_button_5 = relative_to_assets(f"control/DEarProcessFrame/active_10s.png")
 
+        left_arrow_hover = relative_to_assets(f"control/DEarProcessFrame/left_arrow_hover.png")
+        left_arrow = relative_to_assets(f"control/DEarProcessFrame/left_arrow.png")
+
+        right_arrow_hover = relative_to_assets(f"control/DEarProcessFrame/right_arrow_hover.png")
+        right_arrow = relative_to_assets(f"control/DEarProcessFrame/right_arrow.png")
+
+        up_arrow_hover = relative_to_assets(f"control/DEarProcessFrame/up_arrow_hover.png")
+        up_arrow = relative_to_assets(f"control/DEarProcessFrame/up_arrow.png")
+
+        bottom_arrow_hover = relative_to_assets(f"control/DEarProcessFrame/bottom_arrow_hover.png")
+        bottom_arrow = relative_to_assets(f"control/DEarProcessFrame/bottom_arrow.png")
+
         create_hover_button(self.window, 50.0, 632.0, 192.0, 54.0,
                             "#FFFFFF", inactive_button_1, active_button_1, 
                             lambda: self.backToPrevPage())
@@ -298,6 +315,22 @@ class ProcessPage(Canvas, BasePage):
         create_hover_button(self.window, 250.0, 632.0, 192.0, 54.0,
                             "#FFFFFF", inactive_button_2, active_button_2,  
                             lambda: self.countdown(self.timer))
+
+        create_hover_button(self.window, 325.0, 85.0, 69.0, 69.0,
+                            "#000000", up_arrow, up_arrow_hover,
+                            lambda: print("berhasil"))
+
+        create_hover_button(self.window, 325.0, 520.0, 69.0, 69.0,
+                            "#000000", bottom_arrow, bottom_arrow_hover,
+                            lambda: print("berhasil"))
+
+        create_hover_button(self.window, 65.0, 300.0, 69.0, 69.0,
+                            "#000000", left_arrow, left_arrow_hover,
+                            lambda: print("berhasil"))
+
+        create_hover_button(self.window, 575.0, 300.0, 69.0, 69.0,
+                            "#000000", right_arrow, right_arrow_hover,
+                            lambda: self.backToPrevPage())
 
         self.create_button(450.0, 632.0, 62.0, 54.0, "#FFFFFF", inactive_button_3, active_button_3, 3)
         self.create_button(520.0, 632.0, 62.0, 54.0, "#FFFFFF", inactive_button_4, active_button_4, 5)
