@@ -13,16 +13,16 @@ class MedicalRecordModel:
     def close_connection(self):
         self.db.close()
 
-    def insert_medical_record(self, tanggal_pemeriksaan, tingkat_keyakinan, prediksi_benar, alasan_koreksi, gambar_penyakit, NIK, id_faskes, id_penyakit):
+    def insert_medical_record(self, tanggal_pemeriksaan, tingkat_keyakinan, prediksi_benar, alasan_koreksi, gambar_penyakit, NIK, id_faskes, id_penyakit, deskripsi_gejala):
         id_rekam_medis = str(uuid.uuid4())
         try:
             self.open_connection()
             query = """
-            INSERT INTO Rekam_Medis (id_rekam_medis, tanggal_pemeriksaan, tingkat_keyakinan, prediksi_benar, alasan_koreksi, gambar_penyakit, NIK, id_faskes, id_penyakit)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+            INSERT INTO Rekam_Medis (id_rekam_medis, tanggal_pemeriksaan, tingkat_keyakinan, prediksi_benar, alasan_koreksi, gambar_penyakit, NIK, id_faskes, id_penyakit, deskripsi_gejala)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """
             cursor = self.db.connection.cursor()
-            cursor.execute(query, (id_rekam_medis, tanggal_pemeriksaan, tingkat_keyakinan, prediksi_benar, alasan_koreksi, gambar_penyakit, NIK, id_faskes, id_penyakit))
+            cursor.execute(query, (id_rekam_medis, tanggal_pemeriksaan, tingkat_keyakinan, prediksi_benar, alasan_koreksi, gambar_penyakit, NIK, id_faskes, id_penyakit, deskripsi_gejala))
             self.db.connection.commit()
             return id_rekam_medis 
         except Exception as e:
@@ -112,16 +112,17 @@ class MedicalRecordModel:
         finally:
             self.close_connection()
 
-    def update_medical_record(self, id_rekam_medis, tanggal_pemeriksaan, tingkat_keyakinan, prediksi_benar, alasan_koreksi, gambar_penyakit, NIK, id_faskes, id_penyakit):
+    def update_medical_record(self, id_rekam_medis, tanggal_pemeriksaan, tingkat_keyakinan, prediksi_benar, alasan_koreksi, gambar_penyakit, NIK, id_faskes, id_penyakit, deskripsi_gejala):
+
         try:
             self.open_connection()
             query = """
             UPDATE Rekam_Medis
-            SET tanggal_pemeriksaan = %s, tingkat_keyakinan = %s, prediksi_benar = %s, alasan_koreksi = %s, gambar_penyakit = %s, NIK = %s, id_faskes = %s, id_penyakit = %s
+            SET tanggal_pemeriksaan = %s, tingkat_keyakinan = %s, prediksi_benar = %s, alasan_koreksi = %s, gambar_penyakit = %s, NIK = %s, id_faskes = %s, id_penyakit = %s, deskripsi_gejala = %s
             WHERE id_rekam_medis = %s
             """
             cursor = self.db.connection.cursor()
-            cursor.execute(query, (tanggal_pemeriksaan, tingkat_keyakinan, prediksi_benar, alasan_koreksi, gambar_penyakit, NIK, id_faskes, id_penyakit, id_rekam_medis))
+            cursor.execute(query, (tanggal_pemeriksaan, tingkat_keyakinan, prediksi_benar, alasan_koreksi, gambar_penyakit, NIK, id_faskes, id_penyakit, deskripsi_gejala, id_rekam_medis))
             self.db.connection.commit()
         except Exception as e:
             print(f"Error: {e}")

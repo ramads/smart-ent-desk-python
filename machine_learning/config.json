@@ -1,0 +1,17 @@
+{
+    "telinga": {
+        "image_size": "(224, 224)",
+        "model": "machine_learning/models/densenet169_telinga.h5",
+        "preprocessing_function": "tf.keras.applications.densenet.preprocess_input"
+    },
+    "hidung": {
+        "image_size": "(150, 150)",
+        "model": "machine_learning/models/densenet201_hidung.h5",
+        "preprocessing_function": "tf.keras.applications.densenet.preprocess_input"
+    },
+    "tenggorokan": {
+        "image_size": "(150, 150)",
+        "model": "machine_learning/models/densenet201_hidung.h5",
+        "preprocessing_function": "tf.keras.applications.inception_v3.preprocess_input"
+    }
+}

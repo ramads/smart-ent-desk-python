@@ -1,3 +1,4 @@
+import threading
 from tkinter import *
 
 from libs import dongle_conn
@@ -7,6 +8,8 @@ from pages import DongleNotification
 from helpers import *
 from colors import *
 import config
+
+from database.core.data_sync import DataSync
 
 
 class App(Tk):
@@ -28,5 +31,17 @@ class App(Tk):
         else:
             self.homePage = HomePage.HomePage(self)
             goToPage(self.homePage)
+        
+        self.homePage = HomePage.HomePage(self)
+        self.data_sync = DataSync('database/data_sync.json')
+        self.data_sync.sync_data('Rekam_Medis')
+        
+        self.periodic_sync()
+        goToPage(self.homePage)
+
+    def periodic_sync(self):
+        self.data_sync.sync_data('Rekam_Medis')
+        threading.Timer(2, self.periodic_sync).start()
+
 
 app = App()
