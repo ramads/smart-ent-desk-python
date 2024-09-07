@@ -59,7 +59,7 @@ def create_hover_button(window, x, y, width, height, bg_color, image_path, hover
     return button
 
 
-def crop_and_save(img, zoom_ratio, target_size):
+def crop_and_save(img, zoom_ratio, target_size, x_position=0, y_position=0):
     # Tentukan sisi terpendek untuk menentukan ukuran cropping, agar dapat menghasilkan ratio 1x1
     height, width, _ = img.shape
     crop_size = min(height, width)
@@ -86,8 +86,8 @@ def crop_and_save(img, zoom_ratio, target_size):
     output_image = np.zeros((target_height, target_width, 3), dtype=np.uint8)
 
     # Hitung posisi tengah dari gambar hasil pembesaran
-    x_offset = (target_width - zoomed_width) // 2
-    y_offset = (target_height - zoomed_height) // 2 + 20  # Geser gambar 20 piksel ke bawah
+    x_offset = (target_width - zoomed_width) // 2 + x_position
+    y_offset = (target_height - zoomed_height) // 2 + y_position + 20  # Geser gambar n-piksel ke bawah
 
     # Pastikan offset tidak menyebabkan gambar keluar dari batas target
     if y_offset + zoomed_height > target_height:
@@ -101,11 +101,14 @@ def crop_and_save(img, zoom_ratio, target_size):
         y2 = y1 + target_height
         output_image = zoomed_image[y1:y2, x1:x2]
     else:
-        output_image[y_offset:y_offset + zoomed_height, x_offset:x_offset + zoomed_width] = zoomed_image
+        try:
+            output_image[y_offset:y_offset + zoomed_height, x_offset:x_offset + zoomed_width] = zoomed_image
+        except:
+            print("Over move, reach maximal move")
 
     return output_image
 
-def crop_with_padding(img, zoom_ratio, target_size):
+def crop_with_padding(img, zoom_ratio, target_size, x_position=0, y_position=0):
     height, width, _ = img.shape
 
     new_width = width // zoom_ratio
@@ -142,10 +145,13 @@ def crop_with_padding(img, zoom_ratio, target_size):
     resized_frame = cv2.resize(cropped_frame, (resized_width, resized_height), interpolation=cv2.INTER_LINEAR)
 
     # Atur posisi gambar ke tenga-tengah
-    x_offset = (target_width - resized_width) // 2
-    y_offset = (target_height - resized_height) // 2
+    x_offset = (target_width - resized_width) // 2 + x_position
+    y_offset = (target_height - resized_height) // 2 + y_position
 
-    padded_image[y_offset:y_offset + resized_height, x_offset:x_offset + resized_width] = resized_frame
+    try:
+        padded_image[y_offset:y_offset + resized_height, x_offset:x_offset + resized_width] = resized_frame
+    except:
+        print("Over move, reach maximal move")
 
     return padded_image
 

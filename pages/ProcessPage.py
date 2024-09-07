@@ -44,6 +44,10 @@ class ProcessPage(Canvas, BasePage):
         self.window = window
         self.vidCap = None
         self.zoom_factor = 1
+        self.x_image_position = 354
+        self.y_image_position = 339
+        self.x_state = 0
+        self.y_state = 0
         self.save_image = None
         self.camera_thread = None
         self.camera_open_thread = None
@@ -137,6 +141,16 @@ class ProcessPage(Canvas, BasePage):
         self.camera_thread = threading.Thread(target=self.updateCameraFrame)
         self.camera_thread.start()
 
+    def moving_image(self, direction):
+        if direction == "up":
+            self.y_state -= 10
+        elif direction == "bottom":
+            self.y_state += 10
+        elif direction == "right":
+            self.x_state += 10
+        elif direction == "left":
+            self.x_state -= 10
+
     def updateCameraFrame(self):
         if self.vidCap is None or not self.vidCap.isOpened():
             self.handle_camera_disconnection()
@@ -151,13 +165,14 @@ class ProcessPage(Canvas, BasePage):
         if self.ret:
             # self.frame = cv2.resize(self.frame, (604, 538))
 
-            self.save_image = crop_and_save(self.frame, self.zoom_factor, (550, 550))
+            self.save_image = crop_and_save(self.frame, self.zoom_factor, (550, 550), self.x_state, self.y_state)
 
-            opencv_PIL = crop_and_save(self.frame, self.zoom_factor, (604, 538))
+            opencv_PIL = crop_and_save(self.frame, self.zoom_factor, (604, 538), self.x_state, self.y_state)
             opencv_to_PIL = cv2.cvtColor(opencv_PIL, cv2.COLOR_BGR2RGBA)
             # opencv_to_PIL = cv2.cvtColor(self.save_image, cv2.COLOR_BGR2RGBA)
             self.capture_image = ImageTk.PhotoImage(image=Image.fromarray(opencv_to_PIL))
-            self.create_image(354.0, 339.0, image=self.capture_image)
+            self.create_image(self.x_image_position, self.y_image_position, image=self.capture_image)
+            self.create_image(354, 339, image=self.capture_image)
 
 
         if self.countdown_seconds > 0:
@@ -263,10 +278,6 @@ class ProcessPage(Canvas, BasePage):
         self.zoom_factor /= 1.1
         # self.update_image()
 
-    def moving_image(self, direction):
-        if direction=="up":
-            pass
-
 
     def drawPage(self):
         self.place(x=0, y=0)
@@ -318,19 +329,19 @@ class ProcessPage(Canvas, BasePage):
 
         create_hover_button(self.window, 325.0, 85.0, 69.0, 69.0,
                             "#000000", up_arrow, up_arrow_hover,
-                            lambda: print("berhasil"))
+                            lambda: self.moving_image("up"))
 
         create_hover_button(self.window, 325.0, 520.0, 69.0, 69.0,
                             "#000000", bottom_arrow, bottom_arrow_hover,
-                            lambda: print("berhasil"))
+                            lambda: self.moving_image("bottom"))
 
         create_hover_button(self.window, 65.0, 300.0, 69.0, 69.0,
                             "#000000", left_arrow, left_arrow_hover,
-                            lambda: print("berhasil"))
+                            lambda: self.moving_image("left"))
 
         create_hover_button(self.window, 575.0, 300.0, 69.0, 69.0,
                             "#000000", right_arrow, right_arrow_hover,
-                            lambda: self.backToPrevPage())
+                            lambda: self.moving_image("right"))
 
         self.create_button(450.0, 632.0, 62.0, 54.0, "#FFFFFF", inactive_button_3, active_button_3, 3)
         self.create_button(520.0, 632.0, 62.0, 54.0, "#FFFFFF", inactive_button_4, active_button_4, 5)
