@@ -10,14 +10,10 @@ class ImagePredictor:
     def __init__(self, diagnosis_type):
         with open('machine_learning/config.json', 'r') as config_file:
             config = json.load(config_file)
-        
         self.config = config[diagnosis_type]
-        
-        model_path = self.config['model']
         all_diseases = Disease.DiseaseModel().get_all_diseases_by_diagnosis_type(diagnosis_type=diagnosis_type)
         self.labels = [disease['nama_penyakit'] for disease in all_diseases]
-        print(self.labels)
-        self.model = tf.keras.models.load_model(model_path)
+        self.model = tf.keras.models.load_model(self.config['model'])
         self.preprocessing_function = eval(self.config['preprocessing_function'])
 
     def preprocess_image(self, image_path):

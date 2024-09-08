@@ -217,6 +217,18 @@
             "deskripsi_gejala": "baca buku"
         },
         {
+            "id_rekam_medis": "b63dda2c-ca97-4320-a68f-67decc2ee37d",
+            "NIK": "1234567890",
+            "id_penyakit": 26,
+            "id_faskes": 1,
+            "tanggal_pemeriksaan": "2024-09-08T11:37:03",
+            "tingkat_keyakinan": 23,
+            "prediksi_benar": 1,
+            "alasan_koreksi": "None",
+            "gambar_penyakit": "1234567890_1_20240908_113703.png",
+            "deskripsi_gejala": null
+        },
+        {
             "id_rekam_medis": "cae317c5-5148-11ef-b4b5-f47b095d2bf4",
             "NIK": "1234567890",
             "id_penyakit": 1,
@@ -311,6 +323,240 @@
             "alasan_koreksi": "None",
             "gambar_penyakit": "1234567890_1_20240803_213439.png",
             "deskripsi_gejala": "None"
+        }
+    ],
+    "Pasien": [
+        {
+            "NIK": "0987654321",
+            "nama_pasien": "Jane Smith",
+            "tanggal_lahir": "1990-05-15",
+            "jenis_kelamin": "wanita",
+            "alamat": "Jl. Contoh No. 2, Jakarta",
+            "id_desa": 1101012002
+        },
+        {
+            "NIK": "1234567890",
+            "nama_pasien": "John Doe",
+            "tanggal_lahir": "1980-01-01",
+            "jenis_kelamin": "pria",
+            "alamat": "Jl. Contoh No. 1, Jakarta",
+            "id_desa": 1101012001
+        }
+    ],
+    "Rekam_Medis_Gejala": [
+        {
+            "id_rekam_medis": "18f785d8-2db0-4cc9-b5b1-21e4a0ee4827",
+            "id_gejala": 36
+        },
+        {
+            "id_rekam_medis": "18f785d8-2db0-4cc9-b5b1-21e4a0ee4827",
+            "id_gejala": 40
+        },
+        {
+            "id_rekam_medis": "1cc98ac3-9607-4fd7-9f84-c297b47e8187",
+            "id_gejala": 45
+        },
+        {
+            "id_rekam_medis": "1cc98ac3-9607-4fd7-9f84-c297b47e8187",
+            "id_gejala": 49
+        },
+        {
+            "id_rekam_medis": "1e22be17-2bb3-4a7c-b885-3180a9d9cade",
+            "id_gejala": 29
+        },
+        {
+            "id_rekam_medis": "1e22be17-2bb3-4a7c-b885-3180a9d9cade",
+            "id_gejala": 34
+        },
+        {
+            "id_rekam_medis": "29c864f8-0f52-46d7-b541-f23423137676",
+            "id_gejala": 45
+        },
+        {
+            "id_rekam_medis": "29c864f8-0f52-46d7-b541-f23423137676",
+            "id_gejala": 49
+        },
+        {
+            "id_rekam_medis": "3d9010d6-d69b-4994-a15e-387b051663b2",
+            "id_gejala": 29
+        },
+        {
+            "id_rekam_medis": "3d9010d6-d69b-4994-a15e-387b051663b2",
+            "id_gejala": 32
+        },
+        {
+            "id_rekam_medis": "3d9010d6-d69b-4994-a15e-387b051663b2",
+            "id_gejala": 34
+        },
+        {
+            "id_rekam_medis": "4791748a-d73b-4c2e-b6bd-c81424fea7ad",
+            "id_gejala": 32
+        },
+        {
+            "id_rekam_medis": "ac5cc5d3-c0dd-49ce-91ac-986050fdbe39",
+            "id_gejala": 2
+        },
+        {
+            "id_rekam_medis": "ac5cc5d3-c0dd-49ce-91ac-986050fdbe39",
+            "id_gejala": 33
+        },
+        {
+            "id_rekam_medis": "b63dda2c-ca97-4320-a68f-67decc2ee37d",
+            "id_gejala": 45
+        },
+        {
+            "id_rekam_medis": "b63dda2c-ca97-4320-a68f-67decc2ee37d",
+            "id_gejala": 49
+        },
+        {
+            "id_rekam_medis": "cae317c5-5148-11ef-b4b5-f47b095d2bf4",
+            "id_gejala": 1
+        },
+        {
+            "id_rekam_medis": "cae31c7c-5148-11ef-b4b5-f47b095d2bf4",
+            "id_gejala": 2
+        },
+        {
+            "id_rekam_medis": "e471cc08-f4f5-43de-b529-533eca842207",
+            "id_gejala": 45
+        },
+        {
+            "id_rekam_medis": "e471cc08-f4f5-43de-b529-533eca842207",
+            "id_gejala": 49
+        },
+        {
+            "id_rekam_medis": "ef964af4-5e97-485a-97d0-2d7001a5d95e",
+            "id_gejala": 45
+        },
+        {
+            "id_rekam_medis": "ef964af4-5e97-485a-97d0-2d7001a5d95e",
+            "id_gejala": 49
+        },
+        {
+            "id_rekam_medis": "ef964af4-5e97-485a-97d0-2d7001a5d95e",
+            "id_gejala": 50
+        }
+    ],
+    "Gejala": [
+        {
+            "id_gejala": 1,
+            "nama_gejala": "kurang dengar",
+            "organ_gejala": "telinga"
+        },
+        {
+            "id_gejala": 2,
+            "nama_gejala": "sakit telinga",
+            "organ_gejala": "telinga"
+        },
+        {
+            "id_gejala": 29,
+            "nama_gejala": "keluar cairan",
+            "organ_gejala": "telinga"
+        },
+        {
+            "id_gejala": 30,
+            "nama_gejala": "berdengung",
+            "organ_gejala": "telinga"
+        },
+        {
+            "id_gejala": 32,
+            "nama_gejala": "berdenging",
+            "organ_gejala": "telinga"
+        },
+        {
+            "id_gejala": 33,
+            "nama_gejala": "terasa tersumbat",
+            "organ_gejala": "telinga"
+        },
+        {
+            "id_gejala": 34,
+            "nama_gejala": "gatal",
+            "organ_gejala": "telinga"
+        },
+        {
+            "id_gejala": 35,
+            "nama_gejala": "pilek encer",
+            "organ_gejala": "hidung"
+        },
+        {
+            "id_gejala": 36,
+            "nama_gejala": "tersumbat",
+            "organ_gejala": "hidung"
+        },
+        {
+            "id_gejala": 37,
+            "nama_gejala": "bersin-bersin berulang",
+            "organ_gejala": "hidung"
+        },
+        {
+            "id_gejala": 38,
+            "nama_gejala": "pilek berbau",
+            "organ_gejala": "hidung"
+        },
+        {
+            "id_gejala": 39,
+            "nama_gejala": "sakit di hidung",
+            "organ_gejala": "hidung"
+        },
+        {
+            "id_gejala": 40,
+            "nama_gejala": "gatal di hidung",
+            "organ_gejala": "hidung"
+        },
+        {
+            "id_gejala": 41,
+            "nama_gejala": "sakit di sekitar \\n pipi/wajah",
+            "organ_gejala": "hidung"
+        },
+        {
+            "id_gejala": 42,
+            "nama_gejala": "pilek kental",
+            "organ_gejala": "hidung"
+        },
+        {
+            "id_gejala": 43,
+            "nama_gejala": "kurang penciuman",
+            "organ_gejala": "hidung"
+        },
+        {
+            "id_gejala": 44,
+            "nama_gejala": "sakit menelan",
+            "organ_gejala": "tenggorokan"
+        },
+        {
+            "id_gejala": 45,
+            "nama_gejala": "batuk",
+            "organ_gejala": "tenggorokan"
+        },
+        {
+            "id_gejala": 46,
+            "nama_gejala": "gatal di tenggorokan",
+            "organ_gejala": "tenggorokan"
+        },
+        {
+            "id_gejala": 47,
+            "nama_gejala": "rasa mengganjal",
+            "organ_gejala": "tenggorokan"
+        },
+        {
+            "id_gejala": 48,
+            "nama_gejala": "suara serak",
+            "organ_gejala": "tenggorokan"
+        },
+        {
+            "id_gejala": 49,
+            "nama_gejala": "rasa lendir",
+            "organ_gejala": "tenggorokan"
+        },
+        {
+            "id_gejala": 50,
+            "nama_gejala": "kurang pengecapan",
+            "organ_gejala": "tenggorokan"
+        },
+        {
+            "id_gejala": 51,
+            "nama_gejala": "berdahak",
+            "organ_gejala": "tenggorokan"
         }
     ]
 }

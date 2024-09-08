@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 17, 2024 at 05:35 PM
+-- Generation Time: Sep 08, 2024 at 05:49 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -33602,7 +33602,8 @@ INSERT INTO `Penyakit` (`id_penyakit`, `nama_penyakit`, `organ_penyakit`, `deskr
 (31, 'Sekret', 'hidung', 'Sekret di sini merujuk pada produksi lendir yang berlebihan di saluran hidung, yang bisa menjadi gejala dari berbagai kondisi seperti infeksi saluran pernapasan, rinitis, atau sinusitis. Lendir yang berlebihan bisa menyebabkan hidung tersumbat, rasa tidak nyaman, dan gangguan pernapasan.'),
 (32, 'Septum', 'hidung', 'Deviasi septum adalah kondisi di mana dinding yang memisahkan dua lubang hidung (septum) bergeser dari garis tengah, menyebabkan salah satu lubang hidung lebih sempit dari yang lain. Kondisi ini bisa menyebabkan kesulitan bernapas, hidung tersumbat, dan infeksi sinus berulang. Pengobatan biasanya melibatkan pembedahan (septoplasti) untuk memperbaiki septum.'),
 (33, 'Sinusitis', 'hidung', 'Sinusitis adalah peradangan pada sinus, yaitu rongga udara di sekitar hidung. Sinusitis dapat disebabkan oleh infeksi bakteri, virus, atau jamur, serta alergi. Gejala umum termasuk nyeri wajah, hidung tersumbat, dan keluarnya lendir kental dari hidung. Pengobatan sinusitis bisa berupa antibiotik, dekongestan, atau bahkan pembedahan pada kasus kronis.'),
-(34, 'Tumor Cavum', 'hidung', 'Tumor cavum biasanya merujuk pada tumor yang tumbuh di nasofaring atau rongga hidung. Tumor ini bisa bersifat jinak atau ganas, dengan salah satu jenis ganas yang paling umum adalah Karsinoma Nasofaring (Nasopharyngeal Carcinoma - NPC). Gejalanya bisa berupa hidung tersumbat, mimisan, benjolan di leher, dan gangguan pendengaran. Pengobatan tergantung pada jenis tumor dan bisa melibatkan kombinasi radioterapi, kemoterapi, dan pembedahan.');
+(34, 'Tumor Cavum', 'hidung', 'Tumor cavum biasanya merujuk pada tumor yang tumbuh di nasofaring atau rongga hidung. Tumor ini bisa bersifat jinak atau ganas, dengan salah satu jenis ganas yang paling umum adalah Karsinoma Nasofaring (Nasopharyngeal Carcinoma - NPC). Gejalanya bisa berupa hidung tersumbat, mimisan, benjolan di leher, dan gangguan pendengaran. Pengobatan tergantung pada jenis tumor dan bisa melibatkan kombinasi radioterapi, kemoterapi, dan pembedahan.'),
+(35, 'Normal', 'tenggorokan', 'Kondisi tenggorokan yang sehat tanpa adanya tanda-tanda penyakit atau kelainan.');
 
 -- --------------------------------------------------------
 
@@ -33682,23 +33683,31 @@ CREATE TABLE `Rekam_Medis` (
 --
 
 INSERT INTO `Rekam_Medis` (`id_rekam_medis`, `NIK`, `id_penyakit`, `id_faskes`, `tanggal_pemeriksaan`, `tingkat_keyakinan`, `prediksi_benar`, `alasan_koreksi`, `gambar_penyakit`, `deskripsi_gejala`) VALUES
-('05dadaa8-4d75-4d8c-bf2f-07f737f5a8c7', '1234567890', 8, 1, '2024-08-17 00:00:00', 34, 1, 'None', '1234567890_1_20240817_152259.png', 'None'),
-('1e22be17-2bb3-4a7c-b885-3180a9d9cade', '0987654321', 1, 1, '2024-08-17 00:00:00', 34, 1, 'None', '0987654321_1_20240817_155419.png', NULL),
-('3d9010d6-d69b-4994-a15e-387b051663b2', '0987654321', 1, 1, '2024-08-06 00:00:00', 34, 1, 'None', '0987654321_1_20240806_172555.png', 'None'),
+('05dadaa8-4d75-4d8c-bf2f-07f737f5a8c7', '1234567890', 8, 1, '2024-08-17 00:00:00', 34, 1, 'None', '1234567890_1_20240817_152259.png', 'pusing tujuh keliling'),
+('18f785d8-2db0-4cc9-b5b1-21e4a0ee4827', '0987654321', 29, 1, '2024-09-03 21:23:08', 20, 1, 'None', '0987654321_1_20240903_212308.png', 'halo halo'),
+('1cc98ac3-9607-4fd7-9f84-c297b47e8187', '0987654321', 21, 1, '2024-09-03 22:31:32', 20, 1, 'None', '0987654321_1_20240903_223132.png', NULL),
+('1e22be17-2bb3-4a7c-b885-3180a9d9cade', '0987654321', 8, 1, '2024-09-03 00:00:00', 38, 1, 'None', '0987654321_1_20240903_131210.png', 'berkunang kunang'),
+('29c864f8-0f52-46d7-b541-f23423137676', '0987654321', 25, 1, '2024-09-03 14:26:48', 23, 1, 'None', '0987654321_1_20240903_142648.png', 'testest'),
+('3b02d279-4632-456d-a88c-73688fbdc12d', '0987654321', 25, 1, '2024-09-03 21:07:27', 23, 1, 'None', '0987654321_1_20240903_210727.png', NULL),
+('3d9010d6-d69b-4994-a15e-387b051663b2', '0987654321', 1, 1, '2024-08-06 00:00:00', 34, 1, 'None', '0987654321_1_20240806_172555.png', 'suka tiba tiba kepencet emot'),
 ('46a100fd-821b-43e6-929f-4308b85ad49c', '1234567890', 8, 1, '2024-08-17 00:00:00', 43, 1, 'None', '1234567890_1_20240817_145033.png', 'None'),
 ('46d248c0-b16e-4181-a239-f4848dd77ddb', '0987654321', 8, 1, '2024-08-03 00:00:00', 27, 1, 'None', '0987654321_1_20240803_205713.png', 'None'),
 ('4791748a-d73b-4c2e-b6bd-c81424fea7ad', '0987654321', 8, 1, '2024-08-17 00:00:00', 23, 1, 'None', '0987654321_1_20240817_151015.png', 'None'),
-('6e7b0b91-ab51-44a4-98d9-ce073af86700', '0987654321', 29, 1, '2024-08-17 00:00:00', 15, 1, 'None', '0987654321_1_20240817_233355.png', NULL),
+('6e7b0b91-ab51-44a4-98d9-ce073af86700', '0987654321', 29, 1, '2024-08-17 00:00:00', 15, 1, 'None', '0987654321_1_20240817_233355.png', 'sakit hati dan galau'),
 ('773d25af-150c-4924-adc6-b8bd22d1eece', '0987654321', 1, 1, '2024-08-03 00:00:00', 41, 1, 'None', '0987654321_1_20240803_220314.png', 'None'),
 ('775bafd9-0aa8-40a6-8575-7e09ac66d3ed', '0987654321', 25, 1, '2024-08-17 00:00:00', 23, 1, 'None', '0987654321_1_20240817_172043.png', NULL),
 ('80544298-7db5-435e-b9b1-41a7673413ba', '1234567890', 8, 1, '2024-08-06 00:00:00', 31, 1, 'None', '1234567890_1_20240806_102556.png', 'None'),
 ('865f87a2-32bc-4a6a-bb46-61fb00c059d8', '0987654321', 1, 1, '2024-08-03 00:00:00', 25, 1, 'None', '0987654321_1_20240803_210550.png', 'None'),
 ('9fb73f5a-7802-4103-9393-67980fc31760', '1234567890', 8, 1, '2024-08-03 00:00:00', 23, 1, 'None', '1234567890_1_20240803_205911.png', 'None'),
 ('a5200d4d-1787-4d9c-9582-86fd52e2ddc4', '0987654321', 8, 1, '2024-08-06 00:00:00', 20, 1, 'None', '0987654321_1_20240806_172225.png', 'None'),
+('ac5cc5d3-c0dd-49ce-91ac-986050fdbe39', '0987654321', 13, 1, '2024-09-03 22:30:58', 43, 1, 'None', '0987654321_1_20240903_223058.png', 'baca buku'),
+('b63dda2c-ca97-4320-a68f-67decc2ee37d', '1234567890', 26, 1, '2024-09-08 11:37:03', 23, 1, 'None', '1234567890_1_20240908_113703.png', NULL),
 ('cae317c5-5148-11ef-b4b5-f47b095d2bf4', '1234567890', 1, 1, '2024-08-03 00:00:00', 34, 1, 'None', '1234567890_1_20240803_213609.png', 'None'),
 ('cae31c7c-5148-11ef-b4b5-f47b095d2bf4', '0987654321', 2, 2, '2024-07-02 11:00:00', 90, 0, 'Diagnosa awal tidak akurat', 'link_to_image_2', 'None'),
 ('dc0f27e0-7c56-4c01-a296-558a0c48f953', '0987654321', 8, 1, '2024-08-03 00:00:00', 18, 1, 'None', '0987654321_1_20240803_205609.png', 'None'),
 ('e09f4196-bc3e-488c-892d-1ef11f775a35', '0987654321', NULL, 1, '2024-08-03 00:00:00', 52, 1, 'None', '0987654321_1_20240803_173020.png', 'None'),
+('e471cc08-f4f5-43de-b529-533eca842207', '1234567890', 25, 1, '2024-09-03 00:00:00', 23, 1, 'None', '1234567890_1_20240903_131350.png', NULL),
+('ef964af4-5e97-485a-97d0-2d7001a5d95e', '0987654321', 25, 1, '2024-09-03 00:00:00', 23, 1, 'None', '0987654321_1_20240903_141657.png', NULL),
 ('f3330d93-96ed-486e-9ee4-d7beaeabf95f', '0987654321', 8, 1, '2024-08-03 00:00:00', 21, 1, 'None', '0987654321_1_20240803_202636.png', 'None'),
 ('f6124f8e-60e0-4820-b997-9d8bb9382528', '1234567890', 8, 1, '2024-08-03 00:00:00', 31, 1, 'None', '1234567890_1_20240803_213439.png', 'None');
 
@@ -33718,12 +33727,29 @@ CREATE TABLE `Rekam_Medis_Gejala` (
 --
 
 INSERT INTO `Rekam_Medis_Gejala` (`id_rekam_medis`, `id_gejala`) VALUES
+('18f785d8-2db0-4cc9-b5b1-21e4a0ee4827', 36),
+('18f785d8-2db0-4cc9-b5b1-21e4a0ee4827', 40),
+('1cc98ac3-9607-4fd7-9f84-c297b47e8187', 45),
+('1cc98ac3-9607-4fd7-9f84-c297b47e8187', 49),
+('1e22be17-2bb3-4a7c-b885-3180a9d9cade', 29),
+('1e22be17-2bb3-4a7c-b885-3180a9d9cade', 34),
+('29c864f8-0f52-46d7-b541-f23423137676', 45),
+('29c864f8-0f52-46d7-b541-f23423137676', 49),
 ('3d9010d6-d69b-4994-a15e-387b051663b2', 29),
 ('3d9010d6-d69b-4994-a15e-387b051663b2', 32),
 ('3d9010d6-d69b-4994-a15e-387b051663b2', 34),
 ('4791748a-d73b-4c2e-b6bd-c81424fea7ad', 32),
+('ac5cc5d3-c0dd-49ce-91ac-986050fdbe39', 2),
+('ac5cc5d3-c0dd-49ce-91ac-986050fdbe39', 33),
+('b63dda2c-ca97-4320-a68f-67decc2ee37d', 45),
+('b63dda2c-ca97-4320-a68f-67decc2ee37d', 49),
 ('cae317c5-5148-11ef-b4b5-f47b095d2bf4', 1),
-('cae31c7c-5148-11ef-b4b5-f47b095d2bf4', 2);
+('cae31c7c-5148-11ef-b4b5-f47b095d2bf4', 2),
+('e471cc08-f4f5-43de-b529-533eca842207', 45),
+('e471cc08-f4f5-43de-b529-533eca842207', 49),
+('ef964af4-5e97-485a-97d0-2d7001a5d95e', 45),
+('ef964af4-5e97-485a-97d0-2d7001a5d95e', 49),
+('ef964af4-5e97-485a-97d0-2d7001a5d95e', 50);
 
 -- --------------------------------------------------------
 
@@ -33897,7 +33923,7 @@ ALTER TABLE `Notifikasi`
 -- AUTO_INCREMENT for table `Penyakit`
 --
 ALTER TABLE `Penyakit`
-  MODIFY `id_penyakit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id_penyakit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `Tekanan`

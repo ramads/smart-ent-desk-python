@@ -29,18 +29,16 @@ class App(Tk):
         if not dongle_conn.DongleCom().isValid():     # correct_Id "12345"
             goToPage(DongleNotification.DongleNotification(self))
         else:
+    
             self.homePage = HomePage.HomePage(self)
+            self.data_sync = DataSync('database/data_sync.json')
+            self.data_sync.sync_data()
+            
+            self.periodic_sync()
             goToPage(self.homePage)
-        
-        self.homePage = HomePage.HomePage(self)
-        self.data_sync = DataSync('database/data_sync.json')
-        self.data_sync.sync_data('Rekam_Medis')
-        
-        self.periodic_sync()
-        goToPage(self.homePage)
 
     def periodic_sync(self):
-        self.data_sync.sync_data('Rekam_Medis')
+        self.data_sync.sync_data()
         threading.Timer(2, self.periodic_sync).start()
 
 

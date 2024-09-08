@@ -1,6 +1,6 @@
 import json
 import os
-from datetime import datetime
+from datetime import datetime, date
 
 from database.core.database import Database
 from database.config.config import *
@@ -35,17 +35,21 @@ class DataSync:
         cursor.close()
         return result
 
-    def sync_data(self, table_name):
+    def sync_data(self):
+        table_names = ['Rekam_Medis', 'Pasien','Rekam_Medis_Gejala', 'Gejala']
         try:
             self.open_connection()
-            query = f"SELECT * FROM {table_name}"
-            mysql_data = self.fetch_mysql_data(query)
-            for record in mysql_data:
-                for key, value in record.items():
-                    if isinstance(value, datetime):
-                        record[key] = value.isoformat()
+            all_data = {}
+            for table_name in table_names:
+                query = f"SELECT * FROM {table_name}"
+                mysql_data = self.fetch_mysql_data(query)
+                for record in mysql_data:
+                    for key, value in record.items():
+                        if isinstance(value, (datetime, date)):
+                            record[key] = value.isoformat()
+                all_data[table_name] = mysql_data
             
-            self.save_json_data({table_name: mysql_data})
+            self.save_json_data(all_data)
         except Exception as e:
             print(f"Error: {e}")
         finally:
