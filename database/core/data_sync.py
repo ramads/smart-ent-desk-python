@@ -4,7 +4,7 @@ from datetime import datetime, date
 
 from database.core.database import Database
 from database.config.config import *
-
+from collections import defaultdict
 class DataSync:
     def __init__(self, json_file_path):
         self.json_file_path = json_file_path
@@ -36,21 +36,73 @@ class DataSync:
         return result
 
     def sync_data(self):
-        table_names = ['Rekam_Medis', 'Pasien','Rekam_Medis_Gejala', 'Gejala']
         try:
             self.open_connection()
-            all_data = {}
-            for table_name in table_names:
-                query = f"SELECT * FROM {table_name}"
-                mysql_data = self.fetch_mysql_data(query)
-                for record in mysql_data:
-                    for key, value in record.items():
-                        if isinstance(value, (datetime, date)):
-                            record[key] = value.isoformat()
-                all_data[table_name] = mysql_data
+            query = """
+            SELECT 
+                rm.*, 
+                p.*, 
+                rmg.*, 
+                g.* 
+            FROM 
+                Rekam_Medis rm
+            JOIN 
+                Pasien p ON rm.NIK = p.NIK
+            JOIN 
+                Rekam_Medis_Gejala rmg ON rm.id_rekam_medis = rmg.id_rekam_medis
+            JOIN 
+                Gejala g ON rmg.id_gejala = g.id_gejala
+            """
+            mysql_data = self.fetch_mysql_data(query)
             
-            self.save_json_data(all_data)
+            # Convert datetime and date objects to ISO format
+            for record in mysql_data:
+                for key, value in record.items():
+                    if isinstance(value, (datetime, date)):
+                        record[key] = value.isoformat()
+            
+            # Combine records with the same id_rekam_medis and NIK
+            combined_data = self.combine_records(mysql_data)
+            
+            self.save_json_data(combined_data)
         except Exception as e:
             print(f"Error: {e}")
         finally:
             self.close_connection()
+
+    def combine_records(self, data):
+        combined_data = defaultdict(lambda: {
+            "id_rekam_medis": None,
+            "NIK": None,
+            "id_penyakit": None,
+            "id_faskes": None,
+            "tanggal_pemeriksaan": None,
+            "tingkat_keyakinan": None,
+            "prediksi_benar": None,
+            "alasan_koreksi": None,
+            "gambar_penyakit": None,
+            "deskripsi_gejala": None,
+            "nama_pasien": None,
+            "tanggal_lahir": None,
+            "jenis_kelamin": None,
+            "alamat": None,
+            "id_desa": None,
+            "organ_gejala": None,
+            "gejala": []
+        })
+        
+        for record in data:
+            key = (record["id_rekam_medis"], record["NIK"])
+            combined_record = combined_data[key]
+            
+            for field in combined_record:
+                if field != "gejala" and combined_record[field] is None:
+                    combined_record[field] = record[field]
+            
+            gejala_info = {
+                "id_gejala": record["id_gejala"],
+                "nama_gejala": record["nama_gejala"],
+            }
+            combined_record["gejala"].append(gejala_info)
+        
+        return list(combined_data.values())
