@@ -60,7 +60,7 @@ class DataSync:
                 LEFT JOIN 
                     Gejala g ON rmg.id_gejala = g.id_gejala
                 WHERE 
-                    rm.tanggal_pemeriksaan >= NOW() - INTERVAL 1 DAY
+                    rm.tanggal_pemeriksaan >= NOW() - INTERVAL 1 HOUR
             """
             mysql_data = self.fetch_mysql_data(query)
             # Convert datetime and date objects to ISO format

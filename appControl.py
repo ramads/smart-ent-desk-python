@@ -31,7 +31,7 @@ class App(Tk):
         else:
     
             self.homePage = HomePage.HomePage(self)
-            self.data_sync = DataSync('database/data_sync.json')            
+            self.data_sync = DataSync('database/data_sync/data_sync.json')            
             self.periodic_sync()
             goToPage(self.homePage)
 
