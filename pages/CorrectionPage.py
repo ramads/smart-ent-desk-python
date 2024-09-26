@@ -48,7 +48,7 @@ class CorrectionPage(Canvas, BasePage):
             image=image_image_1
         )
 
-        image_path = relative_to_image_capture("test_image.jpg")
+        image_path = relative_to_image_capture("temp_image.jpg")
         original_image = Image.open(image_path)
         resized_image = original_image.resize((604, 600))  # Resize to 604x538
         captured_img = ImageTk.PhotoImage(resized_image)
