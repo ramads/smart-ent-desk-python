@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 08, 2024 at 05:49 AM
+-- Generation Time: Sep 25, 2024 at 05:35 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -25604,20 +25604,23 @@ INSERT INTO `Gejala` (`id_gejala`, `nama_gejala`, `organ_gejala`) VALUES
 (35, 'pilek encer', 'hidung'),
 (36, 'tersumbat', 'hidung'),
 (37, 'bersin-bersin berulang', 'hidung'),
-(38, 'pilek berbau', 'hidung'),
 (39, 'sakit di hidung', 'hidung'),
 (40, 'gatal di hidung', 'hidung'),
-(41, 'sakit di sekitar \\n pipi/wajah', 'hidung'),
+(41, 'sakit di sekitar pipi/wajah', 'hidung'),
 (42, 'pilek kental', 'hidung'),
 (43, 'kurang penciuman', 'hidung'),
 (44, 'sakit menelan', 'tenggorokan'),
-(45, 'batuk', 'tenggorokan'),
-(46, 'gatal di tenggorokan', 'tenggorokan'),
 (47, 'rasa mengganjal', 'tenggorokan'),
 (48, 'suara serak', 'tenggorokan'),
-(49, 'rasa lendir', 'tenggorokan'),
-(50, 'kurang pengecapan', 'tenggorokan'),
-(51, 'berdahak', 'tenggorokan');
+(52, 'pilek', 'hidung'),
+(53, 'sakit kepala', 'hidung'),
+(54, 'demam', 'hidung'),
+(55, 'mimisan', 'hidung'),
+(56, 'ngorok', 'hidung'),
+(57, 'rasa berpasir', 'tenggorokan'),
+(58, 'rasa kering', 'tenggorokan'),
+(59, 'demam', 'tenggorokan'),
+(60, 'sakit tenggorokan', 'tenggorokan');
 
 -- --------------------------------------------------------
 
@@ -33687,6 +33690,7 @@ INSERT INTO `Rekam_Medis` (`id_rekam_medis`, `NIK`, `id_penyakit`, `id_faskes`, 
 ('18f785d8-2db0-4cc9-b5b1-21e4a0ee4827', '0987654321', 29, 1, '2024-09-03 21:23:08', 20, 1, 'None', '0987654321_1_20240903_212308.png', 'halo halo'),
 ('1cc98ac3-9607-4fd7-9f84-c297b47e8187', '0987654321', 21, 1, '2024-09-03 22:31:32', 20, 1, 'None', '0987654321_1_20240903_223132.png', NULL),
 ('1e22be17-2bb3-4a7c-b885-3180a9d9cade', '0987654321', 8, 1, '2024-09-03 00:00:00', 38, 1, 'None', '0987654321_1_20240903_131210.png', 'berkunang kunang'),
+('2845e99f-0780-408f-b4b6-2f2ed3e19e2a', '0987654321', 1, 1, '2024-09-25 23:33:37', 41, 1, 'None', 'telinga/0987654321_1_20240925_233337.png', NULL),
 ('29c864f8-0f52-46d7-b541-f23423137676', '0987654321', 25, 1, '2024-09-03 14:26:48', 23, 1, 'None', '0987654321_1_20240903_142648.png', 'testest'),
 ('3b02d279-4632-456d-a88c-73688fbdc12d', '0987654321', 25, 1, '2024-09-03 21:07:27', 23, 1, 'None', '0987654321_1_20240903_210727.png', NULL),
 ('3d9010d6-d69b-4994-a15e-387b051663b2', '0987654321', 1, 1, '2024-08-06 00:00:00', 34, 1, 'None', '0987654321_1_20240806_172555.png', 'suka tiba tiba kepencet emot'),
@@ -33696,19 +33700,25 @@ INSERT INTO `Rekam_Medis` (`id_rekam_medis`, `NIK`, `id_penyakit`, `id_faskes`, 
 ('6e7b0b91-ab51-44a4-98d9-ce073af86700', '0987654321', 29, 1, '2024-08-17 00:00:00', 15, 1, 'None', '0987654321_1_20240817_233355.png', 'sakit hati dan galau'),
 ('773d25af-150c-4924-adc6-b8bd22d1eece', '0987654321', 1, 1, '2024-08-03 00:00:00', 41, 1, 'None', '0987654321_1_20240803_220314.png', 'None'),
 ('775bafd9-0aa8-40a6-8575-7e09ac66d3ed', '0987654321', 25, 1, '2024-08-17 00:00:00', 23, 1, 'None', '0987654321_1_20240817_172043.png', NULL),
+('7fc2d130-001e-41db-8254-e4f3fff3058d', '0987654321', 13, 1, '2024-09-25 23:34:03', 31, 1, 'None', 'telinga/0987654321_1_20240925_233403.png', NULL),
 ('80544298-7db5-435e-b9b1-41a7673413ba', '1234567890', 8, 1, '2024-08-06 00:00:00', 31, 1, 'None', '1234567890_1_20240806_102556.png', 'None'),
 ('865f87a2-32bc-4a6a-bb46-61fb00c059d8', '0987654321', 1, 1, '2024-08-03 00:00:00', 25, 1, 'None', '0987654321_1_20240803_210550.png', 'None'),
+('92bb78c5-242f-4d9e-82e7-3c71600cf22e', '0987654321', 26, 1, '2024-09-25 23:34:40', 23, 1, 'None', 'tenggorokan/0987654321_1_20240925_233440.png', NULL),
 ('9fb73f5a-7802-4103-9393-67980fc31760', '1234567890', 8, 1, '2024-08-03 00:00:00', 23, 1, 'None', '1234567890_1_20240803_205911.png', 'None'),
 ('a5200d4d-1787-4d9c-9582-86fd52e2ddc4', '0987654321', 8, 1, '2024-08-06 00:00:00', 20, 1, 'None', '0987654321_1_20240806_172225.png', 'None'),
 ('ac5cc5d3-c0dd-49ce-91ac-986050fdbe39', '0987654321', 13, 1, '2024-09-03 22:30:58', 43, 1, 'None', '0987654321_1_20240903_223058.png', 'baca buku'),
+('b50a83ac-8034-43fc-8929-1413d5bd94f3', '0987654321', 26, 1, '2024-09-25 23:09:09', 23, 1, 'None', 'tenggorokan/0987654321_1_20240925_230909.png', NULL),
 ('b63dda2c-ca97-4320-a68f-67decc2ee37d', '1234567890', 26, 1, '2024-09-08 11:37:03', 23, 1, 'None', '1234567890_1_20240908_113703.png', NULL),
 ('cae317c5-5148-11ef-b4b5-f47b095d2bf4', '1234567890', 1, 1, '2024-08-03 00:00:00', 34, 1, 'None', '1234567890_1_20240803_213609.png', 'None'),
 ('cae31c7c-5148-11ef-b4b5-f47b095d2bf4', '0987654321', 2, 2, '2024-07-02 11:00:00', 90, 0, 'Diagnosa awal tidak akurat', 'link_to_image_2', 'None'),
+('cbddd961-63c6-4735-a5e7-8def95dd86e3', '0987654321', 13, 1, '2024-09-25 23:20:36', 41, 1, 'None', 'telinga/0987654321_1_20240925_232036.png', NULL),
 ('dc0f27e0-7c56-4c01-a296-558a0c48f953', '0987654321', 8, 1, '2024-08-03 00:00:00', 18, 1, 'None', '0987654321_1_20240803_205609.png', 'None'),
 ('e09f4196-bc3e-488c-892d-1ef11f775a35', '0987654321', NULL, 1, '2024-08-03 00:00:00', 52, 1, 'None', '0987654321_1_20240803_173020.png', 'None'),
 ('e471cc08-f4f5-43de-b529-533eca842207', '1234567890', 25, 1, '2024-09-03 00:00:00', 23, 1, 'None', '1234567890_1_20240903_131350.png', NULL),
 ('ef964af4-5e97-485a-97d0-2d7001a5d95e', '0987654321', 25, 1, '2024-09-03 00:00:00', 23, 1, 'None', '0987654321_1_20240903_141657.png', NULL),
+('f08aa0c7-972d-4f53-8508-7266c469c2aa', '0987654321', 28, 1, '2024-09-25 23:21:04', 34, 1, 'None', 'hidung/0987654321_1_20240925_232104.png', NULL),
 ('f3330d93-96ed-486e-9ee4-d7beaeabf95f', '0987654321', 8, 1, '2024-08-03 00:00:00', 21, 1, 'None', '0987654321_1_20240803_202636.png', 'None'),
+('f362fa3d-831c-4e78-b26e-dee75466a5d4', '0987654321', 28, 1, '2024-09-25 23:35:06', 27, 1, 'None', 'hidung/0987654321_1_20240925_233506.png', NULL),
 ('f6124f8e-60e0-4820-b997-9d8bb9382528', '1234567890', 8, 1, '2024-08-03 00:00:00', 31, 1, 'None', '1234567890_1_20240803_213439.png', 'None');
 
 -- --------------------------------------------------------
@@ -33729,27 +33739,16 @@ CREATE TABLE `Rekam_Medis_Gejala` (
 INSERT INTO `Rekam_Medis_Gejala` (`id_rekam_medis`, `id_gejala`) VALUES
 ('18f785d8-2db0-4cc9-b5b1-21e4a0ee4827', 36),
 ('18f785d8-2db0-4cc9-b5b1-21e4a0ee4827', 40),
-('1cc98ac3-9607-4fd7-9f84-c297b47e8187', 45),
-('1cc98ac3-9607-4fd7-9f84-c297b47e8187', 49),
 ('1e22be17-2bb3-4a7c-b885-3180a9d9cade', 29),
 ('1e22be17-2bb3-4a7c-b885-3180a9d9cade', 34),
-('29c864f8-0f52-46d7-b541-f23423137676', 45),
-('29c864f8-0f52-46d7-b541-f23423137676', 49),
 ('3d9010d6-d69b-4994-a15e-387b051663b2', 29),
 ('3d9010d6-d69b-4994-a15e-387b051663b2', 32),
 ('3d9010d6-d69b-4994-a15e-387b051663b2', 34),
 ('4791748a-d73b-4c2e-b6bd-c81424fea7ad', 32),
 ('ac5cc5d3-c0dd-49ce-91ac-986050fdbe39', 2),
 ('ac5cc5d3-c0dd-49ce-91ac-986050fdbe39', 33),
-('b63dda2c-ca97-4320-a68f-67decc2ee37d', 45),
-('b63dda2c-ca97-4320-a68f-67decc2ee37d', 49),
 ('cae317c5-5148-11ef-b4b5-f47b095d2bf4', 1),
-('cae31c7c-5148-11ef-b4b5-f47b095d2bf4', 2),
-('e471cc08-f4f5-43de-b529-533eca842207', 45),
-('e471cc08-f4f5-43de-b529-533eca842207', 49),
-('ef964af4-5e97-485a-97d0-2d7001a5d95e', 45),
-('ef964af4-5e97-485a-97d0-2d7001a5d95e', 49),
-('ef964af4-5e97-485a-97d0-2d7001a5d95e', 50);
+('cae31c7c-5148-11ef-b4b5-f47b095d2bf4', 2);
 
 -- --------------------------------------------------------
 
@@ -33911,7 +33910,7 @@ ALTER TABLE `Fasilitas_Kesehatan`
 -- AUTO_INCREMENT for table `Gejala`
 --
 ALTER TABLE `Gejala`
-  MODIFY `id_gejala` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id_gejala` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `Notifikasi`

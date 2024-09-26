@@ -18,7 +18,7 @@ class ProcessPage(Canvas, BasePage):
     capture_image = None
     seriCom = SerialCom()
     after_cam_id = 0
-    image_dir = "./" + DIR_TEMP_IMAGE
+    image_dir = "./" + DIR_IMAGE
     text_command = ""
     countdown_seconds = 0
 
@@ -135,7 +135,7 @@ class ProcessPage(Canvas, BasePage):
             self.countdown_seconds -= 1
             self.window.after(1000, self.updateCountdown)
         else:
-            self.onCapture("test_image")
+            self.onCapture("temp_image")
 
     def startCameraThread(self):
         self.camera_thread = threading.Thread(target=self.updateCameraFrame)

@@ -31,15 +31,13 @@ class App(Tk):
         else:
     
             self.homePage = HomePage.HomePage(self)
-            self.data_sync = DataSync('database/data_sync.json')
-            self.data_sync.sync_data()
-            
+            self.data_sync = DataSync('database/data_sync.json')            
             self.periodic_sync()
             goToPage(self.homePage)
 
     def periodic_sync(self):
         self.data_sync.sync_data()
-        threading.Timer(2, self.periodic_sync).start()
+        threading.Timer(3600*24, self.periodic_sync).start()
 
 
 app = App()

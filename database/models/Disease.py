@@ -64,15 +64,17 @@ class DiseaseModel:
         finally:
             self.close_connection()
 
-    def get_disease_id(self, nama_penyakit):
+    def get_disease_id(self, nama_penyakit, organ_penyakit):
         try:
             self.open_connection()
-            query = "SELECT id_penyakit FROM Penyakit WHERE nama_penyakit = %s"
+            query = "SELECT id_penyakit FROM Penyakit WHERE nama_penyakit = %s AND organ_penyakit = %s"
             cursor = self.db.connection.cursor(dictionary=True)
-            cursor.execute(query, (nama_penyakit,))
-            return cursor.fetchone()
+            cursor.execute(query, (nama_penyakit, organ_penyakit,))
+            result = cursor.fetchone()
+            cursor.close()
+            return result
         except Exception as e:
             print(f"Error: {e}")
         finally:
             self.close_connection()
-    
+        

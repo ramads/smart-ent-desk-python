@@ -5,6 +5,8 @@ from datetime import datetime, date
 from database.core.database import Database
 from database.config.config import *
 from collections import defaultdict
+
+from pprint import pprint
 class DataSync:
     def __init__(self, json_file_path):
         self.json_file_path = json_file_path
@@ -39,22 +41,30 @@ class DataSync:
         try:
             self.open_connection()
             query = """
-            SELECT 
-                rm.*, 
-                p.*, 
-                rmg.*, 
-                g.* 
-            FROM 
-                Rekam_Medis rm
-            JOIN 
-                Pasien p ON rm.NIK = p.NIK
-            JOIN 
-                Rekam_Medis_Gejala rmg ON rm.id_rekam_medis = rmg.id_rekam_medis
-            JOIN 
-                Gejala g ON rmg.id_gejala = g.id_gejala
+                SELECT 
+                    rm.*, 
+                    p.*, 
+                    py.nama_penyakit AS nama_penyakit,
+                    py.organ_penyakit AS organ_penyakit,
+                    rmg.id_rekam_medis AS rmg_id_rekam_medis, 
+                    g.id_gejala AS id_gejala, 
+                    g.nama_gejala AS nama_gejala
+                FROM 
+                    Rekam_Medis rm
+                JOIN
+                    Penyakit py ON rm.id_penyakit = py.id_penyakit
+                JOIN 
+                    Pasien p ON rm.NIK = p.NIK
+                LEFT JOIN 
+                    Rekam_Medis_Gejala rmg ON rm.id_rekam_medis = rmg.id_rekam_medis
+                LEFT JOIN 
+                    Gejala g ON rmg.id_gejala = g.id_gejala
+                WHERE 
+                    rm.tanggal_pemeriksaan >= NOW() - INTERVAL 1 DAY
             """
             mysql_data = self.fetch_mysql_data(query)
-            
+            print(len(mysql_data))
+            pprint(mysql_data)
             # Convert datetime and date objects to ISO format
             for record in mysql_data:
                 for key, value in record.items():
@@ -87,7 +97,7 @@ class DataSync:
             "jenis_kelamin": None,
             "alamat": None,
             "id_desa": None,
-            "organ_gejala": None,
+            "organ_penyakit": None,
             "gejala": []
         })
         
