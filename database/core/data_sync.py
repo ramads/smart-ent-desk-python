@@ -63,8 +63,6 @@ class DataSync:
                     rm.tanggal_pemeriksaan >= NOW() - INTERVAL 1 DAY
             """
             mysql_data = self.fetch_mysql_data(query)
-            print(len(mysql_data))
-            pprint(mysql_data)
             # Convert datetime and date objects to ISO format
             for record in mysql_data:
                 for key, value in record.items():

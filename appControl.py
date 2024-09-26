@@ -36,8 +36,8 @@ class App(Tk):
             goToPage(self.homePage)
 
     def periodic_sync(self):
-        self.data_sync.sync_data()
         threading.Timer(3600*24, self.periodic_sync).start()
+        self.data_sync.sync_data()
 
 
 app = App()
