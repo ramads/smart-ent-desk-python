@@ -36,6 +36,7 @@ class DongleNotification(Canvas, BasePage):
 
     def reloadDongle(self):
         if dongle_conn.DongleCom().isValid():     # correct_Id "12345"
+            self.reload_button.destroy()
             goToPage(HomePage.HomePage(self))
             self.destroy()
     def drawPage(self, data=None):
@@ -68,7 +69,7 @@ class DongleNotification(Canvas, BasePage):
         self.inactive_reload = relative_to_assets(f"control/DongleNotificationFrame/{self.lang_code}/inactive_reload.png")
         self.active_reload = relative_to_assets(f"control/DongleNotificationFrame/{self.lang_code}/active_reload.png")
 
-        create_hover_button(self.window, 471.0, 493.0, 192.0, 54.0,
+        self.reload_button = create_hover_button(self.window, 471.0, 493.0, 192.0, 54.0,
                             "#FFFFFF", self.inactive_reload, self.active_reload,
                             lambda: self.reloadDongle())
 

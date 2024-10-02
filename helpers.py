@@ -155,6 +155,12 @@ def crop_with_padding(img, zoom_ratio, target_size, x_position=0, y_position=0):
 
     return padded_image
 
+def truncate_text(text, max_length):
+    """Jika teks lebih panjang dari batas yang ditentukan, tambahkan '...' di akhir."""
+    if len(text) > max_length:
+        return text[:max_length-3] + "..."
+    return text
+
 class TextArea(tk.Text):
     def __init__(self, master=None, placeholder="PLACEHOLDER", color='grey', **kwargs):
         super().__init__(master, **kwargs)

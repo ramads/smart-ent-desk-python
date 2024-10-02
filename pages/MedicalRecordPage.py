@@ -230,12 +230,16 @@ class MedicalRecordPage(Canvas, BasePage):
             y_offset = i * 50
             self.canvas_scroll.create_rectangle(81.0, 367.0 + y_offset, 1278.0, 367.0 + y_offset,
                                                 fill="#F3F3F3", outline="")
+
+            nama_pasien=truncate_text(self.history_data[i]['nama_pasien'],32)
             self.canvas_scroll.create_text(81.0, 331.0 + y_offset, anchor="nw",
-                                           text=self.history_data[i]['nama_pasien'],
+                                           text=nama_pasien,
                                            fill="#404040",
                                            font=("Nunito Regular", 18 * -1))
+
+            nama_penyakit=truncate_text(self.history_data[i]['nama_penyakit'], 28)
             self.canvas_scroll.create_text(380, 331.0 + y_offset, anchor="nw",
-                                           text=self.history_data[i]['nama_penyakit'],
+                                           text=nama_penyakit,
                                            fill="#404040",
                                            font=("Nunito Regular", 18 * -1))
             self.canvas_scroll.create_text(650, 331.0 + y_offset, anchor="nw",
