@@ -29,6 +29,7 @@ class DongleCom():
     def isValid(self):
         self.connect()
         dongle_id = self.read_serial()
+        print("Dongel Read: ", dongle_id)
         return DONGLE_ID == dongle_id
 
     def read_serial(self, num_char=32):
@@ -37,6 +38,8 @@ class DongleCom():
             prev = time.time()
             while not dongle_id:
                 dongle_id = self.com.readline().decode().strip()
+                print(time.time(), dongle_id)
+
                 if dongle_id: return dongle_id
                 if time.time() - prev > 3:  # waiting time
                     break
