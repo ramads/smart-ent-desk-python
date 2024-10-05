@@ -7,9 +7,9 @@ from database.config.config import *
 from collections import defaultdict
 
 from pprint import pprint
+
 class DataSync:
-    def __init__(self, json_file_path):
-        self.json_file_path = json_file_path
+    def __init__(self):
         self.db = None
 
     def open_connection(self):
@@ -20,15 +20,27 @@ class DataSync:
         if self.db:
             self.db.close()
 
-    def load_json_data(self):
-        if os.path.exists(self.json_file_path):
-            with open(self.json_file_path, 'r') as file:
-                return json.load(file)
-        return {}
-
     def save_json_data(self, data):
-        with open(self.json_file_path, 'w') as file:
-            json.dump(data, file, indent=4)
+        current_date = datetime.now().strftime("%Y-%m-%d")
+        JSON_DIR = os.path.join("database","data_sync")
+        if not os.path.exists(JSON_DIR):
+            os.makedirs(JSON_DIR)
+
+        file_path = os.path.join(JSON_DIR, f"{current_date}.json")
+        
+        if os.path.exists(file_path):
+            with open(file_path, "r") as file:
+                existing_data = json.load(file)
+        else:
+            existing_data = []
+
+        existing_ids = {(record["id_rekam_medis"], record["NIK"]) for record in existing_data}
+        new_data = [record for record in data if (record["id_rekam_medis"], record["NIK"]) not in existing_ids]
+
+        combined_data = existing_data + new_data
+
+        with open(file_path, "w") as file:
+            json.dump(combined_data, file, indent=4)
 
     def fetch_mysql_data(self, query):
         cursor = self.db.connection.cursor(dictionary=True)
@@ -60,16 +72,14 @@ class DataSync:
                 LEFT JOIN 
                     Gejala g ON rmg.id_gejala = g.id_gejala
                 WHERE 
-                    rm.tanggal_pemeriksaan >= NOW() - INTERVAL 1 DAY
+                    rm.tanggal_pemeriksaan >= NOW() - INTERVAL 1 HOUR
             """
             mysql_data = self.fetch_mysql_data(query)
-            # Convert datetime and date objects to ISO format
             for record in mysql_data:
                 for key, value in record.items():
                     if isinstance(value, (datetime, date)):
                         record[key] = value.isoformat()
             
-            # Combine records with the same id_rekam_medis and NIK
             combined_data = self.combine_records(mysql_data)
             
             self.save_json_data(combined_data)
