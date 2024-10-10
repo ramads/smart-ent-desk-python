@@ -1,5 +1,6 @@
 import customtkinter
 from tkinter import *
+from tkinter import font
 from colors import *
 from helpers import *
 from PIL import Image, ImageTk
@@ -86,19 +87,6 @@ class MedicalRecordDetailPage(Canvas, BasePage):
             image=image_image_4
         )
 
-        text_widget = tk.Text(self.window, wrap="word", font=("Nunito Regular", 12), bg="#FFFFFF", fg="#404040", bd=0,
-                              highlightthickness=0)
-        text_widget.place(x=72, y=525, width=380, height=100)
-
-        text_content = self.clicked_data['deskripsi_penyakit'],
-        text_widget.insert(tk.END, text_content)
-
-        text_widget.tag_configure("justify", justify="left")
-        text_widget.tag_add("justify", "1.0", "end")
-
-        # Menonaktifkan Text Widget agar tidak dapat diedit
-        text_widget.configure(state="disabled")
-
         try :
             img_diagnose_path = relative_to_image_capture(f"{self.clicked_data['gambar_penyakit']}")
             img = Image.open(img_diagnose_path)
@@ -120,67 +108,156 @@ class MedicalRecordDetailPage(Canvas, BasePage):
             image=cropped_img
         )
 
-        self.create_text(
-            300.0,
-            492.0,
-            anchor="nw",
-            text=f"{self.clicked_data['tingkat_keyakinan']}%",
-            fill="#1E5C2A",
-            font=("Nunito Bold", 16 * -1)
-        )
+        self.my_frame = customtkinter.CTkScrollableFrame(self.window,
+                                                         orientation="vertical",
+                                                         width=380,
+                                                         height=200,
+                                                         fg_color="#FFFFFF",
+                                                         scrollbar_button_hover_color="#404040",
+                                                         scrollbar_fg_color="#FFFFFF",
+                                                         bg_color="#FFFFFF",
+                                                         border_width=0)
+
+        self.my_frame.place(x=65, y=400)
+        self.canvas_scroll = Canvas(self.my_frame,
+                                    width=380,
+                                    height=500,
+                                    bg="#FFFFFF",
+                                    highlightthickness=0,
+                                    borderwidth=0)
+        self.canvas_scroll.pack()
+
+        self.update_cards()
+
+    def update_cards(self):
+        self.canvas_scroll.delete("all")
+        schedule_images = []
+
+        x_col1 = 72.0
+        x_col2 = 245.0
+        y_start = 421.0
+        y_gap = 34.0
 
         self.create_text(
-            72.0,
-            492.0,
-            anchor="nw",
-            text=f"{self.data_localization['confidence_level']}:",
-            fill="#404040",
-            font=("Nunito Regular", 16 * -1)
-        )
-
-        self.create_text(
-            270.0,
-            455.0,
-            anchor="nw",
-            text=self.clicked_data['nama_penyakit'],
-            fill="#1E5C2A",
-            font=("Nunito Bold", 19 * -1)
-        )
-
-        self.create_text(
-            72.0,
-            455.0,
-            anchor="nw",
-            text=f"{self.data_localization['diagnosis_result']}\t: ",
-            fill="#404040",
-            font=("Nunito Regular", 16 * -1)
-        )
-
-        self.create_text(
-            257.0,
-            421.0,
-            anchor="nw",
-            text=self.clicked_data['tanggal_pemeriksaan'].strftime("%d %B %Y"),
-            fill="#404040",
-            font=("Nunito Regular", 16 * -1)
-        )
-
-        self.create_text(
-            72.0,
-            421.0,
-            anchor="nw",
-            text=f"{self.data_localization['check_date'].title()} :",
-            fill="#404040",
-            font=("Nunito Regular", 16 * -1)
-        )
-
-        self.create_text(
-            72.0,
+            x_col1,
             362.0,
             anchor="nw",
             text=self.clicked_data['nama_pasien'],
             fill="#404040",
             font=("Nunito Bold", 24 * -1)
         )
+
+        self.canvas_scroll.create_text(
+            x_col1,
+            y_start,
+            anchor="nw",
+            text=f"NIK",
+            fill="#404040",
+            font=("Nunito Regular", 16 * -1)
+        )
+
+        self.canvas_scroll.create_text(
+            x_col2,  # Kolom 2
+            y_start,  # Baris 1
+            anchor="nw",
+            text=": " + "12345567",
+            fill="#404040",
+            font=("Nunito Regular", 16 * -1)
+        )
+
+        self.canvas_scroll.create_text(
+            x_col1,
+            y_start + y_gap,
+            anchor="nw",
+            text=f"{self.data_localization['check_date'].title()}",
+            fill="#404040",
+            font=("Nunito Regular", 16 * -1)
+        )
+
+        self.canvas_scroll.create_text(
+            x_col2,  # Kolom 2
+            y_start + y_gap,  # Baris 1
+            anchor="nw",
+            text=": "+self.clicked_data['tanggal_pemeriksaan'].strftime("%d %B %Y"),
+            fill="#404040",
+            font=("Nunito Regular", 16 * -1)
+        )
+
+        self.canvas_scroll.create_text(
+            x_col1,  # Kolom 1
+            y_start + 2 * y_gap,  # Baris 2
+            anchor="nw",
+            text=f"{self.data_localization['diagnosis_result']}",
+            fill="#404040",
+            font=("Nunito Regular", 16 * -1)
+        )
+
+        nama_penyakit = ": " + self.clicked_data['nama_penyakit']
+        max_width = 250
+        font_nama_penyakit = ("Nunito Bold", 19 * -1)
+
+        nama_penyakit_id = self.canvas_scroll.create_text(
+            x_col2,  # Kolom 2
+            y_start + 2 * y_gap,  # Baris 2
+            anchor="nw",
+            text=nama_penyakit,
+            fill="#1E5C2A",
+            font=font_nama_penyakit,
+            width=max_width
+        )
+
+        # Ambil bounding box dari teks yang baru dibuat
+        bbox_penyakit = self.canvas_scroll.bbox(nama_penyakit_id)
+
+        penyakit_height = bbox_penyakit[3] - bbox_penyakit[1]
+
+        self.canvas_scroll.create_text(
+            x_col1,  # Kolom 1
+            y_start + (2 * y_gap) + penyakit_height + 10,
+            anchor="nw",
+            text=f"{self.data_localization['confidence_level']}",
+            fill="#404040",
+            font=("Nunito Regular", 16 * -1)
+        )
+
+        self.canvas_scroll.create_text(
+            x_col2,
+            y_start + (2 * y_gap) + penyakit_height + 10,
+            anchor="nw",
+            text=f": {self.clicked_data['tingkat_keyakinan']}%",
+            fill="#1E5C2A",
+            font=("Nunito Bold", 16 * -1)
+        )
+
+        self.canvas_scroll.create_text(
+            x_col1,  # Kolom 1
+            y_start + (3 * y_gap) + penyakit_height,
+            anchor="nw",
+            text=f"Alamat Pasien",
+            fill="#404040",
+            font=("Nunito Regular", 16 * -1)
+        )
+
+        self.canvas_scroll.create_text(
+            x_col2,
+            y_start + (3 * y_gap) + penyakit_height,
+            anchor="nw",
+            text=f": Jalan ABCD no. 1234",
+            fill="#404040",
+            font=("Nunito Bold", 16 * -1)
+        )
+
+        self.canvas_scroll.create_text(
+            x_col1,
+            y_start + (4 * y_gap) + penyakit_height + 10,
+            anchor="nw",
+            text=self.clicked_data['deskripsi_penyakit'],
+            fill="#404040",
+            font=("Nunito Bold", 16 * -1),
+            width=380,
+            justify="left"
+        )
+
+        self.canvas_scroll.configure(scrollregion=self.canvas_scroll.bbox("all"))
 
         self.window.mainloop()

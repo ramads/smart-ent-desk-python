@@ -291,7 +291,7 @@ class ResultPage(Canvas, BasePage):
             font=("Nunito Bold", 15 * -1)
         )
 
-        # Mendapatkan bounding box dari gejala (list)
+        # Ambil bounding box dari gejala (list)
         bbox_1 = self.bbox(self.create_text(
             800.0,
             543.0,
@@ -316,7 +316,7 @@ class ResultPage(Canvas, BasePage):
             font=("Nunito Bold", 15 * -1)
         )
 
-        # Mendapatkan bounding box dari teks kedua
+        # Ambil bounding box dari teks kedua
         bbox_2 = self.bbox(self.create_text(
             726.0,
             y_position_2 + 22,  # Sesuaikan dengan tinggi teks kedua
