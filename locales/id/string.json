@@ -29,7 +29,7 @@
     "picture_analysis" : "Analisis Gambar",
     "other_accumulations" : "Akumulasi Lainnya",
     "diagnosis_result" : "Hasil Diagnosa",
-    "confidence_level" : "Tingkat Keyakinan Diagnosa: ",
+    "confidence_level" : "Keyakinan Diagnosa",
     "diagnosis_note" : "Note: Jika hasil diagnosa dirasa keliru, silakan untuk melakukan koreksi hasil.",
     "reason" : "alasan",
     "correction_result" : "koreksi hasil",

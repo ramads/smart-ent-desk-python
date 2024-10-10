@@ -3,7 +3,7 @@ from colors import *
 from helpers import *
 # from notificationBar import notificationBar
 
-from pages import DEarPage
+from pages import DiagnosisStartPage
 from pages import DiagnosisPage
 
 from database.models import Indication
@@ -36,6 +36,13 @@ class DiagnosisQuestionPage(Canvas, BasePage):
 
         self.indication_model = Indication.IndicationModel()
         self.indication_data = self.indication_model.get_indication_by_organ(self.temp_data["diagnosis_type"])
+        self.get_disease_title(self.temp_data['diagnosis_type'])
+
+    def get_disease_title(self, disease):
+        if self.lang_code == 'id':
+            self.disease_title = f"{self.data_localization['disease']} {self.data_localization[disease]}"
+        else:
+            self.disease_title = f"{self.data_localization[disease]} {self.data_localization['disease']}"
 
     def get_localization(self):
         path = f"locales/{self.lang_code}/string.json"
@@ -117,7 +124,7 @@ class DiagnosisQuestionPage(Canvas, BasePage):
 
         create_hover_button(self.window, 575.0, 614.0, 136.0, 42.0,
                             "#FFFFFF", inactive_continue, active_continue,
-                            lambda: [self.get_entry_text(), goToPage(DEarPage.DEarPage(self.window, self.temp_data))])
+                            lambda: [self.get_entry_text(), goToPage(DiagnosisStartPage.DiagnosisStartPage(self.window, self.temp_data))])
 
         inactive_back = relative_to_assets(f"control/DiagnosisQuestionFrame/{self.lang_code}/inactive_back.png")
         active_back = relative_to_assets(f"control/DiagnosisQuestionFrame/{self.lang_code}/active_back.png")
@@ -159,7 +166,7 @@ class DiagnosisQuestionPage(Canvas, BasePage):
             190.0,
             anchor="center",
             justify="center",
-            text=self.data_localization["question_title"],
+            text=self.disease_title.title(),
             fill="#404040",
             font=("Nunito Bold", 24 * -1)
         )

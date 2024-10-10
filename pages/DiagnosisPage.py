@@ -6,7 +6,7 @@ from helpers import *
 from pages import DiagnosisQuestionPage
 from pages import PatientQueuePage
 
-from database.models import MedicalFacility
+from database.models import MedicalFacility, PatientMedicalFacility
 from config import DUMMY_MEDICAL_FACILITY
 import json
 
@@ -17,6 +17,10 @@ class DiagnosisPage(Canvas, BasePage):
         self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
         self.medical_facility_data = MedicalFacility.MedicalFacilityModel().get_medical_facility(DUMMY_MEDICAL_FACILITY)
+        self.patient_medical_facility = PatientMedicalFacility.PatientMedicalFacilityModel()
+        self.temp_data = temp_data
+        self.checking()
+
         super().__init__(
             window,
             bg=BACKGROUND_COLOUR,
@@ -26,12 +30,27 @@ class DiagnosisPage(Canvas, BasePage):
             highlightthickness=0,
             relief="ridge"
         )
-        self.temp_data = temp_data
     def get_localization(self):
         path = f"locales/{self.lang_code}/string.json"
         with open(path, "r") as file:
             data = json.load(file)
         return data
+    
+    def checking(self):
+        self.patient_medical_facility.update_queue(
+            status_periksa='periksa',
+            NIK=self.temp_data['NIK'],
+            id_faskes=self.temp_data['id_faskes'],
+            tanggal_pendaftaran=self.temp_data['tanggal_pendaftaran']
+        )
+
+    def cancel_checking(self):
+        self.patient_medical_facility.update_queue(
+            status_periksa='tunggu',
+            NIK=self.temp_data['NIK'],
+            id_faskes=self.temp_data['id_faskes'],
+            tanggal_pendaftaran=self.temp_data['tanggal_pendaftaran']
+        )
 
     def drawPage(self, data=None):
         self.place(x=0, y=0)
@@ -56,15 +75,15 @@ class DiagnosisPage(Canvas, BasePage):
         
         create_hover_button(self.window, 402.0, 223.0, 330.0, 319.0,
                             BACKGROUND_COLOUR, inactive_button_2, active_button_2,  
-                            lambda: print("button_2 clicked"))
+                            lambda: goToPage(DiagnosisQuestionPage.DiagnosisQuestionPage(self.window, self.temp_data, 'tenggorokan', DiagnosisPage)))
         
         create_hover_button(self.window, 761.0, 223.0, 332.0, 319.0,
                             BACKGROUND_COLOUR, inactive_button_3, active_button_3,  
-                            lambda: print("button_3 clicked"))
+                            lambda: goToPage(DiagnosisQuestionPage.DiagnosisQuestionPage(self.window, self.temp_data, 'hidung', DiagnosisPage)))
         
         create_hover_button(self.window, 471, 635.0, 192.0, 54.0,
                             BACKGROUND_COLOUR, inactive_button_4, active_button_4,  
-                            lambda: goToPage(PatientQueuePage.PatientQueuePage(self.window)))
+                            lambda: [self.cancel_checking(), goToPage(PatientQueuePage.PatientQueuePage(self.window))])
 
         image_image_1 = PhotoImage(
             file=relative_to_assets(f"control/DiagnosisFrame/image_1.png"))

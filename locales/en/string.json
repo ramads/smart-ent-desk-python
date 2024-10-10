@@ -29,7 +29,7 @@
     "picture_analysis" : "Picture Analysis",
     "other_accumulations" : "Other Accumulations",
     "diagnosis_result" : "Diagnosis Result",
-    "confidence_level" : "Diagnosis Confidence Level ",
+    "confidence_level" : "Diagnosis Confidence",
     "diagnosis_note" : "Note: If the diagnosis result is considered incorrect, please correct the result.",
     "reason" : "Reason",
     "correction_result" : "correction result",

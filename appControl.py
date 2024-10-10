@@ -1,11 +1,15 @@
+import threading
 from tkinter import *
 
+from libs import dongle_conn
 from libs.camera_port import *
 from pages import HomePage
 from pages import DongleNotification
 from helpers import *
 from colors import *
 import config
+
+from database.core.data_sync import DataSync
 
 
 class App(Tk):
@@ -17,16 +21,23 @@ class App(Tk):
 
         config.CAMERA_PORT = int(find_camera())
         if config.CAMERA_PORT is not None:
-            print(f"Camera found at index {config.CAMERA_PORT } ===============")
+            print(f"Camera found at index {config.CAMERA_PORT} ===============")
         else:
             print("No camera available.")
 
-        if config.DONGLE_ID != "12345":     # correct_Id "12345"
+        # validate dongle
+        if not dongle_conn.DongleCom().isValid():     # correct_Id "12345"
             goToPage(DongleNotification.DongleNotification(self))
+        else:
+    
+            self.homePage = HomePage.HomePage(self)
+            self.data_sync = DataSync()            
+            self.periodic_sync()
+            goToPage(self.homePage)
 
-        self.homePage = HomePage.HomePage(self)
-
-        goToPage(self.homePage)
+    def periodic_sync(self):
+        threading.Timer(3600, self.periodic_sync).start()
+        self.data_sync.sync_data()
 
 
 app = App()

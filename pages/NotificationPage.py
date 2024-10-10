@@ -184,7 +184,7 @@ class NotificationPage(Canvas, BasePage):
         return canvas.create_polygon(points, **kwargs, smooth=True)
     
     def create_date_label(self, canvas, y_offset, date_label_text):
-        x1, y1, x2, y2 = 48, y_offset, 130 if self.lang_code == 'en' else 150, y_offset + 30
+        x1, y1, x2, y2 = 48, y_offset, 140 if self.lang_code == 'en' else 180, y_offset + 30
         self.draw_rounded_rectangle(canvas, x1, y1, x2, y2, radius=10, fill='#ffffff', outline="")
         date_label = Label(canvas, text=date_label_text, bg='#ffffff', font=("Nunito Bold", 10), fg="#9E9E9E")
         canvas.create_window((x1 + x2) // 2, (y1 + y2) // 2, anchor="center", window=date_label)

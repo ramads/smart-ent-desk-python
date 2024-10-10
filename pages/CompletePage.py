@@ -11,7 +11,9 @@ from datetime import datetime
 
 from database.models import MedicalRecord, PatientMedicalFacility, Disease, MedicalRecordIndication
 import json
+import os
 from config import DUMMY_MEDICAL_FACILITY
+
 
 
 class CompletePage(Canvas, BasePage):
@@ -49,76 +51,87 @@ class CompletePage(Canvas, BasePage):
         self.disease = Disease.DiseaseModel()
         self.medical_record_indication = MedicalRecordIndication.MedicalRecordIndicationModel()
 
-    def get_disease_id(self, nama_penyakit):
-        return self.disease.get_disease_id(nama_penyakit)['id_penyakit']
+    def get_disease_id(self, nama_penyakit, diagnosis_type):
+        return self.disease.get_disease_id(nama_penyakit, organ_penyakit=diagnosis_type)['id_penyakit']
     
     def update_data(self):
-        current_date = datetime.now().strftime('%Y-%m-%d')
+        if not os.path.exists(os.path.join("images", self.temp_data['diagnosis_type'])):
+            os.makedirs(os.path.join("images", self.temp_data['diagnosis_type']))
+        current_datetime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         image_path = f"{self.temp_data['NIK']}_{self.temp_data['id_faskes']}_{timestamp}.png"
+        image_path = os.path.join(self.temp_data['diagnosis_type'], image_path)
         
         image = Image.open(self.temp_data['image_path_temp'])
         image = image.resize((512, 512))
-        image.save(f"temp_image/{image_path}", format='PNG')
+        image.save(f"images/{image_path}", format='PNG')
         
         confidence = self.temp_data['result_1'][1]
         confidence = int(round(confidence, 2) * 100)
         
         self.medical_record.update_medical_record(
             id_rekam_medis=self.temp_data['id_rekam_medis'],
-            tanggal_pemeriksaan=current_date,
+            tanggal_pemeriksaan=current_datetime,
             tingkat_keyakinan=confidence,
             prediksi_benar=self.temp_data['is_corrected'],
             alasan_koreksi=self.temp_data['correction_reason'],
             gambar_penyakit=image_path,
             NIK=self.temp_data['NIK'],
             id_faskes=self.temp_data['id_faskes'],
-            id_penyakit=self.get_disease_id(self.temp_data['result_1'][0])
+            id_penyakit=self.get_disease_id(self.temp_data['result_1'][0], self.temp_data['diagnosis_type']),
+            deskripsi_gejala=self.temp_data['detail'] if self.temp_data.get('detail') else None
         )
 
         self.medical_record_indication.delete_medical_record_indication_by_medical_record(id_rekam_medis=self.temp_data['id_rekam_medis'])
-
-        for indication in self.temp_data['indications']:
-            self.medical_record_indication.insert_medical_record_indication(
-                id_rekam_medis=self.temp_data['id_rekam_medis'],
-                id_gejala=indication[0]
-            )
+        if self.temp_data.get('indications'):
+            for indication in self.temp_data['indications']:
+                self.medical_record_indication.insert_medical_record_indication(
+                    id_rekam_medis=self.temp_data['id_rekam_medis'],
+                    id_gejala=indication[0]
+                )
 
     def insert_data(self):
-        current_date = datetime.now().strftime('%Y-%m-%d')
+        if not os.path.exists(os.path.join("images", self.temp_data['diagnosis_type'])):
+            os.makedirs(os.path.join("images", self.temp_data['diagnosis_type']))
+
+        current_datetime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         image_path = f"{self.temp_data['NIK']}_{self.temp_data['id_faskes']}_{timestamp}.png"
-        
+        image_path = os.path.join(self.temp_data['diagnosis_type'], image_path)
+
         image = Image.open(self.temp_data['image_path_temp'])
         image = image.resize((512, 512))
-        image.save(f"temp_image/{image_path}", format='PNG')
+        image.save(f"images/{image_path}", format='PNG')
         
         confidence = self.temp_data['result_1'][1]
         confidence = int(round(confidence, 2) * 100)
         
         id_medical_record =  self.medical_record.insert_medical_record(
-            tanggal_pemeriksaan=current_date,
+            tanggal_pemeriksaan=current_datetime,
             tingkat_keyakinan=confidence,
             prediksi_benar=self.temp_data['is_corrected'],
             alasan_koreksi=self.temp_data['correction_reason'],
             gambar_penyakit=image_path,
             NIK=self.temp_data['NIK'],
             id_faskes=self.temp_data['id_faskes'],
-            id_penyakit=self.get_disease_id(self.temp_data['result_1'][0])
+            id_penyakit=self.get_disease_id(self.temp_data['result_1'][0], self.temp_data['diagnosis_type']),
+            deskripsi_gejala=self.temp_data['detail'] if self.temp_data.get('detail') else None
         )
 
         # Update Queue
         # self.patient_medical_facility.update_queue(
+        #     status_periksa='selesai',
         #     NIK=self.temp_data['NIK'],
         #     id_faskes=self.temp_data['id_faskes'],
         #     tanggal_pendaftaran=self.temp_data['tanggal_pendaftaran']
         # )
 
-        for indication in self.temp_data['indications']:
-            self.medical_record_indication.insert_medical_record_indication(
-                id_rekam_medis=id_medical_record,
-                id_gejala=indication[0]
-            )
+        if self.temp_data.get('indications'):
+            for indication in self.temp_data['indications']:
+                self.medical_record_indication.insert_medical_record_indication(
+                    id_rekam_medis=id_medical_record,
+                    id_gejala=indication[0]
+                )
 
     def loadImage(self):
         return PhotoImage(file=relative_to_assets("image_3.png"))

@@ -1,43 +1,35 @@
+import json
 import tensorflow as tf
 from PIL import Image
 import numpy as np
 from efficientnet.tfkeras import EfficientNetB0
 
+from database.models import Disease
+
 class ImagePredictor:
-    def __init__(self):
-        model_path = './machine_learning/models/v2_new_arch.h5'
-        self.model = tf.keras.models.load_model(model_path)
-        self.labels = [
-            'Aerotitis Barotrauma', 'Cerumen', 'Corpus Alienum', 'M Timpani normal', 
-            'Myringitis Bulosa', 'Normal', 'OE Difusa', 'OE Furunkulosa', 'OMA Hiperemis', 
-            'OMA Oklusi Tuba', 'OMA Perforasi', 'OMA Resolusi', 'OMA Supurasi', 'OMed Efusi', 
-            'OMedK Resolusi', 'OMedK Tipe Aman', 'OMedK Tipe Bahaya', 'Otomikosis', 
-            'Perforasi Membran Tympani', 'Tympanosklerotik'
-        ]
+    def __init__(self, diagnosis_type):
+        with open('machine_learning/config.json', 'r') as config_file:
+            config = json.load(config_file)
+        self.config = config[diagnosis_type]
+        all_diseases = Disease.DiseaseModel().get_all_diseases_by_diagnosis_type(diagnosis_type=diagnosis_type)
+        self.labels = [disease['nama_penyakit'] for disease in all_diseases]
+        self.model = tf.keras.models.load_model(self.config['model'])
+        self.preprocessing_function = eval(self.config['preprocessing_function'])
 
     def preprocess_image(self, image_path):
         img = Image.open(image_path)
-        img = img.resize((224, 224))
-        img = np.array(img) / 255.0  # Normalize pixel values to [0, 1]
-        img = np.expand_dims(img, axis=0)  # Add batch dimension
+        img = img.resize(eval(self.config['image_size']))
+        img = np.array(img)
+        img = self.preprocessing_function(img) 
+        img = np.expand_dims(img, axis=0)
         return img
 
     def predict(self, image_path):
-        # Preprocess the image
         processed_image = self.preprocess_image(image_path)
-        
-        # Make predictions
         predictions = self.model.predict(processed_image)
-        
-        # Get the top 3 predicted class indices
         top_3_indices = np.argsort(predictions[0])[-3:][::-1]
         top_3_probabilities = predictions[0][top_3_indices]
         top_3_labels = [self.labels[i] for i in top_3_indices]
-        
-        # Save the results as a list of tuples
         result = [(top_3_labels[i], top_3_probabilities[i]) for i in range(3)]
-        
-        # Unpack the results into separate variables
         result_1, result_2, result_3 = result
-        
         return result_1, result_2, result_3

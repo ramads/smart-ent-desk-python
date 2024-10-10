@@ -34,7 +34,6 @@ class SerialCom():
 
     # Write whole strings
     def write_serial(self, cmd):
-        print("write serial", cmd)
         if self.com is not None:
             cmd = cmd + '\n'
             self.com.write(cmd.encode())

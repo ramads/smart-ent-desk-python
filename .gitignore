@@ -10,7 +10,10 @@ libs/__pycache__/
 .idea
 
 # image directory
-temp_image
+images/
 image_capture
 
 .venv*
+
+#data sync folder
+database/data_sync
