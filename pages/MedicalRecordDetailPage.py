@@ -160,7 +160,7 @@ class MedicalRecordDetailPage(Canvas, BasePage):
             x_col2,  # Kolom 2
             y_start,  # Baris 1
             anchor="nw",
-            text=": " + "12345567",
+            text=": " + self.clicked_data['NIK'],
             fill="#404040",
             font=("Nunito Regular", 16 * -1)
         )

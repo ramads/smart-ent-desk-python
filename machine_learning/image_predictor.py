@@ -24,9 +24,11 @@ class ImagePredictor:
         img = np.expand_dims(img, axis=0)
         return img
 
-    def predict(self, image_path):
+    def predict(self, image_path, indication):
         processed_image = self.preprocess_image(image_path)
-        predictions = self.model.predict(processed_image)
+        predictions = self.model.predict([processed_image, indication])
+        print("Predictions: ", predictions)
+        print("Labels: ", self.labels, len(self.labels))  
         top_3_indices = np.argsort(predictions[0])[-3:][::-1]
         top_3_probabilities = predictions[0][top_3_indices]
         top_3_labels = [self.labels[i] for i in top_3_indices]
