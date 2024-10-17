@@ -20,6 +20,7 @@ class DiagnosisStartPage(Canvas, BasePage):
             relief="ridge"
         )
         self.temp_data = temp_data
+        pprint(self.temp_data)
         self.get_disease_title(self.temp_data['diagnosis_type'])
 
     def get_disease_title(self, disease):

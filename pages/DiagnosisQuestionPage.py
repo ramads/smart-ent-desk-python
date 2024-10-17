@@ -92,6 +92,21 @@ class DiagnosisQuestionPage(Canvas, BasePage):
 
             current_x += x_offset
 
+    def convert_to_one_hot(self):
+        total_unique_values = len([indication["nama_gejala"] for indication in self.indication_data])
+        data = [indication[1] for indication in self.temp_data["indications"]]
+        unique_values = []
+        for value in self.indication_data:
+            unique_values.append(value["nama_gejala"])
+        unique_values.sort()
+        value_to_index = {value: idx for idx, value in enumerate(unique_values)}
+
+        one_hot = [0] * total_unique_values
+        for value in data:
+            one_hot[value_to_index[value]] = 1
+        
+        self.temp_data["indications_one_hot"] = np.array(one_hot).reshape(1, -1)
+        
     def update_selected_options(self):
         selected_options = [ (id_gejala, nama_gejala) for id_gejala, nama_gejala, var in self.vars if var.get() == 1]
         print("Selected options:", selected_options)
@@ -124,7 +139,7 @@ class DiagnosisQuestionPage(Canvas, BasePage):
 
         create_hover_button(self.window, 575.0, 614.0, 136.0, 42.0,
                             "#FFFFFF", inactive_continue, active_continue,
-                            lambda: [self.get_entry_text(), goToPage(DiagnosisStartPage.DiagnosisStartPage(self.window, self.temp_data))])
+                            lambda: [self.convert_to_one_hot(), self.get_entry_text(), goToPage(DiagnosisStartPage.DiagnosisStartPage(self.window, self.temp_data))])
 
         inactive_back = relative_to_assets(f"control/DiagnosisQuestionFrame/{self.lang_code}/inactive_back.png")
         active_back = relative_to_assets(f"control/DiagnosisQuestionFrame/{self.lang_code}/active_back.png")

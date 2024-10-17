@@ -6,12 +6,12 @@
     },
     "hidung": {
         "image_size": "(150, 150)",
-        "model": "machine_learning/models/densenet201_hidung.h5",
+        "model": "machine_learning/models/densenet121_multimodal_nose.h5",
         "preprocessing_function": "tf.keras.applications.densenet.preprocess_input"
     },
     "tenggorokan": {
         "image_size": "(150, 150)",
-        "model": "machine_learning/models/inceptionv3_tenggorokan.h5",
-        "preprocessing_function": "tf.keras.applications.inception_v3.preprocess_input"
+        "model": "machine_learning/models/densenet169_multimodal_throat.h5",
+        "preprocessing_function": "tf.keras.applications.densenet.preprocess_input"
     }
 }
