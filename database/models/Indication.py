@@ -12,15 +12,15 @@ class IndicationModel:
     def close_connection(self):
         self.db.close()
 
-    def insert_indication(self, nama_gejala, organ_gejala):
+    def insert_indication(self, nama_gejala_idn, nama_gejala_eng, organ_gejala):
         try:
             self.open_connection()
             query = """
-            INSERT INTO Gejala (nama_gejala, organ_gejala)
+            INSERT INTO Gejala (nama_gejala_idn, nama_gejala_eng, organ_gejala)
             VALUES (%s, %s)
             """
             cursor = self.db.connection.cursor(dictionary=True)
-            cursor.execute(query, (nama_gejala, organ_gejala))
+            cursor.execute(query, (nama_gejala_idn, nama_gejala_eng, organ_gejala))
             return cursor.fetchone()
         except Exception as e:
             print(f"Error: {e}")
@@ -54,7 +54,7 @@ class IndicationModel:
     def get_indication_by_organ(self, organ_gejala):
         try:
             self.open_connection()
-            query = "SELECT * FROM Gejala WHERE organ_gejala = %s"
+            query = "SELECT * FROM Gejala WHERE organ_gejala = %s ORDER BY nama_gejala_id"
             cursor = self.db.connection.cursor(dictionary=True)
             cursor.execute(query, (organ_gejala,))
             return cursor.fetchall()

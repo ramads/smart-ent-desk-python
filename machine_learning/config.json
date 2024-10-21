@@ -1,7 +1,7 @@
 {
     "telinga": {
         "image_size": "(224, 224)",
-        "model": "machine_learning/models/densenet169_telinga.h5",
+        "model": "machine_learning/models/densenet169_multimodal_ear.h5",
         "preprocessing_function": "tf.keras.applications.densenet.preprocess_input"
     },
     "hidung": {

@@ -82,5 +82,9 @@
     "dongle_title": "Dongle Disconnected",
     "dongle_description": "Please ensure that the dongle you are using is compatible with the device!",
     "indications": "Indications",
-    "description": "Description"
+    "description": "Description",
+    "gender_int_to_string": {
+        "0": "Female",
+        "1": "Male"
+    }
 }

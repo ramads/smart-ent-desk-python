@@ -12,15 +12,15 @@ class DiseaseModel:
     def close_connection(self):
         self.db.close()
 
-    def get_insert(self, nama_penyakit, deskripsi_penyakit, organ_penyakit):
+    def get_insert(self, nama_penyakit, deskripsi_penyakit_id, deskripsi_penyakit_en, organ_penyakit):
         try:
             self.open_connection()
             query = """
-            INSERT INTO penyakit (nama_penyakit, deskripsi_penyakit, organ_penyakit)
+            INSERT INTO penyakit (nama_penyakit, deskripsi_penyakit_id, deskripsi_penyakit_en, organ_penyakit)
             VALUES (%s, %s, %s)
             """
             cursor = self.db.connection.cursor(dictionary=True)
-            cursor.execute(query, (nama_penyakit, deskripsi_penyakit, organ_penyakit))
+            cursor.execute(query, (nama_penyakit, deskripsi_penyakit_id, deskripsi_penyakit_en, organ_penyakit))
             return cursor.fetchone()
         except Exception as e:
             print(f"Error: {e}")
