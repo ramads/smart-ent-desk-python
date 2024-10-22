@@ -184,7 +184,7 @@ class CompletePage(Canvas, BasePage):
         self.window.mainloop()
 
     def goToNextPage(self):
-        if self.temp_data.get('id_diagnosis'):
+        if self.temp_data.get('id_rekam_medis'):
             goToPage(MedicalRecordPage.MedicalRecordPage(self.window))
         else:
             goToPage(HomePage.HomePage(self.window))

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Oct 21, 2024 at 05:20 PM
+-- Generation Time: Oct 22, 2024 at 07:49 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -25624,7 +25624,8 @@ INSERT INTO `Gejala` (`id_gejala`, `nama_gejala_id`, `nama_gejala_en`, `organ_ge
 (65, 'pendengaran membaik', 'hearing improved', 'telinga'),
 (66, 'rasa sakit berkurang', 'pain reduced', 'telinga'),
 (67, 'sakit telinga sudah tidak ada', 'earache is gone', 'telinga'),
-(68, 'cairan telinga berkurang atau tidak ada', 'decreased or absent ear fluid', 'telinga');
+(68, 'cairan telinga berkurang atau tidak ada', 'decreased or absent ear fluid', 'telinga'),
+(69, 'kurang dengar', 'less heard', 'telinga');
 
 -- --------------------------------------------------------
 
@@ -33685,11 +33686,13 @@ CREATE TABLE `Rekam_Medis` (
 --
 
 INSERT INTO `Rekam_Medis` (`id_rekam_medis`, `NIK`, `id_penyakit`, `id_faskes`, `tanggal_pemeriksaan`, `tingkat_keyakinan`, `prediksi_benar`, `alasan_koreksi`, `gambar_penyakit`, `deskripsi_gejala`) VALUES
+('0bd3feea-1bf4-457c-afe5-93c573370d42', '0987654321', 35, 1, '2024-10-22 13:47:11', 100, 1, 'None', 'tenggorokan/0987654321_1_20241022_134711.png', NULL),
 ('122bd291-cf9b-4715-9e96-be0d0f21ae43', '0987654321', 35, 1, '2024-10-21 22:35:19', 100, 1, 'None', 'tenggorokan/0987654321_1_20241021_223519.png', NULL),
 ('18f785d8-2db0-4cc9-b5b1-21e4a0ee4827', '0987654321', 29, 1, '2024-09-03 21:23:08', 20, 1, 'None', '0987654321_1_20240903_212308.png', 'halo halo'),
 ('1cc98ac3-9607-4fd7-9f84-c297b47e8187', '0987654321', 21, 1, '2024-09-03 22:31:32', 20, 1, 'None', '0987654321_1_20240903_223132.png', NULL),
 ('29c864f8-0f52-46d7-b541-f23423137676', '0987654321', 25, 1, '2024-09-03 14:26:48', 23, 1, 'None', '0987654321_1_20240903_142648.png', 'testest'),
 ('2d97b74a-d8c3-4426-8359-2380536cc155', '0987654321', 35, 1, '2024-10-05 11:58:02', 85, 1, 'None', 'tenggorokan/0987654321_1_20241005_115802.png', NULL),
+('3849b5be-0cc3-4bcf-9475-4e08d5efa75b', '0987654321', 37, 1, '2024-10-22 13:46:35', 100, 0, 'Enter your text here...', 'hidung/0987654321_1_20241022_134635.png', NULL),
 ('3b02d279-4632-456d-a88c-73688fbdc12d', '0987654321', 25, 1, '2024-09-03 21:07:27', 23, 1, 'None', '0987654321_1_20240903_210727.png', NULL),
 ('4af83205-7c55-4ea9-adef-1d48ea3b176b', '0987654321', 35, 1, '2024-10-21 23:19:31', 100, 1, 'None', 'tenggorokan/0987654321_1_20241021_231931.png', NULL),
 ('6e7b0b91-ab51-44a4-98d9-ce073af86700', '0987654321', 29, 1, '2024-08-17 00:00:00', 15, 1, 'None', '0987654321_1_20240817_233355.png', 'sakit hati dan galau'),
@@ -33702,12 +33705,14 @@ INSERT INTO `Rekam_Medis` (`id_rekam_medis`, `NIK`, `id_penyakit`, `id_faskes`, 
 ('ac5cc5d3-c0dd-49ce-91ac-986050fdbe39', '0987654321', 13, 1, '2024-09-03 22:30:58', 43, 1, 'None', '0987654321_1_20240903_223058.png', 'baca buku'),
 ('b33f8424-9e80-4b24-89f2-c032f3264fc0', '0987654321', 35, 1, '2024-09-26 11:48:27', 47, 1, 'None', 'tenggorokan/0987654321_1_20240926_114827.png', NULL),
 ('b50a83ac-8034-43fc-8929-1413d5bd94f3', '0987654321', 26, 1, '2024-09-25 23:09:09', 23, 1, 'None', 'tenggorokan/0987654321_1_20240925_230909.png', NULL),
+('b55f2a17-4a09-4cc7-bf43-6d955a391aaa', '0987654321', 35, 1, '2024-10-22 13:42:20', 100, 1, 'None', 'tenggorokan/0987654321_1_20241022_134220.png', NULL),
 ('b63dda2c-ca97-4320-a68f-67decc2ee37d', '1234567890', 26, 1, '2024-09-08 11:37:03', 23, 1, 'None', '1234567890_1_20240908_113703.png', NULL),
 ('cae31c7c-5148-11ef-b4b5-f47b095d2bf4', '0987654321', 2, 2, '2024-07-02 11:00:00', 90, 0, 'Diagnosa awal tidak akurat', 'link_to_image_2', 'None'),
 ('cbddd961-63c6-4735-a5e7-8def95dd86e3', '0987654321', 13, 1, '2024-09-25 23:20:36', 41, 1, 'None', 'telinga/0987654321_1_20240925_232036.png', NULL),
 ('e09f4196-bc3e-488c-892d-1ef11f775a35', '0987654321', NULL, 1, '2024-08-03 00:00:00', 52, 1, 'None', '0987654321_1_20240803_173020.png', 'None'),
 ('e471cc08-f4f5-43de-b529-533eca842207', '1234567890', 25, 1, '2024-09-03 00:00:00', 23, 1, 'None', '1234567890_1_20240903_131350.png', NULL),
-('ef964af4-5e97-485a-97d0-2d7001a5d95e', '0987654321', 25, 1, '2024-09-03 00:00:00', 23, 1, 'None', '0987654321_1_20240903_141657.png', NULL);
+('ef964af4-5e97-485a-97d0-2d7001a5d95e', '0987654321', 25, 1, '2024-09-03 00:00:00', 23, 1, 'None', '0987654321_1_20240903_141657.png', NULL),
+('f05100a3-cf6f-4075-a981-e7ca448c4340', '0987654321', 6, 1, '2024-10-22 13:45:57', 49, 0, 'Enter your text here...', 'telinga/0987654321_1_20241022_134557.png', NULL);
 
 -- --------------------------------------------------------
 
@@ -33725,9 +33730,12 @@ CREATE TABLE `Rekam_Medis_Gejala` (
 --
 
 INSERT INTO `Rekam_Medis_Gejala` (`id_rekam_medis`, `id_gejala`) VALUES
+('0bd3feea-1bf4-457c-afe5-93c573370d42', 60),
 ('122bd291-cf9b-4715-9e96-be0d0f21ae43', 57),
 ('122bd291-cf9b-4715-9e96-be0d0f21ae43', 59),
 ('18f785d8-2db0-4cc9-b5b1-21e4a0ee4827', 36),
+('3849b5be-0cc3-4bcf-9475-4e08d5efa75b', 36),
+('3849b5be-0cc3-4bcf-9475-4e08d5efa75b', 61),
 ('75ecb6ca-9e87-43a2-b9d2-735291b93839', 2),
 ('75ecb6ca-9e87-43a2-b9d2-735291b93839', 33),
 ('9f44a2f1-2367-4ead-a5a1-37b774569623', 36),
@@ -33887,7 +33895,7 @@ ALTER TABLE `Fasilitas_Kesehatan`
 -- AUTO_INCREMENT for table `Gejala`
 --
 ALTER TABLE `Gejala`
-  MODIFY `id_gejala` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `id_gejala` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT for table `Notifikasi`
