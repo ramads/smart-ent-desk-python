@@ -69,13 +69,13 @@ class DiagnosisQuestionPage(Canvas, BasePage):
                 current_y += 50
 
             var = IntVar()
-            self.vars.append((self.indication_data[i]["id_gejala"], self.indication_data[i]["nama_gejala"], var))
+            self.vars.append((self.indication_data[i]["id_gejala"], self.indication_data[i][f"nama_gejala_{self.lang_code}"], var))
 
             checkbox = ctk.CTkCheckBox(
                 self,
                 variable=var,
                 command=self.update_selected_options,
-                text=self.indication_data[i]["nama_gejala"],
+                text=self.indication_data[i][f"nama_gejala_{self.lang_code}"],
                 font=("Nunito Regular", 16),  # Atur ukuran font untuk memperbesar checkbox
                 text_color="#404040",
                 checkbox_width=25,  # Atur lebar checkbox
@@ -93,12 +93,11 @@ class DiagnosisQuestionPage(Canvas, BasePage):
             current_x += x_offset
 
     def convert_to_one_hot(self):
-        total_unique_values = len([indication["nama_gejala"] for indication in self.indication_data])
-        data = [indication[1] for indication in self.temp_data["indications"]]
+        total_unique_values = len([indication["nama_gejala_id"] for indication in self.indication_data])
+        data = [indication[1] for indication in self.temp_data["indications"]] if "indications" in self.temp_data else []
         unique_values = []
         for value in self.indication_data:
-            unique_values.append(value["nama_gejala"])
-        unique_values.sort()
+            unique_values.append(value[f"nama_gejala_{self.lang_code}"])
         value_to_index = {value: idx for idx, value in enumerate(unique_values)}
 
         one_hot = [0] * total_unique_values

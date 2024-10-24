@@ -251,7 +251,7 @@ class MedicalRecordDetailPage(Canvas, BasePage):
             x_col1,
             y_start + (4 * y_gap) + penyakit_height + 10,
             anchor="nw",
-            text=self.clicked_data['deskripsi_penyakit'],
+            text=self.clicked_data[f'deskripsi_penyakit_{self.lang_code}'],
             fill="#404040",
             font=("Nunito Bold", 16 * -1),
             width=380,

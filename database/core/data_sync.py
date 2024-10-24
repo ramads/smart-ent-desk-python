@@ -60,7 +60,7 @@ class DataSync:
                     py.organ_penyakit AS organ_penyakit,
                     rmg.id_rekam_medis AS rmg_id_rekam_medis, 
                     g.id_gejala AS id_gejala, 
-                    g.nama_gejala AS nama_gejala
+                    g.nama_gejala_id AS nama_gejala
                 FROM 
                     Rekam_Medis rm
                 JOIN

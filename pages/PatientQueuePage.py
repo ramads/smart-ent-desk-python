@@ -122,7 +122,7 @@ class PatientQueuePage(Canvas, BasePage):
             275.0,
             278.5,
             anchor="nw",
-            text=self.current_patient_data['jenis_kelamin'],
+            text=self.data_localization["gender_int_to_string"][self.current_patient_data['jenis_kelamin']],
             fill="#404040",
             font=("Nunito Regular", 16 * -1)
         )
@@ -192,7 +192,7 @@ class PatientQueuePage(Canvas, BasePage):
 
         # Mengisi teks ke Text Widget
         if self.current_history_data and len(self.current_history_data) > 0:
-            text_content = self.current_history_data[0]['deskripsi_penyakit'] or self.data_localization['no_data_yet']
+            text_content = self.current_history_data[0][f'deskripsi_penyakit_{self.lang_code}'] or self.data_localization['no_data_yet']
         else:
             text_content = self.data_localization['no_data_yet']
         text_widget.insert(tk.END, text_content)

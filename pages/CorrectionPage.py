@@ -7,6 +7,8 @@ from tkinter import ttk
 
 from pages import ResultPage
 
+from database.models import Disease
+
 import json
 
 
@@ -16,6 +18,8 @@ class CorrectionPage(Canvas, BasePage):
         self.temp_data = temp_data
         self.lang_code = json.load(open("config.json", "r"))["language"]
         self.data_localization = self.get_localization()
+        self.diasease = Disease.DiseaseModel()
+        
         super().__init__(
             window,
             bg=BACKGROUND_COLOUR,
@@ -103,13 +107,7 @@ class CorrectionPage(Canvas, BasePage):
             goToPage(ResultPage.ResultPage(self.window, self.temp_data))
 
         # Define options
-        options = [
-            'Aerotitis Barotrauma', 'Cerumen', 'Corpus Alienum', 'M Timpani normal', 
-            'Myringitis Bulosa', 'Normal', 'OE Difusa', 'OE Furunkulosa', 'OMA Hiperemis', 
-            'OMA Oklusi Tuba', 'OMA Perforasi', 'OMA Resolusi', 'OMA Supurasi', 'OMed Efusi', 
-            'OMedK Resolusi', 'OMedK Tipe Aman', 'OMedK Tipe Bahaya', 'Otomikosis', 
-            'Perforasi Membran Tympani', 'Tympanosklerotik'
-        ]
+        options = [disease['nama_penyakit'] for disease in self.diasease.get_all_diseases_by_diagnosis_type(self.temp_data['diagnosis_type'])]
 
         # Create a Tkinter StringVar to hold the selected option
         clicked = StringVar()

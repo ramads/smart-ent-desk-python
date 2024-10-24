@@ -632,7 +632,7 @@ class ProcessPage(Canvas, BasePage):
             885.0,
             160.0,
             anchor="nw",
-            text=self.patient_data['jenis_kelamin'].capitalize(),
+            text=self.data_localization["gender_int_to_string"][self.patient_data['jenis_kelamin']],
             fill="#404040",
             font=("Nunito Bold", 15 * -1)
         )

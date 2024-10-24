@@ -35,7 +35,7 @@
     "correction_result" : "correction result",
     "correction_hint" : "To correct the previous diagnosis result, please select the following label that is considered appropriate for the patient's illness and provide a clear reason.",
     "new_label" : "New Label",
-    "diagnosis_complete" : "All Patients Have Been Examined",
+    "diagnosis_complete" : "Diagnosis Process Completed",
     "diagnosis_complete_hint" : "Diagnosis has been successfully carried out. The diagnosis result can be accessed again in the patient history menu.",
     "diagnosis_queue_complete": "All Patients Have Been Examined",
     "diagnosis_queue_complete_hint": "Thank you for your hard work. Today, all patients have been examined.\nYou can review the diagnoses in the medical records menu.",
@@ -82,5 +82,9 @@
     "dongle_title": "Dongle Disconnected",
     "dongle_description": "Please ensure that the dongle you are using is compatible with the device!",
     "indications": "Indications",
-    "description": "Description"
+    "description": "Description",
+    "gender_int_to_string": {
+        "0": "Female",
+        "1": "Male"
+    }
 }
